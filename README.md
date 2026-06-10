@@ -1,6 +1,10 @@
 # PlayerTech
 
-PlayerTech es una plataforma SaaS multi-tenant para academias de fútbol.
+PlayerTech es una API SaaS multi-tenant para academias de fútbol.
+
+## Descripción
+
+La plataforma está pensada para gestionar academias, sedes, categorías, equipos, jugadores, acudientes, matrículas y pagos desde una base técnica sólida, segura y evolutiva.
 
 ## Requisitos
 
