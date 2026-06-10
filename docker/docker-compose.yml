@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/app/Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ../app:/var/www/html
+    depends_on:
+      - mysql
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: "1"
+      DATABASE_URL: mysql://playertech:playertech@mysql:3306/playertech?serverVersion=8.0&charset=utf8mb4
+      JWT_PASSPHRASE: change_this_password
+
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: playertech
+      MYSQL_USER: playertech
+      MYSQL_PASSWORD: playertech
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

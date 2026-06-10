@@ -1,0 +1,269 @@
+# 04-api.md
+
+# API Overview
+
+La API de PlayerTech será una REST API versionada, consistente y segura, diseñada para operar sobre un modelo multi-tenant con JWT.
+
+---
+
+# Base URL
+
+```text
+/api/v1
+```
+
+---
+
+# API Principles
+
+* REST puro.
+* Recursos centrados en dominio.
+* Tenant no expuesto en la URL.
+* Respuestas consistentes.
+* Errores estandarizados.
+* Versionado desde el inicio.
+
+---
+
+# General Response Contract
+
+## Success
+
+Todas las respuestas exitosas usarán este formato:
+
+```json
+{
+  "data": {},
+  "meta": {}
+}
+```
+
+## List Example
+
+```json
+{
+  "data": [],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 120
+  }
+}
+```
+
+---
+
+# Error Contract
+
+Los errores se devolverán con un formato tipo ProblemDetails.
+
+## Example
+
+```json
+{
+  "type": "https://api.playertech/errors/validation",
+  "title": "Validation Error",
+  "status": 400,
+  "detail": "Invalid request payload",
+  "instance": "/api/v1/players"
+}
+```
+
+## Recommended Extensions
+
+Cuando aplique, se puede incluir un bloque `errors` con detalles de validación por campo.
+
+---
+
+# Common HTTP Headers
+
+## Required
+
+```http
+Authorization: Bearer {jwt}
+Content-Type: application/json
+Accept: application/json
+```
+
+---
+
+# Authentication
+
+## Login
+
+```http
+POST /api/v1/auth/login
+```
+
+### Request
+
+```json
+{
+  "email": "user@academy.com",
+  "password": "secret"
+}
+```
+
+### Response
+
+```json
+{
+  "data": {
+    "token": "jwt_token_here"
+  },
+  "meta": {}
+}
+```
+
+---
+
+# Pagination
+
+Los listados deben aceptar paginación estándar:
+
+```http
+GET /api/v1/players?page=1&limit=20
+```
+
+### Pagination Metadata
+
+```json
+{
+  "page": 1,
+  "limit": 20,
+  "total": 120
+}
+```
+
+---
+
+# Filtering and Sorting
+
+Se soportará filtrado básico por query string.
+
+## Example
+
+```http
+GET /api/v1/players?category_id=uuid&status=ACTIVE
+```
+
+## Rules
+
+* Los filtros permitidos deben estar documentados por recurso.
+* El ordenamiento debe ser explícito y controlado.
+* No se aceptan filtros arbitrarios sin contrato.
+
+---
+
+# Resource Conventions
+
+## Naming
+
+* Nombres en plural.
+* Recursos en minúscula.
+* IDs como UUID.
+
+## Tenant Behavior
+
+El tenant se resuelve desde el JWT.
+
+No se permite enviar `academy_id` en la URL para operar el tenant.
+
+---
+
+# Foundation Resources
+
+Los recursos base que deben quedar claros desde el inicio son:
+
+## Auth
+
+* `POST /auth/login`
+
+## Academies
+
+* `POST /academies`
+* `GET /academies/{id}`
+* `GET /academies`
+
+## Users
+
+* `POST /users`
+* `GET /users`
+* `GET /users/{id}`
+
+## Venues
+
+* `POST /venues`
+* `PUT /venues/{id}`
+* `GET /venues`
+
+## Categories
+
+* `POST /categories`
+* `PUT /categories/{id}`
+* `GET /categories`
+
+## Teams
+
+* `POST /teams`
+* `PUT /teams/{id}`
+* `GET /teams`
+
+## Guardians
+
+* `POST /guardians`
+* `PUT /guardians/{id}`
+* `GET /guardians/{id}`
+
+## Players
+
+* `POST /players`
+* `PUT /players/{id}`
+* `GET /players/{id}`
+* `GET /players`
+
+## Memberships
+
+* `POST /memberships`
+* `GET /memberships/{id}`
+* `GET /memberships`
+
+## Payments
+
+* `POST /payments`
+* `GET /payments/{id}`
+* `GET /payments`
+
+---
+
+# Status Codes
+
+| Code | Meaning |
+| ---- | ------- |
+| 200 | OK |
+| 201 | Created |
+| 400 | Validation Error |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not Found |
+
+---
+
+# CQRS Mapping
+
+La API no expone CQRS públicamente, pero internamente:
+
+* `POST`, `PUT`, `PATCH`, `DELETE` se tratarán como comandos.
+* `GET` se tratará como consulta.
+
+---
+
+# Versioning Strategy
+
+Cambios incompatibles generarán una nueva versión:
+
+```text
+/api/v2
+```
+
+No se romperá el contrato de `/api/v1` sin versionar correctamente.

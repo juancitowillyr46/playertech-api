@@ -1,0 +1,18 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    default_locale: es
+    csrf_protection: false
+    http_method_override: false
+    handle_all_throwables: true
+    php_errors:
+        log: true
+    session:
+        enabled: false
+    serializer:
+        enabled: true
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file
