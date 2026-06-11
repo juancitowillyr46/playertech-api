@@ -26,12 +26,12 @@ La base tecnica actual incluye:
 | Foundation bootstrap | Technical Enabler | Done | `7c3de8e` | Symfony, Docker, health endpoint y base runtime |
 | Health endpoint | Functional | Done | `7c3de8e` | `/api/v1/health` responde JSON |
 | Docker stack | Non-Functional / Technical Enabler | Done | `7c3de8e` | Ejecucion dentro de contenedores |
-| Identity auth module refactor | Technical Enabler | Done | - | Login resuelto por Symfony Security `json_login`; `/me`, handlers JWT y entidad movidos a `Modules/Identity` |
-| Identity technical user model | Technical Enabler | Done | - | `AccountUser` usa Doctrine attributes y GUID string para acelerar la foundation sin perder compatibilidad |
-| Shared health endpoint | Technical Enabler | Done | - | HealthController moved to Shared/Presentation/Http |
-| Legacy folder cleanup | Technical Enabler | Done | - | Eliminados `src/Command`, `src/Controller`, `src/Entity`, `src/EventSubscriber` y `src/Security` heredados |
-| Root platform command | Technical Enabler | Done | - | `app:user:create-root` registra usuarios `ROLE_ROOT` sin tenant |
-| UUID storage conversion | Technical Enabler | Done | - | La tabla `users` paso a UUID legible como string (`CHAR(36)`) |
+| Identity auth module refactor | Technical Enabler | Done | `87f6f9b` | Login resuelto por Symfony Security `json_login`; `/me`, handlers JWT y entidad movidos a `Modules/Identity` |
+| Identity technical user model | Technical Enabler | Done | `87f6f9b` | `AccountUser` usa Doctrine attributes y GUID string para acelerar la foundation sin perder compatibilidad |
+| Shared health endpoint | Technical Enabler | Done | `87f6f9b` | HealthController moved to Shared/Presentation/Http |
+| Legacy folder cleanup | Technical Enabler | Done | `87f6f9b` | Eliminados `src/Command`, `src/Controller`, `src/Entity`, `src/EventSubscriber` y `src/Security` heredados |
+| Root platform command | Technical Enabler | Done | `87f6f9b` | `app:user:create-root` registra usuarios `ROLE_ROOT` sin tenant |
+| UUID storage conversion | Technical Enabler | Done | `87f6f9b` | La tabla `users` paso a UUID legible como string (`CHAR(36)`) |
 | Auth JWT | Functional | Pending | - | Proximo paso de implementacion |
 | Tenant context | Non-Functional / Architectural Constraint | Pending | - | Requerido para aislamiento multi-tenant |
 
@@ -41,6 +41,7 @@ La base tecnica actual incluye:
 
 * `7c3de8e` - `chore: bootstrap PlayerTech API foundation`
 * `b40e311` - `docs: improve project README`
+* `87f6f9b` - `feat(identity): align technical foundation and docs`
 
 ---
 
