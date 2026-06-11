@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:8080
+@adminEmail = admin@playertech.com
+@adminPassword = secret123
+@token = REEMPLAZAR_CON_EL_JWT
+
+### Login
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "{{adminEmail}}",
+  "password": "{{adminPassword}}"
+}
+
+### Me
+GET {{baseUrl}}/api/v1/auth/me
+Authorization: Bearer {{token}}
+Accept: application/json

@@ -1,14 +1,12 @@
-# 10-project-setup.md
-
 # Project Setup
 
-Este documento define la base técnica mínima para levantar PlayerTech como un monolito modular en Symfony, antes de implementar cualquier épica o historia de usuario.
+Este documento define la base tecnica minima para levantar PlayerTech como un monolito modular en Symfony, antes de implementar cualquier epica o historia de usuario.
 
 ---
 
 # Objective
 
-Proveer un entorno reproducible, sólido y escalable para desarrollar el MVP de PlayerTech sin mezclar decisiones de negocio con decisiones de plataforma.
+Proveer un entorno reproducible, solido y escalable para desarrollar el MVP de PlayerTech sin mezclar decisiones de negocio con decisiones de plataforma.
 
 ---
 
@@ -18,11 +16,11 @@ El punto de entrada del repositorio es `README.md`.
 
 Ese archivo debe resumir:
 
-* Qué es PlayerTech.
-* Requisitos mínimos.
+* Que es PlayerTech.
+* Requisitos minimos.
 * Estructura del repositorio.
-* Cómo levantar la base técnica.
-* Qué documentación técnica debe leerse primero.
+* Como levantar la base tecnica.
+* Que documentacion tecnica debe leerse primero.
 
 ---
 
@@ -30,20 +28,20 @@ Ese archivo debe resumir:
 
 ## Style
 
-La aplicación será un **monolito modular**.
+La aplicacion sera un **monolito modular**.
 
 ### Why
 
 * Reduce complejidad operativa en el MVP.
-* Permite evolución por módulos sin dividir la aplicación en microservicios.
-* Facilita comunicación interna entre dominios.
-* Mantiene una sola base de despliegue, autenticación y persistencia.
+* Permite evolucion por modulos sin dividir la aplicacion en microservicios.
+* Facilita comunicacion interna entre dominios.
+* Mantiene una sola base de despliegue, autenticacion y persistencia.
 
 ---
 
 ## Module Boundaries
 
-Cada módulo representará un contexto funcional y tendrá sus propias capas internas.
+Cada modulo representara un contexto funcional y tendra sus propias capas internas.
 
 Estructura recomendada:
 
@@ -53,14 +51,17 @@ app/
     ├── Shared/
     └── Modules/
         ├── Academy/
-        ├── Auth/
-        ├── Users/
+        ├── Identity/
         ├── Sports/
         ├── Membership/
         └── Payments/
 ```
 
-Cada módulo seguirá esta organización:
+El modulo Identity concentra autenticacion, usuarios, roles, JWT y adaptadores tecnicos de seguridad.
+
+La entidad tecnica de autenticacion (AccountUser) puede estar acoplada al framework por decision pragmatica, usando atributos Doctrine y propiedades primitivas para acelerar la foundation sin convertirla en referencia obligatoria para otros dominios.
+
+Cada modulo seguira esta organizacion:
 
 ```text
 Module/
@@ -108,15 +109,15 @@ Module/
 
 # Execution Strategy
 
-Toda ejecución del proyecto debe realizarse dentro de contenedores Docker.
+Toda ejecucion del proyecto debe realizarse dentro de contenedores Docker.
 
-La secuencia mínima esperada es:
+La secuencia minima esperada es:
 
 ```bash
 docker compose -f docker/docker-compose.yml up -d --build
 ```
 
-Luego, dentro del entorno de aplicación:
+Luego, dentro del entorno de aplicacion:
 
 ```bash
 cd app
@@ -129,22 +130,22 @@ Y finalmente validar Symfony:
 php bin/console
 ```
 
-No se debe asumir ejecución local fuera de contenedores para el flujo normal de desarrollo.
+No se debe asumir ejecucion local fuera de contenedores para el flujo normal de desarrollo.
 
 ---
 
 # Local Environment
 
-Todos los servicios iniciales se ejecutarán mediante Docker.
+Todos los servicios iniciales se ejecutaran mediante Docker.
 
-Servicios mínimos:
+Servicios minimos:
 
 ```text
 app
 mysql
 ```
 
-Redis, colas u otros servicios solo se incorporarán cuando exista una necesidad real del MVP o una historia que lo justifique.
+Redis, colas u otros servicios solo se incorporaran cuando exista una necesidad real del MVP o una historia que lo justifique.
 
 ---
 
@@ -159,7 +160,7 @@ Responsabilidades:
 * Composer
 * Extensiones necesarias para Symfony y Doctrine
 
-Extensiones mínimas recomendadas:
+Extensiones minimas recomendadas:
 
 ```text
 pdo
@@ -198,15 +199,15 @@ Contiene el proyecto Symfony.
 
 ## docs
 
-Contiene documentación de negocio, dominio, backlog y decisiones funcionales.
+Contiene documentacion de negocio, dominio, backlog y decisiones funcionales.
 
 ## specs
 
-Contiene la documentación técnica y arquitectónica que gobierna el arranque y la evolución del MVP.
+Contiene la documentacion tecnica y arquitectonica que gobierna el arranque y la evolucion del MVP.
 
 ## docker
 
-Contiene configuración de infraestructura local.
+Contiene configuracion de infraestructura local.
 
 ## http
 
@@ -249,13 +250,11 @@ Doctrine ORM.
 
 XML Mapping.
 
-El dominio no deberá depender de atributos Doctrine.
+El dominio de negocio no debera depender de atributos Doctrine. Excepciones tecnicas acotadas en `Identity`, como `AccountUser`, pueden usar atributos Doctrine cuando simplifiquen la foundation sin comprometer trazabilidad.
 
 ## Identifiers
 
-Todas las entidades utilizarán UUID como identificador principal.
-
-Representación física en MySQL:
+Todas las entidades utilizaran UUID como identificador principal.
 
 ```sql
 BINARY(16)
@@ -273,11 +272,11 @@ BINARY(16)
 
 ## Tenant Resolution
 
-El tenant se resolverá desde el JWT y se expondrá en un `TenantContext` disponible para la capa de aplicación.
+El tenant se resolvera desde el JWT y se exponera en un `TenantContext` disponible para la capa de aplicacion.
 
 ## Platform Context
 
-Las operaciones de plataforma pertenecientes a `ROLE_ROOT` podrán trabajar sin tenant de academia o con un contexto de plataforma separado, según lo defina la capa de seguridad.
+Las operaciones de plataforma pertenecientes a `ROLE_ROOT` podran trabajar sin tenant de academia o con un contexto de plataforma separado, segun lo defina la capa de seguridad.
 
 ---
 
@@ -288,10 +287,10 @@ El arranque del proyecto debe construirse en este orden:
 1. Base de Symfony.
 2. Seguridad.
 3. Contexto de tenant.
-4. Persistencia y auditoría.
+4. Persistencia y auditoria.
 5. Contratos base de API.
-6. Módulos fundacionales.
-7. Luego, historias de usuario específicas.
+6. Modulos fundacionales.
+7. Luego, historias de usuario especificas.
 
 ---
 
@@ -314,7 +313,7 @@ JWT_PASSPHRASE=change_this_password
 
 # Verification Checklist
 
-La base técnica se considera lista cuando:
+La base tecnica se considera lista cuando:
 
 * Symfony arranca correctamente.
 * Doctrine conecta con MySQL.
@@ -323,17 +322,20 @@ La base técnica se considera lista cuando:
 * La API responde bajo `/api/v1`.
 * El tenant se resuelve desde JWT.
 * Las consultas quedan aisladas por `academy_id`.
-* PHPUnit ejecuta pruebas mínimas de la base.
+* PHPUnit ejecuta pruebas minimas de la base.
 
 ---
 
 # Non Goals
 
-No se implementarán todavía:
+No se implementaran todavia:
 
 * Microservicios.
 * Redis.
 * RabbitMQ.
 * MinIO.
 * Integraciones externas.
-* Lógica completa de HUs antes de cerrar la base técnica.
+* Logica completa de HUs antes de cerrar la base tecnica.
+
+
+

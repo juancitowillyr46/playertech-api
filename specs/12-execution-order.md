@@ -1,8 +1,18 @@
-# 12-execution-order.md
-
 # Execution Order
 
-Este orden está pensado para construir la base técnica primero y evitar cabos sueltos antes de trabajar historias de usuario.
+Este orden esta pensado para construir la base tecnica primero y evitar cabos sueltos antes de trabajar historias de usuario.
+
+---
+
+# Traceability Rule
+
+Antes de iniciar cada nueva iteracion, revisar:
+
+* [`specs/14-current-state.md`](./14-current-state.md)
+* el commit mas reciente
+* la clasificacion funcional o no funcional del cambio a realizar
+
+Cada cambio relevante debe dejar una referencia clara en el estado actual.
 
 ---
 
@@ -10,7 +20,8 @@ Este orden está pensado para construir la base técnica primero y evitar cabos 
 
 1. Alinear `docs` y `specs` como fuente de verdad.
 2. Confirmar arquitectura, seguridad, base de datos y API.
-3. Resolver ambigüedades antes de escribir código.
+3. Resolver ambiguedades antes de escribir codigo.
+4. Registrar el estado actual y la trazabilidad de commits.
 
 ---
 
@@ -18,10 +29,10 @@ Este orden está pensado para construir la base técnica primero y evitar cabos 
 
 1. Estructura base del proyecto Symfony.
 2. Docker y entorno local.
-3. Configuración de Doctrine y migraciones.
+3. Configuracion de Doctrine y migraciones.
 4. JWT y Symfony Security.
 5. TenantContext y tenant filter.
-6. Auditoría y soft delete.
+6. Auditoria y soft delete.
 7. OpenAPI y formato de errores.
 
 ---
@@ -29,17 +40,16 @@ Este orden está pensado para construir la base técnica primero y evitar cabos 
 # Phase 2 - Core Modules
 
 1. Academy.
-2. Auth.
-3. Users.
-4. Venues.
-5. Categories.
-6. Teams.
-7. Guardians.
-8. Players.
-9. Memberships.
-10. Payment concepts.
-11. Payments.
-12. Payment evidences.
+2. Identity.
+3. Venues.
+4. Categories.
+5. Teams.
+6. Guardians.
+7. Players.
+8. Memberships.
+9. Payment concepts.
+10. Payments.
+11. Payment evidences.
 
 ---
 
@@ -48,11 +58,11 @@ Este orden está pensado para construir la base técnica primero y evitar cabos 
 1. Flujo crear academia.
 2. Flujo crear usuario.
 3. Flujo crear sede.
-4. Flujo crear categoría.
+4. Flujo crear categoria.
 5. Flujo crear equipo.
 6. Flujo registrar acudiente.
 7. Flujo registrar jugador.
-8. Flujo crear matrícula.
+8. Flujo crear matricula.
 9. Flujo registrar pago.
 10. Flujo consultar historial y dashboard.
 
@@ -60,14 +70,18 @@ Este orden está pensado para construir la base técnica primero y evitar cabos 
 
 # Phase 4 - User Stories
 
-Cuando la base técnica y los módulos fundacionales estén listos, se implementarán las HUs en el orden de dependencia real.
+Cuando la base tecnica y los modulos fundacionales esten listos, se implementaran las HUs en el orden de dependencia real.
 
 ---
 
 # Execution Rules
 
 * No iniciar HUs antes de cerrar foundation.
-* No agregar tecnología sin justificación funcional.
-* No reordenar módulos sin revisar dependencias.
+* No agregar tecnologia sin justificacion funcional.
+* No reordenar modulos sin revisar dependencias.
 * No romper contratos ya definidos.
+* Mantener trazabilidad por commit en cada cambio importante.
+* Aceptar excepciones tecnicas acotadas en Identity cuando reduzcan friccion de la foundation sin romper el desacople de los modulos de negocio.
+
+
 

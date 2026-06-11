@@ -10,14 +10,20 @@ use Symfony\Component\ErrorHandler\Debug;
 
 require dirname(__DIR__).'/vendor/autoload.php';
 
-if (class_exists(Debug::class)) {
+$input = new ArgvInput();
+$defaultEnv = getenv('APP_ENV') ?: ($_SERVER['APP_ENV'] ?? 'dev');
+$env = $input->getParameterOption(['--env', '-e'], $defaultEnv, true);
+$debugEnv = getenv('APP_DEBUG');
+if (false === $debugEnv) {
+    $debugEnv = $_SERVER['APP_DEBUG'] ?? ($env !== 'prod');
+}
+$debug = filter_var($debugEnv, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
+$debug = null === $debug ? (bool) $debugEnv : $debug;
+
+if ($debug && class_exists(Debug::class)) {
     Debug::enable();
 }
 
-$input = new ArgvInput();
-$env = $input->getParameterOption(['--env', '-e'], $_SERVER['APP_ENV'] ?? 'dev', true);
-$debug = $_SERVER['APP_DEBUG'] ?? ($env !== 'prod');
-
-$kernel = new Kernel($env, (bool) $debug);
+$kernel = new Kernel($env, $debug);
 $application = new Application($kernel);
 $application->run($input, new ConsoleOutput());

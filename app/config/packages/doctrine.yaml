@@ -3,13 +3,13 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         charset: utf8mb4
     orm:
-        auto_mapping: true
+        auto_mapping: false
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         validate_xml_mapping: true
         mappings:
-            App:
+            Identity:
                 is_bundle: false
-                type: xml
-                dir: '%kernel.project_dir%/config/doctrine'
-                prefix: 'App\\Modules'
-                alias: App
+                type: attribute
+                dir: '%kernel.project_dir%/src/Modules/Identity/Domain/User'
+                prefix: 'App\Modules\Identity\Domain\User'
+                alias: Identity
