@@ -32,7 +32,7 @@ La base tecnica actual incluye:
 | Legacy folder cleanup | Technical Enabler | Done | `87f6f9b` | Eliminados `src/Command`, `src/Controller`, `src/Entity`, `src/EventSubscriber` y `src/Security` heredados |
 | Root platform command | Technical Enabler | Done | `87f6f9b` | `app:user:create-root` registra usuarios `ROLE_ROOT` sin tenant |
 | UUID storage conversion | Technical Enabler | Done | `87f6f9b` | La tabla `users` paso a UUID legible como string (`CHAR(36)`) |
-| Platform vs tenant identity contexts | Architectural Constraint / Technical Enabler | In progress | - | ROLE_ROOT opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext` |
+| Platform vs tenant identity contexts | Architectural Constraint / Technical Enabler | Done | `fc14bd8` | ROLE_ROOT opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext` |
 | Auth JWT | Functional | Pending | - | Proximo paso de implementacion |
 | Tenant context | Non-Functional / Architectural Constraint | Pending | - | Requerido para aislamiento multi-tenant |
 
@@ -43,6 +43,7 @@ La base tecnica actual incluye:
 * `7c3de8e` - `chore: bootstrap PlayerTech API foundation`
 * `b40e311` - `docs: improve project README`
 * `87f6f9b` - `feat(identity): align technical foundation and docs`
+* `fc14bd8` - `feat(identity): add tenant context foundation`
 
 ---
 
