@@ -4,6 +4,7 @@ namespace App\Modules\Identity\Infrastructure\Security;
 
 use App\Modules\Identity\Domain\User\AccountUser;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
+use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class JwtCreatedSubscriber implements EventSubscriberInterface
@@ -11,7 +12,7 @@ final class JwtCreatedSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            JWTCreatedEvent::class => 'onJwtCreated',
+            Events::JWT_CREATED => 'onJwtCreated',
         ];
     }
 

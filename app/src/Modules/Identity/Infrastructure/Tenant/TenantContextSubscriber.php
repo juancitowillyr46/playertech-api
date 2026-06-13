@@ -8,7 +8,7 @@ use App\Modules\Identity\Domain\User\AccountUser;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTAuthenticatedEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 final class TenantContextSubscriber implements EventSubscriberInterface
 {

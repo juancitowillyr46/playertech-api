@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Identity\Infrastructure\Tenant;
 
 use App\Modules\Identity\Domain\User\AccountUser;
-use Symfony\Component\HttpFoundation\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
