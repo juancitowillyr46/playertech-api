@@ -13,3 +13,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Modules/Identity/Domain/User'
                 prefix: 'App\Modules\Identity\Domain\User'
                 alias: Identity
+            Academy:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Modules/Academy/Domain/Academy'
+                prefix: 'App\Modules\Academy\Domain\Academy'
+                alias: Academy
