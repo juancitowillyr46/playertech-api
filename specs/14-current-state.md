@@ -33,9 +33,10 @@ La base tecnica actual incluye:
 | Root platform command | Technical Enabler | Done | `87f6f9b` | `app:user:create-root` registra usuarios `ROLE_ROOT` sin tenant |
 | UUID storage conversion | Technical Enabler | Done | `87f6f9b` | La tabla `users` paso a UUID legible como string (`CHAR(36)`) |
 | Platform vs tenant identity contexts | Architectural Constraint / Technical Enabler | Done | `fc14bd8` | ROLE_ROOT opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext` |
-| Auth JWT | Functional | Pending | - | Proximo paso de implementacion |
-| Tenant context | Non-Functional / Architectural Constraint | Pending | - | Requerido para aislamiento multi-tenant |
+| Auth JWT | Functional | Done | `87f6f9b` | Login JWT y `/api/v1/auth/me` operativos |
+| Tenant context | Non-Functional / Architectural Constraint | Done | `fc14bd8` | `TenantContext` resuelve el contexto de plataforma y tenant desde el JWT |
 | Academy module bootstrap | Functional / Technical Enabler | Done | `e795224` | Primer endpoint tenant-scoped `GET /api/v1/academy/me` valida contexto de academia |
+| Academy management endpoints | Functional / Technical Enabler | Done | `419ded4` | CRUD y ciclo de vida de academias para EP-001 |
 
 ---
 
@@ -46,6 +47,7 @@ La base tecnica actual incluye:
 * `87f6f9b` - `feat(identity): align technical foundation and docs`
 * `fc14bd8` - `feat(identity): add tenant context foundation`
 * `e795224` - `feat(academy): add tenant academy context endpoint`
+* `419ded4` - `feat(academy): implement academy management endpoints`
 
 ---
 
@@ -89,14 +91,9 @@ Ejemplos:
 ---
 
 # Next Steps
-
-1. Validar autenticacion real con usuario `ROLE_ROOT`.
-2. Crear flujo minimo para usuario tenant con `academy_id`.
-3. Implementar `TenantContext`.
-4. Aplicar reglas de acceso plataforma vs tenant.
-5. Implementar filtro tenant en consultas de negocio.
-6. Mantener trazabilidad por commit en cada iteracion.
-
+1. Validar endpoints de Academy con usuario `ROLE_ROOT` y usuario tenant.
+2. Preparar el siguiente dominio de negocio sobre la misma base.
+3. Mantener trazabilidad por commit en cada iteracion.
 ---
 
 # Working Rule
@@ -111,8 +108,9 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El login no usa AuthController; se ejecuta desde el firewall `json_login`.
 * `AccountUser` queda como entidad tecnica acoplada al framework por pragmatismo.
 * El almacenamiento UUID ya esta normalizado como string legible en la tabla `users`.
-* Pendiente validar en runtime el login y el endpoint `/auth/me`.
+* Login y `/auth/me` validados en runtime.
 * `ROLE_ROOT` opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext`.
+* `Academy` ya expone `GET /api/v1/academy/me` como contexto tenant y `GET /api/v1/platform/academies` como API de plataforma.
 ---
 
 # Technical Foundation Checklist
@@ -135,14 +133,14 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 Para considerar la base lista antes de implementar cualquier lógica de negocio, debemos cerrar estos puntos:
 
 ### 1. Multi-Tenant Infrastructure
-- [ ] **TenantContext**: Objeto inmutable/servicio que contenga el `academy_id` activo.
-- [ ] **JWT Custom Claims**: Incluir `academy_id` en el payload generado para usuarios no-root.
-- [ ] **TenantResolver**: Listener que capture el JWT, extraiga el `academy_id` e hidrate el `TenantContext`.
+- [x] **TenantContext**: Objeto inmutable/servicio que contenga el `academy_id` activo.
+- [x] **JWT Custom Claims**: Incluir `academy_id` en el payload generado para usuarios no-root.
+- [x] **TenantResolver**: Listener que capture el JWT, extraiga el `academy_id` e hidrate el `TenantContext`.
 - [ ] **Doctrine Tenant Filter**: Filtro SQL automático que aplique `WHERE academy_id = X` en todas las queries de negocio.
 
 ### 2. Security & Routing Separation
-- [ ] **Platform Firewall/Access**: Bloquear rutas `/api/v1/platform/*` solo para `ROLE_ROOT`.
-- [ ] **Tenant Access Enforcement**: Validar que si el usuario no es Root, el `TenantContext` *deba* estar presente; de lo contrario, devolver 403.
+- [x] **Platform Firewall/Access**: Bloquear rutas `/api/v1/platform/*` solo para `ROLE_ROOT`.
+- [x] **Tenant Access Enforcement**: Validar que si el usuario no es Root, el `TenantContext` *deba* estar presente; de lo contrario, devolver 403.
 
 ### 3. API Reliability
 - [ ] **ProblemDetails (RFC 9457)**: Subscriber para capturar excepciones y devolver el formato estándar de errores.

@@ -8,7 +8,7 @@
 | Épica            | EP-001 Gestión de Academias |
 | Prioridad        | Media                       |
 | MVP              | Sí                          |
-| Estado           | Draft                       |
+| Estado           | Done                        |
 | Actor Principal  | Super Admin                 |
 | Actor Secundario | N/A                         |
 
@@ -176,3 +176,5 @@ HU-008 Crear Academia
 # Notas
 
 La información debe reflejar el estado actual de la academia.
+
+Referencia técnica: 419ded4

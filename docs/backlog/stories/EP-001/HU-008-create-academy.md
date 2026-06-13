@@ -8,7 +8,7 @@
 | Épica            | EP-001 Gestión de Academias |
 | Prioridad        | Alta                        |
 | MVP              | Sí                          |
-| Estado           | Draft                       |
+| Estado           | Done                        |
 | Actor Principal  | Super Admin                 |
 | Actor Secundario | N/A                         |
 
@@ -232,3 +232,5 @@ Ninguna
 # Notas
 
 La academia constituye el tenant principal dentro de PlayerTech.
+
+Referencia técnica: 419ded4

@@ -8,7 +8,7 @@
 | Épica            | EP-001 Gestión de Academias |
 | Prioridad        | Alta                        |
 | MVP              | Sí                          |
-| Estado           | Draft                       |
+| Estado           | Done                        |
 | Actor Principal  | Super Admin                 |
 | Actor Secundario | N/A                         |
 
@@ -209,3 +209,5 @@ HU-008 Crear Academia
 # Notas
 
 La suspensión afecta la autenticación de todos los usuarios pertenecientes a la academia.
+
+Referencia técnica: 419ded4
