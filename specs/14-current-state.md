@@ -32,6 +32,7 @@ La base tecnica actual incluye:
 | Legacy folder cleanup | Technical Enabler | Done | `87f6f9b` | Eliminados `src/Command`, `src/Controller`, `src/Entity`, `src/EventSubscriber` y `src/Security` heredados |
 | Root platform command | Technical Enabler | Done | `87f6f9b` | `app:user:create-root` registra usuarios `ROLE_ROOT` sin tenant |
 | UUID storage conversion | Technical Enabler | Done | `87f6f9b` | La tabla `users` paso a UUID legible como string (`CHAR(36)`) |
+| Platform vs tenant identity contexts | Architectural Constraint / Technical Enabler | In progress | - | ROLE_ROOT opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext` |
 | Auth JWT | Functional | Pending | - | Proximo paso de implementacion |
 | Tenant context | Non-Functional / Architectural Constraint | Pending | - | Requerido para aislamiento multi-tenant |
 
@@ -86,11 +87,12 @@ Ejemplos:
 
 # Next Steps
 
-1. Cerrar autenticacion real.
-2. Implementar tenant context.
-3. Definir y generar migraciones base.
-4. Preparar la primera entidad fundacional.
-5. Mantener trazabilidad por commit en cada iteracion.
+1. Validar autenticacion real con usuario `ROLE_ROOT`.
+2. Crear flujo minimo para usuario tenant con `academy_id`.
+3. Implementar `TenantContext`.
+4. Aplicar reglas de acceso plataforma vs tenant.
+5. Implementar filtro tenant en consultas de negocio.
+6. Mantener trazabilidad por commit en cada iteracion.
 
 ---
 
@@ -107,3 +109,52 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `AccountUser` queda como entidad tecnica acoplada al framework por pragmatismo.
 * El almacenamiento UUID ya esta normalizado como string legible en la tabla `users`.
 * Pendiente validar en runtime el login y el endpoint `/auth/me`.
+* `ROLE_ROOT` opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext`.
+---
+
+# Technical Foundation Checklist
+
+## Done
+
+* Docker stack base.
+* Symfony runtime base.
+* Doctrine y migraciones base.
+* Tabla tecnica `users`.
+* UUID como string legible (`CHAR(36)`) en `users`.
+* Login JWT mediante Symfony Security `json_login`.
+* Endpoint `/api/v1/auth/me`.
+* Comando `app:user:create-root`.
+* Identity ubicado bajo `Modules/Identity`.
+* Health endpoint ubicado en `Shared`.
+
+## Checklist de Base Técnica Sólida (Critical Path)
+
+Para considerar la base lista antes de implementar cualquier lógica de negocio, debemos cerrar estos puntos:
+
+### 1. Multi-Tenant Infrastructure
+- [ ] **TenantContext**: Objeto inmutable/servicio que contenga el `academy_id` activo.
+- [ ] **JWT Custom Claims**: Incluir `academy_id` en el payload generado para usuarios no-root.
+- [ ] **TenantResolver**: Listener que capture el JWT, extraiga el `academy_id` e hidrate el `TenantContext`.
+- [ ] **Doctrine Tenant Filter**: Filtro SQL automático que aplique `WHERE academy_id = X` en todas las queries de negocio.
+
+### 2. Security & Routing Separation
+- [ ] **Platform Firewall/Access**: Bloquear rutas `/api/v1/platform/*` solo para `ROLE_ROOT`.
+- [ ] **Tenant Access Enforcement**: Validar que si el usuario no es Root, el `TenantContext` *deba* estar presente; de lo contrario, devolver 403.
+
+### 3. API Reliability
+- [ ] **ProblemDetails (RFC 9457)**: Subscriber para capturar excepciones y devolver el formato estándar de errores.
+- [ ] **Validation Mapping**: Convertir errores de `symfony/validator` al formato `ProblemDetails`.
+
+### 4. Audit & Persistence
+- [ ] **AuditSubscriber**: Automatizar el llenado de `created_by` y `updated_by` usando el usuario del Token.
+- [ ] **SoftDelete Filter**: Asegurar que las consultas excluyan registros con `deleted_at` por defecto.
+
+### 5. Validation
+- [ ] **Test de Aislamiento**: Prueba técnica que confirme que un usuario de la Academia A no puede ver datos de la Academia B aunque conozca el ID.
+
+---
+
+## Pending Features (Post-Foundation)
+
+* Completar colecciones `.http` con ejemplos de error y éxito.
+* Flujo de creación de Academia (exclusivo para Root).

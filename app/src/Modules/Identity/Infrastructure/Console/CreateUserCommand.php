@@ -14,7 +14,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[AsCommand(
     name: 'app:user:create',
-    description: 'Create or update a user for JWT authentication.'
+    description: 'Create or update a tenant user for JWT authentication.'
 )]
 final class CreateUserCommand extends Command
 {
@@ -30,7 +30,7 @@ final class CreateUserCommand extends Command
         $this
             ->addOption('email', null, InputOption::VALUE_REQUIRED, 'User email')
             ->addOption('password', null, InputOption::VALUE_REQUIRED, 'User password')
-            ->addOption('academy-id', null, InputOption::VALUE_OPTIONAL, 'Academy UUID for tenant users', null)
+            ->addOption('academy-id', null, InputOption::VALUE_REQUIRED, 'Academy UUID for tenant users')
             ->addOption('role', null, InputOption::VALUE_OPTIONAL, 'Primary role', AccountUser::DEFAULT_ROLE)
             ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'User status', AccountUser::STATUS_ACTIVE);
     }
@@ -39,12 +39,24 @@ final class CreateUserCommand extends Command
     {
         $email = (string) $input->getOption('email');
         $plainPassword = (string) $input->getOption('password');
-        $academyId = $input->getOption('academy-id') ?: Uuid::v4()->toRfc4122();
+        $academyId = (string) $input->getOption('academy-id');
         $role = (string) $input->getOption('role');
         $status = (string) $input->getOption('status');
 
-        if ('' === $email || '' === $plainPassword) {
-            $output->writeln('<error>Email and password are required.</error>');
+        if ('' === $email || '' === $plainPassword || '' === $academyId) {
+            $output->writeln('<error>Email, password and academy-id are required.</error>');
+
+            return self::FAILURE;
+        }
+
+        if (!Uuid::isValid($academyId)) {
+            $output->writeln('<error>academy-id must be a valid UUID.</error>');
+
+            return self::FAILURE;
+        }
+
+        if (AccountUser::ROLE_ROOT === $role) {
+            $output->writeln('<error>Use app:user:create-root for ROLE_ROOT users.</error>');
 
             return self::FAILURE;
         }
@@ -78,4 +90,3 @@ final class CreateUserCommand extends Command
         return self::SUCCESS;
     }
 }
-

@@ -276,7 +276,29 @@ El tenant se resolvera desde el JWT y se exponera en un `TenantContext` disponib
 
 ## Platform Context
 
-Las operaciones de plataforma pertenecientes a `ROLE_ROOT` podran trabajar sin tenant de academia o con un contexto de plataforma separado, segun lo defina la capa de seguridad.
+Las operaciones de plataforma pertenecientes a `ROLE_ROOT` trabajan sin tenant de academia.
+
+Reglas:
+
+* `ROLE_ROOT` representa administracion global de la plataforma SaaS.
+* Los usuarios `ROLE_ROOT` viven en la misma tabla `users`.
+* Los usuarios `ROLE_ROOT` deben tener `academy_id = null`.
+* Los usuarios `ROLE_ROOT` no consumen endpoints de negocio tenant-scoped como si pertenecieran a una academia.
+* Los usuarios `ROLE_ROOT` pueden ejecutar operaciones de plataforma como crear academias, crear administradores tenant y consultar estado operativo global.
+
+## Tenant Identity Context
+
+Los usuarios de academia trabajan dentro de un tenant.
+
+Reglas:
+
+* Todo usuario tenant debe tener `academy_id` informado.
+* Los roles tenant no deben operar con `academy_id = null`.
+* El JWT debe incluir la identidad del usuario, sus roles y el `academy_id` cuando aplique.
+* Los endpoints de negocio deben exigir tenant resuelto antes de ejecutar casos de uso.
+* Las consultas de negocio deben aislar datos por `academy_id`.
+
+Esta separacion permite mantener una sola tabla tecnica de usuarios sin mezclar permisos de plataforma con permisos de academia.
 
 ---
 

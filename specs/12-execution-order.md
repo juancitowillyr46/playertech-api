@@ -31,9 +31,10 @@ Cada cambio relevante debe dejar una referencia clara en el estado actual.
 2. Docker y entorno local.
 3. Configuracion de Doctrine y migraciones.
 4. JWT y Symfony Security.
-5. TenantContext y tenant filter.
-6. Auditoria y soft delete.
-7. OpenAPI y formato de errores.
+5. Separacion de contexto plataforma (`ROLE_ROOT`) y contexto tenant.
+6. TenantContext y tenant filter.
+7. Auditoria y soft delete.
+8. OpenAPI y formato de errores.
 
 ---
 
@@ -82,6 +83,5 @@ Cuando la base tecnica y los modulos fundacionales esten listos, se implementara
 * No romper contratos ya definidos.
 * Mantener trazabilidad por commit en cada cambio importante.
 * Aceptar excepciones tecnicas acotadas en Identity cuando reduzcan friccion de la foundation sin romper el desacople de los modulos de negocio.
-
-
-
+* `ROLE_ROOT` opera sin tenant (`academy_id = null`) y no debe ser tratado como usuario de academia.
+* Todo usuario tenant debe tener `academy_id` y sus operaciones de negocio deben quedar aisladas por tenant.

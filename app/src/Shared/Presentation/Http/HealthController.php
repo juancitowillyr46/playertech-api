@@ -15,7 +15,7 @@ final class HealthController
     {
         return new JsonResponse([
             'data' => [
-                'status' => 'ok',
+                'status' => 'ok =D',
             ],
             'meta' => new \stdClass(),
         ], Response::HTTP_OK);

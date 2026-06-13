@@ -23,7 +23,9 @@ use Symfony\Component\Uid\Uuid;
 class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const STATUS_ACTIVE = 'ACTIVE';
-    public const DEFAULT_ROLE = 'ROLE_ACADEMIC_ADMIN';
+    public const ROLE_ROOT = 'ROLE_ROOT';
+    public const ROLE_ACADEMY_ADMIN = 'ROLE_ACADEMY_ADMIN';
+    public const DEFAULT_ROLE = self::ROLE_ACADEMY_ADMIN;
 
     #[ORM\Id]
     #[ORM\Column(type: 'guid', name: 'id')]

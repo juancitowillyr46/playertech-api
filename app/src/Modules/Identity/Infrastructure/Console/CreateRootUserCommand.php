@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Modules\Identity\Infrastructure\Console;
 
 use App\Modules\Identity\Domain\User\AccountUser;
@@ -56,7 +54,7 @@ final class CreateRootUserCommand extends Command
         }
 
         $user->setAcademyId(null);
-        $user->setRole('ROLE_ROOT');
+        $user->setRole(AccountUser::ROLE_ROOT);
         $user->setStatus(AccountUser::STATUS_ACTIVE);
         $user->setPasswordHash($this->passwordHasher->hashPassword($user, $plainPassword));
 
