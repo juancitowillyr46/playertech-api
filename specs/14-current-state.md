@@ -35,6 +35,7 @@ La base tecnica actual incluye:
 | Platform vs tenant identity contexts | Architectural Constraint / Technical Enabler | Done | `fc14bd8` | ROLE_ROOT opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext` |
 | Auth JWT | Functional | Pending | - | Proximo paso de implementacion |
 | Tenant context | Non-Functional / Architectural Constraint | Pending | - | Requerido para aislamiento multi-tenant |
+| Academy module bootstrap | Functional / Technical Enabler | Done | `e795224` | Primer endpoint tenant-scoped `GET /api/v1/academy/me` valida contexto de academia |
 
 ---
 
@@ -44,6 +45,7 @@ La base tecnica actual incluye:
 * `b40e311` - `docs: improve project README`
 * `87f6f9b` - `feat(identity): align technical foundation and docs`
 * `fc14bd8` - `feat(identity): add tenant context foundation`
+* `e795224` - `feat(academy): add tenant academy context endpoint`
 
 ---
 
