@@ -10,13 +10,14 @@
 | MVP              | Sí                          |
 | Estado           | Done                        |
 | Actor Principal  | Super Admin                 |
-| Actor Secundario | N/A                         |
+| Actor Secundario | Tenant Academy Admin        |
 
 ---
 
 # Objetivo
 
 Permitir actualizar la información de una academia registrada.
+El Super Admin puede actualizar cualquier academia desde la plataforma y el tenant puede actualizar sólo su propia academia desde `/api/v1/academy/me`.
 
 ---
 
@@ -45,6 +46,7 @@ Garantiza la calidad y vigencia de los datos registrados.
 # Contexto
 
 Las academias pueden cambiar información administrativa sin afectar la operación del sistema.
+El contexto tenant queda aislado por `academy_id` y no puede modificar una academia distinta a la propia.
 
 ---
 
@@ -168,6 +170,7 @@ Nombre vacío.
 # Permisos Requeridos
 
 * Academy.Update
+* Academy.Profile.Update
 
 ---
 
@@ -211,5 +214,6 @@ HU-008 Crear Academia
 # Notas
 
 La actualización no debe afectar la información histórica asociada a la academia.
+La versión tenant-scoped del flujo se ejecuta contra `/api/v1/academy/me`.
 
-Referencia técnica: 419ded4
+Referencia técnica: 5f95e40

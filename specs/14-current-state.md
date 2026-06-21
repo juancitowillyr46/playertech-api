@@ -36,7 +36,10 @@ La base tecnica actual incluye:
 | Auth JWT | Functional | Done | `87f6f9b` | Login JWT y `/api/v1/auth/me` operativos |
 | Tenant context | Non-Functional / Architectural Constraint | Done | `fc14bd8` | `TenantContext` resuelve el contexto de plataforma y tenant desde el JWT |
 | Academy module bootstrap | Functional / Technical Enabler | Done | `e795224` | Primer endpoint tenant-scoped `GET /api/v1/academy/me` valida contexto de academia |
-| Academy management endpoints | Functional / Technical Enabler | Done | `419ded4` | CRUD y ciclo de vida de academias para EP-001 |
+| Academy management endpoints | Functional / Technical Enabler | Done | `bc2d4e1` | Refactorización a Arquitectura Hexagonal completa. Archivos movidos a `app/src/Modules/Academy`. Módulo sirve como referencia técnica. |
+| Shared typed value objects | Technical Enabler | Done | `bcc18f2` | `Name`, `Email`, `Address`, `City`, `PhoneNumber`, `LogoPath`, `CreatedAt` y `UpdatedAt` quedan tipados como VOs reutilizables |
+| Academy typed VO mapping foundation | Technical Enabler | Done | `5f95e40` | `AcademyId` usa Doctrine custom type y el XML de `Academy` consume los VOs compartidos como embeddables |
+| Tenant academy profile update | Functional | Done | `5f95e40` | `PUT /api/v1/academy/me` permite que el tenant actualice su propia academia |
 
 ---
 
@@ -47,6 +50,9 @@ La base tecnica actual incluye:
 * `87f6f9b` - `feat(identity): align technical foundation and docs`
 * `fc14bd8` - `feat(identity): add tenant context foundation`
 * `e795224` - `feat(academy): add tenant academy context endpoint`
+* `bc2d4e1` - `refactor(academy): apply hexagonal architecture and domain purity`
+* `bcc18f2` - `feat(shared): add typed academy value objects`
+* `5f95e40` - `feat(academy): introduce typed vo mapping`
 * `419ded4` - `feat(academy): implement academy management endpoints`
 
 ---
@@ -93,6 +99,7 @@ Ejemplos:
 # Next Steps
 1. Validar endpoints de Academy con usuario `ROLE_ROOT` y usuario tenant.
 2. Preparar el siguiente dominio de negocio sobre la misma base.
+2. Iniciar el desarrollo del módulo `Sports` siguiendo el patrón de referencia de `Academy`.
 3. Mantener trazabilidad por commit en cada iteracion.
 ---
 
@@ -110,7 +117,9 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El almacenamiento UUID ya esta normalizado como string legible en la tabla `users`.
 * Login y `/auth/me` validados en runtime.
 * `ROLE_ROOT` opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext`.
-* `Academy` ya expone `GET /api/v1/academy/me` como contexto tenant y `GET /api/v1/platform/academies` como API de plataforma.
+* `Academy` ya expone `GET /api/v1/academy/me` como contexto tenant, `PUT /api/v1/academy/me` para autogestión del tenant y `GET /api/v1/platform/academies` como API de plataforma.
+* `Academy` ahora usa `AcademyId` como Doctrine custom type y VOs compartidos como embeddables XML, sirviendo como referencia del patrón para los demas modulos.
+* Los VOs compartidos ya estan versionados en git y el mapping XML de `Academy` los consume de forma consistente.
 ---
 
 # Technical Foundation Checklist

@@ -32,9 +32,10 @@ Cada cambio relevante debe dejar una referencia clara en el estado actual.
 3. Configuracion de Doctrine y migraciones.
 4. JWT y Symfony Security.
 5. Separacion de contexto plataforma (`ROLE_ROOT`) y contexto tenant.
-6. TenantContext y tenant filter.
-7. Auditoria y soft delete.
-8. OpenAPI y formato de errores.
+6. XML mapping puro con Value Objects tipados y Custom Types para IDs UUID.
+7. TenantContext y tenant filter.
+8. Auditoria y soft delete.
+9. OpenAPI y formato de errores.
 
 ---
 
@@ -85,3 +86,4 @@ Cuando la base tecnica y los modulos fundacionales esten listos, se implementara
 * Aceptar excepciones tecnicas acotadas en Identity cuando reduzcan friccion de la foundation sin romper el desacople de los modulos de negocio.
 * `ROLE_ROOT` opera sin tenant (`academy_id = null`) y no debe ser tratado como usuario de academia.
 * Todo usuario tenant debe tener `academy_id` y sus operaciones de negocio deben quedar aisladas por tenant.
+* `Academy` se toma como referencia de XML Mapping puro con `AcademyId` como custom type y VOs compartidos como embeddables.
