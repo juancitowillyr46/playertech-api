@@ -10,3 +10,5 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Kernel.php'
             - '../src/Modules/*/Domain/'
+
+    App\Modules\Academy\Domain\Academy\AcademyRepository: '@App\Modules\Academy\Infrastructure\Persistence\AcademyRepository'
