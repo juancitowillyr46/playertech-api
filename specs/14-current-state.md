@@ -42,6 +42,7 @@ La base tecnica actual incluye:
 | Tenant academy profile update | Functional | Done | `5f95e40` | `PUT /api/v1/academy/me` permite que el tenant actualice su propia academia |
 | Academy CQRS application refactor | Technical Enabler | Done | `ff61ec1` | Los casos de uso de `Academy` pasaron a `Application/Command`, `Application/Query` y `Application/Handler` |
 | Module creation guide | Documentation / Technical Enabler | Done | `0801f4f` | Guia operativa para crear nuevos modulos siguiendo el patron de `Academy` |
+| Tenant signup onboarding spec | Documentation / Functional | Done | `untracked` | Nueva épica `EP-014` y HU-001 para alta simplificada de tenant con activación por correo |
 
 ---
 
@@ -127,6 +128,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Existe una guia operativa para construir nuevos modulos sin depender de modelos previos.
 * Las validaciones de negocio de `Academy` devuelven Problem Details JSON; el caso de duplicado de correo se resuelve con excepcion de dominio y respuesta `409`.
 * `Academy` incorpora soft delete con `deleted_at` y `deleted_by`, y Doctrine ya tiene un filtro global para excluir entidades borradas lógicamente.
+* Se documentó una épica nueva para onboarding de tenant (`EP-014`) sin alterar el flujo de creación de tenants por `ROLE_ROOT`.
 ---
 
 # Technical Foundation Checklist
@@ -175,3 +177,4 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 
 * Completar colecciones `.http` con ejemplos de error y éxito.
 * Flujo de creación de Academia (exclusivo para Root).
+* Formalizar el onboarding de tenant como siguiente bloque funcional tras `EP-001`.

@@ -16,7 +16,7 @@
 
 # Objetivo
 
-Permitir consultar la información detallada de una academia registrada.
+Permitir consultar la información detallada de una academia registrada desde el contexto de plataforma.
 
 ---
 
@@ -176,5 +176,6 @@ HU-008 Crear Academia
 # Notas
 
 La información debe reflejar el estado actual de la academia.
+Esta historia pertenece al contexto de plataforma (`ROLE_ROOT`).
 
 Referencia técnica: 419ded4

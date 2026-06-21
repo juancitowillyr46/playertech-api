@@ -56,7 +56,15 @@ Cada cambio relevante debe dejar una referencia clara en el estado actual.
 
 ---
 
-# Phase 3 - Business Flow Validation
+# Phase 3 - Tenant Onboarding
+
+1. Alta simplificada de tenant.
+2. Activación por correo del tenant.
+3. Primer acceso del owner/admin del tenant.
+
+---
+
+# Phase 4 - Business Flow Validation
 
 1. Flujo crear academia.
 2. Flujo crear usuario.
@@ -71,7 +79,7 @@ Cada cambio relevante debe dejar una referencia clara en el estado actual.
 
 ---
 
-# Phase 4 - User Stories
+# Phase 5 - User Stories
 
 Cuando la base tecnica y los modulos fundacionales esten listos, se implementaran las HUs en el orden de dependencia real.
 

@@ -16,7 +16,7 @@
 
 # Objetivo
 
-Permitir registrar una nueva academia dentro de la plataforma PlayerTech.
+Permitir registrar una nueva academia dentro de la plataforma PlayerTech desde el contexto de plataforma.
 
 ---
 
@@ -189,6 +189,10 @@ Formato de correo inválido.
 # Permisos Requeridos
 
 * Academy.Create
+
+## Alcance
+
+Esta historia corresponde exclusivamente al contexto de plataforma (`ROLE_ROOT`).
 
 ---
 

@@ -35,6 +35,12 @@ Quiero actualizar una academia
 
 Para mantener la información actualizada.
 
+Como Tenant Academy Admin
+
+Quiero actualizar mi propia academia
+
+Para mantener la información de mi tenant actualizada.
+
 ---
 
 # Valor de Negocio
@@ -129,6 +135,22 @@ Cuando el usuario actualiza información válida
 
 Entonces el sistema guarda los cambios.
 
+## CA-004 Actualización tenant-scoped
+
+Dado un usuario autenticado con contexto tenant
+
+Cuando actualiza su propia academia mediante `/api/v1/academy/me`
+
+Entonces el sistema guarda los cambios sólo sobre su academia.
+
+## CA-005 Bloqueo de acceso cross-tenant
+
+Dado un usuario tenant
+
+Cuando intenta actualizar una academia distinta a la propia
+
+Entonces el sistema rechaza la operación.
+
 ---
 
 ## CA-002 Datos obligatorios
@@ -216,5 +238,6 @@ HU-008 Crear Academia
 La actualización no debe afectar la información histórica asociada a la academia.
 La versión tenant-scoped del flujo se ejecuta contra `/api/v1/academy/me`.
 La implementación actual delega en Application Layer con CQRS para mantener los controladores delgados.
+Esta historia tiene doble alcance: plataforma (`ROLE_ROOT`) y tenant (`Tenant Academy Admin`).
 
 Referencia técnica: ff61ec1

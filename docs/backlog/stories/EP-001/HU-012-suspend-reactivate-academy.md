@@ -16,7 +16,7 @@
 
 # Objetivo
 
-Permitir controlar el estado operativo de una academia.
+Permitir controlar el estado operativo de una academia desde el contexto de plataforma.
 
 ---
 
@@ -209,5 +209,6 @@ HU-008 Crear Academia
 # Notas
 
 La suspensión afecta la autenticación de todos los usuarios pertenecientes a la academia.
+Esta historia pertenece exclusivamente al contexto de plataforma (`ROLE_ROOT`).
 
 Referencia técnica: 419ded4
