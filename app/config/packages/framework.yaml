@@ -10,6 +10,8 @@ framework:
         enabled: false
     serializer:
         enabled: true
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
 
 when@test:
     framework:

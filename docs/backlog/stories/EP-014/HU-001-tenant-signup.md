@@ -8,7 +8,7 @@
 | Épica            | EP-014 Alta de Tenant |
 | Prioridad        | Alta                 |
 | MVP              | Sí                   |
-| Estado           | Draft                |
+| Estado           | Done                 |
 | Actor Principal  | Tenant Prospect      |
 | Actor Secundario | Super Admin          |
 
@@ -220,3 +220,4 @@ EP-001 Gestión de Academias
 # Notas
 
 Este flujo complementa, pero no reemplaza, la creación de tenants por parte del Super Admin.
+Implementado con `Messenger`, `Mailer` y `Mailpit` para validar el circuito de activación por correo en desarrollo.

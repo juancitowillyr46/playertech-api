@@ -23,6 +23,7 @@ use Symfony\Component\Uid\Uuid;
 class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const STATUS_ACTIVE = 'ACTIVE';
+    public const STATUS_PENDING_ACTIVATION = 'PENDING_ACTIVATION';
     public const ROLE_ROOT = 'ROLE_ROOT';
     public const ROLE_ACADEMY_ADMIN = 'ROLE_ACADEMY_ADMIN';
     public const DEFAULT_ROLE = self::ROLE_ACADEMY_ADMIN;
@@ -64,6 +65,12 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'guid', name: 'deleted_by', nullable: true)]
     private ?string $deletedBy = null;
+
+    #[ORM\Column(type: 'string', length: 64, name: 'activation_token', nullable: true, unique: true)]
+    private ?string $activationToken = null;
+
+    #[ORM\Column(type: 'datetime_immutable', name: 'activation_expires_at', nullable: true)]
+    private ?\DateTimeImmutable $activationExpiresAt = null;
 
     public function __construct()
     {
@@ -157,6 +164,16 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->deletedBy;
     }
 
+    public function getActivationToken(): ?string
+    {
+        return $this->activationToken;
+    }
+
+    public function getActivationExpiresAt(): ?\DateTimeImmutable
+    {
+        return $this->activationExpiresAt;
+    }
+
     public function setId(Uuid|string $id): void
     {
         $this->id = $id instanceof Uuid ? $id->toRfc4122() : $id;
@@ -220,5 +237,29 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDeletedBy(Uuid|string|null $deletedBy): void
     {
         $this->deletedBy = $deletedBy instanceof Uuid ? $deletedBy->toRfc4122() : $deletedBy;
+    }
+
+    public function setActivationToken(?string $activationToken): void
+    {
+        $this->activationToken = $activationToken;
+    }
+
+    public function setActivationExpiresAt(?\DateTimeImmutable $activationExpiresAt): void
+    {
+        $this->activationExpiresAt = $activationExpiresAt;
+    }
+
+    public function markPendingActivation(string $activationToken, \DateTimeImmutable $expiresAt): void
+    {
+        $this->setStatus(self::STATUS_PENDING_ACTIVATION);
+        $this->setActivationToken($activationToken);
+        $this->setActivationExpiresAt($expiresAt);
+    }
+
+    public function activate(): void
+    {
+        $this->setStatus(self::STATUS_ACTIVE);
+        $this->setActivationToken(null);
+        $this->setActivationExpiresAt(null);
     }
 }

@@ -3,6 +3,9 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            string $publicUrl: '%env(APP_PUBLIC_URL)%'
+            string $mailFrom: '%env(MAIL_FROM)%'
 
     App\:
         resource: '../src/'
