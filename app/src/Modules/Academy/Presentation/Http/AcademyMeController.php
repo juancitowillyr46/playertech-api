@@ -7,6 +7,12 @@ namespace App\Modules\Academy\Presentation\Http;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Infrastructure\Persistence\AcademyRepository;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
+use App\Shared\Domain\ValueObject\Address;
+use App\Shared\Domain\ValueObject\City;
+use App\Shared\Domain\ValueObject\Email;
+use App\Shared\Domain\ValueObject\LogoPath;
+use App\Shared\Domain\ValueObject\Name;
+use App\Shared\Domain\ValueObject\PhoneNumber;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,17 +57,17 @@ final class AcademyMeController
         $actorId = $this->requireActorId($tenantContext);
 
         $duplicate = $this->academyRepository->findOneByContactEmail($payload['contact_email']);
-        if (null !== $duplicate && $duplicate->getId() !== $academy->getId()) {
+        if (null !== $duplicate && $duplicate->id()->value() !== $academy->id()->value()) {
             throw new ConflictHttpException('El correo de contacto ya existe.');
         }
 
         $academy->updateProfile(
-            $payload['name'],
-            $payload['contact_email'],
-            $payload['phone'],
-            $payload['address'],
-            $payload['city'],
-            $payload['logo'],
+            new Name($payload['name']),
+            new Email($payload['contact_email']),
+            null === $payload['phone'] ? null : new PhoneNumber($payload['phone']),
+            null === $payload['address'] ? null : new Address($payload['address']),
+            null === $payload['city'] ? null : new City($payload['city']),
+            null === $payload['logo'] ? null : new LogoPath($payload['logo']),
             $actorId,
         );
 
@@ -166,18 +172,18 @@ final class AcademyMeController
     private function serialize(Academy $academy): array
     {
         return [
-            'id' => $academy->getId(),
-            'name' => $academy->getName(),
-            'contact_email' => $academy->getContactEmail(),
-            'phone' => $academy->getPhone(),
-            'address' => $academy->getAddress(),
-            'city' => $academy->getCity(),
-            'logo' => $academy->getLogo(),
-            'status' => $academy->getStatus(),
-            'created_at' => $academy->getCreatedAt()->format(DATE_ATOM),
-            'created_by' => $academy->getCreatedBy(),
-            'updated_at' => $academy->getUpdatedAt()?->format(DATE_ATOM),
-            'updated_by' => $academy->getUpdatedBy(),
+            'id' => $academy->id()->value(),
+            'name' => $academy->name()->value(),
+            'contact_email' => $academy->contactEmail()->value(),
+            'phone' => $academy->phone()?->value(),
+            'address' => $academy->address()?->value(),
+            'city' => $academy->city()?->value(),
+            'logo' => $academy->logo()?->value(),
+            'status' => $academy->status()->value(),
+            'created_at' => $academy->auditTrail()->createdAt()->value()->format(DATE_ATOM),
+            'created_by' => $academy->auditTrail()->createdBy(),
+            'updated_at' => $academy->auditTrail()->updatedAt()?->value()?->format(DATE_ATOM),
+            'updated_by' => $academy->auditTrail()->updatedBy(),
         ];
     }
 }

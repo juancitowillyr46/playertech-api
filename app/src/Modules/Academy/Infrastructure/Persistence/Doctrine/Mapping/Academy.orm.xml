@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity
+        name="App\Modules\Academy\Domain\Academy\Academy"
+        table="academies">
+
+        <unique-constraints>
+            <unique-constraint
+                name="UNIQ_ACADEMIES_CONTACT_EMAIL"
+                columns="contact_email"/>
+        </unique-constraints>
+
+        <indexes>
+            <index
+                name="IDX_ACADEMIES_STATUS"
+                columns="status"/>
+
+            <index
+                name="IDX_ACADEMIES_CREATED_BY"
+                columns="created_by"/>
+
+            <index
+                name="IDX_ACADEMIES_UPDATED_BY"
+                columns="updated_by"/>
+        </indexes>
+
+        <id
+            name="id"
+            column="id"
+            type="academy_id"/>
+
+        <embedded
+            name="name"
+            class="App\Shared\Domain\ValueObject\Name"
+            column-prefix="false"/>
+
+        <embedded
+            name="contactEmail"
+            class="App\Shared\Domain\ValueObject\Email"
+            column-prefix="false"/>
+
+        <embedded
+            name="phone"
+            class="App\Shared\Domain\ValueObject\PhoneNumber"
+            column-prefix="false"/>
+
+        <embedded
+            name="address"
+            class="App\Shared\Domain\ValueObject\Address"
+            column-prefix="false"/>
+
+        <embedded
+            name="city"
+            class="App\Shared\Domain\ValueObject\City"
+            column-prefix="false"/>
+
+        <embedded
+            name="logo"
+            class="App\Shared\Domain\ValueObject\LogoPath"
+            column-prefix="false"/>
+
+        <embedded
+            name="status"
+            class="App\Modules\Academy\Domain\Academy\AcademyStatus"
+            column-prefix="false"/>
+
+        <embedded
+            name="auditTrail"
+            class="App\Shared\Domain\ValueObject\AuditTrail"
+            column-prefix="false"/>
+
+    </entity>
+
+</doctrine-mapping>

@@ -4,197 +4,130 @@ declare(strict_types=1);
 
 namespace App\Modules\Academy\Domain\Academy;
 
-use App\Modules\Academy\Infrastructure\Persistence\AcademyRepository;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\Uuid;
+use App\Shared\Domain\ValueObject\Address;
+use App\Shared\Domain\ValueObject\AuditTrail;
+use App\Shared\Domain\ValueObject\City;
+use App\Shared\Domain\ValueObject\Email;
+use App\Shared\Domain\ValueObject\LogoPath;
+use App\Shared\Domain\ValueObject\Name;
+use App\Shared\Domain\ValueObject\PhoneNumber;
 
-#[ORM\Entity(repositoryClass: AcademyRepository::class)]
-#[ORM\Table(
-    name: 'academies',
-    uniqueConstraints: [new ORM\UniqueConstraint(name: 'UNIQ_ACADEMIES_CONTACT_EMAIL', columns: ['contact_email'])],
-    indexes: [
-        new ORM\Index(name: 'IDX_ACADEMIES_STATUS', columns: ['status']),
-        new ORM\Index(name: 'IDX_ACADEMIES_CREATED_BY', columns: ['created_by']),
-        new ORM\Index(name: 'IDX_ACADEMIES_UPDATED_BY', columns: ['updated_by']),
-    ]
-)]
-class Academy
+final class Academy
 {
-    public const STATUS_ACTIVE = 'ACTIVE';
-    public const STATUS_SUSPENDED = 'SUSPENDED';
+    private AcademyId $id;
 
-    #[ORM\Id]
-    #[ORM\Column(type: 'guid', name: 'id')]
-    #[ORM\GeneratedValue(strategy: 'NONE')]
-    private string $id;
+    private Name $name;
 
-    #[ORM\Column(type: 'string', length: 150)]
-    private string $name;
+    private Email $contactEmail;
 
-    #[ORM\Column(type: 'string', length: 180, name: 'contact_email')]
-    private string $contactEmail;
+    private ?PhoneNumber $phone;
 
-    #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    private ?string $phone = null;
+    private ?Address $address;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $address = null;
+    private ?City $city;
 
-    #[ORM\Column(type: 'string', length: 120, nullable: true)]
-    private ?string $city = null;
+    private ?LogoPath $logo;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $logo = null;
+    private AcademyStatus $status;
 
-    #[ORM\Column(type: 'string', length: 20)]
-    private string $status;
+    private AuditTrail $auditTrail;
 
-    #[ORM\Column(type: 'datetime_immutable', name: 'created_at')]
-    private \DateTimeImmutable $createdAt;
+    private function __construct(
+        AcademyId $id,
+        Name $name,
+        Email $contactEmail,
+        ?PhoneNumber $phone,
+        ?Address $address,
+        ?City $city,
+        ?LogoPath $logo,
+        AuditTrail $auditTrail
+    ) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->contactEmail = $contactEmail;
+        $this->status = AcademyStatus::active();
+        $this->phone = $phone;
+        $this->address = $address;
+        $this->city = $city;
+        $this->logo = $logo;
 
-    #[ORM\Column(type: 'guid', name: 'created_by', nullable: true)]
-    private ?string $createdBy = null;
-
-    #[ORM\Column(type: 'datetime_immutable', name: 'updated_at', nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
-
-    #[ORM\Column(type: 'guid', name: 'updated_by', nullable: true)]
-    private ?string $updatedBy = null;
-
-    public function __construct()
-    {
-        $this->id = Uuid::v4()->toRfc4122();
-        $this->status = self::STATUS_ACTIVE;
-        $this->createdAt = new \DateTimeImmutable();
+        $this->auditTrail = $auditTrail;
     }
 
-    public function getId(): string
+    public static function create(
+        AcademyId $id,
+        Name $name,
+        Email $contactEmail,
+        ?PhoneNumber $phone,
+        ?Address $address,
+        ?City $city,
+        ?LogoPath $logo,
+        AuditTrail $auditTrail
+    ): self {
+        return new self(
+            $id,
+            $name,
+            $contactEmail,
+            $phone,
+            $address,
+            $city,
+            $logo,
+            $auditTrail
+        );
+    }
+
+    public function id(): AcademyId
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function name(): Name
     {
         return $this->name;
     }
 
-    public function getContactEmail(): string
+    public function contactEmail(): Email
     {
         return $this->contactEmail;
     }
 
-    public function getPhone(): ?string
+    public function phone(): ?PhoneNumber
     {
         return $this->phone;
     }
 
-    public function getAddress(): ?string
+    public function address(): ?Address
     {
         return $this->address;
     }
 
-    public function getCity(): ?string
+    public function city(): ?City
     {
         return $this->city;
     }
 
-    public function getLogo(): ?string
+    public function logo(): ?LogoPath
     {
         return $this->logo;
     }
 
-    public function getStatus(): string
+    public function status(): AcademyStatus
     {
         return $this->status;
     }
 
-    public function isActive(): bool
+    public function auditTrail(): AuditTrail
     {
-        return self::STATUS_ACTIVE === $this->status;
-    }
-
-    public function isSuspended(): bool
-    {
-        return self::STATUS_SUSPENDED === $this->status;
-    }
-
-    public function getCreatedAt(): \DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function getCreatedBy(): ?string
-    {
-        return $this->createdBy;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function getUpdatedBy(): ?string
-    {
-        return $this->updatedBy;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function setContactEmail(string $contactEmail): void
-    {
-        $this->contactEmail = $contactEmail;
-    }
-
-    public function setPhone(?string $phone): void
-    {
-        $this->phone = $phone;
-    }
-
-    public function setAddress(?string $address): void
-    {
-        $this->address = $address;
-    }
-
-    public function setCity(?string $city): void
-    {
-        $this->city = $city;
-    }
-
-    public function setLogo(?string $logo): void
-    {
-        $this->logo = $logo;
-    }
-
-    public function setStatus(string $status): void
-    {
-        $this->status = $status;
-    }
-
-    public function setCreatedBy(?string $createdBy): void
-    {
-        $this->createdBy = $createdBy;
-    }
-
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    public function setUpdatedBy(?string $updatedBy): void
-    {
-        $this->updatedBy = $updatedBy;
+        return $this->auditTrail;
     }
 
     public function updateProfile(
-        string $name,
-        string $contactEmail,
-        ?string $phone,
-        ?string $address,
-        ?string $city,
-        ?string $logo,
+        Name $name,
+        Email $contactEmail,
+        ?PhoneNumber $phone,
+        ?Address $address,
+        ?City $city,
+        ?LogoPath $logo,
         string $updatedBy
     ): void {
         $this->name = $name;
@@ -203,21 +136,26 @@ class Academy
         $this->address = $address;
         $this->city = $city;
         $this->logo = $logo;
-        $this->updatedAt = new \DateTimeImmutable();
-        $this->updatedBy = $updatedBy;
+        $this->auditTrail->touch($updatedBy);
     }
 
     public function suspend(string $updatedBy): void
     {
-        $this->status = self::STATUS_SUSPENDED;
-        $this->updatedAt = new \DateTimeImmutable();
-        $this->updatedBy = $updatedBy;
+        if ($this->status->isSuspended()) {
+            return;
+        }
+
+        $this->status = AcademyStatus::suspended();
+        $this->auditTrail->touch($updatedBy);
     }
 
     public function reactivate(string $updatedBy): void
     {
-        $this->status = self::STATUS_ACTIVE;
-        $this->updatedAt = new \DateTimeImmutable();
-        $this->updatedBy = $updatedBy;
+        if ($this->status->isActive()) {
+            return;
+        }
+
+        $this->status = AcademyStatus::active();
+        $this->auditTrail->touch($updatedBy);
     }
 }

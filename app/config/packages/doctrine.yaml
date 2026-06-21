@@ -2,6 +2,8 @@ doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
         charset: utf8mb4
+        types:
+            academy_id: App\Modules\Academy\Infrastructure\Persistence\Doctrine\Type\AcademyIdType
     orm:
         auto_mapping: false
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -15,7 +17,13 @@ doctrine:
                 alias: Identity
             Academy:
                 is_bundle: false
-                type: attribute
-                dir: '%kernel.project_dir%/src/Modules/Academy/Domain/Academy'
-                prefix: 'App\Modules\Academy\Domain\Academy'
+                type: xml
+                dir: '%kernel.project_dir%/src/Modules/Academy/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: App\Modules\Academy\Domain\Academy
                 alias: Academy
+            Shared:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Shared/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Shared\Domain\ValueObject'
+                alias: Shared

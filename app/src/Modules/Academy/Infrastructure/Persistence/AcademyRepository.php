@@ -21,13 +21,17 @@ final class AcademyRepository extends ServiceEntityRepository
     public function findAllOrdered(): array
     {
         return $this->createQueryBuilder('academy')
-            ->orderBy('academy.createdAt', 'DESC')
+            ->orderBy('academy.auditTrail.createdAt.value', 'DESC')
             ->getQuery()
             ->getResult();
     }
 
     public function findOneByContactEmail(string $contactEmail): ?Academy
     {
-        return $this->findOneBy(['contactEmail' => $contactEmail]);
+        return $this->createQueryBuilder('academy')
+            ->andWhere('academy.contactEmail.value = :contactEmail')
+            ->setParameter('contactEmail', mb_strtolower($contactEmail))
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
