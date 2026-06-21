@@ -32,6 +32,10 @@ final class Academy
 
     private AuditTrail $auditTrail;
 
+    private ?\DateTimeImmutable $deletedAt = null;
+
+    private ?string $deletedBy = null;
+
     private function __construct(
         AcademyId $id,
         Name $name,
@@ -121,6 +125,16 @@ final class Academy
         return $this->auditTrail;
     }
 
+    public function deletedAt(): ?\DateTimeImmutable
+    {
+        return $this->deletedAt;
+    }
+
+    public function deletedBy(): ?string
+    {
+        return $this->deletedBy;
+    }
+
     public function updateProfile(
         Name $name,
         Email $contactEmail,
@@ -156,6 +170,28 @@ final class Academy
         }
 
         $this->status = AcademyStatus::active();
+        $this->auditTrail->touch($updatedBy);
+    }
+
+    public function delete(string $deletedBy): void
+    {
+        if (null !== $this->deletedAt) {
+            return;
+        }
+
+        $this->deletedAt = new \DateTimeImmutable();
+        $this->deletedBy = $deletedBy;
+        $this->auditTrail->touch($deletedBy);
+    }
+
+    public function restore(string $updatedBy): void
+    {
+        if (null === $this->deletedAt) {
+            return;
+        }
+
+        $this->deletedAt = null;
+        $this->deletedBy = null;
         $this->auditTrail->touch($updatedBy);
     }
 }

@@ -28,6 +28,10 @@
             <index
                 name="IDX_ACADEMIES_UPDATED_BY"
                 columns="updated_by"/>
+
+            <index
+                name="IDX_ACADEMIES_DELETED_BY"
+                columns="deleted_by"/>
         </indexes>
 
         <id
@@ -74,6 +78,18 @@
             name="auditTrail"
             class="App\Shared\Domain\ValueObject\AuditTrail"
             use-column-prefix="false"/>
+
+        <field
+            name="deletedAt"
+            column="deleted_at"
+            type="datetime_immutable"
+            nullable="true"/>
+
+        <field
+            name="deletedBy"
+            column="deleted_by"
+            type="guid"
+            nullable="true"/>
 
     </entity>
 

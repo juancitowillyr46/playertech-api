@@ -95,6 +95,7 @@ Pautas:
 * En XML de Doctrine, para desactivar prefijos de `embedded`, usar `use-column-prefix="false"` y no `column-prefix="false"`.
 * Validar siempre el mapping dentro del contenedor con `php bin/console doctrine:mapping:info` antes de asumir que el XML quedó correcto.
 * Si aparece una columna fantasma como `falsename` o `falsecontact_email`, revisar primero el `embedded` y la cache de Symfony/Doctrine.
+* Si el módulo requiere soft delete, declarar `deleted_at` y `deleted_by`, exponer métodos de dominio para borrar y restaurar lógicamente, y registrar un filtro Doctrine que excluya registros borrados.
 
 ## 5. Registrar Doctrine
 
