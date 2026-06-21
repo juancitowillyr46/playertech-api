@@ -215,5 +215,6 @@ HU-008 Crear Academia
 
 La actualización no debe afectar la información histórica asociada a la academia.
 La versión tenant-scoped del flujo se ejecuta contra `/api/v1/academy/me`.
+La implementación actual delega en Application Layer con CQRS para mantener los controladores delgados.
 
-Referencia técnica: 5f95e40
+Referencia técnica: ff61ec1

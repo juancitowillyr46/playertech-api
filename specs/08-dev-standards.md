@@ -277,6 +277,16 @@ PaymentRegistered
 
 # Application Layer Standards
 
+## CQRS
+
+La capa de aplicación debe separar claramente:
+
+* Commands para mutaciones.
+* Queries para lecturas.
+* Handlers como orquestadores del caso de uso.
+
+Los controladores sólo deben adaptar HTTP hacia el caso de uso.
+
 ## Commands
 
 Convención:
@@ -374,6 +384,9 @@ Ejemplo:
 ```text
 CreatePlayerController
 ```
+
+En PlayerTech, el controller no debe contener lógica de negocio ni orquestación compleja.
+Debe delegar en handlers de Application Layer.
 
 ---
 
