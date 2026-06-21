@@ -41,7 +41,7 @@ La base tecnica actual incluye:
 | Academy typed VO mapping foundation | Technical Enabler | Done | `5f95e40` | `AcademyId` usa Doctrine custom type y el XML de `Academy` consume los VOs compartidos como embeddables |
 | Tenant academy profile update | Functional | Done | `5f95e40` | `PUT /api/v1/academy/me` permite que el tenant actualice su propia academia |
 | Academy CQRS application refactor | Technical Enabler | Done | `ff61ec1` | Los casos de uso de `Academy` pasaron a `Application/Command`, `Application/Query` y `Application/Handler` |
-| Module creation guide | Documentation / Technical Enabler | Done | `pending` | Guia operativa para crear nuevos modulos siguiendo el patron de `Academy` |
+| Module creation guide | Documentation / Technical Enabler | Done | `0801f4f` | Guia operativa para crear nuevos modulos siguiendo el patron de `Academy` |
 
 ---
 
