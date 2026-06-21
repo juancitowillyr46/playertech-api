@@ -38,42 +38,42 @@
         <embedded
             name="name"
             class="App\Shared\Domain\ValueObject\Name"
-            column-prefix="false"/>
+            use-column-prefix="false"/>
 
         <embedded
             name="contactEmail"
             class="App\Shared\Domain\ValueObject\Email"
-            column-prefix="false"/>
+            use-column-prefix="false"/>
 
         <embedded
             name="phone"
             class="App\Shared\Domain\ValueObject\PhoneNumber"
-            column-prefix="false"/>
+            use-column-prefix="false"/>
 
         <embedded
             name="address"
             class="App\Shared\Domain\ValueObject\Address"
-            column-prefix="false"/>
+            use-column-prefix="false"/>
 
         <embedded
             name="city"
             class="App\Shared\Domain\ValueObject\City"
-            column-prefix="false"/>
+            use-column-prefix="false"/>
 
         <embedded
             name="logo"
             class="App\Shared\Domain\ValueObject\LogoPath"
-            column-prefix="false"/>
+            use-column-prefix="false"/>
 
         <embedded
             name="status"
             class="App\Modules\Academy\Domain\Academy\AcademyStatus"
-            column-prefix="false"/>
+            use-column-prefix="false"/>
 
         <embedded
             name="auditTrail"
             class="App\Shared\Domain\ValueObject\AuditTrail"
-            column-prefix="false"/>
+            use-column-prefix="false"/>
 
     </entity>
 

@@ -125,6 +125,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Los VOs compartidos ya estan versionados en git y el mapping XML de `Academy` los consume de forma consistente.
 * La capa HTTP de `Academy` quedo delgada y delega en CQRS con commands, queries y handlers.
 * Existe una guia operativa para construir nuevos modulos sin depender de modelos previos.
+* Las validaciones de negocio de `Academy` devuelven Problem Details JSON; el caso de duplicado de correo se resuelve con excepcion de dominio y respuesta `409`.
 ---
 
 # Technical Foundation Checklist

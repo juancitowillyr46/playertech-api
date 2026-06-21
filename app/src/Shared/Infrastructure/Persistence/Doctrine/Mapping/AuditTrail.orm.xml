@@ -10,7 +10,8 @@
 
         <embedded
             name="createdAt"
-            class="App\Shared\Domain\ValueObject\CreatedAt"/>
+            class="App\Shared\Domain\ValueObject\CreatedAt"
+            use-column-prefix="false"/>
 
         <field
             name="createdBy"
@@ -20,7 +21,8 @@
 
         <embedded
             name="updatedAt"
-            class="App\Shared\Domain\ValueObject\UpdatedAt"/>
+            class="App\Shared\Domain\ValueObject\UpdatedAt"
+            use-column-prefix="false"/>
 
         <field
             name="updatedBy"

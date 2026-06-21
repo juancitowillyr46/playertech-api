@@ -1,0 +1,72 @@
+@baseUrl = http://localhost:8081
+@token = {{token}}
+
+### Platform: List academies
+GET {{baseUrl}}/api/v1/platform/academies
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Platform: Create academy
+POST {{baseUrl}}/api/v1/platform/academies
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Academia PlayerTech",
+  "contact_email": "contacto@academiaplayertech.com",
+  "phone": "+51 999 999 999",
+  "address": "Av. Principal 123",
+  "city": "Lima",
+  "logo": "https://cdn.example.com/logo.png"
+}
+
+### Platform: Show academy
+GET {{baseUrl}}/api/v1/platform/academies/{{academyId}}
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Platform: Update academy
+PUT {{baseUrl}}/api/v1/platform/academies/{{academyId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Academia PlayerTech Actualizada",
+  "contact_email": "contacto@academiaplayertech.com",
+  "phone": "+51 999 999 111",
+  "address": "Av. Principal 456",
+  "city": "Lima",
+  "logo": "https://cdn.example.com/logo-v2.png"
+}
+
+### Platform: Suspend academy
+POST {{baseUrl}}/api/v1/platform/academies/{{academyId}}/suspend
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Platform: Reactivate academy
+POST {{baseUrl}}/api/v1/platform/academies/{{academyId}}/reactivate
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Tenant: Academy context
+GET {{baseUrl}}/api/v1/academy/me
+Authorization: Bearer {{tenantToken}}
+Accept: application/json
+
+### Tenant: Update own academy
+PUT {{baseUrl}}/api/v1/academy/me
+Authorization: Bearer {{tenantToken}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Academia Tenant Demo",
+  "contact_email": "tenant@academiademo.com",
+  "phone": "+51 987 654 321",
+  "address": "Jr. Secundario 789",
+  "city": "Arequipa",
+  "logo": "https://cdn.example.com/tenant-logo.png"
+}

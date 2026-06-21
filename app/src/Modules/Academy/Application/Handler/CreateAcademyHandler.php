@@ -10,8 +10,8 @@ use App\Modules\Academy\Application\Response\AcademyView;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
+use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
 use App\Shared\Domain\ValueObject\AuditTrail;
-use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 final readonly class CreateAcademyHandler
 {
@@ -25,7 +25,7 @@ final readonly class CreateAcademyHandler
         $profile = AcademyProfileData::fromArray($command->payload);
 
         if (null !== $this->academyRepository->findOneByContactEmail($profile->contactEmail())) {
-            throw new ConflictHttpException('El correo de contacto ya existe.');
+            throw new AcademyAlreadyExistsException();
         }
 
         $academy = Academy::create(

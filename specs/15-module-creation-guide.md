@@ -92,6 +92,9 @@ Pautas:
 * `id` con `type="module_id"` cuando aplique.
 * `embedded` para VOs de negocio.
 * Evitar `attribute-overrides` salvo necesidad real y documentada.
+* En XML de Doctrine, para desactivar prefijos de `embedded`, usar `use-column-prefix="false"` y no `column-prefix="false"`.
+* Validar siempre el mapping dentro del contenedor con `php bin/console doctrine:mapping:info` antes de asumir que el XML quedó correcto.
+* Si aparece una columna fantasma como `falsename` o `falsecontact_email`, revisar primero el `embedded` y la cache de Symfony/Doctrine.
 
 ## 5. Registrar Doctrine
 
@@ -239,4 +242,3 @@ AcademyMeController
 * No mezclar rules de plataforma y tenant.
 * No usar attributes Doctrine en dominio.
 * No repetir logica de validacion en cada controller.
-
