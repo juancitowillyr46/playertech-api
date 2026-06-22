@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Application\Handler;
 
 use App\Modules\Academy\Application\Command\RegisterTenantCommand;
-use App\Modules\Academy\Application\Dto\TenantSignupData;
 use App\Modules\Academy\Application\Message\SendTenantActivationEmailMessage;
 use App\Modules\Academy\Application\Response\AcademyView;
 use App\Modules\Academy\Domain\Academy\Academy;
@@ -32,9 +31,9 @@ final readonly class RegisterTenantHandler
 
     public function __invoke(RegisterTenantCommand $command): array
     {
-        $data = TenantSignupData::fromArray($command->payload);
+        $data = $command->input;
 
-        if (null !== $this->academyRepository->findOneByContactEmail($data->contactEmail())) {
+        if (null !== $this->academyRepository->findOneByContactEmail(new \App\Shared\Domain\ValueObject\Email($data->contactEmail))) {
             throw new AcademyAlreadyExistsException();
         }
 
@@ -42,23 +41,23 @@ final readonly class RegisterTenantHandler
 
         $academy = Academy::create(
             $academyId,
-            $data->academyName(),
-            $data->contactEmail(),
-            $data->phone(),
-            $data->address(),
-            $data->city(),
-            $data->logo(),
+            new \App\Shared\Domain\ValueObject\Name($data->name),
+            new \App\Shared\Domain\ValueObject\Email($data->contactEmail),
+            null === $data->phone ? null : new \App\Shared\Domain\ValueObject\PhoneNumber($data->phone),
+            null === $data->address ? null : new \App\Shared\Domain\ValueObject\Address($data->address),
+            null === $data->city ? null : new \App\Shared\Domain\ValueObject\City($data->city),
+            null === $data->logo ? null : new \App\Shared\Domain\ValueObject\LogoPath($data->logo),
             AuditTrail::create(null),
         );
 
         $this->academyRepository->save($academy);
 
         $user = new AccountUser();
-        $user->setEmail($data->contactEmail()->value());
+        $user->setEmail($data->contactEmail);
         $user->setAcademyId($academyId->value());
         $user->setRole(AccountUser::ROLE_ACADEMY_ADMIN);
         $user->setStatus(AccountUser::STATUS_PENDING_ACTIVATION);
-        $user->setPasswordHash($this->passwordHasher->hashPassword($user, $data->plainPassword()));
+        $user->setPasswordHash($this->passwordHasher->hashPassword($user, $data->password));
         $user->markPendingActivation(
             Uuid::v4()->toRfc4122(),
             (new \DateTimeImmutable())->modify('+24 hours')
@@ -70,9 +69,9 @@ final readonly class RegisterTenantHandler
         $activationUrl = sprintf('%s/api/v1/public/tenants/activate/%s', rtrim($this->publicUrl, '/'), $user->getActivationToken());
 
         $this->messageBus->dispatch(new SendTenantActivationEmailMessage(
-            $data->contactEmail()->value(),
-            $data->contactName(),
-            $data->academyName()->value(),
+            $data->contactEmail,
+            $data->contactName,
+            $data->name,
             $activationUrl
         ));
 

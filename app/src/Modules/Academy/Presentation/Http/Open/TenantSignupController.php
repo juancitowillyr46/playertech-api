@@ -6,16 +6,19 @@ namespace App\Modules\Academy\Presentation\Http\Open;
 
 use App\Modules\Academy\Application\Command\ActivateTenantCommand;
 use App\Modules\Academy\Application\Command\RegisterTenantCommand;
+use App\Modules\Academy\Application\Dto\TenantSignupInput;
 use App\Modules\Academy\Application\Handler\ActivateTenantHandler;
 use App\Modules\Academy\Application\Handler\RegisterTenantHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/public/tenants')]
 final readonly class TenantSignupController
 {
     public function __construct(
+        private ValidatorInterface $validator,
         private RegisterTenantHandler $registerTenantHandler,
         private ActivateTenantHandler $activateTenantHandler,
     ) {
@@ -24,7 +27,10 @@ final readonly class TenantSignupController
     #[Route('/signup', name: 'api_v1_public_tenant_signup', methods: ['POST'])]
     public function signup(Request $request): JsonResponse
     {
-        $result = ($this->registerTenantHandler)(new RegisterTenantCommand($request->toArray()));
+        $input = TenantSignupInput::fromArray($request->toArray());
+        $this->assertValid($input);
+
+        $result = ($this->registerTenantHandler)(new RegisterTenantCommand($input));
 
         return new JsonResponse([
             'data' => $result,
@@ -41,5 +47,16 @@ final readonly class TenantSignupController
             'data' => $result,
             'meta' => new \stdClass(),
         ]);
+    }
+
+    private function assertValid(object $input): void
+    {
+        $violations = $this->validator->validate($input);
+
+        if (0 === count($violations)) {
+            return;
+        }
+
+        throw new \App\Shared\Domain\Exception\ValidationException($violations);
     }
 }

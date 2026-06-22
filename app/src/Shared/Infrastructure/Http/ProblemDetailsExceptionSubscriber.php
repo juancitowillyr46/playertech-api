@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Shared\Infrastructure\Http;
 
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
+use App\Shared\Domain\Exception\ValidationException;
 use DomainException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -45,6 +46,23 @@ final class ProblemDetailsExceptionSubscriber implements EventSubscriberInterfac
                     'status' => Response::HTTP_CONFLICT,
                     'detail' => $throwable->getMessage(),
                     'instance' => $instance,
+                ],
+            ];
+        }
+
+        if ($throwable instanceof ValidationException) {
+            return [
+                'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'body' => [
+                    'type' => 'https://api.playertech/errors/validation',
+                    'title' => 'Validation Error',
+                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    'detail' => $throwable->getMessage(),
+                    'instance' => $instance,
+                    'violations' => array_map(static fn ($violation): array => [
+                        'property' => $violation->getPropertyPath(),
+                        'message' => $violation->getMessage(),
+                    ], iterator_to_array($throwable->violations())),
                 ],
             ];
         }

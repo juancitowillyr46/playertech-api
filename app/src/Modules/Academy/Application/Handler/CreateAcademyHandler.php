@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Application\Handler;
 
 use App\Modules\Academy\Application\Command\CreateAcademyCommand;
-use App\Modules\Academy\Application\Dto\AcademyProfileData;
 use App\Modules\Academy\Application\Response\AcademyView;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
@@ -22,20 +21,18 @@ final readonly class CreateAcademyHandler
 
     public function __invoke(CreateAcademyCommand $command): AcademyView
     {
-        $profile = AcademyProfileData::fromArray($command->payload);
-
-        if (null !== $this->academyRepository->findOneByContactEmail($profile->contactEmail())) {
+        if (null !== $this->academyRepository->findOneByContactEmail($command->input->contactEmail)) {
             throw new AcademyAlreadyExistsException();
         }
 
         $academy = Academy::create(
             AcademyId::generate(),
-            $profile->name(),
-            $profile->contactEmail(),
-            $profile->phone(),
-            $profile->address(),
-            $profile->city(),
-            $profile->logo(),
+            new \App\Shared\Domain\ValueObject\Name($command->input->name),
+            new \App\Shared\Domain\ValueObject\Email($command->input->contactEmail),
+            null === $command->input->phone ? null : new \App\Shared\Domain\ValueObject\PhoneNumber($command->input->phone),
+            null === $command->input->address ? null : new \App\Shared\Domain\ValueObject\Address($command->input->address),
+            null === $command->input->city ? null : new \App\Shared\Domain\ValueObject\City($command->input->city),
+            null === $command->input->logo ? null : new \App\Shared\Domain\ValueObject\LogoPath($command->input->logo),
             AuditTrail::create($command->actorId),
         );
 

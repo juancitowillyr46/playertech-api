@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Application\Handler;
 
 use App\Modules\Academy\Application\Command\UpdateAcademyCommand;
-use App\Modules\Academy\Application\Dto\AcademyProfileData;
 use App\Modules\Academy\Application\Response\AcademyView;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
+use App\Shared\Domain\ValueObject\Address;
+use App\Shared\Domain\ValueObject\City;
+use App\Shared\Domain\ValueObject\Email;
+use App\Shared\Domain\ValueObject\LogoPath;
+use App\Shared\Domain\ValueObject\Name;
+use App\Shared\Domain\ValueObject\PhoneNumber;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Uid\Uuid;
@@ -23,20 +28,19 @@ final readonly class UpdateAcademyHandler
     public function __invoke(UpdateAcademyCommand $command): AcademyView
     {
         $academy = $this->requireAcademy($command->academyId);
-        $profile = AcademyProfileData::fromArray($command->payload);
 
-        $duplicate = $this->academyRepository->findOneByContactEmail($profile->contactEmail());
+        $duplicate = $this->academyRepository->findOneByContactEmail(new Email($command->input->contactEmail));
         if (null !== $duplicate && $duplicate->id()->value() !== $academy->id()->value()) {
             throw new ConflictHttpException('El correo de contacto ya existe.');
         }
 
         $academy->updateProfile(
-            $profile->name(),
-            $profile->contactEmail(),
-            $profile->phone(),
-            $profile->address(),
-            $profile->city(),
-            $profile->logo(),
+            new Name($command->input->name),
+            new Email($command->input->contactEmail),
+            null === $command->input->phone ? null : new PhoneNumber($command->input->phone),
+            null === $command->input->address ? null : new Address($command->input->address),
+            null === $command->input->city ? null : new City($command->input->city),
+            null === $command->input->logo ? null : new LogoPath($command->input->logo),
             $command->actorId,
         );
 
