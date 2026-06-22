@@ -234,6 +234,27 @@ AcademyMeController
 * Tenant vs Platform context.
 * Soft delete preparado.
 * Auditoria embebida.
+* Validacion formal en DTOs.
+* Controllers delgados.
+* Trazabilidad por commit.
+
+`Academy` no es solo un modulo funcional: es la referencia oficial para construir los demas contextos del sistema.
+
+---
+
+# Email Testing Standard
+
+Para desarrollo local, la herramienta recomendada para probar correos es:
+
+```text
+Mailpit
+```
+
+Motivos:
+
+* Permite ver correos enviados en una interfaz web local.
+* Facilita validar links de activacion y reset de contrasena.
+* Evita depender de proveedores externos durante la iteracion.
 
 ---
 

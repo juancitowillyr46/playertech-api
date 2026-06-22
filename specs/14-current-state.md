@@ -127,6 +127,8 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Los VOs compartidos ya estan versionados en git y el mapping XML de `Academy` los consume de forma consistente.
 * La capa HTTP de `Academy` quedo delgada y delega en CQRS con commands, queries y handlers.
 * Existe una guia operativa para construir nuevos modulos sin depender de modelos previos.
+* `Academy` queda definido como el modulo de referencia oficial para nuevos contextos: CQRS, XML puro, VOs tipados, soft delete, validacion formal, controllers delgados y separacion root/tenant.
+* `Mailpit` queda adoptado como la herramienta base de desarrollo local para validar envios de correo y flujos de activacion.
 * Las validaciones de negocio de `Academy` devuelven Problem Details JSON; el caso de duplicado de correo se resuelve con excepcion de dominio y respuesta `409`.
 * `Academy` incorpora soft delete con `deleted_at` y `deleted_by`, y Doctrine ya tiene un filtro global para excluir entidades borradas lógicamente.
 * Se documentó una épica nueva para onboarding de tenant (`EP-014`) sin alterar el flujo de creación de tenants por `ROLE_ROOT`.
@@ -180,3 +182,4 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * Completar colecciones `.http` con ejemplos de error y éxito.
 * Flujo de creación de Academia (exclusivo para Root).
 * Formalizar el onboarding de tenant como siguiente bloque funcional tras `EP-001`.
+* Reutilizar `Academy` como plantilla de implementacion para los siguientes modulos.

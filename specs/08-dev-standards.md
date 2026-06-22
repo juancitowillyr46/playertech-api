@@ -598,6 +598,22 @@ Toda API deberá documentarse mediante OpenAPI.
 
 Los errores deberán seguir Problem Details (RFC 9457).
 
+## Local Email Tooling
+
+Para desarrollo local y validacion de flujos de correo se adopta:
+
+```text
+Mailpit
+```
+
+Uso recomendado:
+
+* Vista local de correos enviados.
+* Validacion manual de links de activacion y reseteo.
+* Pruebas sin depender de un proveedor externo.
+
+Mailpit debe considerarse la opcion base en contenedores locales mientras no exista una decision distinta por ambiente.
+
 ---
 
 # Testing Standards
@@ -666,6 +682,25 @@ Una funcionalidad se considera terminada cuando:
 * Respeta arquitectura.
 * Respeta estándares de desarrollo.
 * No introduce deuda técnica significativa.
+
+---
+
+# Reference Module
+
+`Academy` es el modulo de referencia tecnica para los demas modulos del sistema.
+
+Debe servir como ejemplo oficial de:
+
+* CQRS.
+* XML Mapping puro.
+* Value Objects tipados.
+* Soft delete.
+* Validacion formal en DTOs.
+* Controllers delgados.
+* Trazabilidad por commit.
+* Separacion clara entre `ROLE_ROOT` y contexto tenant.
+
+Todo nuevo modulo debera partir de este criterio salvo justificacion documentada.
 
 
 # Aggregate Root Guidelines
