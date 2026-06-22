@@ -30,6 +30,7 @@ La base tecnica actual incluye:
 | Identity technical user model | Technical Enabler | Done | `87f6f9b` | `AccountUser` usa Doctrine attributes y GUID string para acelerar la foundation sin perder compatibilidad |
 | Identity users CRUD runtime | Functional / Technical Enabler | Done | `untracked` | CRUD de users expuesto en `/api/v1/platform/users` y `/api/v1/academy/users`, con DTOs, handlers, exceptions de dominio y respuesta JSON estándar |
 | API controller foundation | Technical Enabler | Done | `untracked` | Base HTTP común para validación y resolución del usuario autenticado, reduciendo duplicación entre controladores |
+| First unit test baseline | Technical Enabler | Done | `untracked` | PHPUnit inicial valida `AcademyId`, `AccountUser` y `UserAdministrationPolicy` |
 | Shared health endpoint | Technical Enabler | Done | `87f6f9b` | HealthController moved to Shared/Presentation/Http |
 | Legacy folder cleanup | Technical Enabler | Done | `87f6f9b` | Eliminados `src/Command`, `src/Controller`, `src/Entity`, `src/EventSubscriber` y `src/Security` heredados |
 | Root platform command | Technical Enabler | Done | `87f6f9b` | `app:user:create-root` registra usuarios `ROLE_ROOT` sin tenant |
@@ -125,6 +126,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Login y `/auth/me` validados en runtime.
 * CRUD de users validado en runtime para contexto plataforma, incluyendo create, update, disable y enable con respuesta JSON estándar.
 * Se introdujo una base HTTP común para evitar duplicación de validación y resolución del actor autenticado.
+* La base de pruebas ya tiene su primer baseline unitario verde.
 * `ROLE_ROOT` opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext`.
 * `Academy` ya expone `GET /api/v1/academy/me` como contexto tenant, `PUT /api/v1/academy/me` para autogestión del tenant y `GET /api/v1/platform/academies` como API de plataforma.
 * `Academy` ahora usa `AcademyId` como Doctrine custom type y VOs compartidos como embeddables XML, sirviendo como referencia del patrón para los demas modulos.

@@ -70,6 +70,24 @@ Antes de empezar HUs, la base técnica debe cubrir al menos:
 
 ---
 
+# Current Test Baseline
+
+La base inicial de pruebas debe comenzar por:
+
+* Unit tests de Value Objects y reglas puras.
+* Unit tests de policies de dominio.
+* Functional tests del contrato HTTP cuando exista infraestructura de testing web estable.
+
+Para PlayerTech, la primera tanda valida:
+
+* `AcademyId`
+* `AccountUser`
+* `UserAdministrationPolicy`
+
+Esta capa sirve como red de seguridad antes de incorporar pruebas funcionales de API.
+
+---
+
 # Test Priorities
 
 ## Priority 1
