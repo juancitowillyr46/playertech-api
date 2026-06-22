@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Application\Handler;
 
 use App\Modules\Academy\Application\Query\GetAcademyContextQuery;
-use App\Modules\Academy\Application\Response\AcademyContextView;
+use App\Modules\Academy\Application\Response\AcademyContextResponse;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 
 final readonly class GetAcademyContextHandler
@@ -15,9 +15,9 @@ final readonly class GetAcademyContextHandler
     ) {
     }
 
-    public function __invoke(GetAcademyContextQuery $query): AcademyContextView
+    public function __invoke(GetAcademyContextQuery $query): AcademyContextResponse
     {
-        return new AcademyContextView(
+        return new AcademyContextResponse(
             $this->tenantContext->getMode(),
             $this->tenantContext->getUserId(),
             $this->tenantContext->requireAcademyId(),

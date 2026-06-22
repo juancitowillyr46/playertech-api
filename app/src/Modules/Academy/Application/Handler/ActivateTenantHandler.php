@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Academy\Application\Handler;
 
+use App\Modules\Academy\Application\Response\TenantActivationResponse;
 use App\Modules\Academy\Application\Command\ActivateTenantCommand;
 use App\Modules\Identity\Domain\User\AccountUser;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +17,7 @@ final readonly class ActivateTenantHandler
     ) {
     }
 
-    public function __invoke(ActivateTenantCommand $command): array
+    public function __invoke(ActivateTenantCommand $command): TenantActivationResponse
     {
         /** @var AccountUser|null $user */
         $user = $this->entityManager->getRepository(AccountUser::class)->findOneBy([
@@ -36,10 +37,10 @@ final readonly class ActivateTenantHandler
 
         $this->entityManager->flush();
 
-        return [
-            'email' => $user->getUserIdentifier(),
-            'status' => $user->getStatus(),
-            'activated' => true,
-        ];
+        return new TenantActivationResponse(
+            $user->getUserIdentifier(),
+            $user->getStatus(),
+            true,
+        );
     }
 }

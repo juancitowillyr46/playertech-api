@@ -138,14 +138,23 @@ Los handlers:
 * usan repositorios por contrato
 * retornan Response Models o Views
 
+Convención de salida:
+
+* `CreateXHandler` y `UpdateXHandler` retornan un DTO de detalle.
+* `ShowXHandler` retorna un DTO de detalle.
+* `ListXHandler` retorna una colección de DTOs resumidos.
+* Si existe relación entre entidades, el DTO de salida debe anidar sub-DTOs, no entidades Doctrine.
+
 ## 8. Definir Presentation Layer
 
 Los controllers deben:
 
 * recibir HTTP
-* construir el command/query
+* construir el input DTO o el command/query
 * delegar al handler
 * devolver JSON
+* no mapear entidades Doctrine
+* no convertir relaciones por su cuenta
 
 No deben contener:
 
@@ -237,6 +246,7 @@ AcademyMeController
 * Validacion formal en DTOs.
 * Controllers delgados.
 * Trazabilidad por commit.
+* DTOs de salida por caso de uso.
 
 `Academy` no es solo un modulo funcional: es la referencia oficial para construir los demas contextos del sistema.
 

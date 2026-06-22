@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Application\Handler;
 
 use App\Modules\Academy\Application\Command\UpdateAcademyCommand;
-use App\Modules\Academy\Application\Response\AcademyView;
+use App\Modules\Academy\Application\Response\AcademyResponse;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
+use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
 use App\Shared\Domain\ValueObject\Address;
 use App\Shared\Domain\ValueObject\City;
 use App\Shared\Domain\ValueObject\Email;
@@ -25,13 +26,13 @@ final readonly class UpdateAcademyHandler
     ) {
     }
 
-    public function __invoke(UpdateAcademyCommand $command): AcademyView
+    public function __invoke(UpdateAcademyCommand $command): AcademyResponse
     {
         $academy = $this->requireAcademy($command->academyId);
 
         $duplicate = $this->academyRepository->findOneByContactEmail(new Email($command->input->contactEmail));
         if (null !== $duplicate && $duplicate->id()->value() !== $academy->id()->value()) {
-            throw new ConflictHttpException('El correo de contacto ya existe.');
+            throw new AcademyAlreadyExistsException();
         }
 
         $academy->updateProfile(
@@ -46,7 +47,7 @@ final readonly class UpdateAcademyHandler
 
         $this->academyRepository->save($academy);
 
-        return AcademyView::fromAcademy($academy);
+        return AcademyResponse::fromAcademy($academy);
     }
 
     private function requireAcademy(string $academyId): \App\Modules\Academy\Domain\Academy\Academy

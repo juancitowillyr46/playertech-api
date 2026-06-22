@@ -336,6 +336,10 @@ Los DTOs deberán ser:
 * Simples.
 * Inmutables.
 * Sin lógica de negocio.
+* Separados por propósito:
+  * `Input DTOs` para requests.
+  * `Response DTOs` para respuestas.
+  * `View Models` para consultas complejas.
 
 ---
 
@@ -401,6 +405,13 @@ La validación deberá realizarse antes de ejecutar el caso de uso.
 Las respuestas deberán construirse mediante DTOs o Response Models.
 
 Nunca exponer entidades directamente.
+
+### Convención de respuestas
+
+* Listados: usar DTOs de item resumido.
+* Detalles: usar DTOs de detalle.
+* Relaciones: usar DTOs anidados, no entidades Doctrine.
+* No devolver arrays crudos desde el controller si ya existe un Response DTO.
 
 ---
 

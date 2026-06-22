@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Academy\Application\Response;
 
-final readonly class AcademyContextView
+final readonly class AcademyContextResponse
 {
     public function __construct(
         private string $mode,

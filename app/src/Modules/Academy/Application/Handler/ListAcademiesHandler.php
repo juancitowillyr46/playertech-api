@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Application\Handler;
 
 use App\Modules\Academy\Application\Query\ListAcademiesQuery;
-use App\Modules\Academy\Application\Response\AcademyView;
+use App\Modules\Academy\Application\Response\AcademyListItemResponse;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 
 final readonly class ListAcademiesHandler
@@ -16,12 +16,12 @@ final readonly class ListAcademiesHandler
     }
 
     /**
-     * @return AcademyView[]
+     * @return AcademyListItemResponse[]
      */
     public function __invoke(ListAcademiesQuery $query): array
     {
         return array_map(
-            static fn ($academy): AcademyView => AcademyView::fromAcademy($academy),
+            static fn ($academy): AcademyListItemResponse => AcademyListItemResponse::fromAcademy($academy),
             $this->academyRepository->findAllOrdered()
         );
     }

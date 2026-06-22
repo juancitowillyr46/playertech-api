@@ -9,6 +9,7 @@ use App\Modules\Academy\Application\Command\RegisterTenantCommand;
 use App\Modules\Academy\Application\Dto\TenantSignupInput;
 use App\Modules\Academy\Application\Handler\ActivateTenantHandler;
 use App\Modules\Academy\Application\Handler\RegisterTenantHandler;
+use App\Shared\Domain\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -33,7 +34,7 @@ final readonly class TenantSignupController
         $result = ($this->registerTenantHandler)(new RegisterTenantCommand($input));
 
         return new JsonResponse([
-            'data' => $result,
+            'data' => $result->toArray(),
             'meta' => new \stdClass(),
         ], 201);
     }
@@ -44,7 +45,7 @@ final readonly class TenantSignupController
         $result = ($this->activateTenantHandler)(new ActivateTenantCommand($token));
 
         return new JsonResponse([
-            'data' => $result,
+            'data' => $result->toArray(),
             'meta' => new \stdClass(),
         ]);
     }
@@ -57,6 +58,6 @@ final readonly class TenantSignupController
             return;
         }
 
-        throw new \App\Shared\Domain\Exception\ValidationException($violations);
+        throw new ValidationException($violations);
     }
 }

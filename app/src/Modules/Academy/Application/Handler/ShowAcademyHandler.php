@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Application\Handler;
 
 use App\Modules\Academy\Application\Query\ShowAcademyQuery;
-use App\Modules\Academy\Application\Response\AcademyView;
+use App\Modules\Academy\Application\Response\AcademyResponse;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
@@ -19,11 +19,11 @@ final readonly class ShowAcademyHandler
     ) {
     }
 
-    public function __invoke(ShowAcademyQuery $query): AcademyView
+    public function __invoke(ShowAcademyQuery $query): AcademyResponse
     {
         $academy = $this->requireAcademy($query->academyId);
 
-        return AcademyView::fromAcademy($academy);
+        return AcademyResponse::fromAcademy($academy);
     }
 
     private function requireAcademy(string $academyId): Academy

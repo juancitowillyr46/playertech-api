@@ -126,6 +126,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Academy` ahora usa `AcademyId` como Doctrine custom type y VOs compartidos como embeddables XML, sirviendo como referencia del patrón para los demas modulos.
 * Los VOs compartidos ya estan versionados en git y el mapping XML de `Academy` los consume de forma consistente.
 * La capa HTTP de `Academy` quedo delgada y delega en CQRS con commands, queries y handlers.
+* `Academy` ya responde mediante DTOs de salida por caso de uso, incluyendo contratos anidados para flujos como tenant signup.
 * Existe una guia operativa para construir nuevos modulos sin depender de modelos previos.
 * `Academy` queda definido como el modulo de referencia oficial para nuevos contextos: CQRS, XML puro, VOs tipados, soft delete, validacion formal, controllers delgados y separacion root/tenant.
 * `Mailpit` queda adoptado como la herramienta base de desarrollo local para validar envios de correo y flujos de activacion.

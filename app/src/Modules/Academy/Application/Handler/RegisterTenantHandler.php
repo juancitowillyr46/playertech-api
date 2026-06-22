@@ -6,7 +6,9 @@ namespace App\Modules\Academy\Application\Handler;
 
 use App\Modules\Academy\Application\Command\RegisterTenantCommand;
 use App\Modules\Academy\Application\Message\SendTenantActivationEmailMessage;
-use App\Modules\Academy\Application\Response\AcademyView;
+use App\Modules\Academy\Application\Response\AcademyResponse;
+use App\Modules\Academy\Application\Response\TenantSignupResponse;
+use App\Modules\Academy\Application\Response\TenantSignupUserResponse;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
@@ -29,7 +31,7 @@ final readonly class RegisterTenantHandler
     ) {
     }
 
-    public function __invoke(RegisterTenantCommand $command): array
+    public function __invoke(RegisterTenantCommand $command): TenantSignupResponse
     {
         $data = $command->input;
 
@@ -75,13 +77,13 @@ final readonly class RegisterTenantHandler
             $activationUrl
         ));
 
-        return [
-            'academy' => AcademyView::fromAcademy($academy)->toArray(),
-            'user' => [
-                'email' => $user->getUserIdentifier(),
-                'status' => $user->getStatus(),
-                'activation_pending' => true,
-            ],
-        ];
+        return new TenantSignupResponse(
+            AcademyResponse::fromAcademy($academy),
+            new TenantSignupUserResponse(
+                $user->getUserIdentifier(),
+                $user->getStatus(),
+                true,
+            )
+        );
     }
 }

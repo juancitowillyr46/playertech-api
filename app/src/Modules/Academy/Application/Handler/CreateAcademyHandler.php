@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Application\Handler;
 
 use App\Modules\Academy\Application\Command\CreateAcademyCommand;
-use App\Modules\Academy\Application\Response\AcademyView;
+use App\Modules\Academy\Application\Response\AcademyResponse;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
@@ -19,7 +19,7 @@ final readonly class CreateAcademyHandler
     ) {
     }
 
-    public function __invoke(CreateAcademyCommand $command): AcademyView
+    public function __invoke(CreateAcademyCommand $command): AcademyResponse
     {
         if (null !== $this->academyRepository->findOneByContactEmail($command->input->contactEmail)) {
             throw new AcademyAlreadyExistsException();
@@ -38,6 +38,6 @@ final readonly class CreateAcademyHandler
 
         $this->academyRepository->save($academy);
 
-        return AcademyView::fromAcademy($academy);
+        return AcademyResponse::fromAcademy($academy);
     }
 }

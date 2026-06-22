@@ -19,6 +19,7 @@ use App\Modules\Academy\Application\Handler\UpdateAcademyHandler;
 use App\Modules\Academy\Application\Query\ListAcademiesQuery;
 use App\Modules\Academy\Application\Query\ShowAcademyQuery;
 use App\Modules\Identity\Domain\User\AccountUser;
+use App\Shared\Domain\Exception\ValidationException;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -156,6 +157,6 @@ final class AcademyController
             return;
         }
 
-        throw new \App\Shared\Domain\Exception\ValidationException($violations);
+        throw new ValidationException($violations);
     }
 }

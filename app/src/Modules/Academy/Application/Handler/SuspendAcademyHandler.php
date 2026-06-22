@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Application\Handler;
 
 use App\Modules\Academy\Application\Command\SuspendAcademyCommand;
-use App\Modules\Academy\Application\Response\AcademyView;
+use App\Modules\Academy\Application\Response\AcademyResponse;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
@@ -19,14 +19,14 @@ final readonly class SuspendAcademyHandler
     ) {
     }
 
-    public function __invoke(SuspendAcademyCommand $command): AcademyView
+    public function __invoke(SuspendAcademyCommand $command): AcademyResponse
     {
         $academy = $this->requireAcademy($command->academyId);
 
         $academy->suspend($command->actorId);
         $this->academyRepository->save($academy);
 
-        return AcademyView::fromAcademy($academy);
+        return AcademyResponse::fromAcademy($academy);
     }
 
     private function requireAcademy(string $academyId): Academy
