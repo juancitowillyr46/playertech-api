@@ -131,3 +131,31 @@ La base técnica se considera bien protegida cuando:
 * Las validaciones críticas están cubiertas.
 * Los cambios de seguridad rompen tests si se alteran reglas.
 
+---
+
+# Test Commands
+
+## Local / Docker
+
+```bash
+docker exec docker-app-1 bash -lc 'cd /var/www/html && vendor/bin/phpunit --testdox'
+```
+
+## Test puntual
+
+```bash
+docker exec docker-app-1 bash -lc 'cd /var/www/html && vendor/bin/phpunit --filter RegisterTenantHandlerTest --testdox'
+```
+
+## Migraciones de entorno de desarrollo
+
+```bash
+docker exec docker-app-1 bash -lc 'cd /var/www/html && php bin/console doctrine:migrations:migrate --no-interaction'
+```
+
+## Validación técnica de mapping
+
+```bash
+docker exec docker-app-1 bash -lc 'cd /var/www/html && php bin/console doctrine:mapping:info'
+```
+
