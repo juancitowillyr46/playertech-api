@@ -142,6 +142,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Existe una guia operativa para construir nuevos modulos sin depender de modelos previos.
 * `Academy` queda definido como el modulo de referencia oficial para nuevos contextos: CQRS, XML puro, VOs tipados, soft delete, validacion formal, controllers delgados y separacion root/tenant.
 * Los comandos de validacion de pruebas y migraciones quedaron documentados en `specs/11-testing-strategy.md`.
+* La separacion de configuracion `local`/`test`/`prod` quedó documentada en `specs/17-environment-guide.md`.
 * `Mailpit` queda adoptado como la herramienta base de desarrollo local para validar envios de correo y flujos de activacion.
 * `EP-003` queda reorientada para distinguir usuarios de plataforma y usuarios tenant; la creacion del owner/admin inicial del tenant se documenta como historia explicita.
 * La suspension de una academia bloquea a todos sus usuarios, pero no elimina ni desactiva usuarios en cascada.

@@ -25,7 +25,6 @@ final class RegisterTenantHandlerTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        $this->forceTestEnvironment();
         self::bootKernel();
 
         $doctrine = self::$kernel->getContainer()->get('doctrine');
@@ -62,26 +61,8 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         $schemaTool = new SchemaTool($this->entityManager);
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
 
+        $schemaTool->dropDatabase();
         $schemaTool->createSchema($metadata);
-    }
-
-    private function forceTestEnvironment(): void
-    {
-        $databaseUrl = getenv('DATABASE_URL') ?: 'mysql://root:root@mysql:3306/playertech_test?serverVersion=8.0&charset=utf8mb4';
-
-        foreach ([
-            'APP_ENV=test',
-            'APP_DEBUG=1',
-            'KERNEL_CLASS=App\Kernel',
-            'DATABASE_URL='.$databaseUrl,
-            'MAILER_DSN=null://null',
-            'JWT_PASSPHRASE=test_passphrase',
-        ] as $value) {
-            putenv($value);
-            [$name, $envValue] = explode('=', $value, 2);
-            $_ENV[$name] = $envValue;
-            $_SERVER[$name] = $envValue;
-        }
     }
 
     public function testItRegistersTenantAcademyAndOwnerUser(): void

@@ -159,3 +159,7 @@ docker exec docker-app-1 bash -lc 'cd /var/www/html && php bin/console doctrine:
 docker exec docker-app-1 bash -lc 'cd /var/www/html && php bin/console doctrine:mapping:info'
 ```
 
+## Entornos
+
+La separación de `local`, `test` y `prod` está documentada en `specs/17-environment-guide.md`.
+

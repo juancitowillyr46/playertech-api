@@ -2,25 +2,38 @@
 
 declare(strict_types=1);
 
+use Symfony\Component\Dotenv\Dotenv;
+
 require dirname(__DIR__).'/vendor/autoload.php';
 
-$databaseName = 'playertech_test_'.getmypid();
-$dsn = 'mysql:host=mysql;port=3306;charset=utf8mb4';
+$dotenv = new Dotenv();
+$dotenv->usePutenv();
+$projectDir = dirname(__DIR__);
+$dotenv->loadEnv($projectDir.'/.env');
 
-$pdo = new PDO($dsn, 'root', 'root', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-]);
+if ('test' === ($_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? null) && is_file($projectDir.'/.env.test')) {
+    $dotenv->overload($projectDir.'/.env.test');
+}
 
-$pdo->exec(sprintf(
-    'CREATE DATABASE IF NOT EXISTS `%s` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci',
-    $databaseName
-));
+$databaseUrl = $_SERVER['DATABASE_URL'] ?? $_ENV['DATABASE_URL'] ?? null;
 
-$databaseUrl = sprintf(
-    'mysql://root:root@mysql:3306/%s?serverVersion=8.0&charset=utf8mb4',
-    $databaseName
-);
+if ('test' === ($_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? null) && is_string($databaseUrl) && str_starts_with($databaseUrl, 'mysql://')) {
+    $parts = parse_url($databaseUrl);
+    $databaseName = isset($parts['path']) ? ltrim((string) $parts['path'], '/') : null;
 
-putenv('DATABASE_URL='.$databaseUrl);
-$_ENV['DATABASE_URL'] = $databaseUrl;
-$_SERVER['DATABASE_URL'] = $databaseUrl;
+    if (is_string($databaseName) && '' !== $databaseName) {
+        $pdo = new PDO('mysql:host=mysql;port=3306;charset=utf8mb4', 'root', 'root', [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        ]);
+
+        $pdo->exec(sprintf(
+            'DROP DATABASE IF EXISTS `%s`',
+            $databaseName
+        ));
+
+        $pdo->exec(sprintf(
+            'CREATE DATABASE IF NOT EXISTS `%s` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci',
+            $databaseName
+        ));
+    }
+}
