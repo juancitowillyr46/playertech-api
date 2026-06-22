@@ -169,6 +169,19 @@ El tenant se resuelve desde el JWT.
 
 No se permite enviar `academy_id` en la URL para operar el tenant.
 
+## Platform vs Tenant Users
+
+Las rutas bajo `/api/v1/platform/*` son exclusivas de `ROLE_ROOT`.
+
+Las rutas bajo `/api/v1/academy/*` son exclusivas de usuarios autenticados con contexto tenant.
+
+La creación de usuarios se separa así:
+
+* `POST /api/v1/platform/users` para usuarios de plataforma y creación administrativa global.
+* `POST /api/v1/academy/users` para creación de usuarios dentro del tenant actual.
+
+Un usuario tenant no debe acceder a `/api/v1/platform/users`.
+
 ---
 
 # Foundation Resources
@@ -190,6 +203,8 @@ Los recursos base que deben quedar claros desde el inicio son:
 * `POST /users`
 * `GET /users`
 * `GET /users/{id}`
+
+Ver referencia detallada en `specs/16-api-reference.md`.
 
 ## Venues
 

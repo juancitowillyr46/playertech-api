@@ -18,17 +18,15 @@ use App\Modules\Academy\Application\Handler\SuspendAcademyHandler;
 use App\Modules\Academy\Application\Handler\UpdateAcademyHandler;
 use App\Modules\Academy\Application\Query\ListAcademiesQuery;
 use App\Modules\Academy\Application\Query\ShowAcademyQuery;
-use App\Modules\Identity\Domain\User\AccountUser;
-use App\Shared\Domain\Exception\ValidationException;
+use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/platform/academies')]
-final class AcademyController
+final class AcademyController extends AbstractApiController
 {
     public function __construct(
         private readonly Security $security,
@@ -46,7 +44,7 @@ final class AcademyController
     public function create(Request $request): JsonResponse
     {
         $input = CreateAcademyInput::fromArray($request->toArray());
-        $this->assertValid($input);
+        $this->assertValid($this->validator, $input);
 
         $view = ($this->createAcademyHandler)(
             new CreateAcademyCommand(
@@ -90,7 +88,7 @@ final class AcademyController
     public function update(string $academyId, Request $request): JsonResponse
     {
         $input = UpdateAcademyInput::fromArray($request->toArray());
-        $this->assertValid($input);
+        $this->assertValid($this->validator, $input);
 
         $view = ($this->updateAcademyHandler)(
             new UpdateAcademyCommand(
@@ -140,23 +138,6 @@ final class AcademyController
 
     private function requireActorId(): string
     {
-        $user = $this->security->getUser();
-
-        if (!$user instanceof AccountUser) {
-            throw new BadRequestHttpException('No se pudo resolver el usuario autenticado.');
-        }
-
-        return $user->getId();
-    }
-
-    private function assertValid(object $input): void
-    {
-        $violations = $this->validator->validate($input);
-
-        if (0 === count($violations)) {
-            return;
-        }
-
-        throw new ValidationException($violations);
+        return $this->requireAuthenticatedUserId($this->security);
     }
 }

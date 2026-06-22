@@ -8,10 +8,18 @@ use App\Modules\Identity\Application\Command\UpdateUserCommand;
 use App\Modules\Identity\Application\Response\UserResponse;
 use App\Modules\Identity\Domain\Exception\UserAlreadyExistsException;
 use App\Modules\Identity\Domain\Exception\UserTenantScopeViolationException;
+use App\Modules\Identity\Domain\Policy\UserAdministrationPolicy;
 use App\Modules\Identity\Domain\User\AccountUser;
 
 final readonly class UpdateUserHandler extends AbstractUserHandler
 {
+    public function __construct(
+        \Doctrine\ORM\EntityManagerInterface $entityManager,
+        private UserAdministrationPolicy $userAdministrationPolicy,
+    ) {
+        parent::__construct($entityManager);
+    }
+
     public function __invoke(UpdateUserCommand $command): UserResponse
     {
         $user = $this->requireUser($command->userId, $command->academyId);
@@ -25,13 +33,7 @@ final readonly class UpdateUserHandler extends AbstractUserHandler
             throw new UserAlreadyExistsException();
         }
 
-        if (AccountUser::ROLE_ROOT === $user->getRole() && AccountUser::ROLE_ROOT !== $role) {
-            throw new UserTenantScopeViolationException();
-        }
-
-        if (AccountUser::ROLE_ROOT !== $user->getRole() && AccountUser::ROLE_ROOT === $role) {
-            throw new UserTenantScopeViolationException();
-        }
+        $this->userAdministrationPolicy->assertCanChangeRole($user, $role);
 
         if (null !== $user->getAcademyId() && (null === $command->academyId || $user->getAcademyId() !== $command->academyId)) {
             throw new UserTenantScopeViolationException();

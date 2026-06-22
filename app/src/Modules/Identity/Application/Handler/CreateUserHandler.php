@@ -8,6 +8,7 @@ use App\Modules\Identity\Application\Command\CreateUserCommand;
 use App\Modules\Identity\Application\Response\UserResponse;
 use App\Modules\Identity\Domain\Exception\UserAlreadyExistsException;
 use App\Modules\Identity\Domain\Exception\UserTenantScopeViolationException;
+use App\Modules\Identity\Domain\Policy\UserAdministrationPolicy;
 use App\Modules\Identity\Domain\User\AccountUser;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -18,6 +19,7 @@ final readonly class CreateUserHandler extends AbstractUserHandler
     public function __construct(
         \Doctrine\ORM\EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
+        private UserAdministrationPolicy $userAdministrationPolicy,
     ) {
         parent::__construct($entityManager);
     }
@@ -37,13 +39,7 @@ final readonly class CreateUserHandler extends AbstractUserHandler
             throw new UserTenantScopeViolationException();
         }
 
-        if (AccountUser::ROLE_ROOT === $role && null !== $effectiveAcademyId) {
-            throw new UserTenantScopeViolationException();
-        }
-
-        if (AccountUser::ROLE_ROOT !== $role && (null === $effectiveAcademyId || '' === $effectiveAcademyId)) {
-            throw new UserTenantScopeViolationException();
-        }
+        $this->userAdministrationPolicy->assertCanCreate($role, $effectiveAcademyId);
 
         if (null !== $effectiveAcademyId && !Uuid::isValid($effectiveAcademyId)) {
             throw new UserTenantScopeViolationException();

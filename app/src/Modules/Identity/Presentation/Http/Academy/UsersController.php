@@ -18,18 +18,16 @@ use App\Modules\Identity\Application\Handler\ShowUserHandler;
 use App\Modules\Identity\Application\Handler\UpdateUserHandler;
 use App\Modules\Identity\Application\Query\ListUsersQuery;
 use App\Modules\Identity\Application\Query\ShowUserQuery;
-use App\Modules\Identity\Domain\User\AccountUser;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
-use App\Shared\Domain\Exception\ValidationException;
+use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/academy/users')]
-final class UsersController
+final class UsersController extends AbstractApiController
 {
     public function __construct(
         private readonly Security $security,
@@ -62,7 +60,7 @@ final class UsersController
     public function create(Request $request, TenantContext $tenantContext): JsonResponse
     {
         $input = CreateUserInput::fromArray($request->toArray());
-        $this->assertValid($input);
+        $this->assertValid($this->validator, $input);
 
         $view = ($this->createUserHandler)(
             new CreateUserCommand(
@@ -149,20 +147,9 @@ final class UsersController
         $actorId = $tenantContext->getUserId();
 
         if (null === $actorId || '' === $actorId) {
-            throw new BadRequestHttpException('No se pudo resolver el usuario autenticado.');
+            throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('No se pudo resolver el usuario autenticado.');
         }
 
         return $actorId;
-    }
-
-    private function assertValid(object $input): void
-    {
-        $violations = $this->validator->validate($input);
-
-        if (0 === count($violations)) {
-            return;
-        }
-
-        throw new ValidationException($violations);
     }
 }

@@ -10,14 +10,13 @@ use App\Modules\Academy\Application\Handler\GetAcademyContextHandler;
 use App\Modules\Academy\Application\Handler\UpdateAcademyHandler;
 use App\Modules\Academy\Application\Query\GetAcademyContextQuery;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
-use App\Shared\Domain\Exception\ValidationException;
+use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-final class AcademyMeController
+final class AcademyMeController extends AbstractApiController
 {
     public function __construct(
         private readonly GetAcademyContextHandler $getAcademyContextHandler,
@@ -41,7 +40,7 @@ final class AcademyMeController
     public function update(Request $request, TenantContext $tenantContext): JsonResponse
     {
         $input = UpdateAcademyInput::fromArray($request->toArray());
-        $this->assertValid($input);
+        $this->assertValid($this->validator, $input);
 
         $view = ($this->updateAcademyHandler)(
             new UpdateAcademyCommand(
@@ -62,20 +61,9 @@ final class AcademyMeController
         $actorId = $tenantContext->getUserId();
 
         if (null === $actorId || '' === $actorId) {
-            throw new BadRequestHttpException('No se pudo resolver el usuario autenticado.');
+            throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('No se pudo resolver el usuario autenticado.');
         }
 
         return $actorId;
-    }
-
-    private function assertValid(object $input): void
-    {
-        $violations = $this->validator->validate($input);
-
-        if (0 === count($violations)) {
-            return;
-        }
-
-        throw new ValidationException($violations);
     }
 }

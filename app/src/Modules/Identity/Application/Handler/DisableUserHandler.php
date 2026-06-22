@@ -6,20 +6,26 @@ namespace App\Modules\Identity\Application\Handler;
 
 use App\Modules\Identity\Application\Command\DisableUserCommand;
 use App\Modules\Identity\Application\Response\UserResponse;
-use App\Modules\Identity\Domain\Exception\CannotDisableLastTenantAdminException;
+use App\Modules\Identity\Domain\Policy\UserAdministrationPolicy;
 use App\Modules\Identity\Domain\User\AccountUser;
 
 final readonly class DisableUserHandler extends AbstractUserHandler
 {
+    public function __construct(
+        \Doctrine\ORM\EntityManagerInterface $entityManager,
+        private UserAdministrationPolicy $userAdministrationPolicy,
+    ) {
+        parent::__construct($entityManager);
+    }
+
     public function __invoke(DisableUserCommand $command): UserResponse
     {
         $user = $this->requireUser($command->userId, $command->academyId);
 
-        if (null !== $user->getAcademyId() && AccountUser::ROLE_ACADEMY_ADMIN === $user->getRole() && $user->isActive()) {
-            if (1 >= $this->countActiveTenantAdmins($user->getAcademyId(), $user->getId())) {
-                throw new CannotDisableLastTenantAdminException();
-            }
-        }
+        $this->userAdministrationPolicy->assertCanDisable(
+            $user,
+            null === $user->getAcademyId() ? 0 : $this->countActiveTenantAdmins($user->getAcademyId(), $user->getId())
+        );
 
         if (!$user->isActive()) {
             return UserResponse::fromUser($user);
