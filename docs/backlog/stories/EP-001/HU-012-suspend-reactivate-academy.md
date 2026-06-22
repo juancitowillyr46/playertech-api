@@ -67,9 +67,17 @@ Las academias no pueden eliminarse físicamente.
 
 Una academia suspendida no puede autenticarse.
 
+## BR-002a
+
+La suspensión de una academia bloquea la autenticación de todos sus usuarios.
+
 ## BR-003
 
 La información histórica debe conservarse.
+
+## BR-003a
+
+La suspensión de una academia no elimina ni desactiva automáticamente a sus usuarios.
 
 ## BR-004
 

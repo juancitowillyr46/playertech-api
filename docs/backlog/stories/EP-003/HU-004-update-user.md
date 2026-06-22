@@ -2,7 +2,7 @@
 
 ## Historia de Usuario
 
-Como administrador académico
+Como administrador de plataforma o de academia
 
 Quiero actualizar la información de un usuario
 
@@ -13,7 +13,8 @@ Para mantener la información actualizada.
 # Reglas de Negocio
 
 * El usuario debe existir.
-* No se puede modificar la academia del usuario.
+* No se puede modificar la academia del usuario si ya pertenece a un tenant.
+* No se puede cambiar un usuario root a tenant ni viceversa mediante este flujo.
 
 ---
 

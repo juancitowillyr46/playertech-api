@@ -2,7 +2,7 @@
 
 ## Historia de Usuario
 
-Como administrador académico
+Como administrador de plataforma o academia
 
 Quiero reactivar un usuario
 

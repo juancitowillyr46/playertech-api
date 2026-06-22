@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Shared\Infrastructure\Http;
 
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
+use App\Modules\Identity\Domain\Exception\CannotDisableLastTenantAdminException;
+use App\Modules\Identity\Domain\Exception\UserAlreadyExistsException;
+use App\Modules\Identity\Domain\Exception\UserTenantScopeViolationException;
 use App\Shared\Domain\Exception\ValidationException;
 use DomainException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -44,6 +47,32 @@ final class ProblemDetailsExceptionSubscriber implements EventSubscriberInterfac
                     'type' => 'https://api.playertech/errors/conflict',
                     'title' => 'Conflict',
                     'status' => Response::HTTP_CONFLICT,
+                    'detail' => $throwable->getMessage(),
+                    'instance' => $instance,
+                ],
+            ];
+        }
+
+        if ($throwable instanceof UserAlreadyExistsException || $throwable instanceof CannotDisableLastTenantAdminException) {
+            return [
+                'status' => Response::HTTP_CONFLICT,
+                'body' => [
+                    'type' => 'https://api.playertech/errors/conflict',
+                    'title' => 'Conflict',
+                    'status' => Response::HTTP_CONFLICT,
+                    'detail' => $throwable->getMessage(),
+                    'instance' => $instance,
+                ],
+            ];
+        }
+
+        if ($throwable instanceof UserTenantScopeViolationException) {
+            return [
+                'status' => Response::HTTP_FORBIDDEN,
+                'body' => [
+                    'type' => 'https://api.playertech/errors/forbidden',
+                    'title' => 'Forbidden',
+                    'status' => Response::HTTP_FORBIDDEN,
                     'detail' => $throwable->getMessage(),
                     'instance' => $instance,
                 ],

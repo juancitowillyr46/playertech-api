@@ -23,6 +23,7 @@ use Symfony\Component\Uid\Uuid;
 class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const STATUS_ACTIVE = 'ACTIVE';
+    public const STATUS_INACTIVE = 'INACTIVE';
     public const STATUS_PENDING_ACTIVATION = 'PENDING_ACTIVATION';
     public const ROLE_ROOT = 'ROLE_ROOT';
     public const ROLE_ACADEMY_ADMIN = 'ROLE_ACADEMY_ADMIN';
@@ -35,6 +36,9 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'guid', name: 'academy_id', nullable: true)]
     private ?string $academyId = null;
+
+    #[ORM\Column(type: 'string', length: 150, name: 'full_name', nullable: true)]
+    private ?string $fullName = null;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private string $email;
@@ -124,6 +128,11 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
         return null === $this->academyId ? null : Uuid::fromString($this->academyId);
     }
 
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
     public function getStatus(): string
     {
         return $this->status;
@@ -182,6 +191,11 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAcademyId(Uuid|string|null $academyId): void
     {
         $this->academyId = $academyId instanceof Uuid ? $academyId->toRfc4122() : $academyId;
+    }
+
+    public function setFullName(?string $fullName): void
+    {
+        $this->fullName = null === $fullName ? null : trim($fullName);
     }
 
     public function setEmail(string $email): void

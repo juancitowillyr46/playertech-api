@@ -27,7 +27,7 @@ La plataforma requiere identificar al usuario que realiza las operaciones y rest
 
 # Historia de Usuario
 
-Como usuario administrativo
+Como usuario administrativo de plataforma o tenant
 
 Quiero iniciar sesión
 
@@ -37,7 +37,7 @@ Para acceder a las funcionalidades permitidas según mi rol.
 
 # Valor de Negocio
 
-Garantizar acceso seguro a la información de la academia.
+Garantizar acceso seguro a la información de la plataforma o de la academia según el contexto del usuario.
 
 ---
 
@@ -57,7 +57,7 @@ Solo usuarios activos pueden iniciar sesión.
 
 ## BR-002
 
-Todo usuario pertenece a una academia.
+Los usuarios tenant pertenecen a una academia.
 
 ## BR-003
 
@@ -65,7 +65,11 @@ Todo usuario posee un rol asignado.
 
 ## BR-004
 
-La academia debe encontrarse activa.
+Si el usuario pertenece a un tenant, la academia debe encontrarse activa.
+
+## BR-005
+
+Los usuarios root no requieren `academy_id`.
 
 ---
 

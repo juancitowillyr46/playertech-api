@@ -46,6 +46,8 @@ Reduce fricción de entrada y permite captación directa de clientes.
 
 El registro crea la academia y el usuario owner/admin inicial en un estado pendiente de activación.
 
+El usuario owner/admin inicial pertenece a la nueva academia y no es root.
+
 El Super Admin conserva la capacidad de crear tenants desde la plataforma.
 
 ---

@@ -28,6 +28,7 @@ La base tecnica actual incluye:
 | Docker stack | Non-Functional / Technical Enabler | Done | `7c3de8e` | Ejecucion dentro de contenedores |
 | Identity auth module refactor | Technical Enabler | Done | `87f6f9b` | Login resuelto por Symfony Security `json_login`; `/me`, handlers JWT y entidad movidos a `Modules/Identity` |
 | Identity technical user model | Technical Enabler | Done | `87f6f9b` | `AccountUser` usa Doctrine attributes y GUID string para acelerar la foundation sin perder compatibilidad |
+| Identity users CRUD runtime | Functional / Technical Enabler | Done | `untracked` | CRUD de users expuesto en `/api/v1/platform/users` y `/api/v1/academy/users`, con DTOs, handlers, exceptions de dominio y respuesta JSON estándar |
 | Shared health endpoint | Technical Enabler | Done | `87f6f9b` | HealthController moved to Shared/Presentation/Http |
 | Legacy folder cleanup | Technical Enabler | Done | `87f6f9b` | Eliminados `src/Command`, `src/Controller`, `src/Entity`, `src/EventSubscriber` y `src/Security` heredados |
 | Root platform command | Technical Enabler | Done | `87f6f9b` | `app:user:create-root` registra usuarios `ROLE_ROOT` sin tenant |
@@ -121,6 +122,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `AccountUser` queda como entidad tecnica acoplada al framework por pragmatismo.
 * El almacenamiento UUID ya esta normalizado como string legible en la tabla `users`.
 * Login y `/auth/me` validados en runtime.
+* CRUD de users validado en runtime para contexto plataforma, incluyendo create, update, disable y enable con respuesta JSON estándar.
 * `ROLE_ROOT` opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext`.
 * `Academy` ya expone `GET /api/v1/academy/me` como contexto tenant, `PUT /api/v1/academy/me` para autogestión del tenant y `GET /api/v1/platform/academies` como API de plataforma.
 * `Academy` ahora usa `AcademyId` como Doctrine custom type y VOs compartidos como embeddables XML, sirviendo como referencia del patrón para los demas modulos.
@@ -130,6 +132,8 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Existe una guia operativa para construir nuevos modulos sin depender de modelos previos.
 * `Academy` queda definido como el modulo de referencia oficial para nuevos contextos: CQRS, XML puro, VOs tipados, soft delete, validacion formal, controllers delgados y separacion root/tenant.
 * `Mailpit` queda adoptado como la herramienta base de desarrollo local para validar envios de correo y flujos de activacion.
+* `EP-003` queda reorientada para distinguir usuarios de plataforma y usuarios tenant; la creacion del owner/admin inicial del tenant se documenta como historia explicita.
+* La suspension de una academia bloquea a todos sus usuarios, pero no elimina ni desactiva usuarios en cascada.
 * Las validaciones de negocio de `Academy` devuelven Problem Details JSON; el caso de duplicado de correo se resuelve con excepcion de dominio y respuesta `409`.
 * `Academy` incorpora soft delete con `deleted_at` y `deleted_by`, y Doctrine ya tiene un filtro global para excluir entidades borradas lógicamente.
 * Se documentó una épica nueva para onboarding de tenant (`EP-014`) sin alterar el flujo de creación de tenants por `ROLE_ROOT`.

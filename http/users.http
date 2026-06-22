@@ -1,0 +1,66 @@
+@baseUrl = http://localhost:8081
+@adminEmail = admin@playertech.com
+@adminPassword = secret123
+
+### Login root
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "{{adminEmail}}",
+  "password": "{{adminPassword}}"
+}
+
+> {% client.global.set("token", response.body.data.token); %}
+
+### Platform: List users
+GET {{baseUrl}}/api/v1/platform/users
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Platform: Create user
+POST {{baseUrl}}/api/v1/platform/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "full_name": "User Demo",
+  "email": "user.demo@example.com",
+  "password": "secret123",
+  "role": "ROLE_ROOT"
+}
+
+### Platform: Show user
+GET {{baseUrl}}/api/v1/platform/users/{{userId}}
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Platform: Update user
+PUT {{baseUrl}}/api/v1/platform/users/{{userId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "full_name": "User Demo Updated",
+  "email": "user.demo@example.com",
+  "role": "ROLE_ROOT"
+}
+
+### Platform: Disable user
+POST {{baseUrl}}/api/v1/platform/users/{{userId}}/disable
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Platform: Enable user
+POST {{baseUrl}}/api/v1/platform/users/{{userId}}/enable
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Tenant: List users
+GET {{baseUrl}}/api/v1/academy/users
+Authorization: Bearer {{tenantToken}}
+Accept: application/json
+

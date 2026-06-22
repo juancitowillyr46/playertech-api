@@ -29,6 +29,7 @@ final class CreateUserCommand extends Command
     {
         $this
             ->addOption('email', null, InputOption::VALUE_REQUIRED, 'User email')
+            ->addOption('full-name', null, InputOption::VALUE_OPTIONAL, 'User full name')
             ->addOption('password', null, InputOption::VALUE_REQUIRED, 'User password')
             ->addOption('academy-id', null, InputOption::VALUE_REQUIRED, 'Academy UUID for tenant users')
             ->addOption('role', null, InputOption::VALUE_OPTIONAL, 'Primary role', AccountUser::DEFAULT_ROLE)
@@ -38,6 +39,7 @@ final class CreateUserCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = (string) $input->getOption('email');
+        $fullName = (string) $input->getOption('full-name');
         $plainPassword = (string) $input->getOption('password');
         $academyId = (string) $input->getOption('academy-id');
         $role = (string) $input->getOption('role');
@@ -61,6 +63,10 @@ final class CreateUserCommand extends Command
             return self::FAILURE;
         }
 
+        if ('' === $fullName) {
+            $fullName = $email;
+        }
+
         $repository = $this->entityManager->getRepository(AccountUser::class);
         /** @var AccountUser|null $user */
         $user = $repository->findOneBy(['email' => $email]);
@@ -72,6 +78,7 @@ final class CreateUserCommand extends Command
             $this->entityManager->persist($user);
         }
 
+        $user->setFullName($fullName);
         $user->setAcademyId($academyId);
         $user->setRole($role);
         $user->setStatus($status);

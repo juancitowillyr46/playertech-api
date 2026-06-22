@@ -2,7 +2,7 @@
 
 ## Historia de Usuario
 
-Como administrador académico
+Como administrador de plataforma o academia
 
 Quiero desactivar un usuario
 
@@ -15,6 +15,7 @@ Para impedir que continúe accediendo a la plataforma.
 * No se eliminan usuarios.
 * El historial debe conservarse.
 * Un usuario desactivado no puede autenticarse.
+* No se puede desactivar el último administrador activo del tenant.
 
 ---
 

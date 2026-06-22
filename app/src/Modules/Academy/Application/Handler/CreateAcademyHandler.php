@@ -11,6 +11,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
 use App\Shared\Domain\ValueObject\AuditTrail;
+use App\Shared\Domain\ValueObject\Email;
 
 final readonly class CreateAcademyHandler
 {
@@ -21,7 +22,7 @@ final readonly class CreateAcademyHandler
 
     public function __invoke(CreateAcademyCommand $command): AcademyResponse
     {
-        if (null !== $this->academyRepository->findOneByContactEmail($command->input->contactEmail)) {
+        if (null !== $this->academyRepository->findOneByContactEmail(new Email($command->input->contactEmail))) {
             throw new AcademyAlreadyExistsException();
         }
 

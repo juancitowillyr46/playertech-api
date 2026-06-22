@@ -28,18 +28,24 @@ final class CreateRootUserCommand extends Command
     {
         $this
             ->addOption('email', null, InputOption::VALUE_REQUIRED, 'Root user email')
+            ->addOption('full-name', null, InputOption::VALUE_OPTIONAL, 'Root user full name')
             ->addOption('password', null, InputOption::VALUE_REQUIRED, 'Root user password');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = (string) $input->getOption('email');
+        $fullName = (string) $input->getOption('full-name');
         $plainPassword = (string) $input->getOption('password');
 
         if ('' === $email || '' === $plainPassword) {
             $output->writeln('<error>Email and password are required.</error>');
 
             return self::FAILURE;
+        }
+
+        if ('' === $fullName) {
+            $fullName = $email;
         }
 
         $repository = $this->entityManager->getRepository(AccountUser::class);
@@ -53,6 +59,7 @@ final class CreateRootUserCommand extends Command
             $this->entityManager->persist($user);
         }
 
+        $user->setFullName($fullName);
         $user->setAcademyId(null);
         $user->setRole(AccountUser::ROLE_ROOT);
         $user->setStatus(AccountUser::STATUS_ACTIVE);

@@ -1,5 +1,18 @@
 @baseUrl = http://localhost:8081
 @token = {{token}}
+@tenantToken = {{tenantToken}}
+@academyId = {{academyId}}
+@activationToken = {{activationToken}}
+
+### Auth: Login root or tenant
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "admin@playertech.com",
+  "password": "secret123"
+}
 
 ### Platform: List academies
 GET {{baseUrl}}/api/v1/platform/academies
@@ -7,6 +20,7 @@ Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Platform: Create academy
+### Request DTO: CreateAcademyInput
 POST {{baseUrl}}/api/v1/platform/academies
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -27,6 +41,7 @@ Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Platform: Update academy
+### Request DTO: UpdateAcademyInput
 PUT {{baseUrl}}/api/v1/platform/academies/{{academyId}}
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -51,12 +66,34 @@ POST {{baseUrl}}/api/v1/platform/academies/{{academyId}}/reactivate
 Authorization: Bearer {{token}}
 Accept: application/json
 
+### Public: Tenant signup
+### Request DTO: TenantSignupInput
+POST {{baseUrl}}/api/v1/public/tenants/signup
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Academia Tenant Demo",
+  "contact_email": "tenant.demo@example.com",
+  "contact_name": "Juan Perez",
+  "password": "secret12345",
+  "phone": "+51 987 654 321",
+  "address": "Jr. Secundario 789",
+  "city": "Arequipa",
+  "logo": "https://cdn.example.com/tenant-logo.png"
+}
+
+### Public: Activate tenant
+GET {{baseUrl}}/api/v1/public/tenants/activate/{{activationToken}}
+Accept: application/json
+
 ### Tenant: Academy context
 GET {{baseUrl}}/api/v1/academy/me
 Authorization: Bearer {{tenantToken}}
 Accept: application/json
 
 ### Tenant: Update own academy
+### Request DTO: UpdateAcademyInput
 PUT {{baseUrl}}/api/v1/academy/me
 Authorization: Bearer {{tenantToken}}
 Content-Type: application/json

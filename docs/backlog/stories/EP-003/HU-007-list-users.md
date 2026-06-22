@@ -2,7 +2,7 @@
 
 ## Historia de Usuario
 
-Como administrador académico
+Como administrador de plataforma o academia
 
 Quiero consultar los usuarios registrados
 
@@ -18,7 +18,8 @@ Tener visibilidad de quién tiene acceso al sistema.
 
 # Reglas de Negocio
 
-* Solo se visualizan usuarios de la academia actual.
+* Los usuarios de plataforma se listan sin `academy_id`.
+* Los usuarios tenant solo se visualizan dentro de su academia.
 * No se muestran usuarios de otras academias.
 
 ---

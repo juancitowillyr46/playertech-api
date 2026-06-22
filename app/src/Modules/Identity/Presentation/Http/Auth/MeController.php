@@ -28,6 +28,7 @@ final class MeController
         return new JsonResponse([
             'data' => [
                 'id' => $user->getId(),
+                'full_name' => $user->getFullName(),
                 'email' => $user->getUserIdentifier(),
                 'academy_id' => $user->getAcademyId(),
                 'role' => $user->getRole(),
