@@ -15,3 +15,4 @@ services:
             - '../src/Modules/*/Domain/'
 
     App\Modules\Academy\Domain\Academy\AcademyRepository: '@App\Modules\Academy\Infrastructure\Persistence\AcademyRepository'
+    App\Modules\Identity\Domain\Policy\UserAdministrationPolicy: ~

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
+         bootstrap="tests/bootstrap.php"
          colors="true"
 >
     <php>
         <env name="APP_ENV" value="test" />
         <env name="APP_DEBUG" value="1" />
-        <env name="DATABASE_URL" value="sqlite:///:memory:" />
+        <env name="KERNEL_CLASS" value="App\Kernel" />
+        <env name="DATABASE_URL" value="mysql://root:root@mysql:3306/playertech_test?serverVersion=8.0&amp;charset=utf8mb4" />
+        <env name="MAILER_DSN" value="null://null" />
         <env name="JWT_PASSPHRASE" value="test_passphrase" />
     </php>
     <testsuites>

@@ -84,6 +84,10 @@ Para PlayerTech, la primera tanda valida:
 * `AccountUser`
 * `UserAdministrationPolicy`
 
+Y como primera integración real de infraestructura:
+
+* `RegisterTenantHandler` contra base de datos MySQL de test y bus de mensajes desacoplado.
+
 Esta capa sirve como red de seguridad antes de incorporar pruebas funcionales de API.
 
 ---
