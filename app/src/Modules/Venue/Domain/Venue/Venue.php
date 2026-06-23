@@ -133,4 +133,20 @@ final class Venue
     {
         return $this->deletedBy;
     }
+
+    public function update(
+        Name $name,
+        ?Address $address,
+        ?City $city,
+        ?PhoneNumber $phone,
+        ?Notes $notes,
+        string $updatedBy
+    ): void {
+        $this->name = $name;
+        $this->address = $address;
+        $this->phone = $phone;
+        $this->city = $city;
+        $this->notes = $notes;
+        $this->auditTrail->touch($updatedBy);
+    }
 }

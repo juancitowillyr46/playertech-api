@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Venue\Infrastructure\Persistence\Doctrine\Type;
 
-use App\Modules\Academy\Infrastructure\Persistence\Doctrine\Type\AbstractUuidType;
+use App\Shared\Infrastructure\Persistence\Doctrine\Type\AbstractUuidType;
 use App\Modules\Venue\Domain\Venue\VenueId;
 
 final class VenueIdType extends AbstractUuidType
