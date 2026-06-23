@@ -22,3 +22,10 @@ academy_controllers:
         namespace: App\Modules\Academy\Presentation\Http
     type: attribute
     prefix: /api/v1
+
+venue_controllers:
+    resource:
+        path: ../../src/Modules/Venue/Presentation/Http/
+        namespace: App\Modules\Venue\Presentation\Http
+    type: attribute
+    prefix: /api/v1
