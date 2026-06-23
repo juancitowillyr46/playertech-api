@@ -149,4 +149,35 @@ final class Venue
         $this->notes = $notes;
         $this->auditTrail->touch($updatedBy);
     }
+
+    public function inactivate(string $updatedBy): void
+    {
+        if (!$this->status->isActive()) {
+            return;
+        }
+
+        $this->status = VenueStatus::inactive();
+        $this->auditTrail->touch($updatedBy);
+    }
+
+    public function activate(string $updatedBy): void
+    {
+        if ($this->status->isActive()) {
+            return;
+        }
+
+        $this->status = VenueStatus::active();
+        $this->auditTrail->touch($updatedBy);
+    }
+
+    public function delete(string $deletedBy): void
+    {
+        if (null !== $this->deletedAt) {
+            return;
+        }
+
+        $this->deletedAt = new \DateTimeImmutable();
+        $this->deletedBy = $deletedBy;
+        $this->auditTrail->touch($deletedBy);
+    }
 }

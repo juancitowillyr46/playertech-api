@@ -7,11 +7,17 @@ namespace App\Modules\Venue\Presentation\Http;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Venue\Domain\Venue\venueId;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
+use App\Modules\Venue\Application\Command\ActiveVenueCommand;
 use App\Modules\Venue\Application\Command\CreateVenueCommand;
+use App\Modules\Venue\Application\Command\DeleteVenueCommand;
+use App\Modules\Venue\Application\Command\InactiveVenueCommand;
 use App\Modules\Venue\Application\Command\UpdateVenueCommand;
 use App\Modules\Venue\Application\Dto\CreateVenueInput;
 use App\Modules\Venue\Application\Dto\UpdateVenueInput;
+use App\Modules\Venue\Application\Handler\ActivateVenueHandler;
 use App\Modules\Venue\Application\Handler\CreateVenueHandler;
+use App\Modules\Venue\Application\Handler\DeleteVenueHandler;
+use App\Modules\Venue\Application\Handler\InactivateVenueHandler;
 use App\Modules\Venue\Application\Handler\ListVenuesHandler;
 use App\Modules\Venue\Application\Handler\ShowVenueHandler;
 use App\Modules\Venue\Application\Handler\UpdateVenueHandler;
@@ -33,6 +39,9 @@ final class VenueController extends AbstractApiController
         private readonly ListVenuesHandler $listVenuesHandler,
         private readonly ShowVenueHandler $showVenueHandler,
         private readonly UpdateVenueHandler $updateVenueHandler,
+        private readonly DeleteVenueHandler $deleteVenueHandler,
+        private readonly InactivateVenueHandler $inactivateVenueHandler,
+        private readonly ActivateVenueHandler $activateVenueHandler,
         private readonly ValidatorInterface $validator,
         private readonly TenantContext $tenantContext,
     ) {
@@ -100,6 +109,54 @@ final class VenueController extends AbstractApiController
                 $this->requireActorId(),
                 $venueId,
                 $input
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/{venueId}/inactivate', name: 'api_v1_venues_inactivate', methods: ['POST'])]
+    public function reactivate(string $venueId): JsonResponse
+    {
+        $view = ($this->inactivateVenueHandler)(
+            new InactiveVenueCommand(
+                $this->requireActorId(),
+                $venueId
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/{venueId}/activate', name: 'api_v1_venues_activate', methods: ['POST'])]
+    public function activate(string $venueId): JsonResponse
+    {
+        $view = ($this->activateVenueHandler)(
+            new ActiveVenueCommand(
+                $this->requireActorId(),
+                $venueId
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/{venueId}', name: 'api_v1_venues_delete', methods: ['DELETE'])]
+    public function delete(string $venueId): JsonResponse
+    {
+         $view = ($this->deleteVenueHandler)(
+            new DeleteVenueCommand(
+                $this->requireActorId(),
+                $venueId
             )
         );
 
