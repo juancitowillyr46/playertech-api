@@ -1,0 +1,21 @@
+@baseUrl = http://localhost:8081
+@token = {{token}}
+@tenantToken = {{tenantToken}}
+@academyId = {{academyId}}
+@activationToken = {{activationToken}}
+
+
+### Create category
+### Request DTO: CreateCategoryInput
+
+POST {{baseUrl}}/api/v1/categories
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Sub-12",
+  "min_age": 10,
+  "max_age": 12,
+  "description": "Categoría para jugadores entre 10 y 12 años."
+}

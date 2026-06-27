@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\ValueObject;
 
-final readonly class Name
+final readonly class Description
 {
     private string $value;
     public function __construct(string $value) {
@@ -12,11 +12,15 @@ final readonly class Name
         $value = trim($value);
 
         if ($value === '') {
-            throw new \InvalidArgumentException('Name cannot be empty.');
+            throw new \InvalidArgumentException(
+                'Description cannot be empty.'
+            );
         }
 
         if (mb_strlen($value) > 150) {
-            throw new \InvalidArgumentException('Name is too long.');
+            throw new \InvalidArgumentException(
+                'Description cannot exceed 150 characters.'
+            );
         }
 
         $this->value = $value;
@@ -31,7 +35,7 @@ final readonly class Name
     {
         return $this->value === $other->value;
     }
-    
+
     public function __toString(): string
     {
         return $this->value;

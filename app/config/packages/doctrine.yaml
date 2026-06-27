@@ -5,6 +5,7 @@ doctrine:
         types:
             academy_id: App\Modules\Academy\Infrastructure\Persistence\Doctrine\Type\AcademyIdType
             venue_id: App\Modules\Venue\Infrastructure\Persistence\Doctrine\Type\VenueIdType
+            category_id: App\Modules\Category\Infrastructure\Persistence\Doctrine\Type\CategoryIdType
     orm:
         auto_mapping: false
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -32,6 +33,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Modules/Venue/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: App\Modules\Venue\Domain\Venue
                 alias: Venue
+            Category:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Modules/Category/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: App\Modules\Category\Domain\Category
+                alias: Category
             Shared:
                 is_bundle: false
                 type: xml

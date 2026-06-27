@@ -16,4 +16,10 @@ services:
 
     App\Modules\Academy\Domain\Academy\AcademyRepository: '@App\Modules\Academy\Infrastructure\Persistence\AcademyRepository'
     App\Modules\Venue\Domain\Venue\VenueRepository: '@App\Modules\Venue\Infrastructure\Persistence\VenueRepository'
+    App\Modules\Category\Domain\Category\CategoryRepository: '@App\Modules\Category\Infrastructure\Persistence\CategoryRepository'
     App\Modules\Identity\Domain\Policy\UserAdministrationPolicy: ~
+
+    # Explicits
+    App\Shared\Infrastructure\Http\ProblemDetailsExceptionSubscriber:
+        arguments:
+            $logger: '@monolog.logger.application'

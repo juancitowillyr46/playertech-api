@@ -76,6 +76,7 @@
 | name | VARCHAR(100) |
 | min_age | SMALLINT |
 | max_age | SMALLINT |
+| description | VARCHAR(250) |
 | status | VARCHAR(20) |
 
 ---

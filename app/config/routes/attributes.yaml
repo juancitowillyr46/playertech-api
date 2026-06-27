@@ -29,3 +29,10 @@ venue_controllers:
         namespace: App\Modules\Venue\Presentation\Http
     type: attribute
     prefix: /api/v1
+
+category_controllers:
+    resource:
+        path: ../../src/Modules/Category/Presentation/Http/
+        namespace: App\Modules\Category\Presentation\Http
+    type: attribute
+    prefix: /api/v1

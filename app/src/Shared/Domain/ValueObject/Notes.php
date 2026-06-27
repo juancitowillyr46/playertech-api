@@ -6,23 +6,30 @@ namespace App\Shared\Domain\ValueObject;
 
 final readonly class Notes
 {
-    public function __construct(
-        private string $value
-    ) {
+    private string $value;
+    public function __construct(string $value) {
+
         $value = trim($value);
 
         if ($value === '') {
-            throw new \InvalidArgumentException('Name cannot be empty.');
+            throw new \InvalidArgumentException('Notes cannot be empty.');
         }
 
         if (mb_strlen($value) > 150) {
-            throw new \InvalidArgumentException('Name is too long.');
+            throw new \InvalidArgumentException('Notes cannot exceed 150 characters.');
         }
+
+        $this->value = $value;
     }
 
     public function value(): string
     {
         return $this->value;
+    }
+
+    public function equals(self $other): bool
+    {
+        return $this->value === $other->value;
     }
 
     public function __toString(): string

@@ -1,0 +1,18 @@
+monolog:
+    channels: 
+        - application
+
+    handlers:
+
+        main:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+            channels: ["!application"]
+
+        application:
+            type: rotating_file
+            path: "%kernel.logs_dir%/application.log"
+            level: debug
+            channels: [application]
+            max_files: 30

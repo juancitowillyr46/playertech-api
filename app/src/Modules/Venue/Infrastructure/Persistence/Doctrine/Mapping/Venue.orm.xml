@@ -11,6 +11,36 @@
         name="App\Modules\Venue\Domain\Venue\Venue"
         table="venues">
 
+        <unique-constraints>
+            <unique-constraint
+                name="UNIQ_VENUE_ACADEMY_NAME"
+                columns="academy_id,name"/>
+        </unique-constraints>
+
+        <indexes>
+
+            <index
+                name="IDX_VENUE_ACADEMY"
+                columns="academy_id"/>
+
+            <index
+                name="IDX_VENUE_STATUS"
+                columns="status"/>
+
+            <index
+                name="IDX_VENUE_CREATED_BY"
+                columns="created_by"/>
+
+            <index
+                name="IDX_VENUE_UPDATED_BY"
+                columns="updated_by"/>
+
+            <index
+                name="IDX_VENUE_DELETED_BY"
+                columns="deleted_by"/>
+
+        </indexes>
+
         <id
             name="id"
             column="id"
@@ -23,9 +53,7 @@
         <embedded name="city" class="App\Shared\Domain\ValueObject\City" use-column-prefix="false"/>
         <embedded name="phone" class="App\Shared\Domain\ValueObject\PhoneNumber" use-column-prefix="false"/>
         <embedded name="notes" class="App\Shared\Domain\ValueObject\Notes" use-column-prefix="false"/>
-
         <embedded name="status" class="App\Modules\Venue\Domain\Venue\VenueStatus" use-column-prefix="false"/>
-
         <embedded name="auditTrail" class="App\Shared\Domain\ValueObject\AuditTrail" use-column-prefix="false"/>
 
         <field name="deletedAt" column="deleted_at" type="datetime_immutable" nullable="true"/>

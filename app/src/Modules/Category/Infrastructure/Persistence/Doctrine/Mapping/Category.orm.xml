@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity
+        name="App\Modules\Category\Domain\Category\Category"
+        table="categories">
+
+        <unique-constraints>
+            <unique-constraint
+                name="UNIQ_CATEGORY_ACADEMY_NAME"
+                columns="academy_id,name"/>
+        </unique-constraints>
+
+        <indexes>
+
+            <index
+                name="IDX_CATEGORY_ACADEMY"
+                columns="academy_id"/>
+
+            <index
+                name="IDX_CATEGORY_STATUS"
+                columns="status"/>
+
+            <index
+                name="IDX_CATEGORY_CREATED_BY"
+                columns="created_by"/>
+
+            <index
+                name="IDX_CATEGORY_UPDATED_BY"
+                columns="updated_by"/>
+
+            <index
+                name="IDX_CATEGORY_DELETED_BY"
+                columns="deleted_by"/>
+
+        </indexes>
+
+        <id
+            name="id"
+            column="id"
+            type="category_id"/>
+
+        <field name="academyId" column="academy_id" type="academy_id"/>
+
+        <embedded
+            name="name"
+            class="App\Shared\Domain\ValueObject\Name"
+            use-column-prefix="false"/>
+
+        <embedded
+            name="minAge"
+            class="App\Shared\Domain\ValueObject\MinimumAge"
+            use-column-prefix="false"/>
+
+        <embedded
+            name="maxAge"
+            class="App\Shared\Domain\ValueObject\MaximumAge"
+            use-column-prefix="false"/>
+
+        <embedded
+            name="description"
+            class="App\Shared\Domain\ValueObject\Description"
+            use-column-prefix="false"/>
+
+        <embedded
+            name="status"
+            class="App\Modules\Category\Domain\Category\CategoryStatus"
+            use-column-prefix="false"/>
+
+        <embedded
+            name="auditTrail"
+            class="App\Shared\Domain\ValueObject\AuditTrail"
+            use-column-prefix="false"/>
+
+        <field
+            name="deletedAt"
+            column="deleted_at"
+            type="datetime_immutable"
+            nullable="true"/>
+
+        <field
+            name="deletedBy"
+            column="deleted_by"
+            type="guid"
+            nullable="true"/>
+
+    </entity>
+
+</doctrine-mapping>
