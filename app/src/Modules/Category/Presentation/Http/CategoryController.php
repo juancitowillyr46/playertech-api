@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Modules\Category\Presentation\Http;
 
+use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Application\Command\CreateCategoryCommand;
 use App\Modules\Category\Application\Command\UpdateCategoryCommand;
 use App\Modules\Category\Application\Dto\CreateCategoryInput;
 use App\Modules\Category\Application\Dto\UpdateCategoryInput;
 use App\Modules\Category\Application\Handler\CreateCategoryHandler;
+use App\Modules\Category\Application\Handler\ListCategoriesHandler;
 use App\Modules\Category\Application\Handler\UpdateCategoryHandler;
+use App\Modules\Category\Application\Query\ListCategoriesQuery;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Psr\Log\LoggerInterface;
@@ -27,6 +30,7 @@ final class CategoryController extends AbstractApiController
         private readonly ValidatorInterface $validator,
         private readonly CreateCategoryHandler $createCategoryHandler,
         private readonly UpdateCategoryHandler $updateCategoryHandler,
+        private readonly ListCategoriesHandler $listCategoriesHandler,
         private readonly TenantContext $tenantContext,
     ) {
     }
@@ -50,6 +54,26 @@ final class CategoryController extends AbstractApiController
             'data' => $view->toArray(),
             'meta' => new \stdClass(),
         ], 201);
+    }
+
+    #[Route('', name: 'api_v1_categories_list', methods: ['GET'])]
+    public function list(TenantContext $tenantContext): JsonResponse
+    {
+        $categories = ($this->listCategoriesHandler)(
+            new ListCategoriesQuery(
+                new AcademyId(
+                    $tenantContext->requireAcademyId()
+                )
+            )
+        );
+
+        return new JsonResponse([
+            'data' => array_map(
+                static fn ($item) => $item->toArray(),
+                $categories
+            ),
+            'meta' => new \stdClass(),
+        ]);
     }
 
     #[Route('/{categoryId}', name: 'api_v1_categories_update', methods: ['PUT'])]

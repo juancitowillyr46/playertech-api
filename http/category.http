@@ -4,6 +4,10 @@
 @academyId = {{academyId}}
 @activationToken = {{activationToken}}
 
+### List Categories
+GET {{baseUrl}}/api/v1/academy/categories
+Authorization: Bearer {{token}}
+Accept: application/json
 
 ### Create category
 ### Request DTO: CreateCategoryInput
