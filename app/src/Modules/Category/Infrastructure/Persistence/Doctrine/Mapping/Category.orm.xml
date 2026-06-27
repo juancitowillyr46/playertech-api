@@ -11,12 +11,6 @@
         name="App\Modules\Category\Domain\Category\Category"
         table="categories">
 
-        <unique-constraints>
-            <unique-constraint
-                name="UNIQ_CATEGORY_ACADEMY_NAME"
-                columns="academy_id,name"/>
-        </unique-constraints>
-
         <indexes>
 
             <index

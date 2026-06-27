@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace App\Modules\Category\Presentation\Http;
 
 use App\Modules\Category\Application\Command\CreateCategoryCommand;
+use App\Modules\Category\Application\Command\UpdateCategoryCommand;
 use App\Modules\Category\Application\Dto\CreateCategoryInput;
+use App\Modules\Category\Application\Dto\UpdateCategoryInput;
 use App\Modules\Category\Application\Handler\CreateCategoryHandler;
+use App\Modules\Category\Application\Handler\UpdateCategoryHandler;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -22,6 +26,7 @@ final class CategoryController extends AbstractApiController
     public function __construct(
         private readonly ValidatorInterface $validator,
         private readonly CreateCategoryHandler $createCategoryHandler,
+        private readonly UpdateCategoryHandler $updateCategoryHandler,
         private readonly TenantContext $tenantContext,
     ) {
     }
@@ -47,4 +52,28 @@ final class CategoryController extends AbstractApiController
         ], 201);
     }
 
+    #[Route('/{categoryId}', name: 'api_v1_categories_update', methods: ['PUT'])]
+    public function update(
+        string $categoryId,
+        Request $request,
+    ): Response {
+
+        $input = UpdateCategoryInput::fromArray($request->toArray());
+        
+        $this->assertValid($this->validator, $input);
+
+        ($this->updateCategoryHandler)(
+            new UpdateCategoryCommand(
+                $this->tenantContext->getUserId(),
+                $this->tenantContext->requireAcademyId(),
+                $categoryId,
+                $input
+            )
+        );
+
+        return new Response(
+            status: Response::HTTP_NO_CONTENT,
+        );
+        
+    }
 }

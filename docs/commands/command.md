@@ -1,3 +1,4 @@
+docker exec -it docker-app-1 bash
 php bin/console doctrine:migrations:diff
 php bin/console doctrine:mapping:info
 php bin/console doctrine:migrations:sync-metadata-storage

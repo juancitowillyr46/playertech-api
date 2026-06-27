@@ -36,10 +36,10 @@ final readonly class CategoryResponse
     {
         return [
             'id' => $this->id,
-            'academy_id' => $this->academyId,
+            'academyId' => $this->academyId,
             'name' => $this->name,
-            'min_age' => $this->minAge,
-            'max_age' => $this->maxAge,
+            'minAge' => $this->minAge,
+            'maxAge' => $this->maxAge,
             'description' => $this->description,
             'status' => $this->status
         ];

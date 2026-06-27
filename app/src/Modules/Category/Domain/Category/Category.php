@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Category\Domain\Category;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Category\Domain\Exception\InvalidCategoryAgeRangeException;
 use App\Shared\Domain\ValueObject\Age;
 use App\Shared\Domain\ValueObject\AgeFrom;
 use App\Shared\Domain\ValueObject\AgeTo;
@@ -45,11 +46,7 @@ final class Category
         ?Description $description,
         AuditTrail $auditTrail
     ) {
-        if ($minAge->value() >= $maxAge->value()) {
-            throw new \InvalidArgumentException(
-                'Minimum age must be lower than maximum age.'
-            );
-        }
+        $this->ensureValidAgeRange($minAge, $maxAge);
 
         $this->id = $id;
         $this->academyId = $academyId;
@@ -138,11 +135,7 @@ final class Category
         ?Description $description,
         string $updatedBy
     ): void {
-        if ($minAge->value() >= $maxAge->value()) {
-            throw new \InvalidArgumentException(
-                'Minimum age must be lower than maximum age.'
-            );
-        }
+        $this->ensureValidAgeRange($minAge, $maxAge);
 
         $this->name = $name;
         $this->minAge = $minAge;
@@ -196,5 +189,14 @@ final class Category
         $this->deletedBy = null;
 
         $this->auditTrail->touch($updatedBy);
+    }
+
+    private function ensureValidAgeRange(
+        MinimumAge $minAge,
+        MaximumAge $maxAge,
+    ): void {
+        if ($minAge->value() >= $maxAge->value()) {
+            throw new InvalidCategoryAgeRangeException();
+        }
     }
 }

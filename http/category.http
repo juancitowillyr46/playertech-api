@@ -19,3 +19,17 @@ Accept: application/json
   "max_age": 12,
   "description": "Categoría para jugadores entre 10 y 12 años."
 }
+
+### Update Category
+### Request DTO: UpdateCategoryInput
+
+PUT {{baseUrl}}/api/v1/academy/categories/{{categoryId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Sub-13",
+  "minAge": 11,
+  "maxAge": 13,
+  "description": "Updated category"
+}
