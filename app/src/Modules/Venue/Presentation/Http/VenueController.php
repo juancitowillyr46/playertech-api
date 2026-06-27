@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Modules\Venue\Presentation\Http;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
-use App\Modules\Venue\Domain\Venue\venueId;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Modules\Venue\Application\Command\ActiveVenueCommand;
 use App\Modules\Venue\Application\Command\CreateVenueCommand;

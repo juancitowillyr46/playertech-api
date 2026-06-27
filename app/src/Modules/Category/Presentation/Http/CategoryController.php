@@ -5,18 +5,23 @@ declare(strict_types=1);
 namespace App\Modules\Category\Presentation\Http;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Category\Application\Command\ActivateCategoryCommand;
 use App\Modules\Category\Application\Command\CreateCategoryCommand;
+use App\Modules\Category\Application\Command\InactivateCategoryCommand;
 use App\Modules\Category\Application\Command\UpdateCategoryCommand;
 use App\Modules\Category\Application\Dto\CreateCategoryInput;
 use App\Modules\Category\Application\Dto\UpdateCategoryInput;
+use App\Modules\Category\Application\Handler\ActivateCategoryHandler;
 use App\Modules\Category\Application\Handler\CreateCategoryHandler;
+use App\Modules\Category\Application\Handler\InactivateCategoryHandler;
 use App\Modules\Category\Application\Handler\ListCategoriesHandler;
+use App\Modules\Category\Application\Handler\ShowCategoryHandler;
 use App\Modules\Category\Application\Handler\UpdateCategoryHandler;
 use App\Modules\Category\Application\Query\ListCategoriesQuery;
+use App\Modules\Category\Application\Query\ShowCategoryQuery;
+use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Shared\Presentation\Http\AbstractApiController;
-use Psr\Log\LoggerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +36,9 @@ final class CategoryController extends AbstractApiController
         private readonly CreateCategoryHandler $createCategoryHandler,
         private readonly UpdateCategoryHandler $updateCategoryHandler,
         private readonly ListCategoriesHandler $listCategoriesHandler,
+        private readonly ShowCategoryHandler $showCategoryHandler,
+        private readonly InactivateCategoryHandler $inactivateCategoryHandler,
+        private readonly ActivateCategoryHandler $activateCategoryHandler,
         private readonly TenantContext $tenantContext,
     ) {
     }
@@ -99,5 +107,57 @@ final class CategoryController extends AbstractApiController
             status: Response::HTTP_NO_CONTENT,
         );
         
+    }
+
+    #[Route('/{categoryId}', name: 'api_v1_categories_show', methods: ['GET'])]
+    public function show(
+        string $categoryId,
+        TenantContext $tenantContext,
+    ): JsonResponse {
+        $category = ($this->showCategoryHandler)(
+            new ShowCategoryQuery(
+                new AcademyId(
+                    $tenantContext->requireAcademyId()
+                ),
+                new CategoryId($categoryId),
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $category->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/{categoryId}/inactivate', name: 'api_v1_categories_inactivate', methods: ['PATCH'])]
+    public function inactivate(string $categoryId): Response
+    {
+        ($this->inactivateCategoryHandler)(
+            new InactivateCategoryCommand(
+                $this->tenantContext->getUserId(),
+                $this->tenantContext->requireAcademyId(),
+                $categoryId,
+            )
+        );
+
+        return new Response(
+            status: Response::HTTP_NO_CONTENT,
+        );
+    }
+
+    #[Route('/{categoryId}/activate', name: 'api_v1_categories_activate', methods: ['PATCH'])]
+    public function activate(string $categoryId): Response
+    {
+        ($this->activateCategoryHandler)(
+            new ActivateCategoryCommand(
+                $this->tenantContext->getUserId(),
+                $this->tenantContext->requireAcademyId(),
+                $categoryId,
+            )
+        );
+
+        return new Response(
+            status: Response::HTTP_NO_CONTENT,
+        );
     }
 }
