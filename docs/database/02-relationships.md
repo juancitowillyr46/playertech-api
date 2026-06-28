@@ -1,165 +1,264 @@
-# Domain Relationships
+# 02-relationships.md
 
-## Academy -> Venue
+# Relaciones del Dominio
 
-Cardinalidad:
+Este documento describe las relaciones existentes entre las entidades principales del dominio de PlayerTech.
+
+Las relaciones están organizadas desde la perspectiva del modelo Player-Centric, donde el jugador es la entidad central del sistema.
+
+---
+
+# Academy → Venue
+
+## Cardinalidad
 
 1:N
+
+## Descripción
 
 Una academia puede tener múltiples sedes.
 
----
-
-## Academy -> User
-
-Cardinalidad:
-
-1:N
-
-Una academia puede tener múltiples usuarios.
+Cada sede pertenece a una única academia.
 
 ---
 
-## Academy -> Category
+# Academy → User
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
-Una academia puede tener múltiples categorías.
+## Descripción
+
+Una academia puede tener múltiples usuarios administrativos.
 
 ---
 
-## Academy -> Team
+# Academy → Category
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
-Una academia puede tener múltiples equipos.
+## Descripción
+
+Una academia puede definir múltiples categorías deportivas.
 
 ---
 
-## Academy -> Player
+# Academy → Team
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
-Una academia puede tener múltiples jugadores.
+## Descripción
+
+Una academia puede administrar múltiples equipos competitivos.
 
 ---
 
-## Academy -> LegalGuardian
+# Academy → Player
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
-Una academia puede tener múltiples acudientes.
+## Descripción
+
+Una academia puede registrar múltiples jugadores.
 
 ---
 
-## Category -> Team
+# Academy → LegalGuardian
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
-Una categoría puede contener múltiples equipos.
+## Descripción
+
+Una academia puede registrar múltiples acudientes.
 
 ---
 
-## Player -> Membership
+# Category → Player
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
+
+## Descripción
+
+Una categoría puede contener múltiples jugadores.
+
+Todo jugador debe pertenecer a una única categoría administrativa activa.
+
+La categoría determina la clasificación administrativa del jugador.
+
+---
+
+# Category → Team
+
+## Cardinalidad
+
+1:N
+
+## Descripción
+
+Una categoría puede contener múltiples equipos competitivos.
+
+Los equipos representan agrupaciones deportivas para competencias o torneos.
+
+---
+
+# Player → Membership
+
+## Cardinalidad
+
+1:N
+
+## Descripción
 
 Un jugador puede tener múltiples matrículas históricas.
 
+Solo una matrícula puede estar activa simultáneamente dentro de una academia.
+
 ---
 
-## Player -> TeamAssignment
+# Player → TeamAssignment
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
-Un jugador puede pertenecer a múltiples equipos.
+## Descripción
+
+Un jugador puede participar simultáneamente en múltiples equipos.
+
+La participación deportiva es independiente de la matrícula.
 
 ---
 
-## Team -> TeamAssignment
+# Team → TeamAssignment
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
-Un equipo puede contener múltiples jugadores.
+## Descripción
+
+Un equipo puede tener múltiples jugadores asignados.
+
+Las asignaciones mantienen el historial deportivo mediante fechas de inicio y finalización.
 
 ---
 
-## Player -> PlayerGuardian
+# Player → PlayerGuardian
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
+## Descripción
+
+Un jugador puede estar relacionado con múltiples acudientes.
+
+La relación se gestiona mediante PlayerGuardian.
+
 ---
 
-## LegalGuardian -> PlayerGuardian
+# LegalGuardian → PlayerGuardian
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
+## Descripción
+
+Un acudiente puede estar asociado a múltiples jugadores.
+
 ---
 
-## Membership -> Payment
+# Membership → Payment
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
-Una matrícula puede tener múltiples pagos.
+## Descripción
+
+Una matrícula puede registrar múltiples pagos.
+
+Los pagos representan la permanencia administrativa del jugador.
 
 ---
 
-## PaymentConcept -> Payment
+# PaymentConcept → Payment
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
-Un concepto puede asociarse a múltiples pagos.
+## Descripción
+
+Un concepto de pago puede utilizarse en múltiples pagos.
 
 ---
 
-## Payment -> PaymentEvidence
+# Payment → PaymentEvidence
 
-Cardinalidad:
+## Cardinalidad
 
 1:N
 
-Un pago puede contener múltiples evidencias.
+## Descripción
+
+Un pago puede tener múltiples evidencias o soportes documentales.
 
 ---
 
-## User -> Role
+# User → Role
 
-Cardinalidad:
+## Cardinalidad
 
 N:M
 
-Implementada mediante UserRole.
+## Descripción
+
+Un usuario puede tener múltiples roles.
+
+La relación se implementa mediante UserRole.
 
 ---
 
-## Role -> Permission
+# Role → Permission
 
-Cardinalidad:
+## Cardinalidad
 
 N:M
 
-Implementada mediante RolePermission.
+## Descripción
+
+Un rol puede contener múltiples permisos.
+
+La relación se implementa mediante RolePermission.
+
+---
+
+# Resumen del Modelo Relacional
+
+Academy
+├── Venue
+├── User
+├── Category
+│   ├── Player
+│   │   ├── Membership
+│   │   │   └── Payment
+│   │   │       └── PaymentEvidence
+│   │   ├── PlayerGuardian
+│   │   └── TeamAssignment
+│   └── Team
+│       └── TeamAssignment
+└── LegalGuardian
+    └── PlayerGuardian

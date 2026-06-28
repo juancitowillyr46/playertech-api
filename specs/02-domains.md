@@ -1,423 +1,465 @@
 # 02-domains.md
 
-# Domain Overview
+# Visión General del Dominio
 
-El dominio de PlayerTech está orientado a la gestión operativa y administrativa de academias de fútbol.
+PlayerTech es una plataforma SaaS enfocada en la gestión operativa y administrativa de academias de fútbol.
 
-El sistema deberá soportar múltiples academias bajo un modelo SaaS Multi-Tenant utilizando una base de datos compartida.
+La plataforma sigue una arquitectura Multi-Tenant donde todas las entidades de negocio pertenecen a una única academia mediante el campo:
 
-Todas las entidades de negocio deberán pertenecer a una academia mediante el campo:
+- academy_id
 
-* academy_id
+El dominio se divide intencionalmente en dos contextos de negocio complementarios:
+
+- Formación
+- Competición
+
+Aunque ambos están relacionados, representan procesos de negocio diferentes y evolucionan de forma independiente.
+
+El **Jugador** es la entidad central del dominio.
 
 ---
 
-# Academy
+# Principios del Dominio
+
+## Modelo centrado en el Jugador
+
+El jugador es el núcleo del dominio.
+
+Los procesos administrativos, formativos y competitivos giran alrededor del jugador y no del equipo.
+
+## Separación de responsabilidades
+
+El dominio distingue claramente tres procesos:
+
+- Gestión administrativa
+- Formación deportiva
+- Participación competitiva
+
+Cada proceso posee sus propias reglas de negocio.
+
+## Contexto de Formación
+
+Representa el ciclo de vida administrativo y formativo del jugador dentro de la academia.
+
+Conceptos principales:
+
+- Jugador
+- Matrícula
+- Acudiente
+- Pagos
+- Categorías
+- Sesiones de entrenamiento (Futuro)
+
+## Contexto de Competición
+
+Representa la participación deportiva de los jugadores en equipos y torneos.
+
+Conceptos principales:
+
+- Equipo
+- Asignación de jugadores a equipos
+- Torneos (Futuro)
+
+Un jugador puede participar en múltiples equipos competitivos sin afectar su información administrativa.
+
+---
+
+# Academia
 
 Representa una academia registrada en la plataforma.
 
-## Responsibilities
+## Responsabilidades
 
-* Configuración general.
-* Aislamiento multi-tenant.
-* Administración de datos operativos.
+- Aislamiento Multi-Tenant.
+- Configuración general de la academia.
+- Administración de toda la información operativa.
 
-## Status
+## Estados
 
-* ACTIVE
-* SUSPENDED
-* INACTIVE
-
----
-
-# Venue
-
-Representa una sede física donde se desarrollan entrenamientos o actividades deportivas.
-
-## Rules
-
-* Pertenece a una academia.
-* Puede ser utilizada por múltiples equipos.
-* Puede utilizarse en futuros módulos de horarios.
-
-## Status
-
-* ACTIVE
-* INACTIVE
+- ACTIVE
+- SUSPENDED
+- INACTIVE
 
 ---
 
-# Category
+# Sede
 
-Representa una agrupación deportiva basada en rangos de edad.
+Representa una sede física donde la academia desarrolla sus actividades.
 
-## Attributes
+## Responsabilidades
 
-* Name
-* Min Age
-* Max Age
+- Lugar de entrenamiento.
+- Lugar para partidos (Futuro).
+- Punto operativo de la academia.
 
-## Rules
+## Reglas
 
-* La edad mínima debe ser menor que la edad máxima.
-* No puede existir una categoría duplicada dentro de una misma academia.
+- Pertenece a una única academia.
+- Puede albergar múltiples sesiones de entrenamiento.
+- No representa una asignación permanente de jugadores ni de equipos.
 
-## Examples
+## Estados
 
-* Sub 6
-* Sub 8
-* Sub 10
-* Sub 12
-
-## Status
-
-* ACTIVE
-* INACTIVE
+- ACTIVE
+- INACTIVE
 
 ---
 
-# Team
+# Categoría
 
-Representa un equipo deportivo.
+Representa la clasificación administrativa y deportiva de los jugadores según su rango de edad.
 
-## Rules
+## Responsabilidades
 
-* Debe pertenecer a una categoría.
-* Una categoría puede contener múltiples equipos.
-* Un equipo puede tener múltiples jugadores asignados.
+- Organizar jugadores por edad.
+- Definir rangos de edad.
+- Servir como base para la organización de entrenamientos.
+- Servir como referencia para equipos competitivos.
 
-## Examples
+## Atributos
 
-* Sub 12 A
-* Sub 12 B
-* Sub 12 Competitivo
+- Nombre
+- Edad mínima
+- Edad máxima
 
-## Status
+## Reglas
 
-* ACTIVE
-* INACTIVE
+- La edad mínima debe ser menor que la edad máxima.
+- No pueden existir categorías duplicadas dentro de una misma academia.
 
----
+## Ejemplos
 
-# Legal Guardian
+- Sub-6
+- Sub-8
+- Sub-10
+- Sub-12
 
-Representa un acudiente o tutor legal.
+## Estados
 
-## Rules
-
-* Puede existir independientemente de jugadores.
-* Puede estar asociado a múltiples jugadores.
-* Debe contener información de contacto.
-
-## Status
-
-* ACTIVE
-* INACTIVE
+- ACTIVE
+- INACTIVE
 
 ---
 
-## Legal Guardian Relationships
-
-La relación entre jugadores y tutores legales es de tipo N:M.
-
-Un jugador puede tener:
-
-* Padre.
-* Madre.
-* Acudiente.
-* Responsable autorizado.
-
-simultáneamente.
-
-Un tutor legal puede estar asociado a múltiples jugadores.
-
-Las responsabilidades administrativas se gestionan mediante la entidad PlayerGuardian.
-
----
-
-# Player
+# Jugador
 
 Representa un jugador registrado en la academia.
 
-## Rules
+El jugador es la entidad principal del dominio deportivo.
 
-* Puede estar asociado a múltiples tutores legales mediante PlayerGuardian.
-* Puede tener múltiples asignaciones deportivas mediante TeamAssignment.
-* Puede tener múltiples matrículas históricas.
+## Reglas
 
-## Status
+- Pertenece a una academia.
+- Pertenece a una categoría administrativa.
+- Puede tener múltiples acudientes.
+- Puede tener múltiples matrículas a lo largo de su permanencia.
+- Puede participar simultáneamente en múltiples equipos competitivos.
 
-* ACTIVE
-* INACTIVE
+## Atributos MVP
 
-## MVP Attributes
+- Nombres
+- Apellidos
+- Fecha de nacimiento
+- Número de documento
 
-* First Name
-* Last Name
-* Birth Date
-* Document Number
+## Atributos futuros
 
-## Future Attributes (V1.1)
+- Fotografía
+- Correo electrónico
+- Teléfono
+- Nacionalidad
+- Posición preferida
+- Perfil dominante
+- Identificador de federación
 
-* Photo
-* Email
-* Phone
-* Nationality
-* Federation Player Id
-* Preferred Position
-* Dominant Foot
+## Estados
 
----
-
-# Player Guardian
-
-Representa la relación entre jugadores y tutores legales.
-
-## Rules
-
-* Relación N:M entre Player y LegalGuardian.
-* Debe existir exactamente un tutor principal por jugador activo.
-* Permite definir responsabilidades administrativas específicas.
-
-## Responsibilities
-
-* Tutor principal.
-* Responsable de pagos.
-* Responsable de autorizaciones.
-* Contacto de emergencia.
-
-## Attributes
-
-* player_id
-* guardian_id
-* is_primary
+- ACTIVE
+- INACTIVE
 
 ---
 
-# Membership
+# Acudiente
 
-Representa la matrícula de un jugador dentro de una academia.
+Representa un tutor legal o responsable del jugador.
 
-Es la entidad principal para controlar la permanencia administrativa y financiera del jugador.
+## Reglas
 
-## Rules
+- Puede existir independientemente de los jugadores.
+- Puede estar relacionado con múltiples jugadores.
+- Debe contener información de contacto.
 
-* Una matrícula pertenece a un único jugador.
-* Un jugador puede tener múltiples matrículas históricas.
-* Solo puede existir una matrícula activa por academia.
-* Una matrícula activa indica que el jugador pertenece actualmente a la academia.
-* Los pagos se asocian a una matrícula.
+## Estados
 
-## Attributes
-
-* Start Date
-* End Date
-* Status
-
-## Status
-
-* ACTIVE
-* SUSPENDED
-* WITHDRAWN
-* GRADUATED
+- ACTIVE
+- INACTIVE
 
 ---
 
-# Team Assignment
+# Relación Jugador - Acudiente
 
-Representa la relación entre Player y Team.
+Representa la relación entre jugadores y acudientes.
 
-La relación entre jugadores y equipos es de tipo N:M.
+## Reglas
+
+- Relación muchos a muchos.
+- Todo jugador activo debe tener exactamente un acudiente principal.
+
+## Responsabilidades
+
+- Acudiente principal.
+- Responsable de pagos.
+- Responsable de autorizaciones.
+- Contacto de emergencia.
+
+## Atributos
+
+- player_id
+- guardian_id
+- is_primary
+
+---
+
+# Matrícula
+
+Representa la inscripción administrativa de un jugador dentro de la academia.
+
+Controla la permanencia del jugador en la academia.
+
+## Reglas
+
+- Pertenece a un único jugador.
+- Un jugador puede tener múltiples matrículas históricas.
+- Solo puede existir una matrícula activa por jugador dentro de una academia.
+- Los pagos pertenecen a una matrícula.
+- La participación en equipos no genera matrículas.
+
+## Estados
+
+- ACTIVE
+- SUSPENDED
+- WITHDRAWN
+- GRADUATED
+
+---
+
+# Equipo
+
+Representa un equipo deportivo con fines competitivos.
+
+Un equipo se crea para participar en competencias o torneos.
+
+No representa la pertenencia administrativa del jugador.
+
+## Responsabilidades
+
+- Organizar jugadores para competir.
+- Participar en torneos.
+- Definir plantillas deportivas.
+
+## Reglas
+
+- Pertenece a una academia.
+- Hace referencia a una categoría.
+- Contiene múltiples asignaciones de jugadores.
+- Un jugador puede pertenecer simultáneamente a múltiples equipos.
+
+## Ejemplos
+
+- Sub-12 Liga
+- Sub-12 Mixto
+- Sub-14 Competitivo
+
+## Estados
+
+- ACTIVE
+- INACTIVE
+
+---
+
+# Asignación de Jugadores a Equipos
 
 Representa la participación deportiva de un jugador dentro de un equipo.
 
-## Rules
+Esta entidad separa la inscripción administrativa de la participación deportiva.
 
-* Un jugador puede pertenecer simultáneamente a múltiples equipos.
-* Una asignación tiene fecha de inicio.
-* Una asignación puede tener fecha de finalización.
-* No genera obligaciones financieras.
-* No representa una matrícula.
+## Reglas
 
-## Examples
+- Relación muchos a muchos.
+- Un jugador puede pertenecer a múltiples equipos.
+- Tiene fecha de inicio.
+- Puede tener fecha de finalización.
+- No genera obligaciones financieras.
+- No reemplaza una matrícula.
 
-Jugador:
+## Atributos
 
-* Sub 12 A
-* Sub 13 Competitivo
+- player_id
+- team_id
+- start_date
+- end_date
 
 ---
 
-# Aggregate Boundaries
+# Concepto de Pago
 
-## Academy Aggregate
+Representa el motivo de un pago.
 
-Raíz del contexto multi-tenant.
+## Conceptos iniciales
 
-## Player Aggregate
+- REGISTRATION
+- MONTHLY_FEE
+- OTHER
 
-Raíz del contexto deportivo del jugador.
+## Conceptos futuros
 
-## LegalGuardian Aggregate
+- TOURNAMENT_REGISTRATION
+- UNIFORM
+- TRANSPORT
+- REFEREE_FEE
+- EVENT
 
-Raíz del contexto administrativo del tutor legal.
+---
 
-## Membership Aggregate
+# Pago
 
-Raíz del contexto de permanencia del jugador dentro de la academia.
+Representa un pago realizado por un acudiente.
 
-## Payment Aggregate
+## Reglas
+
+- Pertenece a una matrícula.
+- Pertenece a un jugador.
+- Pertenece a un acudiente.
+- Pertenece a un concepto de pago.
+- Debe registrar fecha y valor.
+
+## Estados
+
+- REGISTERED
+- VOIDED
+
+---
+
+# Evidencia de Pago
+
+Representa los soportes asociados a un pago.
+
+## Tipos soportados
+
+- Imagen
+- PDF
+
+## Reglas
+
+- Pertenece a un pago.
+- Un pago puede tener múltiples evidencias.
+
+---
+
+# Límites de Agregados
+
+## Agregado Academia
+
+Raíz del contexto Multi-Tenant.
+
+## Agregado Jugador
+
+Raíz del contexto deportivo y administrativo del jugador.
+
+## Agregado Acudiente
+
+Raíz del contexto administrativo del acudiente.
+
+## Agregado Matrícula
+
+Raíz del contexto de permanencia del jugador.
+
+## Agregado Pago
 
 Raíz del contexto financiero.
 
-## Relationship Entities
+## Entidades de Relación
 
 Las siguientes entidades no son Aggregate Roots:
 
-* PlayerGuardian
-* TeamAssignment
+- PlayerGuardian
+- TeamAssignment
 
 ---
 
-# Payment Concept
+# Módulos Futuros
 
-Representa el concepto o motivo del pago.
+Fuera del alcance del MVP.
 
-## Initial Concepts
+## Formación
 
-* REGISTRATION
-* MONTHLY_FEE
-* OTHER
+- Entrenadores
+- Sesiones de entrenamiento
+- Asistencia a entrenamientos
+- Planificación de entrenamientos
 
-## Future Concepts
+## Competición
 
-* TOURNAMENT_REGISTRATION
-* REFEREE_FEE
-* UNIFORM
-* TRANSPORT
-* EVENT
+- Torneos
+- Inscripciones a torneos
+- Partidos
+- Estadísticas deportivas
 
-## Status
+## Administración
 
-* ACTIVE
-* INACTIVE
-
----
-
-# Payment
-
-Representa un pago realizado por un tutor legal.
-
-## Rules
-
-* Asociado a una matrícula.
-* Asociado a un jugador.
-* Asociado a un tutor legal.
-* Asociado a un concepto de pago.
-* Debe registrar fecha y valor.
-* No puede existir sin una matrícula válida.
-
-## Status
-
-* REGISTERED
-* VOIDED
+- Portal para acudientes
+- Aplicación móvil
+- Notificaciones
+- Reportes
 
 ---
 
-# Payment Evidence
+# Notas de Evolución del Dominio
 
-Representa la evidencia o comprobante asociado a un pago.
+## Evolución de Equipos
 
-## Supported Types
+Los equipos representan agrupaciones competitivas.
 
-* Image
-* PDF
+La organización de los entrenamientos deberá evolucionar de manera independiente.
 
-## Rules
+En futuras versiones podrán incorporarse:
 
-* Pertenece a un pago.
-* Puede existir más de una evidencia por pago.
+- Grupos de entrenamiento
+- Sesiones de entrenamiento
+- Calendarios de entrenamiento
 
----
-
-# Open Questions
-
-## Primary Team
-
-Algunas academias manejan el concepto de equipo principal para un jugador.
-
-Actualmente esta necesidad queda cubierta mediante TeamAssignment.
-
-Se validará en futuras entrevistas si existe una necesidad real de modelar:
-
-* Equipo principal.
-* Equipo secundario.
-* Equipo invitado.
+sin modificar el modelo de Equipos.
 
 ---
 
-## Future Modules
+## Matrícula vs Asignación a Equipos
 
-Fuera del alcance del MVP V1.
+La matrícula representa la relación administrativa entre un jugador y la academia.
 
-* Coaches
-* Training Schedules
-* Training Sessions
-* Attendance
-* Competitions
-* Tournament Registrations
-* Matches
-* Referee Fees
-* Statistics
-* Parent Portal
-* Mobile Applications
+La asignación a equipos representa la participación deportiva del jugador.
 
-
-## Domain Evolution Notes
-
-Las siguientes observaciones fueron identificadas durante el diseño del dominio y quedan registradas para futuras iteraciones.
-
-### Membership Active Constraint
-
-Actualmente se define:
-
-"Solo puede existir una matrícula activa por academia."
-
-En futuras versiones deberá validarse si la regla correcta es:
-
-"Solo puede existir una matrícula activa por jugador dentro de una academia."
-
-La definición actual se mantiene para el MVP hasta validar el comportamiento real con academias usuarias.
+Ambos conceptos deben permanecer independientes.
 
 ---
 
-### PlayerGuardian Responsibilities
+## Evolución del Jugador
 
-Actualmente la relación PlayerGuardian utiliza el atributo:
+El jugador puede evolucionar durante toda su permanencia en la academia.
 
-* is_primary
+Su evolución típica es:
 
-En futuras versiones podría evolucionar hacia un modelo más flexible basado en responsabilidades.
+Categoría → Matrícula → Equipos Competitivos → Torneos
 
-Ejemplos:
-
-* PRIMARY_GUARDIAN
-* PAYMENT_RESPONSIBLE
-* AUTHORIZATION_RESPONSIBLE
-* EMERGENCY_CONTACT
-
-Esta evolución permitiría representar escenarios familiares más complejos sin modificar los Aggregate Roots existentes.
+sin cambiar su identidad dentro de la academia.
 
 ---
 
-### Primary Team Concept
+# Preguntas Abiertas
 
-Actualmente TeamAssignment cubre la participación de un jugador en uno o varios equipos.
+Los siguientes conceptos deberán validarse con academias reales antes de su implementación.
 
-En futuras versiones podría requerirse distinguir:
-
-* Equipo principal
-* Equipo secundario
-* Equipo invitado
-
-La necesidad será validada con academias durante la evolución del producto.
+- Equipo principal.
+- Grupos de entrenamiento.
+- Ascenso automático de categoría.
+- Equipos específicos por torneo.
+- Participación de jugadores en categorías superiores.

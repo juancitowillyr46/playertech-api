@@ -1,6 +1,14 @@
-# Domain Entities
+# 01-entities.md
 
-## Academy
+# Entidades del Dominio
+
+Este documento describe las principales entidades que conforman el dominio de PlayerTech.
+
+La plataforma sigue un modelo **Player-Centric**, donde el jugador es la entidad principal y alrededor de él se construyen los procesos administrativos, formativos y competitivos.
+
+---
+
+# Academy
 
 Representa una academia registrada dentro de PlayerTech.
 
@@ -11,9 +19,10 @@ Aggregate Root
 ### Responsabilidades
 
 - Configuración general de la academia.
-- Aislamiento multi-tenant.
+- Aislamiento Multi-Tenant.
 - Administración de sedes.
-- Administración de usuarios de la academia.
+- Administración de usuarios.
+- Propietaria de toda la información del negocio.
 
 ### Estado
 
@@ -23,9 +32,9 @@ Aggregate Root
 
 ---
 
-## Venue
+# Venue
 
-Representa una sede física donde la academia realiza actividades.
+Representa una sede física donde la academia desarrolla sus actividades.
 
 ### Tipo
 
@@ -34,7 +43,8 @@ Entidad
 ### Responsabilidades
 
 - Identificar ubicaciones físicas.
-- Organizar futuras actividades deportivas.
+- Soportar entrenamientos y actividades deportivas.
+- Ser utilizada por futuras sesiones de entrenamiento.
 
 ### Estado
 
@@ -43,7 +53,7 @@ Entidad
 
 ---
 
-## User
+# User
 
 Representa una persona autorizada para acceder a la plataforma.
 
@@ -64,7 +74,7 @@ Aggregate Root
 
 ---
 
-## Role
+# Role
 
 Representa un conjunto de permisos asignables a usuarios.
 
@@ -75,17 +85,17 @@ Aggregate Root
 ### Responsabilidades
 
 - Agrupar permisos.
-- Simplificar administración de accesos.
+- Simplificar la administración de accesos.
 
 ---
 
-## Permission
+# Permission
 
 Representa una capacidad específica dentro del sistema.
 
 ### Tipo
 
-Entidad de referencia
+Entidad de Referencia
 
 ### Responsabilidades
 
@@ -93,9 +103,9 @@ Entidad de referencia
 
 ---
 
-## Category
+# Category
 
-Representa una agrupación deportiva basada en edad.
+Representa la clasificación administrativa y deportiva de los jugadores según su rango de edad.
 
 ### Tipo
 
@@ -103,7 +113,10 @@ Aggregate Root
 
 ### Responsabilidades
 
-- Clasificación deportiva.
+- Clasificar jugadores.
+- Definir rangos de edad.
+- Servir como referencia para equipos competitivos.
+- Base para futuros procesos de formación.
 
 ### Estado
 
@@ -112,29 +125,11 @@ Aggregate Root
 
 ---
 
-## Team
+# Player
 
-Representa un equipo deportivo.
+Representa un jugador registrado en la academia.
 
-### Tipo
-
-Aggregate Root
-
-### Responsabilidades
-
-- Organización deportiva.
-- Participación en competencias.
-
-### Estado
-
-- ACTIVE
-- INACTIVE
-
----
-
-## Player
-
-Representa un jugador registrado.
+Es la entidad central del dominio.
 
 ### Tipo
 
@@ -142,10 +137,12 @@ Aggregate Root
 
 ### Responsabilidades
 
-- Información deportiva.
-- Participación en equipos.
+- Información personal y deportiva.
+- Clasificación dentro de una categoría.
+- Participación en equipos competitivos.
 - Relación con acudientes.
-- Matrículas.
+- Gestión de matrículas.
+- Historial administrativo y deportivo.
 
 ### Estado
 
@@ -154,7 +151,30 @@ Aggregate Root
 
 ---
 
-## LegalGuardian
+# Team
+
+Representa un equipo deportivo con fines competitivos.
+
+No representa un grupo permanente de entrenamiento.
+
+### Tipo
+
+Aggregate Root
+
+### Responsabilidades
+
+- Organizar jugadores para competencias.
+- Participar en torneos.
+- Agrupar jugadores de una misma categoría.
+
+### Estado
+
+- ACTIVE
+- INACTIVE
+
+---
+
+# LegalGuardian
 
 Representa un acudiente o tutor legal.
 
@@ -166,6 +186,8 @@ Aggregate Root
 
 - Contacto administrativo.
 - Responsable financiero.
+- Responsable de autorizaciones.
+- Contacto de emergencia.
 
 ### Estado
 
@@ -174,7 +196,7 @@ Aggregate Root
 
 ---
 
-## PlayerGuardian
+# PlayerGuardian
 
 Representa la relación entre jugadores y acudientes.
 
@@ -184,13 +206,15 @@ Entidad Relacional
 
 ### Responsabilidades
 
-- Gestionar relaciones N:M.
+- Gestionar la relación N:M.
+- Identificar el acudiente principal.
+- Definir responsabilidades administrativas.
 
 ---
 
-## Membership
+# Membership
 
-Representa la matrícula de un jugador.
+Representa la matrícula administrativa de un jugador.
 
 ### Tipo
 
@@ -198,8 +222,10 @@ Aggregate Root
 
 ### Responsabilidades
 
-- Control de permanencia.
-- Relación financiera.
+- Controlar la permanencia del jugador en la academia.
+- Base para la gestión financiera.
+- Asociar pagos.
+- Mantener el historial de matrículas.
 
 ### Estado
 
@@ -210,9 +236,9 @@ Aggregate Root
 
 ---
 
-## TeamAssignment
+# TeamAssignment
 
-Representa la asignación deportiva de un jugador a un equipo.
+Representa la participación deportiva de un jugador dentro de un equipo.
 
 ### Tipo
 
@@ -220,17 +246,23 @@ Entidad Relacional
 
 ### Responsabilidades
 
-- Gestión deportiva.
+- Gestionar la relación N:M entre jugadores y equipos.
+- Mantener el historial de participación deportiva.
+- Permitir la participación simultánea en múltiples equipos.
 
 ---
 
-## PaymentConcept
+# PaymentConcept
 
-Representa el motivo o concepto del pago.
+Representa el motivo o concepto de un pago.
 
 ### Tipo
 
 Aggregate Root
+
+### Responsabilidades
+
+- Clasificar los pagos realizados por la academia.
 
 ### Estado
 
@@ -239,9 +271,9 @@ Aggregate Root
 
 ---
 
-## Payment
+# Payment
 
-Representa una transacción financiera.
+Representa una transacción financiera asociada a una matrícula.
 
 ### Tipo
 
@@ -249,8 +281,10 @@ Aggregate Root
 
 ### Responsabilidades
 
-- Registro de pagos.
-- Control financiero.
+- Registrar pagos.
+- Controlar la información financiera.
+- Asociar conceptos de pago.
+- Mantener el historial de transacciones.
 
 ### Estado
 
@@ -259,7 +293,7 @@ Aggregate Root
 
 ---
 
-## PaymentEvidence
+# PaymentEvidence
 
 Representa una evidencia asociada a un pago.
 
@@ -269,4 +303,5 @@ Entidad
 
 ### Responsabilidades
 
-- Soporte documental.
+- Almacenar soportes documentales.
+- Permitir múltiples evidencias por pago.
