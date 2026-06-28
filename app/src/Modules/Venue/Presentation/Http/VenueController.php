@@ -106,6 +106,7 @@ final class VenueController extends AbstractApiController
         $view = ($this->updateVenueHandler)(
             new UpdateVenueCommand(
                 $this->requireActorId(),
+                $this->tenantContext->requireAcademyId(),
                 $venueId,
                 $input
             )
@@ -117,12 +118,13 @@ final class VenueController extends AbstractApiController
         ]);
     }
 
-    #[Route('/{venueId}/inactivate', name: 'api_v1_venues_inactivate', methods: ['POST'])]
+    #[Route('/{venueId}/inactivate', name: 'api_v1_venues_inactivate', methods: ['PATCH'])]
     public function reactivate(string $venueId): JsonResponse
     {
         $view = ($this->inactivateVenueHandler)(
             new InactiveVenueCommand(
                 $this->requireActorId(),
+                $this->tenantContext->requireAcademyId(),
                 $venueId
             )
         );
@@ -133,12 +135,13 @@ final class VenueController extends AbstractApiController
         ]);
     }
 
-    #[Route('/{venueId}/activate', name: 'api_v1_venues_activate', methods: ['POST'])]
+    #[Route('/{venueId}/activate', name: 'api_v1_venues_activate', methods: ['PATCH'])]
     public function activate(string $venueId): JsonResponse
     {
         $view = ($this->activateVenueHandler)(
             new ActiveVenueCommand(
                 $this->requireActorId(),
+                $this->tenantContext->requireAcademyId(),
                 $venueId
             )
         );
@@ -155,6 +158,7 @@ final class VenueController extends AbstractApiController
          $view = ($this->deleteVenueHandler)(
             new DeleteVenueCommand(
                 $this->requireActorId(),
+                $this->tenantContext->requireAcademyId(),
                 $venueId
             )
         );

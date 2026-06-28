@@ -24,9 +24,15 @@ final class VenueRepository extends ServiceEntityRepository implements VenueRepo
         $this->getEntityManager()->flush();
     }
 
-    public function findById(VenueId $venueId): ?Venue
+    public function findById(AcademyId $academyId, VenueId $venueId): ?Venue
     {
-        return $this->find($venueId->value());
+        return $this->createQueryBuilder('venue')
+            ->where('venue.id = :venueId')
+            ->andWhere('venue.academyId = :academyId')
+            ->setParameter('venueId', $venueId->value())
+            ->setParameter('academyId', $academyId->value())
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     public function findAllByAcademy(AcademyId $academyId): array

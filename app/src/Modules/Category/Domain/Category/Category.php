@@ -145,7 +145,7 @@ final class Category
         $this->auditTrail->touch($updatedBy);
     }
 
-    public function deactivate(string $updatedBy): void
+    public function inactivate(string $updatedBy): void
     {
         if ($this->status->isInactive()) {
             return;

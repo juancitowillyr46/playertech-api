@@ -8,6 +8,7 @@ final readonly class InactiveVenueCommand
 {
     public function __construct(
         public string $actorId,
+        public string $academyId,
         public string $venueId,
     ) {
     }

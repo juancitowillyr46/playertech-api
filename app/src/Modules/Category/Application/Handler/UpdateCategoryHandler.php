@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Modules\Category\Application\Handler;
 
+use App\Categories\Application\Services\CategoryFinder;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Application\Command\UpdateCategoryCommand;
-use App\Modules\Category\Application\Response\CategoryResponse;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Category\Domain\Category\CategoryRepository;
-use App\Modules\Category\Domain\Exception\CategoryAlreadyExistsException;
-use App\Modules\Category\Domain\Exception\CategoryNotFoundException;
 use App\Shared\Domain\ValueObject\Description;
 use App\Shared\Domain\ValueObject\MaximumAge;
 use App\Shared\Domain\ValueObject\MinimumAge;
@@ -20,20 +18,18 @@ final readonly class UpdateCategoryHandler
 {
     public function __construct(
         private CategoryRepository $categoryRepository,
+        private CategoryFinder $categoryFinder
     ) {
     }
 
     public function __invoke(UpdateCategoryCommand $command): void
     {
+
         $academyId = new AcademyId($command->academyId);
 
         $categoryId = new CategoryId($command->categoryId);
 
-        $category = $this->categoryRepository->findById($academyId, $categoryId);
-
-        if (null === $category) {
-            throw new CategoryNotFoundException();
-        }
+        $category = $this->categoryFinder->findOrFail($academyId, $categoryId);
 
         $category->update(
             new Name($command->input->name),

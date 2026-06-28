@@ -10,7 +10,7 @@ interface VenueRepository
 {
     public function save(Venue $venue): void;
 
-    public function findById(VenueId $venueId): ?Venue;
+    public function findById(AcademyId $academyId, VenueId $venueId): ?Venue;
 
     /**
      * @return Venue[]

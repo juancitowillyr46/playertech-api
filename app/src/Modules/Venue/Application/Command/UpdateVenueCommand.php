@@ -10,6 +10,7 @@ final readonly class UpdateVenueCommand
 {
     public function __construct(
         public string $actorId,
+        public string $academyId,
         public string $venueId,
         public UpdateVenueInput $input,
     ) {
