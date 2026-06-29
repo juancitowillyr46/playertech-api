@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Response;
 
 #[Route('/academy/venues')]
 final class VenueController extends AbstractApiController
@@ -67,12 +68,12 @@ final class VenueController extends AbstractApiController
     }
 
     #[Route('', name: 'api_v1_venues_list', methods: ['GET'])]
-    public function list(TenantContext $tenantContext): JsonResponse
+    public function list(): JsonResponse
     {
         $venues = ($this->listVenuesHandler)(
             new ListVenuesQuery(
                 new AcademyId(
-                    $tenantContext->requireAcademyId()
+                    $this->tenantContext->requireAcademyId()
                 )
             )
         );
@@ -89,7 +90,10 @@ final class VenueController extends AbstractApiController
     #[Route('/{venueId}', name: 'api_v1_venues_show', methods: ['GET'])]
     public function show(string $venueId): JsonResponse
     {
-        $view = ($this->showVenueHandler)(new ShowVenueQuery($venueId));
+        $view = ($this->showVenueHandler)(new ShowVenueQuery(
+            new AcademyId($this->tenantContext->requireAcademyId()),
+            new \App\Modules\Venue\Domain\Venue\VenueId($venueId)
+        ));
 
         return new JsonResponse([
             'data' => $view->toArray(),
@@ -119,9 +123,9 @@ final class VenueController extends AbstractApiController
     }
 
     #[Route('/{venueId}/inactivate', name: 'api_v1_venues_inactivate', methods: ['PATCH'])]
-    public function reactivate(string $venueId): JsonResponse
+    public function reactivate(string $venueId): Response
     {
-        $view = ($this->inactivateVenueHandler)(
+        ($this->inactivateVenueHandler)(
             new InactiveVenueCommand(
                 $this->requireActorId(),
                 $this->tenantContext->requireAcademyId(),
@@ -129,16 +133,15 @@ final class VenueController extends AbstractApiController
             )
         );
 
-        return new JsonResponse([
-            'data' => $view->toArray(),
-            'meta' => new \stdClass(),
-        ]);
+        return new Response(
+            status: Response::HTTP_NO_CONTENT,
+        );
     }
 
     #[Route('/{venueId}/activate', name: 'api_v1_venues_activate', methods: ['PATCH'])]
-    public function activate(string $venueId): JsonResponse
+    public function activate(string $venueId): Response
     {
-        $view = ($this->activateVenueHandler)(
+        ($this->activateVenueHandler)(
             new ActiveVenueCommand(
                 $this->requireActorId(),
                 $this->tenantContext->requireAcademyId(),
@@ -146,16 +149,15 @@ final class VenueController extends AbstractApiController
             )
         );
 
-        return new JsonResponse([
-            'data' => $view->toArray(),
-            'meta' => new \stdClass(),
-        ]);
+        return new Response(
+            status: Response::HTTP_NO_CONTENT,
+        );
     }
 
     #[Route('/{venueId}', name: 'api_v1_venues_delete', methods: ['DELETE'])]
-    public function delete(string $venueId): JsonResponse
+    public function delete(string $venueId): Response
     {
-         $view = ($this->deleteVenueHandler)(
+         ($this->deleteVenueHandler)(
             new DeleteVenueCommand(
                 $this->requireActorId(),
                 $this->tenantContext->requireAcademyId(),
@@ -163,10 +165,9 @@ final class VenueController extends AbstractApiController
             )
         );
 
-        return new JsonResponse([
-            'data' => $view->toArray(),
-            'meta' => new \stdClass(),
-        ]);
+        return new Response(
+            status: Response::HTTP_NO_CONTENT,
+        );
     }
 
     private function requireActorId(): string

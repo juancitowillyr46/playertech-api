@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Venue\Domain\Exception;
 
-final class VenueNotFoundException extends \DomainException
+use App\Shared\Domain\Exception\NotFoundException;
+
+final class VenueNotFoundException extends NotFoundException
 {
     public function __construct()
     {

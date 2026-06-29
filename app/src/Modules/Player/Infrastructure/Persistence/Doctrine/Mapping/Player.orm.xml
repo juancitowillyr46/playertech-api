@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity
+        name="App\Modules\Player\Domain\Player\Player"
+        table="players">
+
+        <unique-constraints>
+            <unique-constraint
+                name="UNIQ_PLAYER_ACADEMY_DOCUMENT_NUMBER"
+                columns="academy_id,document_number"/>
+        </unique-constraints>
+
+        <indexes>
+            <index
+                name="IDX_PLAYER_ACADEMY"
+                columns="academy_id"/>
+
+            <index
+                name="IDX_PLAYER_STATUS"
+                columns="status"/>
+
+            <index
+                name="IDX_PLAYER_CREATED_BY"
+                columns="created_by"/>
+
+            <index
+                name="IDX_PLAYER_UPDATED_BY"
+                columns="updated_by"/>
+
+            <index
+                name="IDX_PLAYER_DELETED_BY"
+                columns="deleted_by"/>
+        </indexes>
+
+        <id
+            name="id"
+            column="id"
+            type="player_id"/>
+
+        <field
+            name="academyId"
+            column="academy_id"
+            type="academy_id"/>
+
+        <field
+            name="firstName"
+            column="first_name"
+            type="string"
+            length="100"/>
+
+        <field
+            name="lastName"
+            column="last_name"
+            type="string"
+            length="100"/>
+
+        <field
+            name="birthDate"
+            column="birth_date"
+            type="date_immutable"/>
+
+        <field
+            name="documentNumber"
+            column="document_number"
+            type="string"
+            length="30"/>
+
+        <field
+            name="categoryId"
+            column="category_id"
+            type="category_id"
+            nullable="true"/>
+
+        <embedded
+            name="status"
+            class="App\Modules\Player\Domain\Player\PlayerStatus"
+            use-column-prefix="false"/>
+
+        <embedded
+            name="auditTrail"
+            class="App\Shared\Domain\ValueObject\AuditTrail"
+            use-column-prefix="false"/>
+
+        <field
+            name="deletedAt"
+            column="deleted_at"
+            type="datetime_immutable"
+            nullable="true"/>
+
+        <field
+            name="deletedBy"
+            column="deleted_by"
+            type="guid"
+            nullable="true"/>
+
+    </entity>
+
+</doctrine-mapping>

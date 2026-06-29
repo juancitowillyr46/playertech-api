@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Category\Application\Handler;
 
-use App\Categories\Application\Services\CategoryFinder;
+use App\Modules\Category\Application\Services\CategoryFinder;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Application\Command\InactivateCategoryCommand;
 use App\Modules\Category\Domain\Category\CategoryId;

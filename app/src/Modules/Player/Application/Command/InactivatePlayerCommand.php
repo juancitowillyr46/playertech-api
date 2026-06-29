@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Category\Application\Command;
+namespace App\Modules\Player\Application\Command;
 
-final readonly class ActivateCategoryCommand
+final readonly class InactivatePlayerCommand
 {
     public function __construct(
         public string $actorId,
         public string $academyId,
-        public string $categoryId,
+        public string $playerId,
     ) {
     }
 }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Venue\Domain\Exception;
 
-final class VenueAlreadyExistsException extends \DomainException
+use App\Shared\Domain\Exception\ConflictException;
+
+final class VenueAlreadyExistsException extends ConflictException
 {
     public function __construct()
     {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Academy\Domain\Exception;
 
-use DomainException;
+use App\Shared\Domain\Exception\ConflictException;
 
-final class AcademyAlreadyExistsException extends DomainException
+final class AcademyAlreadyExistsException extends ConflictException
 {
     public function __construct()
     {

@@ -46,9 +46,9 @@ Cada cambio relevante debe dejar una referencia clara en el estado actual.
 2. Identity.
 3. Venues.
 4. Categories.
-5. Teams.
-6. Guardians.
-7. Players.
+5. Players.
+6. Teams.
+7. Guardians.
 8. Memberships.
 9. Payment concepts.
 10. Payments.
@@ -70,9 +70,9 @@ Cada cambio relevante debe dejar una referencia clara en el estado actual.
 2. Flujo crear usuario.
 3. Flujo crear sede.
 4. Flujo crear categoria.
-5. Flujo crear equipo.
+5. Flujo registrar jugador.
 6. Flujo registrar acudiente.
-7. Flujo registrar jugador.
+7. Flujo crear equipo.
 8. Flujo crear matricula.
 9. Flujo registrar pago.
 10. Flujo consultar historial y dashboard.

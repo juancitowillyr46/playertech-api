@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Categories\Application\Services;
+namespace App\Modules\Category\Application\Services;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Domain\Category\Category;
 use App\Modules\Category\Domain\Category\CategoryId;
+use App\Modules\Category\Domain\Category\CategoryRepository;
 use App\Modules\Category\Domain\Exception\CategoryNotFoundException;
-use App\Modules\Category\Infrastructure\Persistence\CategoryRepository;
 use App\Shared\Domain\Exception\IdInvalidException;
 use Symfony\Component\Uid\Uuid;
 

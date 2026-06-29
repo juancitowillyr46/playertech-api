@@ -17,6 +17,7 @@ services:
     App\Modules\Academy\Domain\Academy\AcademyRepository: '@App\Modules\Academy\Infrastructure\Persistence\AcademyRepository'
     App\Modules\Venue\Domain\Venue\VenueRepository: '@App\Modules\Venue\Infrastructure\Persistence\VenueRepository'
     App\Modules\Category\Domain\Category\CategoryRepository: '@App\Modules\Category\Infrastructure\Persistence\CategoryRepository'
+    App\Modules\Player\Domain\Player\PlayerRepository: '@App\Modules\Player\Infrastructure\Persistence\PlayerRepository'
     App\Modules\Identity\Domain\Policy\UserAdministrationPolicy: ~
 
     # Explicits

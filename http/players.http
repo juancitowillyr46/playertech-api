@@ -1,0 +1,70 @@
+@baseUrl = http://localhost:8081
+@adminEmail = admin@playertech.com
+@adminPassword = secret123
+
+### Login
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "{{adminEmail}}",
+  "password": "{{adminPassword}}"
+}
+
+> {% client.global.set("token", response.body.data.token); %}
+
+### Create Player
+POST {{baseUrl}}/api/v1/academy/players
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "first_name": "Juan",
+  "last_name": "Pérez",
+  "birth_date": "2014-05-18",
+  "document_number": "12345678"
+}
+
+### List Players
+GET {{baseUrl}}/api/v1/academy/players
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Show Player
+GET {{baseUrl}}/api/v1/academy/players/{{playerId}}
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Update Player
+PUT {{baseUrl}}/api/v1/academy/players/{{playerId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "first_name": "Juan Carlos",
+  "last_name": "Pérez Gómez",
+  "birth_date": "2014-05-20",
+  "document_number": "87654321"
+}
+
+### Inactivate Player
+PATCH {{baseUrl}}/api/v1/academy/players/{{playerId}}/inactivate
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Activate Player
+PATCH {{baseUrl}}/api/v1/academy/players/{{playerId}}/activate
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Import Players
+POST {{baseUrl}}/api/v1/academy/players/import
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data
+
+# Adjunta un archivo .xlsx con columnas:
+# first_name, last_name, birth_date, document_number, category_id
+# En VS Code REST Client, usa el selector de archivo del cliente o una variable local para el path.

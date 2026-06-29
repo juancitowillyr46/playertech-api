@@ -4,24 +4,22 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Http;
 
-use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
-use App\Modules\Category\Domain\Exception\CategoryAlreadyExistsException;
-use App\Modules\Identity\Domain\Exception\CannotDisableLastTenantAdminException;
-use App\Modules\Identity\Domain\Exception\UserAlreadyExistsException;
-use App\Modules\Identity\Domain\Exception\UserTenantScopeViolationException;
-use App\Modules\Venue\Domain\Exception\VenueAlreadyExistsException;
+use App\Shared\Domain\Exception\BusinessRuleException;
+use App\Shared\Domain\Exception\ConflictException;
+use App\Shared\Domain\Exception\ForbiddenException;
+use App\Shared\Domain\Exception\NotFoundException;
+use App\Shared\Domain\Exception\UnauthorizedException;
 use App\Shared\Domain\Exception\ValidationException;
 use DomainException;
-use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Throwable;
 
-// #[WithMonologChannel('application')]
 final class ProblemDetailsExceptionSubscriber implements EventSubscriberInterface
 {
     public function __construct(
@@ -64,13 +62,7 @@ final class ProblemDetailsExceptionSubscriber implements EventSubscriberInterfac
         Throwable $throwable,
         string $instance
     ): ?array {
-        if (
-            $throwable instanceof AcademyAlreadyExistsException
-            || $throwable instanceof UserAlreadyExistsException
-            || $throwable instanceof CannotDisableLastTenantAdminException
-            || $throwable instanceof VenueAlreadyExistsException
-            || $throwable instanceof CategoryAlreadyExistsException
-        ) {
+        if ($throwable instanceof ConflictException) {
             return $this->problem(
                 Response::HTTP_CONFLICT,
                 'https://api.playertech/errors/conflict',
@@ -80,11 +72,31 @@ final class ProblemDetailsExceptionSubscriber implements EventSubscriberInterfac
             );
         }
 
-        if ($throwable instanceof UserTenantScopeViolationException) {
+        if ($throwable instanceof ForbiddenException) {
             return $this->problem(
                 Response::HTTP_FORBIDDEN,
                 'https://api.playertech/errors/forbidden',
                 'Forbidden',
+                $throwable->getMessage(),
+                $instance,
+            );
+        }
+
+        if ($throwable instanceof NotFoundException) {
+            return $this->problem(
+                Response::HTTP_NOT_FOUND,
+                'https://api.playertech/errors/not-found',
+                'Not Found',
+                $throwable->getMessage(),
+                $instance,
+            );
+        }
+
+        if ($throwable instanceof UnauthorizedException) {
+            return $this->problem(
+                Response::HTTP_UNAUTHORIZED,
+                'https://api.playertech/errors/unauthorized',
+                'Unauthorized',
                 $throwable->getMessage(),
                 $instance,
             );
@@ -109,11 +121,31 @@ final class ProblemDetailsExceptionSubscriber implements EventSubscriberInterfac
             );
         }
 
+        if ($throwable instanceof BusinessRuleException) {
+            return $this->problem(
+                Response::HTTP_BAD_REQUEST,
+                'https://api.playertech/errors/business-rule',
+                'Business Rule Error',
+                $throwable->getMessage(),
+                $instance,
+            );
+        }
+
         if ($throwable instanceof DomainException) {
             return $this->problem(
                 Response::HTTP_BAD_REQUEST,
                 'https://api.playertech/errors/domain',
                 'Domain Error',
+                $throwable->getMessage(),
+                $instance,
+            );
+        }
+
+        if ($throwable instanceof AccessDeniedHttpException) {
+            return $this->problem(
+                Response::HTTP_FORBIDDEN,
+                'https://api.playertech/errors/forbidden',
+                'Forbidden',
                 $throwable->getMessage(),
                 $instance,
             );

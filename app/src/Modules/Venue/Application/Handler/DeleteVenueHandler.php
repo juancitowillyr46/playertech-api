@@ -4,49 +4,30 @@ declare(strict_types=1);
 
 namespace App\Modules\Venue\Application\Handler;
 
+use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Venue\Application\Command\DeleteVenueCommand;
-use App\Modules\Venue\Application\Command\UpdateVenueCommand;
-use App\Modules\Venue\Application\Response\VenueResponse;
+use App\Modules\Venue\Application\Services\VenueFinder;
 use App\Modules\Venue\Domain\Venue\VenueId;
 use App\Modules\Venue\Domain\Venue\VenueRepository;
-use App\Shared\Domain\ValueObject\Address;
-use App\Shared\Domain\ValueObject\City;
-use App\Shared\Domain\ValueObject\Name;
-use App\Shared\Domain\ValueObject\Notes;
-use App\Shared\Domain\ValueObject\PhoneNumber;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Uid\Uuid;
 
 final readonly class DeleteVenueHandler
 {
     public function __construct(
         private VenueRepository $venueRepository,
+        private VenueFinder $venueFinder
     ) {
     }
 
-    public function __invoke(DeleteVenueCommand $command): VenueResponse
+    public function __invoke(DeleteVenueCommand $command): void
     {
-        $venue = $this->requireVenue($command->venueId);
+        $academyId = new AcademyId($command->academyId);
+
+        $venueId = new VenueId($command->venueId);
+
+        $venue = $this->venueFinder->findOrFail($academyId, $venueId);
 
         $venue->delete($command->actorId);
 
         $this->venueRepository->save($venue);
-
-        return VenueResponse::fromVenue($venue);
-    }
-
-    private function requireVenue(string $venueId): \App\Modules\Venue\Domain\Venue\Venue
-    {
-        if (!Uuid::isValid($venueId)) {
-            throw new NotFoundHttpException('Identificador de sede inválido.');
-        }
-
-        $venue = $this->venueRepository->findById(new VenueId($venueId));
-
-        if (null === $venue) {
-            throw new NotFoundHttpException('Sede no encontrada.');
-        }
-
-        return $venue;
     }
 }

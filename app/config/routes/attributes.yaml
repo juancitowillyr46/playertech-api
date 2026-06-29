@@ -36,3 +36,10 @@ category_controllers:
         namespace: App\Modules\Category\Presentation\Http
     type: attribute
     prefix: /api/v1
+
+player_controllers:
+    resource:
+        path: ../../src/Modules/Player/Presentation/Http/
+        namespace: App\Modules\Player\Presentation\Http
+    type: attribute
+    prefix: /api/v1

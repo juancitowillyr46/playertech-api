@@ -32,6 +32,9 @@ La base tecnica actual incluye:
 | API controller foundation | Technical Enabler | Done | `untracked` | Base HTTP común para validación y resolución del usuario autenticado, reduciendo duplicación entre controladores |
 | First unit test baseline | Technical Enabler | Done | `untracked` | PHPUnit inicial valida `AcademyId`, `AccountUser` y `UserAdministrationPolicy` |
 | Tenant signup integration test | Technical Enabler | Done | `untracked` | `RegisterTenantHandler` valida alta de tenant contra una base de datos MySQL de test con bus de mensajes desacoplado |
+| Category module completion | Functional / Technical Enabler | Done | `9d1cca1` | `Category` quedo completa con create, list, update, activate, inactivate y Finder centralizado |
+| Venue module completion | Functional / Technical Enabler | Done | `b8eec30` | `Venue` quedo completa con create, list, update, activate e inactivate |
+| Spec domain alignment | Documentation | Done | `679df05` | Se alinearon dominio, entidades, relaciones y modelo de base de datos con el diseño player-centric |
 | Shared health endpoint | Technical Enabler | Done | `87f6f9b` | HealthController moved to Shared/Presentation/Http |
 | Legacy folder cleanup | Technical Enabler | Done | `87f6f9b` | Eliminados `src/Command`, `src/Controller`, `src/Entity`, `src/EventSubscriber` y `src/Security` heredados |
 | Root platform command | Technical Enabler | Done | `87f6f9b` | `app:user:create-root` registra usuarios `ROLE_ROOT` sin tenant |
@@ -48,6 +51,13 @@ La base tecnica actual incluye:
 | Module creation guide | Documentation / Technical Enabler | Done | `0801f4f` | Guia operativa para crear nuevos modulos siguiendo el patron de `Academy` |
 | Tenant signup onboarding spec | Documentation / Functional | Done | `untracked` | Nueva épica `EP-014` y HU-001 para alta simplificada de tenant con activación por correo |
 | Tenant signup runtime implementation | Functional / Technical Enabler | Done | `untracked` | Signup tenant, activación por correo, Mailpit y flujo de login validado |
+| Player module base | Functional / Technical Enabler | Done | `untracked` | `Player` arranca con `POST /api/v1/academy/players`, custom type UUID, XML mapping y test unitario del alta |
+| Player list baseline | Functional / Technical Enabler | Done | `untracked` | `GET /api/v1/academy/players` lista jugadores del tenant actual con DTO resumido y prueba unitaria |
+| Player detail baseline | Functional / Technical Enabler | Done | `untracked` | `GET /api/v1/academy/players/{playerId}` devuelve detalle del jugador dentro del tenant con `PlayerResponse` y prueba unitaria |
+| Player update baseline | Functional / Technical Enabler | Done | `untracked` | `PUT /api/v1/academy/players/{playerId}` actualiza datos del jugador dentro del tenant con validación de unicidad y prueba unitaria |
+| Player status management | Functional / Technical Enabler | Done | `untracked` | `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate` cambian el estado del jugador con cobertura unitaria |
+| Player status management story | Functional / Documentation | Done | `untracked` | HU-005 consolidada documenta desactivar y reactivar como una sola gestion de estado |
+| Player bulk import baseline | Functional / Technical Enabler | Done | `untracked` | `POST /api/v1/academy/players/import` permite carga masiva desde Excel con `category_id` y validación completa por fila |
 
 ---
 
@@ -67,6 +77,16 @@ La base tecnica actual incluye:
 * `ae7cbc7` - `refactor(identity): reduce controller duplication`
 * `f02ee94` - `test(identity): add initial unit test baseline`
 * `9f72c99` - `test(academy): add mysql-backed tenant signup integration`
+* `72bba8a` - `feat(category): implement update use case and refine category management`
+* `0e2d016` - `feat(category): implement category listing use case`
+* `e869926` - `feat(category): implement activate and inactivate category endpoints`
+* `9d1cca1` - `feat(category): complete category module and improve exception handling`
+* `aa6a37e` - `feat(venue): implement Venue module with Create (POST) use case`
+* `af65397` - `feat(venue): implement list venue use case`
+* `5fe29d5` - `feat(venue): implement update venue use case`
+* `b8eec30` - `feat(venue): implement active and inactive use case`
+* `679df05` - `docs(specs): align domain, entities, relationships and database model with player-centric design`
+* `b76e1d2` - `refactor(category): introduce CategoryFinder to centralize category retrieval logic`
 
 ---
 
@@ -145,11 +165,27 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La separacion de configuracion `local`/`test`/`prod` quedó documentada en `specs/17-environment-guide.md`.
 * `Mailpit` queda adoptado como la herramienta base de desarrollo local para validar envios de correo y flujos de activacion.
 * `EP-003` queda reorientada para distinguir usuarios de plataforma y usuarios tenant; la creacion del owner/admin inicial del tenant se documenta como historia explicita.
+* `Category` y `Venue` ya quedaron implementados como módulos funcionales completos y el backlog debe seguir su mismo lifecycle con historias faltantes o inconsistentes.
+* `Category` y `Venue` comparten ahora el patrón de recuperación por `Finder`, reduciendo duplicación en handlers y homogeneizando Application.
+* El backlog de `Category` ya tiene historias explícitas para listar, actualizar y cambiar estado, alineadas con el código existente.
+* `Venue` quedó homologado con `Category` mediante `Finder Services` y `ShowVenueQuery` ahora requiere contexto tenant completo.
+* `CategoryController` y `VenueController` quedaron homogeneizados para usar el `TenantContext` del controlador y no mezclar inyección por parámetro.
+* La jerarquía compartida de excepciones de `Shared` quedó aplicada y el `ProblemDetailsExceptionSubscriber` traduce por tipo base.
+* `EP-007` quedó reescrita como inicio formal del dominio `Player` y ya tiene HUs mínimas para registrar, listar, consultar, actualizar y desactivar.
+* `HU-001` de `EP-007` quedó implementada y validada en runtime con `POST /api/v1/academy/players`.
+* `HU-002` de `EP-007` quedó implementada y validada en runtime con `GET /api/v1/academy/players`.
 * La suspension de una academia bloquea a todos sus usuarios, pero no elimina ni desactiva usuarios en cascada.
 * Las validaciones de negocio de `Academy` devuelven Problem Details JSON; el caso de duplicado de correo se resuelve con excepcion de dominio y respuesta `409`.
 * `Academy` incorpora soft delete con `deleted_at` y `deleted_by`, y Doctrine ya tiene un filtro global para excluir entidades borradas lógicamente.
 * Se documentó una épica nueva para onboarding de tenant (`EP-014`) sin alterar el flujo de creación de tenants por `ROLE_ROOT`.
 * El onboarding tenant ya tiene implementación base: signup público, correo de activación y endpoint de activación.
+* `Player` queda priorizado como siguiente módulo de negocio sobre `EP-008`, `EP-009`, `EP-010` y `EP-012`.
+* `HU-003` de `EP-007` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}`.
+* `HU-004` de `EP-007` quedó implementada y validada en runtime con `PUT /api/v1/academy/players/{playerId}`.
+* `HU-005` de `EP-007` quedó consolidada como gestión de estado del jugador: desactivar y reactivar con endpoints `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate`.
+* Se abrió la historia `HU-007` de `EP-007` para importación masiva de jugadores y categorías desde Excel como base de migración de datos.
+* `HU-007` de `EP-007` quedó implementada con carga masiva de jugadores desde Excel, validación de categorías y rechazo total ante errores.
+* El módulo `Player` ahora incluye `category_id` como referencia opcional y el endpoint de importación masiva `POST /api/v1/academy/players/import`.
 ---
 
 # Technical Foundation Checklist
@@ -182,8 +218,8 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] **Tenant Access Enforcement**: Validar que si el usuario no es Root, el `TenantContext` *deba* estar presente; de lo contrario, devolver 403.
 
 ### 3. API Reliability
-- [ ] **ProblemDetails (RFC 9457)**: Subscriber para capturar excepciones y devolver el formato estándar de errores.
-- [ ] **Validation Mapping**: Convertir errores de `symfony/validator` al formato `ProblemDetails`.
+- [x] **ProblemDetails (RFC 9457)**: Subscriber para capturar excepciones y devolver el formato estándar de errores.
+- [x] **Validation Mapping**: Convertir errores de `symfony/validator` al formato `ProblemDetails`.
 
 ### 4. Audit & Persistence
 - [ ] **AuditSubscriber**: Automatizar el llenado de `created_by` y `updated_by` usando el usuario del Token.
@@ -200,3 +236,5 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * Flujo de creación de Academia (exclusivo para Root).
 * Formalizar el onboarding de tenant como siguiente bloque funcional tras `EP-001`.
 * Reutilizar `Academy` como plantilla de implementacion para los siguientes modulos.
+* Completar el backlog de `Category` con historias explícitas para listar, actualizar, activar e inactivar, porque ya existen en código.
+* Continuar con `EP-007` para cerrar `HU-002` a `HU-005` y luego retomar `EP-008` -> `EP-009` -> `EP-010` -> `EP-012`.

@@ -9,6 +9,7 @@
         "doctrine/orm": "^3.3",
         "lexik/jwt-authentication-bundle": "^3.0",
         "nelmio/api-doc-bundle": "^5.0",
+        "phpoffice/phpspreadsheet": "^3.10",
         "symfony/console": "^7.4",
         "symfony/dependency-injection": "^7.4",
         "symfony/doctrine-bridge": "^7.4",

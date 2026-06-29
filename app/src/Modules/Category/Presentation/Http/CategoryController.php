@@ -65,12 +65,12 @@ final class CategoryController extends AbstractApiController
     }
 
     #[Route('', name: 'api_v1_categories_list', methods: ['GET'])]
-    public function list(TenantContext $tenantContext): JsonResponse
+    public function list(): JsonResponse
     {
         $categories = ($this->listCategoriesHandler)(
             new ListCategoriesQuery(
                 new AcademyId(
-                    $tenantContext->requireAcademyId()
+                    $this->tenantContext->requireAcademyId()
                 )
             )
         );
@@ -110,14 +110,11 @@ final class CategoryController extends AbstractApiController
     }
 
     #[Route('/{categoryId}', name: 'api_v1_categories_show', methods: ['GET'])]
-    public function show(
-        string $categoryId,
-        TenantContext $tenantContext,
-    ): JsonResponse {
+    public function show(string $categoryId): JsonResponse {
         $category = ($this->showCategoryHandler)(
             new ShowCategoryQuery(
                 new AcademyId(
-                    $tenantContext->requireAcademyId()
+                    $this->tenantContext->requireAcademyId()
                 ),
                 new CategoryId($categoryId),
             )

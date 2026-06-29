@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Identity\Domain\Exception;
 
-use DomainException;
+use App\Shared\Domain\Exception\ForbiddenException;
 
-final class UserTenantScopeViolationException extends DomainException
+final class UserTenantScopeViolationException extends ForbiddenException
 {
     public function __construct()
     {
