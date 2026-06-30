@@ -57,7 +57,8 @@ La base tecnica actual incluye:
 | Player update baseline | Functional / Technical Enabler | Done | `untracked` | `PUT /api/v1/academy/players/{playerId}` actualiza datos del jugador dentro del tenant con validación de unicidad y prueba unitaria |
 | Player status management | Functional / Technical Enabler | Done | `untracked` | `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate` cambian el estado del jugador con cobertura unitaria |
 | Player status management story | Functional / Documentation | Done | `untracked` | HU-005 consolidada documenta desactivar y reactivar como una sola gestion de estado |
-| Player bulk import baseline | Functional / Technical Enabler | Done | `untracked` | `POST /api/v1/academy/players/import` permite carga masiva desde Excel con `category_id` y validación completa por fila |
+| Player bulk import baseline | Functional / Technical Enabler | Done | `untracked` | `POST /api/v1/academy/players/import` permite carga masiva desde Excel con `category_key` y validación completa por fila |
+| Category business key foundation | Functional / Technical Enabler | Done | `untracked` | `Category` ahora expone `category_key` estable, unico por academia, para contratos API e importaciones |
 
 ---
 
@@ -180,12 +181,13 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Se documentó una épica nueva para onboarding de tenant (`EP-014`) sin alterar el flujo de creación de tenants por `ROLE_ROOT`.
 * El onboarding tenant ya tiene implementación base: signup público, correo de activación y endpoint de activación.
 * `Player` queda priorizado como siguiente módulo de negocio sobre `EP-008`, `EP-009`, `EP-010` y `EP-012`.
+* Las categorias ahora tienen `category_key` estable para soportar importaciones y contratos de integracion sin depender del UUID.
 * `HU-003` de `EP-007` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}`.
 * `HU-004` de `EP-007` quedó implementada y validada en runtime con `PUT /api/v1/academy/players/{playerId}`.
 * `HU-005` de `EP-007` quedó consolidada como gestión de estado del jugador: desactivar y reactivar con endpoints `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate`.
 * Se abrió la historia `HU-007` de `EP-007` para importación masiva de jugadores y categorías desde Excel como base de migración de datos.
 * `HU-007` de `EP-007` quedó implementada con carga masiva de jugadores desde Excel, validación de categorías y rechazo total ante errores.
-* El módulo `Player` ahora incluye `category_id` como referencia opcional y el endpoint de importación masiva `POST /api/v1/academy/players/import`.
+* El módulo `Player` ahora incluye `category_id` como referencia opcional y el endpoint de importación masiva `POST /api/v1/academy/players/import` consume `category_key` como referencia de negocio.
 ---
 
 # Technical Foundation Checklist
@@ -238,3 +240,33 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * Reutilizar `Academy` como plantilla de implementacion para los siguientes modulos.
 * Completar el backlog de `Category` con historias explícitas para listar, actualizar, activar e inactivar, porque ya existen en código.
 * Continuar con `EP-007` para cerrar `HU-002` a `HU-005` y luego retomar `EP-008` -> `EP-009` -> `EP-010` -> `EP-012`.
+
+---
+
+# MVP Pending Checklist
+
+## Foundation y Seguridad
+
+- [ ] Doctrine Tenant Filter global para aislar consultas por `academy_id`.
+- [ ] AuditSubscriber para `created_by` y `updated_by`.
+- [ ] SoftDelete Filter global para excluir registros borrados lógicamente.
+- [ ] Test de aislamiento cross-tenant para validar que una academia no vea datos de otra.
+
+## Academy y Onboarding
+
+- [ ] Validar runtime de endpoints de `Academy` con usuario `ROLE_ROOT` y con usuario tenant.
+- [ ] Cerrar el flujo de signup de tenant con revisión final de contrato de correo y activación.
+
+## PlayerTech Core MVP
+
+- [x] `EP-007` Player base: registrar, listar, ver detalle, actualizar y gestionar estado.
+- [x] `EP-007` importación masiva de jugadores por Excel.
+- [ ] `EP-008` Relaciones jugador-acudiente.
+- [ ] `EP-009` Equipos.
+- [ ] `EP-010` Matrículas.
+- [ ] `EP-012` Pagos.
+
+## Base Operativa
+
+- [ ] Consolidar archivos `.http` con ejemplos de éxito y error por módulo.
+- [ ] Revisión final de `README` y guía de ejecución para el siguiente bloque funcional.

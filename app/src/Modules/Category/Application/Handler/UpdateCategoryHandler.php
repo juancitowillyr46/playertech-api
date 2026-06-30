@@ -9,6 +9,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Application\Command\UpdateCategoryCommand;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Category\Domain\Category\CategoryRepository;
+use App\Modules\Category\Domain\Exception\CategoryAlreadyExistsException;
 use App\Shared\Domain\ValueObject\Description;
 use App\Shared\Domain\ValueObject\MaximumAge;
 use App\Shared\Domain\ValueObject\MinimumAge;
@@ -31,11 +32,21 @@ final readonly class UpdateCategoryHandler
 
         $category = $this->categoryFinder->findOrFail($academyId, $categoryId);
 
+        $categoryKey = $command->input->categoryKey;
+
+        $existing = $this->categoryRepository->findByCategoryKey($academyId, $categoryKey);
+        if (null !== $existing && $existing->id()->value() !== $categoryId->value()) {
+            throw new CategoryAlreadyExistsException();
+        }
+
         $category->update(
+            $categoryKey,
             new Name($command->input->name),
             new MinimumAge($command->input->minAge),
             new MaximumAge($command->input->maxAge),
-            new Description($command->input->description),
+            null === $command->input->description
+                ? null
+                : new Description($command->input->description),
             $command->actorId,
         );
 

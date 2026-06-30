@@ -11,6 +11,7 @@ final readonly class CategoryResponse
     private function __construct(
         private string $id,
         private string $academyId,
+        private string $categoryKey,
         private string $name,
         private int $minAge,
         private int $maxAge,
@@ -24,6 +25,7 @@ final readonly class CategoryResponse
         return new self(
             $category->id()->value(),
             $category->academyId()->value(),
+            $category->categoryKey(),
             $category->name()->value(),
             $category->minAge()->value(),
             $category->maxAge()->value(),
@@ -36,10 +38,11 @@ final readonly class CategoryResponse
     {
         return [
             'id' => $this->id,
-            'academyId' => $this->academyId,
+            'academy_id' => $this->academyId,
+            'category_key' => $this->categoryKey,
             'name' => $this->name,
-            'minAge' => $this->minAge,
-            'maxAge' => $this->maxAge,
+            'min_age' => $this->minAge,
+            'max_age' => $this->maxAge,
             'description' => $this->description,
             'status' => $this->status
         ];

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Modules\Player\Application\Handler;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
-use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Category\Domain\Category\CategoryRepository;
 use App\Modules\Player\Application\Command\ImportPlayersCommand;
 use App\Modules\Player\Application\Response\PlayerResponse;
@@ -44,7 +43,8 @@ final readonly class ImportPlayersHandler
             $lastName = trim((string) ($row['last_name'] ?? ''));
             $birthDate = trim((string) ($row['birth_date'] ?? ''));
             $documentNumber = trim((string) ($row['document_number'] ?? ''));
-            $categoryId = trim((string) ($row['category_id'] ?? ''));
+            $categoryKey = trim((string) ($row['category_key'] ?? ''));
+            $category = null;
 
             if ('' === $firstName) {
                 $violations->add($this->violation("rows[$line].first_name", 'El campo "first_name" es obligatorio.'));
@@ -63,16 +63,12 @@ final readonly class ImportPlayersHandler
                 $violations->add($this->violation("rows[$line].document_number", 'El campo "document_number" es obligatorio.'));
             }
 
-            if ('' === $categoryId) {
-                $violations->add($this->violation("rows[$line].category_id", 'El campo "category_id" es obligatorio.'));
+            if ('' === $categoryKey) {
+                $violations->add($this->violation("rows[$line].category_key", 'El campo "category_key" es obligatorio.'));
             } else {
-                try {
-                    $resolvedCategoryId = new CategoryId($categoryId);
-                    if (null === $this->categoryRepository->findById($academyId, $resolvedCategoryId)) {
-                        $violations->add($this->violation("rows[$line].category_id", 'La categoría no existe en la academia.'));
-                    }
-                } catch (\InvalidArgumentException) {
-                    $violations->add($this->violation("rows[$line].category_id", 'El campo "category_id" debe ser un UUID válido.'));
+                $category = $this->categoryRepository->findByCategoryKey($academyId, $categoryKey);
+                if (null === $category) {
+                    $violations->add($this->violation("rows[$line].category_key", 'La categoría no existe en la academia.'));
                 }
             }
 
@@ -97,7 +93,7 @@ final readonly class ImportPlayersHandler
                 $lastName,
                 $parsedBirthDate,
                 $documentNumber,
-                new CategoryId($categoryId),
+                $category->id(),
                 AuditTrail::create($command->actorId),
             );
         }
@@ -139,7 +135,7 @@ final readonly class ImportPlayersHandler
         }
 
         $header = array_map('strtolower', array_map('trim', array_values(array_shift($rows))));
-        $expected = ['first_name', 'last_name', 'birth_date', 'document_number', 'category_id'];
+        $expected = ['first_name', 'last_name', 'birth_date', 'document_number', 'category_key'];
 
         if ($header !== $expected) {
             throw new ValidationException(new ConstraintViolationList([

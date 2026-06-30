@@ -18,15 +18,16 @@ Accept: application/json
 ### Create category
 ### Request DTO: CreateCategoryInput
 
-POST http://localhost:8081/api/v1/categories
+POST http://localhost:8081/api/v1/academy/categories
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3ODI2MDE2MDMsImV4cCI6MTc4MjYwNTIwMywicm9sZXMiOlsiUk9MRV9BQ0FERU1ZX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiYWRtaW5AYWNhZGVtaWEuY29tIiwidXNlcl9pZCI6IjM0MjE4NjA0LWViZmQtNDYxZC1iY2M1LTAyMDg1ZGM3NGYxMiIsImFjYWRlbXlfaWQiOiIwMTllZjBlOC1kMjAzLTc4ZjEtOTE0OC0yZjRmMTZmOGUxYjciLCJyb2xlIjoiUk9MRV9BQ0FERU1ZX0FETUlOIn0.JoJFkTfoOtDuGtTrk85D1z0Yx57oJU5f6Lj2VuDK2V03lmIfkWl3PFqMUaual0xd4W4eBKu9K27AStNT1CaWxzy0ZrsX75lNz58QkOaMDAvV3lZPK0OSHK75_lVGEgyeU5H3BXpqZryKD9VtfK5KQOMoTlYDo3A_XAtxaGSUOIwWNDmsKADsomxgrx3p8Qg_U2yHRr8puK4k8jpaWQA7HDE_AldTjymWUdOP_zwMT7djs7LrPXQLP00VxevQWTqEi5p3SmgdArhvjWvtgmUzeUBhQqKt4ShxOrSrWjPZeuEW8VTliLxQzb2ohr6BV6qiTgrX6iMZrIa8uFVkViWPRw
 Content-Type: application/json
 Accept: application/json
 
 {
+  "category_key": "SUB_12",
   "name": "Sub-12",
-  "minAge": 10,
-  "maxAge": 12,
+  "min_age": 10,
+  "max_age": 12,
   "description": "Categoría para jugadores entre 10 y 12 años."
 }
 
@@ -38,9 +39,10 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3ODI2MDE2M
 Content-Type: application/json
 
 {
+  "category_key": "SUB_13",
   "name": "Sub-13",
-  "minAge": 11,
-  "maxAge": 13,
+  "min_age": 11,
+  "max_age": 13,
   "description": "Updated category"
 }
 

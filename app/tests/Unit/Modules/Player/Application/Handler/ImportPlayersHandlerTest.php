@@ -34,6 +34,7 @@ final class ImportPlayersHandlerTest extends TestCase
         $categoryRepository->save(Category::create(
             $categoryId,
             $academyId,
+            'SUB_14',
             new Name('Sub 14'),
             new MinimumAge(12),
             new MaximumAge(14),
@@ -43,8 +44,8 @@ final class ImportPlayersHandlerTest extends TestCase
 
         $handler = new ImportPlayersHandler($playerRepository, $categoryRepository);
         $file = $this->createWorkbook([
-            ['first_name', 'last_name', 'birth_date', 'document_number', 'category_id'],
-            ['Juan', 'Pérez', '2014-05-18', '12345678', $categoryId->value()],
+            ['first_name', 'last_name', 'birth_date', 'document_number', 'category_key'],
+            ['Juan', 'Pérez', '2014-05-18', '12345678', 'SUB_14'],
         ]);
 
         $responses = $handler(new ImportPlayersCommand(
@@ -66,8 +67,8 @@ final class ImportPlayersHandlerTest extends TestCase
 
         $handler = new ImportPlayersHandler($playerRepository, $categoryRepository);
         $file = $this->createWorkbook([
-            ['first_name', 'last_name', 'birth_date', 'document_number', 'category_id'],
-            ['Juan', 'Pérez', '2014-05-18', '12345678', '019eec93-9a11-7432-bd04-52306b2b3d70'],
+            ['first_name', 'last_name', 'birth_date', 'document_number', 'category_key'],
+            ['Juan', 'Pérez', '2014-05-18', '12345678', 'SUB_14'],
         ]);
 
         $this->expectException(ValidationException::class);

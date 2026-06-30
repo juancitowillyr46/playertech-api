@@ -13,6 +13,8 @@ interface CategoryRepository
 
     public function findById(AcademyId $academyId, CategoryId $categoryId): ?Category;
 
+    public function findByCategoryKey(AcademyId $academyId, string $categoryKey): ?Category;
+
     /**
      * @return Category[]
      */

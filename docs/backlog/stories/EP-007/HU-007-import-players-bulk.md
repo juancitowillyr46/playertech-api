@@ -43,7 +43,7 @@ Para registrar en lote información que hoy se carga manualmente uno por uno.
 * El archivo debe validar formato y estructura antes de persistir.
 * Cada jugador debe quedar asociado a la academia actual.
 * El documento del jugador debe seguir siendo único por academia.
-* La categoría debe existir dentro de la academia o resolverse por una referencia válida del archivo.
+* La categoría debe existir dentro de la academia o resolverse por `category_key`.
 * Si el archivo contiene errores estructurales o de negocio, la importación debe rechazarse.
 
 ---
@@ -90,5 +90,5 @@ Para registrar en lote información que hoy se carga manualmente uno por uno.
 * Endpoint: `POST /api/v1/academy/players/import`
 * Entrada: `multipart/form-data`
 * Formato: `.xlsx`
-* Clave de categoría: `category_id`
+* Clave de categoría: `category_key`
 * Estrategia MVP: falla toda la importación si existe al menos un error de validación

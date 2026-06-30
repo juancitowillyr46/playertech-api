@@ -30,6 +30,19 @@ final class InMemoryCategoryRepository implements CategoryRepository
         return null;
     }
 
+    public function findByCategoryKey(AcademyId $academyId, string $categoryKey): ?Category
+    {
+        $normalizedKey = strtoupper(trim($categoryKey));
+
+        foreach ($this->categories as $category) {
+            if ($category->academyId()->equals($academyId) && $category->categoryKey() === $normalizedKey) {
+                return $category;
+            }
+        }
+
+        return null;
+    }
+
     public function findAllByAcademy(AcademyId $academyId): array
     {
         return array_values(array_filter(

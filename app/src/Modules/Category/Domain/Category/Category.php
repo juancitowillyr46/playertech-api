@@ -21,6 +21,8 @@ final class Category
 
     private AcademyId $academyId;
 
+    private string $categoryKey;
+
     private Name $name;
 
     private MinimumAge $minAge;
@@ -40,6 +42,7 @@ final class Category
     private function __construct(
         CategoryId $id,
         AcademyId $academyId,
+        string $categoryKey,
         Name $name,
         MinimumAge $minAge,
         MaximumAge $maxAge,
@@ -50,6 +53,7 @@ final class Category
 
         $this->id = $id;
         $this->academyId = $academyId;
+        $this->categoryKey = self::normalizeKey($categoryKey);
         $this->name = $name;
         $this->minAge = $minAge;
         $this->maxAge = $maxAge;
@@ -61,6 +65,7 @@ final class Category
     public static function create(
         CategoryId $id,
         AcademyId $academyId,
+        string $categoryKey,
         Name $name,
         MinimumAge $minAge,
         MaximumAge $maxAge,
@@ -70,6 +75,7 @@ final class Category
         return new self(
             $id,
             $academyId,
+            $categoryKey,
             $name,
             $minAge,
             $maxAge,
@@ -86,6 +92,11 @@ final class Category
     public function academyId(): AcademyId
     {
         return $this->academyId;
+    }
+
+    public function categoryKey(): string
+    {
+        return $this->categoryKey;
     }
 
     public function name(): Name
@@ -129,6 +140,7 @@ final class Category
     }
 
     public function update(
+        string $categoryKey,
         Name $name,
         MinimumAge $minAge,
         MaximumAge $maxAge,
@@ -137,6 +149,7 @@ final class Category
     ): void {
         $this->ensureValidAgeRange($minAge, $maxAge);
 
+        $this->categoryKey = self::normalizeKey($categoryKey);
         $this->name = $name;
         $this->minAge = $minAge;
         $this->maxAge = $maxAge;
@@ -198,5 +211,24 @@ final class Category
         if ($minAge->value() >= $maxAge->value()) {
             throw new InvalidCategoryAgeRangeException();
         }
+    }
+
+    private static function normalizeKey(string $value): string
+    {
+        $value = strtoupper(trim($value));
+
+        if ('' === $value) {
+            throw new \InvalidArgumentException('Category key cannot be empty.');
+        }
+
+        if (mb_strlen($value) > 50) {
+            throw new \InvalidArgumentException('Category key is too long.');
+        }
+
+        if (!preg_match('/^[A-Z0-9][A-Z0-9_-]*$/', $value)) {
+            throw new \InvalidArgumentException('Category key has invalid format.');
+        }
+
+        return $value;
     }
 }

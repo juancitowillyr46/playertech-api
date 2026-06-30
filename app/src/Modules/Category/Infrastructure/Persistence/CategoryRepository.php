@@ -35,6 +35,18 @@ final class CategoryRepository extends ServiceEntityRepository implements Catego
             ->getOneOrNullResult();
     }
 
+    public function findByCategoryKey(AcademyId $academyId, string $categoryKey): ?Category
+    {
+        return $this->createQueryBuilder('category')
+            ->where('category.categoryKey = :categoryKey')
+            ->andWhere('category.academyId = :academyId')
+            ->andWhere('category.deletedAt IS NULL')
+            ->setParameter('categoryKey', strtoupper(trim($categoryKey)))
+            ->setParameter('academyId', $academyId->value())
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     /**
      * @return Category[]
      */

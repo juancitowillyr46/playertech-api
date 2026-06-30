@@ -11,6 +11,14 @@
         name="App\Modules\Category\Domain\Category\Category"
         table="categories">
 
+        <unique-constraints>
+
+            <unique-constraint
+                name="UNIQ_CATEGORY_ACADEMY_KEY"
+                columns="academy_id,category_key"/>
+
+        </unique-constraints>
+
         <indexes>
 
             <index
@@ -41,6 +49,12 @@
             type="category_id"/>
 
         <field name="academyId" column="academy_id" type="academy_id"/>
+
+        <field
+            name="categoryKey"
+            column="category_key"
+            type="string"
+            length="50"/>
 
         <embedded
             name="name"

@@ -28,11 +28,17 @@ final readonly class CreateCategoryHandler
     ): CategoryResponse {
 
         $academyId = new AcademyId($command->academyId);
+        $categoryKey = $command->input->categoryKey;
         $name = new Name($command->input->name);
+
+        if (null !== $this->categoryRepository->findByCategoryKey($academyId, $categoryKey)) {
+            throw new CategoryAlreadyExistsException();
+        }
 
         $category = Category::create(
             CategoryId::generate(),
             $academyId,
+            $categoryKey,
             $name,
             new MinimumAge($command->input->minAge),
             new MaximumAge($command->input->maxAge),

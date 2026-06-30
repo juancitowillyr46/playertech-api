@@ -11,7 +11,7 @@ final class CategoryAlreadyExistsException extends ConflictException
     public function __construct()
     {
         parent::__construct(
-            'A category with the same name already exists for this academy.'
+            'La categoría ya existe para esta academia.'
         );
     }
 }

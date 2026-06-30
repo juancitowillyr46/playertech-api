@@ -10,6 +10,7 @@ final readonly class CategoryListItemResponse
 {
     private function __construct(
         private string $id,
+        private string $categoryKey,
         private string $name,
         private int $minAge,
         private int $maxAge,
@@ -22,6 +23,7 @@ final readonly class CategoryListItemResponse
     {
         return new self(
             $category->id()->value(),
+            $category->categoryKey(),
             $category->name()->value(),
             $category->minAge()->value(),
             $category->maxAge()->value(),
@@ -34,9 +36,10 @@ final readonly class CategoryListItemResponse
     {
         return [
             'id' => $this->id,
+            'category_key' => $this->categoryKey,
             'name' => $this->name,
-            'minAge' => $this->minAge,
-            'maxAge' => $this->maxAge,
+            'min_age' => $this->minAge,
+            'max_age' => $this->maxAge,
             'description' => $this->description,
             'status' => $this->status,
         ];

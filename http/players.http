@@ -66,5 +66,5 @@ Authorization: Bearer {{token}}
 Content-Type: multipart/form-data
 
 # Adjunta un archivo .xlsx con columnas:
-# first_name, last_name, birth_date, document_number, category_id
+# first_name, last_name, birth_date, document_number, category_key
 # En VS Code REST Client, usa el selector de archivo del cliente o una variable local para el path.
