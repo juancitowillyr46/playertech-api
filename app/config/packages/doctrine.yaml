@@ -15,6 +15,9 @@ doctrine:
             soft_delete:
                 class: App\Shared\Infrastructure\Persistence\Doctrine\Filter\SoftDeleteFilter
                 enabled: true
+            tenant:
+                class: App\Shared\Infrastructure\Persistence\Doctrine\Filter\TenantFilter
+                enabled: false
         mappings:
             Identity:
                 is_bundle: false

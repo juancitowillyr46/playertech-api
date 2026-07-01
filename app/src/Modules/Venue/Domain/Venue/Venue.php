@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Venue\Domain\Venue;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Shared\Domain\Contracts\Auditable;
 use App\Shared\Domain\ValueObject\Address;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\City;
@@ -12,28 +13,18 @@ use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
 use App\Shared\Domain\ValueObject\Notes;
 
-final class Venue
+final class Venue implements Auditable
 {
     private VenueId $id;
-
     private AcademyId $academyId;
-
     private Name $name;
-
     private ?Address $address;
-
     private ?City $city;
-
     private ?PhoneNumber $phone;
-
     private ?Notes $notes;
-
     private VenueStatus $status;
-
-    private AuditTrail $auditTrail;
-
+    private ?AuditTrail $auditTrail = null;
     private ?\DateTimeImmutable $deletedAt = null;
-
     private ?string $deletedBy = null;
 
     private function __construct(
@@ -79,95 +70,49 @@ final class Venue
         );
     }
 
-    public function id(): VenueId
-    {
-        return $this->id;
-    }
-
-    public function academyId(): AcademyId
-    {
-        return $this->academyId;
-    }
-
-    public function name(): Name
-    {
-        return $this->name;
-    }
-
-    public function address(): ?Address
-    {
-        return $this->address;
-    }
-
-    public function city(): ?City
-    {
-        return $this->city;
-    }
-
-    public function phone(): ?PhoneNumber
-    {
-        return $this->phone;
-    }
-
-    public function notes(): ?Notes
-    {
-        return $this->notes;
-    }
-
-    public function status(): VenueStatus
-    {
-        return $this->status;
-    }
-
-    public function auditTrail(): AuditTrail
-    {
-        return $this->auditTrail;
-    }
-
-    public function deletedAt(): ?\DateTimeImmutable
-    {
-        return $this->deletedAt;
-    }
-
-    public function deletedBy(): ?string
-    {
-        return $this->deletedBy;
-    }
+    public function id(): VenueId { return $this->id; }
+    public function academyId(): AcademyId { return $this->academyId; }
+    public function name(): Name { return $this->name; }
+    public function address(): ?Address { return $this->address; }
+    public function city(): ?City { return $this->city; }
+    public function phone(): ?PhoneNumber { return $this->phone; }
+    public function notes(): ?Notes { return $this->notes; }
+    public function status(): VenueStatus { return $this->status; }
+    public function auditTrail(): ?AuditTrail { return $this->auditTrail; }
+    public function setAuditTrail(AuditTrail $auditTrail): void { $this->auditTrail = $auditTrail; }
+    public function deletedAt(): ?\DateTimeImmutable { return $this->deletedAt; }
+    public function deletedBy(): ?string { return $this->deletedBy; }
 
     public function update(
         Name $name,
         ?Address $address,
         ?City $city,
         ?PhoneNumber $phone,
-        ?Notes $notes,
-        string $updatedBy
+        ?Notes $notes
     ): void {
         $this->name = $name;
         $this->address = $address;
         $this->phone = $phone;
         $this->city = $city;
         $this->notes = $notes;
-        $this->auditTrail->touch($updatedBy);
     }
 
-    public function inactivate(string $updatedBy): void
+    public function inactivate(): void
     {
         if (!$this->status->isActive()) {
             return;
         }
 
         $this->status = VenueStatus::inactive();
-        $this->auditTrail->touch($updatedBy);
     }
 
-    public function activate(string $updatedBy): void
+    public function activate(): void
     {
         if ($this->status->isActive()) {
             return;
         }
 
         $this->status = VenueStatus::active();
-        $this->auditTrail->touch($updatedBy);
     }
 
     public function delete(string $deletedBy): void
@@ -178,6 +123,5 @@ final class Venue
 
         $this->deletedAt = new \DateTimeImmutable();
         $this->deletedBy = $deletedBy;
-        $this->auditTrail->touch($deletedBy);
     }
 }

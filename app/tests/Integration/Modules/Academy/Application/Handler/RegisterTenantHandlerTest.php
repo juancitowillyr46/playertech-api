@@ -61,7 +61,9 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         $schemaTool = new SchemaTool($this->entityManager);
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
 
-        $schemaTool->dropDatabase();
+        $this->entityManager->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
+        $this->entityManager->getConnection()->executeStatement('DROP TABLE IF EXISTS players, categories, venues, academies, users');
+        $this->entityManager->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
         $schemaTool->createSchema($metadata);
     }
 

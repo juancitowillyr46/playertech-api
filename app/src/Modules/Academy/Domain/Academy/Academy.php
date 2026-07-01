@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Academy\Domain\Academy;
 
+use App\Shared\Domain\Contracts\Auditable;
 use App\Shared\Domain\ValueObject\Address;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\City;
@@ -12,7 +13,7 @@ use App\Shared\Domain\ValueObject\LogoPath;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
 
-final class Academy
+final class Academy implements Auditable
 {
     private AcademyId $id;
 
@@ -30,7 +31,7 @@ final class Academy
 
     private AcademyStatus $status;
 
-    private AuditTrail $auditTrail;
+    private ?AuditTrail $auditTrail = null;
 
     private ?\DateTimeImmutable $deletedAt = null;
 
@@ -54,7 +55,6 @@ final class Academy
         $this->address = $address;
         $this->city = $city;
         $this->logo = $logo;
-
         $this->auditTrail = $auditTrail;
     }
 
@@ -120,9 +120,14 @@ final class Academy
         return $this->status;
     }
 
-    public function auditTrail(): AuditTrail
+    public function auditTrail(): ?AuditTrail
     {
         return $this->auditTrail;
+    }
+
+    public function setAuditTrail(AuditTrail $auditTrail): void
+    {
+        $this->auditTrail = $auditTrail;
     }
 
     public function deletedAt(): ?\DateTimeImmutable
@@ -150,7 +155,9 @@ final class Academy
         $this->address = $address;
         $this->city = $city;
         $this->logo = $logo;
-        $this->auditTrail->touch($updatedBy);
+        // if ($this->auditTrail) {
+        //     $this->auditTrail->touch($updatedBy);
+        // }
     }
 
     public function suspend(string $updatedBy): void
@@ -160,7 +167,9 @@ final class Academy
         }
 
         $this->status = AcademyStatus::suspended();
-        $this->auditTrail->touch($updatedBy);
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
     }
 
     public function reactivate(string $updatedBy): void
@@ -170,7 +179,9 @@ final class Academy
         }
 
         $this->status = AcademyStatus::active();
-        $this->auditTrail->touch($updatedBy);
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
     }
 
     public function delete(string $deletedBy): void
@@ -181,7 +192,9 @@ final class Academy
 
         $this->deletedAt = new \DateTimeImmutable();
         $this->deletedBy = $deletedBy;
-        $this->auditTrail->touch($deletedBy);
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($deletedBy);
+        }
     }
 
     public function restore(string $updatedBy): void
@@ -192,6 +205,8 @@ final class Academy
 
         $this->deletedAt = null;
         $this->deletedBy = null;
-        $this->auditTrail->touch($updatedBy);
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
     }
 }

@@ -6,9 +6,10 @@ namespace App\Modules\Player\Domain\Player;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Domain\Category\CategoryId;
+use App\Shared\Domain\Contracts\Auditable;
 use App\Shared\Domain\ValueObject\AuditTrail;
 
-final class Player
+final class Player implements Auditable
 {
     private PlayerId $id;
 
@@ -26,7 +27,7 @@ final class Player
 
     private PlayerStatus $status;
 
-    private AuditTrail $auditTrail;
+    private ?AuditTrail $auditTrail = null;
 
     private ?\DateTimeImmutable $deletedAt = null;
 
@@ -115,9 +116,14 @@ final class Player
         return $this->status;
     }
 
-    public function auditTrail(): AuditTrail
+    public function auditTrail(): ?AuditTrail
     {
         return $this->auditTrail;
+    }
+
+    public function setAuditTrail(AuditTrail $auditTrail): void
+    {
+        $this->auditTrail = $auditTrail;
     }
 
     public function updateProfile(
@@ -131,19 +137,25 @@ final class Player
         $this->lastName = self::normalizeText($lastName, 'last name');
         $this->birthDate = $birthDate;
         $this->documentNumber = self::normalizeText($documentNumber, 'document number');
-        $this->auditTrail->touch($updatedBy);
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
     }
 
     public function inactivate(string $updatedBy): void
     {
         $this->status = PlayerStatus::inactive();
-        $this->auditTrail->touch($updatedBy);
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
     }
 
     public function activate(string $updatedBy): void
     {
         $this->status = PlayerStatus::active();
-        $this->auditTrail->touch($updatedBy);
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
     }
 
     public function deletedAt(): ?\DateTimeImmutable

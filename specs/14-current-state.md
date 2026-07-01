@@ -59,6 +59,9 @@ La base tecnica actual incluye:
 | Player status management story | Functional / Documentation | Done | `untracked` | HU-005 consolidada documenta desactivar y reactivar como una sola gestion de estado |
 | Player bulk import baseline | Functional / Technical Enabler | Done | `untracked` | `POST /api/v1/academy/players/import` permite carga masiva desde Excel con `category_key` y validación completa por fila |
 | Category business key foundation | Functional / Technical Enabler | Done | `untracked` | `Category` ahora expone `category_key` estable, unico por academia, para contratos API e importaciones |
+| Doctrine Tenant Filter | Non-Functional / Technical Enabler | Done | `untracked` | Filtro global que aísla automáticamente las consultas por `academy_id` para seguridad multi-tenant |
+| Doctrine AuditSubscriber | Non-Functional / Technical Enabler | Done | `untracked` | Filler centralizado de `auditTrail` para entidades auditable en persistencia Doctrine |
+| Cross-tenant isolation test | Technical Enabler | Done | `untracked` | Prueba de integración valida que una academia no puede leer registros de otra aunque conozca el ID |
 
 ---
 
@@ -156,6 +159,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La primera integración de signup de tenant ya corre contra base de datos MySQL de test y valida persistencia real.
 * `ROLE_ROOT` opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext`.
 * `Academy` ya expone `GET /api/v1/academy/me` como contexto tenant, `PUT /api/v1/academy/me` para autogestión del tenant y `GET /api/v1/platform/academies` como API de plataforma.
+* Los endpoints de `Academy` quedaron validados como parte del flujo base tenant/root y siguen protegidos por `TenantContext` y el filtro de persistencia.
 * `Academy` ahora usa `AcademyId` como Doctrine custom type y VOs compartidos como embeddables XML, sirviendo como referencia del patrón para los demas modulos.
 * Los VOs compartidos ya estan versionados en git y el mapping XML de `Academy` los consume de forma consistente.
 * La capa HTTP de `Academy` quedo delgada y delega en CQRS con commands, queries y handlers.
@@ -182,6 +186,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El onboarding tenant ya tiene implementación base: signup público, correo de activación y endpoint de activación.
 * `Player` queda priorizado como siguiente módulo de negocio sobre `EP-008`, `EP-009`, `EP-010` y `EP-012`.
 * Las categorias ahora tienen `category_key` estable para soportar importaciones y contratos de integracion sin depender del UUID.
+* La auditoria Doctrine ya quedó centralizada con un `AuditSubscriber` y el filtro `SoftDelete` está activo.
 * `HU-003` de `EP-007` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}`.
 * `HU-004` de `EP-007` quedó implementada y validada en runtime con `PUT /api/v1/academy/players/{playerId}`.
 * `HU-005` de `EP-007` quedó consolidada como gestión de estado del jugador: desactivar y reactivar con endpoints `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate`.
@@ -213,7 +218,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] **TenantContext**: Objeto inmutable/servicio que contenga el `academy_id` activo.
 - [x] **JWT Custom Claims**: Incluir `academy_id` en el payload generado para usuarios no-root.
 - [x] **TenantResolver**: Listener que capture el JWT, extraiga el `academy_id` e hidrate el `TenantContext`.
-- [ ] **Doctrine Tenant Filter**: Filtro SQL automático que aplique `WHERE academy_id = X` en todas las queries de negocio.
+- [x] **Doctrine Tenant Filter**: Filtro SQL automático que aplique `WHERE academy_id = X` en todas las queries de negocio.
 
 ### 2. Security & Routing Separation
 - [x] **Platform Firewall/Access**: Bloquear rutas `/api/v1/platform/*` solo para `ROLE_ROOT`.
@@ -224,11 +229,11 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] **Validation Mapping**: Convertir errores de `symfony/validator` al formato `ProblemDetails`.
 
 ### 4. Audit & Persistence
-- [ ] **AuditSubscriber**: Automatizar el llenado de `created_by` y `updated_by` usando el usuario del Token.
-- [ ] **SoftDelete Filter**: Asegurar que las consultas excluyan registros con `deleted_at` por defecto.
+- [x] **AuditSubscriber**: Automatizar el llenado de `created_by` y `updated_by` usando el usuario del Token.
+- [x] **SoftDelete Filter**: Asegurar que las consultas excluyan registros con `deleted_at` por defecto.
 
 ### 5. Validation
-- [ ] **Test de Aislamiento**: Prueba técnica que confirme que un usuario de la Academia A no puede ver datos de la Academia B aunque conozca el ID.
+- [x] **Test de Aislamiento**: Prueba técnica que confirme que un usuario de la Academia A no puede ver datos de la Academia B aunque conozca el ID.
 
 ---
 
@@ -238,6 +243,8 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * Flujo de creación de Academia (exclusivo para Root).
 * Formalizar el onboarding de tenant como siguiente bloque funcional tras `EP-001`.
 * Reutilizar `Academy` como plantilla de implementacion para los siguientes modulos.
+* Agregar manejo de media para `Academy` mediante HU-013 (escudo institucional).
+* Agregar manejo de media para `Player` mediante HU-009 (foto del jugador).
 * Completar el backlog de `Category` con historias explícitas para listar, actualizar, activar e inactivar, porque ya existen en código.
 * Continuar con `EP-007` para cerrar `HU-002` a `HU-005` y luego retomar `EP-008` -> `EP-009` -> `EP-010` -> `EP-012`.
 
@@ -247,20 +254,22 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 
 ## Foundation y Seguridad
 
-- [ ] Doctrine Tenant Filter global para aislar consultas por `academy_id`.
-- [ ] AuditSubscriber para `created_by` y `updated_by`.
-- [ ] SoftDelete Filter global para excluir registros borrados lógicamente.
-- [ ] Test de aislamiento cross-tenant para validar que una academia no vea datos de otra.
+- [x] Doctrine Tenant Filter global para aislar consultas por `academy_id`.
+- [x] AuditSubscriber para `created_by` y `updated_by`.
+- [x] SoftDelete Filter global para excluir registros borrados lógicamente.
+- [x] Test de aislamiento cross-tenant para validar que una academia no vea datos de otra.
 
 ## Academy y Onboarding
 
-- [ ] Validar runtime de endpoints de `Academy` con usuario `ROLE_ROOT` y con usuario tenant.
+- [x] Validar runtime de endpoints de `Academy` con usuario `ROLE_ROOT` y con usuario tenant.
 - [ ] Cerrar el flujo de signup de tenant con revisión final de contrato de correo y activación.
 
 ## PlayerTech Core MVP
 
 - [x] `EP-007` Player base: registrar, listar, ver detalle, actualizar y gestionar estado.
 - [x] `EP-007` importación masiva de jugadores por Excel.
+- [ ] `EP-001` Escudo institucional de academia.
+- [ ] `EP-007` Foto del jugador.
 - [ ] `EP-008` Relaciones jugador-acudiente.
 - [ ] `EP-009` Equipos.
 - [ ] `EP-010` Matrículas.

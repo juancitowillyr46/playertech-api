@@ -6,6 +6,7 @@ namespace App\Modules\Category\Domain\Category;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Domain\Exception\InvalidCategoryAgeRangeException;
+use App\Shared\Domain\Contracts\Auditable;
 use App\Shared\Domain\ValueObject\Age;
 use App\Shared\Domain\ValueObject\AgeFrom;
 use App\Shared\Domain\ValueObject\AgeTo;
@@ -15,7 +16,7 @@ use App\Shared\Domain\ValueObject\MaximumAge;
 use App\Shared\Domain\ValueObject\MinimumAge;
 use App\Shared\Domain\ValueObject\Name;
 
-final class Category
+final class Category implements Auditable
 {
     private CategoryId $id;
 
@@ -33,7 +34,7 @@ final class Category
 
     private CategoryStatus $status;
 
-    private AuditTrail $auditTrail;
+    private ?AuditTrail $auditTrail = null;
 
     private ?\DateTimeImmutable $deletedAt = null;
 
@@ -124,9 +125,14 @@ final class Category
         return $this->status;
     }
 
-    public function auditTrail(): AuditTrail
+    public function auditTrail(): ?AuditTrail
     {
         return $this->auditTrail;
+    }
+
+    public function setAuditTrail(AuditTrail $auditTrail): void
+    {
+        $this->auditTrail = $auditTrail;
     }
 
     public function deletedAt(): ?\DateTimeImmutable
@@ -155,7 +161,9 @@ final class Category
         $this->maxAge = $maxAge;
         $this->description = $description;
 
-        $this->auditTrail->touch($updatedBy);
+        // if ($this->auditTrail) {
+        //     $this->auditTrail->touch($updatedBy);
+        // }
     }
 
     public function inactivate(string $updatedBy): void
@@ -166,7 +174,9 @@ final class Category
 
         $this->status = CategoryStatus::inactive();
 
-        $this->auditTrail->touch($updatedBy);
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
     }
 
     public function activate(string $updatedBy): void
@@ -177,7 +187,9 @@ final class Category
 
         $this->status = CategoryStatus::active();
 
-        $this->auditTrail->touch($updatedBy);
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
     }
 
     public function delete(string $deletedBy): void
@@ -189,7 +201,9 @@ final class Category
         $this->deletedAt = new \DateTimeImmutable();
         $this->deletedBy = $deletedBy;
 
-        $this->auditTrail->touch($deletedBy);
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($deletedBy);
+        }
     }
 
     public function restore(string $updatedBy): void
@@ -201,7 +215,9 @@ final class Category
         $this->deletedAt = null;
         $this->deletedBy = null;
 
-        $this->auditTrail->touch($updatedBy);
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
     }
 
     private function ensureValidAgeRange(
