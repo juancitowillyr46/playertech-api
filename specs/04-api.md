@@ -251,6 +251,33 @@ Ver referencia detallada en `specs/16-api-reference.md`.
 
 ---
 
+# Media Responses
+
+Los recursos que representen archivos o imagenes no deben devolver binarios dentro del JSON.
+
+## Standard Shape
+
+```json
+{
+  "path": "var/storage/media/local/academies/01J.../shield/original/01K....png",
+  "url": "https://api.playertech.test/media/academies/01J.../shield/01K....png",
+  "mime_type": "image/png",
+  "size": 184233,
+  "checksum": "sha256:..."
+}
+```
+
+## Rules
+
+* `path` representa la referencia interna del archivo.
+* `url` representa el enlace de consumo.
+* `mime_type`, `size` y `checksum` son opcionales pero recomendados.
+* Si un recurso no tiene media asociada, el campo debe responder `null`.
+* `Academy` usara el campo `logo` con este contrato.
+* `Player` usara el campo `photo` con este contrato cuando la historia correspondiente este implementada.
+
+---
+
 # Status Codes
 
 | Code | Meaning |

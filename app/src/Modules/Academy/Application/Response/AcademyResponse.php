@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Application\Response;
 
 use App\Modules\Academy\Domain\Academy\Academy;
+use App\Shared\Application\Response\MediaResponse;
 
 final readonly class AcademyResponse
 {
@@ -15,7 +16,7 @@ final readonly class AcademyResponse
         private ?string $phone,
         private ?string $address,
         private ?string $city,
-        private ?string $logo,
+        private ?MediaResponse $logo,
         private string $status,
         private AcademyAuditResponse $audit,
     ) {
@@ -30,7 +31,7 @@ final readonly class AcademyResponse
             $academy->phone()?->value(),
             $academy->address()?->value(),
             $academy->city()?->value(),
-            $academy->logo()?->value(),
+            null === $academy->logo() ? null : MediaResponse::fromPath($academy->logo()->value()),
             $academy->status()->value(),
             AcademyAuditResponse::fromAuditTrail($academy->auditTrail()),
         );
@@ -45,7 +46,7 @@ final readonly class AcademyResponse
             'phone' => $this->phone,
             'address' => $this->address,
             'city' => $this->city,
-            'logo' => $this->logo,
+            'logo' => $this->logo?->toArray(),
             'status' => $this->status,
             'audit' => $this->audit->toArray(),
         ];
