@@ -65,9 +65,9 @@
             use-column-prefix="false"/>
 
         <embedded
-            name="logo"
-            class="App\Shared\Domain\ValueObject\LogoPath"
-            use-column-prefix="false"/>
+            name="shield"
+            class="App\Shared\Domain\ValueObject\Media"
+            use-column-prefix="shield_"/>
 
         <embedded
             name="status"

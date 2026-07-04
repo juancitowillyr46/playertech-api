@@ -9,7 +9,7 @@ use App\Shared\Domain\ValueObject\Address;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\City;
 use App\Shared\Domain\ValueObject\Email;
-use App\Shared\Domain\ValueObject\LogoPath;
+use App\Shared\Domain\ValueObject\Media;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
 
@@ -27,7 +27,7 @@ final class Academy implements Auditable
 
     private ?City $city;
 
-    private ?LogoPath $logo;
+    private ?Media $shield;
 
     private AcademyStatus $status;
 
@@ -44,7 +44,7 @@ final class Academy implements Auditable
         ?PhoneNumber $phone,
         ?Address $address,
         ?City $city,
-        ?LogoPath $logo,
+        ?Media $shield,
         AuditTrail $auditTrail
     ) {
         $this->id = $id;
@@ -54,7 +54,7 @@ final class Academy implements Auditable
         $this->phone = $phone;
         $this->address = $address;
         $this->city = $city;
-        $this->logo = $logo;
+        $this->shield = $shield;
         $this->auditTrail = $auditTrail;
     }
 
@@ -65,7 +65,7 @@ final class Academy implements Auditable
         ?PhoneNumber $phone,
         ?Address $address,
         ?City $city,
-        ?LogoPath $logo,
+        ?Media $shield,
         AuditTrail $auditTrail
     ): self {
         return new self(
@@ -75,7 +75,7 @@ final class Academy implements Auditable
             $phone,
             $address,
             $city,
-            $logo,
+            $shield,
             $auditTrail
         );
     }
@@ -110,9 +110,9 @@ final class Academy implements Auditable
         return $this->city;
     }
 
-    public function logo(): ?LogoPath
+    public function shield(): ?Media
     {
-        return $this->logo;
+        return $this->shield;
     }
 
     public function status(): AcademyStatus
@@ -146,7 +146,6 @@ final class Academy implements Auditable
         ?PhoneNumber $phone,
         ?Address $address,
         ?City $city,
-        ?LogoPath $logo,
         string $updatedBy
     ): void {
         $this->name = $name;
@@ -154,10 +153,17 @@ final class Academy implements Auditable
         $this->phone = $phone;
         $this->address = $address;
         $this->city = $city;
-        $this->logo = $logo;
-        // if ($this->auditTrail) {
-        //     $this->auditTrail->touch($updatedBy);
-        // }
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
+    }
+
+    public function updateShield(?Media $newShield, string $updatedBy): void
+    {
+        $this->shield = $newShield;
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
     }
 
     public function suspend(string $updatedBy): void
