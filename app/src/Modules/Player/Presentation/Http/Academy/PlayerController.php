@@ -12,6 +12,8 @@ use App\Modules\Player\Application\Command\ActivatePlayerCommand;
 use App\Modules\Player\Application\Command\InactivatePlayerCommand;
 use App\Modules\Player\Application\Dto\CreatePlayerInput;
 use App\Modules\Player\Application\Dto\UpdatePlayerInput;
+use App\Modules\Player\Application\Photo\Upload\UploadPlayerPhotoCommand;
+use App\Modules\Player\Application\Photo\Upload\UploadPlayerPhotoHandler;
 use App\Modules\Player\Application\Handler\ActivatePlayerHandler;
 use App\Modules\Player\Application\Handler\CreatePlayerHandler;
 use App\Modules\Player\Application\Handler\ImportPlayersHandler;
@@ -25,6 +27,7 @@ use App\Modules\Player\Domain\Player\PlayerId;
 use App\Modules\Player\Application\Command\UpdatePlayerCommand;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,6 +45,7 @@ final class PlayerController extends AbstractApiController
         private readonly ListPlayersHandler $listPlayersHandler,
         private readonly ShowPlayerHandler $showPlayerHandler,
         private readonly UpdatePlayerHandler $updatePlayerHandler,
+        private readonly UploadPlayerPhotoHandler $uploadPlayerPhotoHandler,
         private readonly InactivatePlayerHandler $inactivatePlayerHandler,
         private readonly ActivatePlayerHandler $activatePlayerHandler,
         private readonly TenantContext $tenantContext,
@@ -146,6 +150,31 @@ final class PlayerController extends AbstractApiController
                 $this->tenantContext->requireAcademyId(),
                 $playerId,
                 $input
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/{playerId}/photo', name: 'api_v1_academy_players_photo', methods: ['PATCH'])]
+    public function updatePhoto(Request $request, string $playerId): JsonResponse
+    {
+        /** @var ?UploadedFile $photoFile */
+        $photoFile = $request->files->get('photo');
+
+        if (null === $photoFile) {
+            throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('"photo" file is required.');
+        }
+
+        $view = ($this->uploadPlayerPhotoHandler)(
+            new UploadPlayerPhotoCommand(
+                $this->requireActorId(),
+                $this->tenantContext->requireAcademyId(),
+                $playerId,
+                $photoFile,
             )
         );
 

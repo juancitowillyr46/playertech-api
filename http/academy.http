@@ -2,6 +2,7 @@
 @token = {{token}}
 @tenantToken = {{tenantToken}}
 @academyId = {{academyId}}
+@playerId = {{playerId}}
 @activationToken = {{activationToken}}
 
 ### Auth: Login root or tenant
@@ -107,3 +108,29 @@ Accept: application/json
   "city": "Arequipa",
   "logo": "https://cdn.example.com/tenant-logo.png"
 }
+
+### Tenant: Upload academy shield
+POST {{baseUrl}}/api/v1/academy/me/shield
+Authorization: Bearer {{tenantToken}}
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json
+
+--boundary
+Content-Disposition: form-data; name="shield"; filename="shield.png"
+Content-Type: image/png
+
+< ./fixtures/shield.png
+--boundary--
+
+### Tenant: Upload player photo
+PATCH {{baseUrl}}/api/v1/academy/players/{{playerId}}/photo
+Authorization: Bearer {{tenantToken}}
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json
+
+--boundary
+Content-Disposition: form-data; name="photo"; filename="photo.jpg"
+Content-Type: image/jpeg
+
+< ./fixtures/photo.jpg
+--boundary--

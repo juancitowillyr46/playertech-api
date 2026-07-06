@@ -33,7 +33,7 @@ final readonly class CreateAcademyHandler
             null === $command->input->phone ? null : new \App\Shared\Domain\ValueObject\PhoneNumber($command->input->phone),
             null === $command->input->address ? null : new \App\Shared\Domain\ValueObject\Address($command->input->address),
             null === $command->input->city ? null : new \App\Shared\Domain\ValueObject\City($command->input->city),
-            null === $command->input->logo ? null : new \App\Shared\Domain\ValueObject\LogoPath($command->input->logo),
+            null,
             AuditTrail::create($command->actorId),
         );
 

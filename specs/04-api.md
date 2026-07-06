@@ -236,6 +236,7 @@ Ver referencia detallada en `specs/16-api-reference.md`.
 * `PUT /players/{id}`
 * `GET /players/{id}`
 * `GET /players`
+* `PATCH /players/{id}/photo`
 
 ## Memberships
 
@@ -273,8 +274,8 @@ Los recursos que representen archivos o imagenes no deben devolver binarios dent
 * `url` representa el enlace de consumo.
 * `mime_type`, `size` y `checksum` son opcionales pero recomendados.
 * Si un recurso no tiene media asociada, el campo debe responder `null`.
-* `Academy` usara el campo `logo` con este contrato.
-* `Player` usara el campo `photo` con este contrato cuando la historia correspondiente este implementada.
+* `Academy` usara el campo `shield` con este contrato.
+* `Player` usara el campo `photo` con este contrato.
 
 ---
 

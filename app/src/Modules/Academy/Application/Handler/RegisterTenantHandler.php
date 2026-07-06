@@ -48,7 +48,7 @@ final readonly class RegisterTenantHandler
             null === $data->phone ? null : new \App\Shared\Domain\ValueObject\PhoneNumber($data->phone),
             null === $data->address ? null : new \App\Shared\Domain\ValueObject\Address($data->address),
             null === $data->city ? null : new \App\Shared\Domain\ValueObject\City($data->city),
-            null === $data->logo ? null : new \App\Shared\Domain\ValueObject\LogoPath($data->logo),
+            null,
             AuditTrail::create(null),
         );
 

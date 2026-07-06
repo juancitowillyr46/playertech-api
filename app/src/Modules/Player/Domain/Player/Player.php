@@ -8,6 +8,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Shared\Domain\Contracts\Auditable;
 use App\Shared\Domain\ValueObject\AuditTrail;
+use App\Shared\Domain\ValueObject\Media;
 
 final class Player implements Auditable
 {
@@ -25,6 +26,8 @@ final class Player implements Auditable
 
     private ?CategoryId $categoryId;
 
+    private ?Media $photo;
+
     private PlayerStatus $status;
 
     private ?AuditTrail $auditTrail = null;
@@ -41,6 +44,7 @@ final class Player implements Auditable
         \DateTimeImmutable $birthDate,
         string $documentNumber,
         ?CategoryId $categoryId,
+        ?Media $photo,
         AuditTrail $auditTrail
     ) {
         $this->id = $id;
@@ -50,6 +54,7 @@ final class Player implements Auditable
         $this->birthDate = $birthDate;
         $this->documentNumber = self::normalizeText($documentNumber, 'document number');
         $this->categoryId = $categoryId;
+        $this->photo = $photo;
         $this->status = PlayerStatus::active();
         $this->auditTrail = $auditTrail;
     }
@@ -62,6 +67,7 @@ final class Player implements Auditable
         \DateTimeImmutable $birthDate,
         string $documentNumber,
         ?CategoryId $categoryId,
+        ?Media $photo,
         AuditTrail $auditTrail
     ): self {
         return new self(
@@ -72,6 +78,7 @@ final class Player implements Auditable
             $birthDate,
             $documentNumber,
             $categoryId,
+            $photo,
             $auditTrail
         );
     }
@@ -111,6 +118,11 @@ final class Player implements Auditable
         return $this->categoryId;
     }
 
+    public function photo(): ?Media
+    {
+        return $this->photo;
+    }
+
     public function status(): PlayerStatus
     {
         return $this->status;
@@ -137,6 +149,14 @@ final class Player implements Auditable
         $this->lastName = self::normalizeText($lastName, 'last name');
         $this->birthDate = $birthDate;
         $this->documentNumber = self::normalizeText($documentNumber, 'document number');
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
+    }
+
+    public function updatePhoto(?Media $photo, string $updatedBy): void
+    {
+        $this->photo = $photo;
         if ($this->auditTrail) {
             $this->auditTrail->touch($updatedBy);
         }

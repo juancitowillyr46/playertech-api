@@ -36,6 +36,7 @@ final readonly class CreatePlayerHandler
             new \DateTimeImmutable($command->input->birthDate ?? ''),
             $command->input->documentNumber ?? '',
             null,
+            null,
             AuditTrail::create($command->actorId),
         );
 

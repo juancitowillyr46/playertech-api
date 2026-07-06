@@ -16,7 +16,7 @@ final readonly class AcademyResponse
         private ?string $phone,
         private ?string $address,
         private ?string $city,
-        private ?MediaResponse $logo,
+        private ?MediaResponse $shield,
         private string $status,
         private AcademyAuditResponse $audit,
     ) {
@@ -24,6 +24,8 @@ final readonly class AcademyResponse
 
     public static function fromAcademy(Academy $academy): self
     {
+        $shield = $academy->shield();
+
         return new self(
             $academy->id()->value(),
             $academy->name()->value(),
@@ -31,7 +33,13 @@ final readonly class AcademyResponse
             $academy->phone()?->value(),
             $academy->address()?->value(),
             $academy->city()?->value(),
-            null === $academy->logo() ? null : MediaResponse::fromPath($academy->logo()->value()),
+            null === $shield ? null : MediaResponse::fromDetails(
+                $shield->path(),
+                $shield->url(),
+                $shield->mimeType(),
+                $shield->size(),
+                $shield->checksum(),
+            ),
             $academy->status()->value(),
             AcademyAuditResponse::fromAuditTrail($academy->auditTrail()),
         );
@@ -46,7 +54,7 @@ final readonly class AcademyResponse
             'phone' => $this->phone,
             'address' => $this->address,
             'city' => $this->city,
-            'logo' => $this->logo?->toArray(),
+            'shield' => $this->shield?->toArray(),
             'status' => $this->status,
             'audit' => $this->audit->toArray(),
         ];

@@ -26,6 +26,7 @@ final class ListPlayersHandlerTest extends TestCase
             new \DateTimeImmutable('2014-05-18'),
             '12345678',
             null,
+            null,
             AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
         ));
 

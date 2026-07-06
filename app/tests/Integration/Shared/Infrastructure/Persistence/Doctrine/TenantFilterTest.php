@@ -16,7 +16,6 @@ use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\City;
 use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\Description;
-use App\Shared\Domain\ValueObject\LogoPath;
 use App\Shared\Domain\ValueObject\MaximumAge;
 use App\Shared\Domain\ValueObject\MinimumAge;
 use App\Shared\Domain\ValueObject\Name;

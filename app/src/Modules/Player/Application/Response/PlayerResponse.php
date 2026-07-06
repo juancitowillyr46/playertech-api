@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Player\Application\Response;
 
 use App\Modules\Player\Domain\Player\Player;
+use App\Shared\Application\Response\MediaResponse;
 
 final readonly class PlayerResponse
 {
@@ -16,6 +17,7 @@ final readonly class PlayerResponse
         private string $lastName,
         private string $birthDate,
         private string $documentNumber,
+        private ?MediaResponse $photo,
         private string $status,
     ) {
     }
@@ -30,6 +32,13 @@ final readonly class PlayerResponse
             $player->lastName(),
             $player->birthDate()->format('Y-m-d'),
             $player->documentNumber(),
+            null === $player->photo() ? null : MediaResponse::fromDetails(
+                $player->photo()->path(),
+                $player->photo()->url(),
+                $player->photo()->mimeType(),
+                $player->photo()->size(),
+                $player->photo()->checksum(),
+            ),
             $player->status()->value(),
         );
     }
@@ -44,6 +53,7 @@ final readonly class PlayerResponse
             'last_name' => $this->lastName,
             'birth_date' => $this->birthDate,
             'document_number' => $this->documentNumber,
+            'photo' => $this->photo?->toArray(),
             'status' => $this->status,
         ];
     }

@@ -26,9 +26,6 @@ final readonly class UpdateAcademyInput
 
         #[Assert\Length(max: 120, maxMessage: 'El campo "city" excede la longitud máxima permitida.')]
         public ?string $city = null,
-
-        #[Assert\Length(max: 255, maxMessage: 'El campo "logo" excede la longitud máxima permitida.')]
-        public ?string $logo = null,
     ) {
     }
 
@@ -40,7 +37,6 @@ final readonly class UpdateAcademyInput
             self::stringOrNull($payload['phone'] ?? null),
             self::stringOrNull($payload['address'] ?? null),
             self::stringOrNull($payload['city'] ?? null),
-            self::stringOrNull($payload['logo'] ?? null),
         );
     }
 

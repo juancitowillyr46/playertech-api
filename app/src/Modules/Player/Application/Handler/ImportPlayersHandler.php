@@ -94,6 +94,7 @@ final readonly class ImportPlayersHandler
                 $parsedBirthDate,
                 $documentNumber,
                 $category->id(),
+                null,
                 AuditTrail::create($command->actorId),
             );
         }

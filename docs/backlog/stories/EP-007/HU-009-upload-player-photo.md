@@ -8,7 +8,7 @@
 | Épica | EP-007 Gestión de Jugadores |
 | Prioridad | Media |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -120,7 +120,7 @@ Entonces el sistema rechaza la operación.
 
 # Consideraciones Técnicas
 
-* Endpoint sugerido: `PATCH /api/v1/academy/players/{playerId}/photo`
+* Endpoint implementado: `PATCH /api/v1/academy/players/{playerId}/photo`
 * La API debe devolver la referencia del archivo almacenado, no binario.
 
 ---

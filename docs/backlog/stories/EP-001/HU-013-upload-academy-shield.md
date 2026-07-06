@@ -8,7 +8,7 @@
 | Épica | EP-001 Gestión de Academias |
 | Prioridad | Media |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Super Admin |
 | Actor Secundario | Tenant Academy Admin |
 
@@ -130,7 +130,7 @@ Entonces el sistema rechaza la operación.
 
 # Consideraciones Técnicas
 
-* Endpoint sugerido para tenant: `PATCH /api/v1/academy/me/shield`
+* Endpoint implementado para tenant: `POST /api/v1/academy/me/shield`
 * Endpoint sugerido para plataforma: `PATCH /api/v1/platform/academies/{academyId}/shield`
 * La API debe devolver la referencia del archivo almacenado, no binario.
 

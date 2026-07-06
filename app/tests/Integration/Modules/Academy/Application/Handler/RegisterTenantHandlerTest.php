@@ -77,7 +77,6 @@ final class RegisterTenantHandlerTest extends KernelTestCase
             '+51 999 999 999',
             'Av. Principal 123',
             'Lima',
-            'https://cdn.example.com/logo.png',
         );
 
         $response = ($this->handler)(new RegisterTenantCommand($input));

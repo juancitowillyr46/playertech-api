@@ -14,7 +14,7 @@ final readonly class Media implements JsonSerializable
     private const ALLOWED_MIME_TYPES = [
         'image/jpeg',
         'image/png',
-        'image/gif',
+        'image/svg+xml',
     ];
 
     public function __construct(

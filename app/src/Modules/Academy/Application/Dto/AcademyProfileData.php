@@ -7,7 +7,6 @@ namespace App\Modules\Academy\Application\Dto;
 use App\Shared\Domain\ValueObject\Address;
 use App\Shared\Domain\ValueObject\City;
 use App\Shared\Domain\ValueObject\Email;
-use App\Shared\Domain\ValueObject\LogoPath;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -20,7 +19,6 @@ final readonly class AcademyProfileData
         private ?PhoneNumber $phone,
         private ?Address $address,
         private ?City $city,
-        private ?LogoPath $logo,
     ) {
     }
 
@@ -32,7 +30,6 @@ final readonly class AcademyProfileData
             self::optionalPhone($payload),
             self::optionalAddress($payload),
             self::optionalCity($payload),
-            self::optionalLogo($payload),
         );
     }
 
@@ -59,11 +56,6 @@ final readonly class AcademyProfileData
     public function city(): ?City
     {
         return $this->city;
-    }
-
-    public function logo(): ?LogoPath
-    {
-        return $this->logo;
     }
 
     private static function requiredName(array $payload): Name
@@ -95,13 +87,6 @@ final readonly class AcademyProfileData
         $value = self::optionalString($payload, 'city', 120);
 
         return null === $value ? null : new City($value);
-    }
-
-    private static function optionalLogo(array $payload): ?LogoPath
-    {
-        $value = self::optionalString($payload, 'logo', 255);
-
-        return null === $value ? null : new LogoPath($value);
     }
 
     private static function requiredString(array $payload, string $key, int $maxLength): string

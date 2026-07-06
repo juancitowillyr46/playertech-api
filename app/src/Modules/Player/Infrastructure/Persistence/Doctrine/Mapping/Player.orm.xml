@@ -78,6 +78,12 @@
             nullable="true"/>
 
         <embedded
+            name="photo"
+            class="App\Shared\Domain\ValueObject\Media"
+            use-column-prefix="true"
+            column-prefix="photo_"/>
+
+        <embedded
             name="status"
             class="App\Modules\Player\Domain\Player\PlayerStatus"
             use-column-prefix="false"/>

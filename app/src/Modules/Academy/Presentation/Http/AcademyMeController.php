@@ -10,23 +10,23 @@ use App\Modules\Academy\Application\Handler\GetAcademyContextHandler;
 use App\Modules\Academy\Application\Handler\UpdateAcademyHandler;
 use App\Modules\Academy\Application\Query\GetAcademyContextQuery;
 use App\Modules\Academy\Application\Shield\Upload\UploadAcademyShieldCommand;
+use App\Modules\Academy\Application\Shield\Upload\UploadAcademyShieldHandler;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class AcademyMeController extends AbstractApiController
 {
     public function __construct(
-        private readonly MessageBusInterface $commandBus,
         private readonly ValidatorInterface $validator,
         private readonly GetAcademyContextHandler $getAcademyContextHandler,
-        private readonly UpdateAcademyHandler $updateAcademyHandler
+        private readonly UpdateAcademyHandler $updateAcademyHandler,
+        private readonly UploadAcademyShieldHandler $uploadAcademyShieldHandler,
     ) {
     }
 
@@ -71,15 +71,18 @@ final class AcademyMeController extends AbstractApiController
             throw new BadRequestHttpException('"shield" file is required.');
         }
 
-        $this->commandBus->dispatch(
+        $view = ($this->uploadAcademyShieldHandler)(
             new UploadAcademyShieldCommand(
+                $this->requireActorId($tenantContext),
                 $tenantContext->requireAcademyId(),
                 $shieldFile,
-                $this->requireActorId($tenantContext)
             )
         );
 
-        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
     }
 
     private function requireActorId(TenantContext $tenantContext): string
@@ -87,7 +90,7 @@ final class AcademyMeController extends AbstractApiController
         $actorId = $tenantContext->getUserId();
 
         if (null === $actorId || '' === $actorId) {
-            throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('No se pudo resolver el usuario autenticado.');
+            throw new BadRequestHttpException('No se pudo resolver el usuario autenticado.');
         }
 
         return $actorId;

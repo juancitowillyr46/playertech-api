@@ -4,33 +4,51 @@ declare(strict_types=1);
 
 namespace App\Modules\Academy\Application\Shield\Upload;
 
+use App\Modules\Academy\Application\Response\AcademyResponse;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
-use App\Shared\Application\Command\CommandHandler;
 use App\Shared\Domain\Contracts\FileStorage;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Uid\Uuid;
 
-final class UploadAcademyShieldHandler implements CommandHandler
+final readonly class UploadAcademyShieldHandler
 {
     public function __construct(
-        private readonly AcademyRepository $academyRepository,
-        private readonly FileStorage $fileStorage,
+        private AcademyRepository $academyRepository,
+        private FileStorage $fileStorage,
     ) {
     }
 
-    public function __invoke(UploadAcademyShieldCommand $command): void
+    public function __invoke(UploadAcademyShieldCommand $command): AcademyResponse
     {
-        $academyId = new AcademyId($command->getRelatedId());
-        $academy = $this->academyRepository->get($academyId);
+        $academy = $this->requireAcademy($command->academyId);
 
         $this->fileStorage->delete($academy->shield());
 
         $media = $this->fileStorage->upload(
-            $command->getFile(),
+            $command->file,
             'images/academies/' . $academy->id()->value()
         );
 
-        $academy->updateShield($media, $command->getUserId());
+        $academy->updateShield($media, $command->actorId);
 
         $this->academyRepository->save($academy);
+
+        return AcademyResponse::fromAcademy($academy);
+    }
+
+    private function requireAcademy(string $academyId): \App\Modules\Academy\Domain\Academy\Academy
+    {
+        if (!Uuid::isValid($academyId)) {
+            throw new NotFoundHttpException('Identificador de academia inválido.');
+        }
+
+        $academy = $this->academyRepository->findById(new AcademyId($academyId));
+
+        if (null === $academy) {
+            throw new NotFoundHttpException('Academia no encontrada.');
+        }
+
+        return $academy;
     }
 }

@@ -12,7 +12,6 @@ use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
 use App\Shared\Domain\ValueObject\Address;
 use App\Shared\Domain\ValueObject\City;
 use App\Shared\Domain\ValueObject\Email;
-use App\Shared\Domain\ValueObject\LogoPath;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
@@ -41,7 +40,6 @@ final readonly class UpdateAcademyHandler
             null === $command->input->phone ? null : new PhoneNumber($command->input->phone),
             null === $command->input->address ? null : new Address($command->input->address),
             null === $command->input->city ? null : new City($command->input->city),
-            null === $command->input->logo ? null : new LogoPath($command->input->logo),
             $command->actorId,
         );
 

@@ -67,7 +67,8 @@
         <embedded
             name="shield"
             class="App\Shared\Domain\ValueObject\Media"
-            use-column-prefix="shield_"/>
+            use-column-prefix="true"
+            column-prefix="shield_"/>
 
         <embedded
             name="status"
