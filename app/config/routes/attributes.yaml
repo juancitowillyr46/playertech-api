@@ -43,3 +43,10 @@ player_controllers:
         namespace: App\Modules\Player\Presentation\Http
     type: attribute
     prefix: /api/v1
+
+team_controllers:
+    resource:
+        path: ../../src/Modules/Team/Presentation/Http/
+        namespace: App\Modules\Team\Presentation\Http
+    type: attribute
+    prefix: /api/v1

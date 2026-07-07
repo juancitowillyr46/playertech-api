@@ -22,6 +22,7 @@ services:
     App\Modules\Venue\Domain\Venue\VenueRepository: '@App\Modules\Venue\Infrastructure\Persistence\VenueRepository'
     App\Modules\Category\Domain\Category\CategoryRepository: '@App\Modules\Category\Infrastructure\Persistence\CategoryRepository'
     App\Modules\Player\Domain\Player\PlayerRepository: '@App\Modules\Player\Infrastructure\Persistence\PlayerRepository'
+    App\Modules\Team\Domain\Team\TeamRepository: '@App\Modules\Team\Infrastructure\Persistence\TeamRepository'
     App\Modules\Identity\Domain\Policy\UserAdministrationPolicy: ~
 
     # Explicits
@@ -33,4 +34,3 @@ services:
         arguments:
             $targetDirectory: '%app.storage.directory%'
             $assetsBaseUrl: '%app.assets.base_url%'
-

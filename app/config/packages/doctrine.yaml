@@ -7,6 +7,7 @@ doctrine:
             venue_id: App\Modules\Venue\Infrastructure\Persistence\Doctrine\Type\VenueIdType
             category_id: App\Modules\Category\Infrastructure\Persistence\Doctrine\Type\CategoryIdType
             player_id: App\Modules\Player\Infrastructure\Persistence\Doctrine\Type\PlayerIdType
+            team_id: App\Modules\Team\Infrastructure\Persistence\Doctrine\Type\TeamIdType
     orm:
         auto_mapping: false
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -49,6 +50,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Modules/Player/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: App\Modules\Player\Domain\Player
                 alias: Player
+            Team:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Modules/Team/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: App\Modules\Team\Domain\Team
+                alias: Team
             Shared:
                 is_bundle: false
                 type: xml
