@@ -1,28 +1,26 @@
 @baseUrl = http://localhost:8081
-@token = {{token}}
-@tenantToken = {{tenantToken}}
-@academyId = {{academyId}}
-@activationToken = {{activationToken}}
+@adminEmail = admin@playertech.com
+@adminPassword = secret123
+@venueId = {{venueId}}
 
-### Auth: Login root or tenant
+### Login root success
 POST {{baseUrl}}/api/v1/auth/login
 Content-Type: application/json
 Accept: application/json
 
 {
-  "email": "admin@playertech.com",
-  "password": "secret123"
+  "email": "{{adminEmail}}",
+  "password": "{{adminPassword}}"
 }
 
-### Tenant: List venues
+> {% client.global.set("token", response.body.data.token); %}
 
-GET http://localhost:8081/api/v1/academy/venues
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3ODI1OTUzMjcsImV4cCI6MTc4MjU5ODkyNywicm9sZXMiOlsiUk9MRV9BQ0FERU1ZX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiYWRtaW5AYWNhZGVtaWEuY29tIiwidXNlcl9pZCI6IjM0MjE4NjA0LWViZmQtNDYxZC1iY2M1LTAyMDg1ZGM3NGYxMiIsImFjYWRlbXlfaWQiOiIwMTllZjBlOC1kMjAzLTc4ZjEtOTE0OC0yZjRmMTZmOGUxYjciLCJyb2xlIjoiUk9MRV9BQ0FERU1ZX0FETUlOIn0.TYQ8r8SsQcN14a1iYR8HKe0CBruZ7wrirU38oY_LNo6QFbsUWpIFd6hiJXCWXumybqaUGC-8odv-C0Flw4cNXhdia4t-vNo7ZfuKGfSdDV0UFnTOR2_coM7HlTftu_OlnzjQ88OXEDjEiLA4P5lABcuO6syM-20hJtWxaUvmaP_B9Y8Gi1WYFRPtksWYk9nJ6qJ_0eeHTA5Q6n2Pu1DRIk-2lY8dJqmG_2t8UDeTc9rytginp4CTws8xh_Wzaau53x46GhOEgLVQbwd1lwFeZN11WFmrWXeoqblBRshOYPwCXRQbbIHTBj9nmRgjSdvZw7H5Mbxm9gFNVqsnXYCL8g
+### Tenant: List venues
+GET {{baseUrl}}/api/v1/academy/venues
+Authorization: Bearer {{token}}
 Accept: application/json
 
-### Platform: Create venue
-### Request DTO: CreateVenueInput
-
+### Tenant: Create venue
 POST {{baseUrl}}/api/v1/academy/venues
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -35,3 +33,21 @@ Accept: application/json
   "phone": "+57 300 123 4567",
   "notes": "Sede principal para entrenamientos de alto rendimiento"
 }
+
+### Tenant: Create venue error validation
+POST {{baseUrl}}/api/v1/academy/venues
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "address": "Av. Deportiva 456",
+  "city": "Medellín",
+  "phone": "+57 300 123 4567",
+  "notes": "Sin nombre para disparar validación"
+}
+
+### Tenant: Show venue
+GET {{baseUrl}}/api/v1/academy/venues/{{venueId}}
+Authorization: Bearer {{token}}
+Accept: application/json

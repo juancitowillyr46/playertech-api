@@ -7,8 +7,10 @@ namespace App\Modules\Team\Application\Handler;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Application\Services\CategoryFinder;
 use App\Modules\Category\Domain\Category\CategoryId;
+use App\Modules\Category\Domain\Exception\CategoryInactiveException;
 use App\Modules\Team\Application\Command\CreateTeamCommand;
 use App\Modules\Team\Application\Response\TeamResponse;
+use App\Modules\Team\Domain\Exception\TeamAlreadyExistsException;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\Team\Domain\Team\TeamRepository;
@@ -27,14 +29,23 @@ final readonly class CreateTeamHandler
     {
         $academyId = new AcademyId($command->academyId);
         $categoryId = new CategoryId($command->input->categoryId);
+        $name = new Name($command->input->name);
 
-        $this->categoryFinder->findOrFail($academyId, $categoryId);
+        $category = $this->categoryFinder->findOrFail($academyId, $categoryId);
+
+        if ($category->status()->isInactive()) {
+            throw new CategoryInactiveException();
+        }
+
+        if (null !== $this->teamRepository->findOneByAcademyCategoryAndName($academyId, $categoryId, $name)) {
+            throw new TeamAlreadyExistsException();
+        }
 
         $team = Team::create(
             TeamId::generate(),
             $academyId,
             $categoryId,
-            new Name($command->input->name),
+            $name,
             AuditTrail::create($command->actorId),
         );
 

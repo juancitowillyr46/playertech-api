@@ -1,27 +1,42 @@
 @baseUrl = http://localhost:8081
-@token = {{token}}
-@tenantToken = {{tenantToken}}
+@adminEmail = admin@playertech.com
+@adminPassword = secret123
+@tenantEmail = tenant.admin@example.com
+@tenantPassword = secret12345
 @academyId = {{academyId}}
 @playerId = {{playerId}}
 @activationToken = {{activationToken}}
 
-### Auth: Login root or tenant
+### Login root success
 POST {{baseUrl}}/api/v1/auth/login
 Content-Type: application/json
 Accept: application/json
 
 {
-  "email": "admin@playertech.com",
-  "password": "secret123"
+  "email": "{{adminEmail}}",
+  "password": "{{adminPassword}}"
 }
+
+> {% client.global.set("token", response.body.data.token); %}
+
+### Login tenant success
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "{{tenantEmail}}",
+  "password": "{{tenantPassword}}"
+}
+
+> {% client.global.set("tenantToken", response.body.data.token); %}
 
 ### Platform: List academies
 GET {{baseUrl}}/api/v1/platform/academies
 Authorization: Bearer {{token}}
 Accept: application/json
 
-### Platform: Create academy
-### Request DTO: CreateAcademyInput
+### Platform: Create academy success
 POST {{baseUrl}}/api/v1/platform/academies
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -36,13 +51,27 @@ Accept: application/json
   "logo": "https://cdn.example.com/logo.png"
 }
 
+### Platform: Create academy error duplicate email
+POST {{baseUrl}}/api/v1/platform/academies
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Academia PlayerTech Duplicada",
+  "contact_email": "contacto@academiaplayertech.com",
+  "phone": "+51 999 999 998",
+  "address": "Av. Principal 124",
+  "city": "Lima",
+  "logo": "https://cdn.example.com/logo-v2.png"
+}
+
 ### Platform: Show academy
 GET {{baseUrl}}/api/v1/platform/academies/{{academyId}}
 Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Platform: Update academy
-### Request DTO: UpdateAcademyInput
 PUT {{baseUrl}}/api/v1/platform/academies/{{academyId}}
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -68,7 +97,6 @@ Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Public: Tenant signup
-### Request DTO: TenantSignupInput
 POST {{baseUrl}}/api/v1/public/tenants/signup
 Content-Type: application/json
 Accept: application/json
@@ -88,13 +116,16 @@ Accept: application/json
 GET {{baseUrl}}/api/v1/public/tenants/activate/{{activationToken}}
 Accept: application/json
 
-### Tenant: Academy context
+### Tenant: Academy context success
 GET {{baseUrl}}/api/v1/academy/me
 Authorization: Bearer {{tenantToken}}
 Accept: application/json
 
+### Tenant: Academy context error missing token
+GET {{baseUrl}}/api/v1/academy/me
+Accept: application/json
+
 ### Tenant: Update own academy
-### Request DTO: UpdateAcademyInput
 PUT {{baseUrl}}/api/v1/academy/me
 Authorization: Bearer {{tenantToken}}
 Content-Type: application/json
@@ -109,7 +140,7 @@ Accept: application/json
   "logo": "https://cdn.example.com/tenant-logo.png"
 }
 
-### Tenant: Upload academy shield
+### Tenant: Upload academy shield success
 POST {{baseUrl}}/api/v1/academy/me/shield
 Authorization: Bearer {{tenantToken}}
 Content-Type: multipart/form-data; boundary=boundary
@@ -122,7 +153,20 @@ Content-Type: image/png
 < ./fixtures/shield.png
 --boundary--
 
-### Tenant: Upload player photo
+### Tenant: Upload academy shield error invalid format
+POST {{baseUrl}}/api/v1/academy/me/shield
+Authorization: Bearer {{tenantToken}}
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json
+
+--boundary
+Content-Disposition: form-data; name="shield"; filename="shield.txt"
+Content-Type: text/plain
+
+< ./fixtures/shield.txt
+--boundary--
+
+### Tenant: Upload player photo success
 PATCH {{baseUrl}}/api/v1/academy/players/{{playerId}}/photo
 Authorization: Bearer {{tenantToken}}
 Content-Type: multipart/form-data; boundary=boundary

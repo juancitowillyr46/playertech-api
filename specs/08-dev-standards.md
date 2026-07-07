@@ -601,7 +601,66 @@ Formato:
 
 ## Documentation
 
-Toda API deberá documentarse mediante OpenAPI.
+Toda API deberá documentarse en el repositorio con dos capas complementarias:
+
+* Referencia técnica en `specs/16-api-reference.md`.
+* Colección importable en Postman bajo `postman/`.
+
+OpenAPI puede existir como apoyo, pero no es obligatorio como fuente principal si la colección y la referencia están completas y sincronizadas.
+
+### Reglas de documentación por endpoint
+
+Todo endpoint nuevo deberá registrar, como mínimo:
+
+* Método HTTP.
+* Ruta completa bajo `/api/v1`.
+* Contexto de acceso:
+  * `public`
+  * `ROLE_ROOT`
+  * `tenant`
+* Request DTO o payload esperado.
+* Response DTO o forma de respuesta.
+* Códigos de estado esperados.
+* Errores principales.
+* Variables necesarias para probarlo en Postman.
+
+### Regla de sincronización
+
+Si se agrega o modifica un endpoint, se actualizarán en el mismo cambio:
+
+* El controller y su handler.
+* Los tests del caso de uso.
+* `specs/16-api-reference.md`.
+* `postman/PlayerTech.postman_collection.json` o su carpeta equivalente.
+
+### Convención para Postman
+
+La colección deberá organizarse por grupos funcionales:
+
+* `Auth`
+* `Public`
+* `Platform`
+* `Academy`
+
+Las variables comunes deberán vivir en un environment:
+
+* `baseUrl`
+* `token`
+* `tenantToken`
+* ids de recursos
+
+---
+
+## Suggested Workflow
+
+Para un endpoint nuevo, el flujo recomendado es:
+
+1. Definir el caso de uso en Application Layer.
+2. Exponer el controller en Presentation.
+3. Añadir pruebas unitarias e integración.
+4. Documentar el contrato en `specs/16-api-reference.md`.
+5. Reflejar el request en Postman.
+6. Verificar que la colección abre correctamente en Postman.
 
 ---
 

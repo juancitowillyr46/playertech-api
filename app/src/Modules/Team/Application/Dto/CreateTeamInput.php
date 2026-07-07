@@ -14,7 +14,7 @@ final readonly class CreateTeamInput
         public ?string $categoryId,
 
         #[Assert\NotBlank(message: 'El campo "name" es obligatorio.')]
-        #[Assert\Length(max: 150, maxMessage: 'El campo "name" excede la longitud máxima permitida.')]
+        #[Assert\Length(max: 80, maxMessage: 'El campo "name" excede la longitud máxima permitida.')]
         public ?string $name,
     ) {
     }

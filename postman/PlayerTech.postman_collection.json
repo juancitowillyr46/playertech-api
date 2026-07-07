@@ -1,0 +1,176 @@
+{
+  "info": {
+    "name": "PlayerTech API",
+    "description": "Collection base para documentar y probar la API HTTP de PlayerTech sin Swagger.",
+    "_postman_id": "b8f0e3d8-4f8b-4cb2-9c39-3fbf0c6f6e11",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "auth", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public",
+      "item": [
+        {
+          "name": "Tenant Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/public/tenants/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "public", "tenants", "signup"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Academia PlayerTech Demo\",\n  \"contact_email\": \"tenant.demo@example.com\",\n  \"contact_name\": \"Juan Perez\",\n  \"password\": \"secret12345\",\n  \"phone\": \"+51 987 654 321\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\",\n  \"category_id\": \"{{categoryId}}\",\n  \"team_name\": \"Sub 12 A\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Platform",
+      "item": [
+        {
+          "name": "Academies - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/platform/academies",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "platform", "academies"]
+            }
+          }
+        },
+        {
+          "name": "Academies - Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/platform/academies",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "platform", "academies"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Academia PlayerTech\",\n  \"contact_email\": \"contacto@academiaplayertech.com\",\n  \"phone\": \"+51 999 999 999\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Lima\",\n  \"logo\": \"https://cdn.example.com/logo.png\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Users - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/platform/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "platform", "users"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Academy",
+      "item": [
+        {
+          "name": "Me - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "academy", "me"]
+            }
+          }
+        },
+        {
+          "name": "Me - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "academy", "me"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Academia Tenant Demo\",\n  \"contact_email\": \"tenant@academiademo.com\",\n  \"phone\": \"+51 987 654 321\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\",\n  \"logo\": \"https://cdn.example.com/tenant-logo.png\"\n}"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8081" },
+    { "key": "adminEmail", "value": "admin@playertech.com" },
+    { "key": "adminPassword", "value": "secret123" },
+    { "key": "token", "value": "" },
+    { "key": "tenantToken", "value": "" }
+  ]
+}

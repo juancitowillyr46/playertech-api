@@ -34,6 +34,14 @@ final readonly class TenantSignupInput
 
         #[Assert\Length(max: 120, maxMessage: 'El campo "city" excede la longitud máxima permitida.')]
         public ?string $city = null,
+
+        #[Assert\NotBlank(message: 'El campo "category_id" es obligatorio.')]
+        #[Assert\Uuid(message: 'El campo "category_id" debe ser un UUID válido.')]
+        public ?string $categoryId = null,
+
+        #[Assert\NotBlank(message: 'El campo "team_name" es obligatorio.')]
+        #[Assert\Length(max: 80, maxMessage: 'El campo "team_name" excede la longitud máxima permitida.')]
+        public ?string $teamName = null,
     ) {
     }
 
@@ -47,6 +55,8 @@ final readonly class TenantSignupInput
             self::stringOrNull($payload['phone'] ?? null),
             self::stringOrNull($payload['address'] ?? null),
             self::stringOrNull($payload['city'] ?? null),
+            self::stringOrNull($payload['category_id'] ?? $payload['categoryId'] ?? null),
+            self::stringOrNull($payload['team_name'] ?? $payload['teamName'] ?? null),
         );
     }
 

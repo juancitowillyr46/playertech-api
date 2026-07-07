@@ -13,8 +13,17 @@ use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
+use App\Modules\Category\Application\Services\CategoryFinder;
+use App\Modules\Category\Domain\Category\CategoryId;
+use App\Modules\Category\Domain\Exception\CategoryInactiveException;
 use App\Modules\Identity\Domain\User\AccountUser;
+use App\Modules\Team\Application\Response\TeamResponse;
+use App\Modules\Team\Domain\Exception\TeamAlreadyExistsException;
+use App\Modules\Team\Domain\Team\Team;
+use App\Modules\Team\Domain\Team\TeamId;
+use App\Modules\Team\Domain\Team\TeamRepository;
 use App\Shared\Domain\ValueObject\AuditTrail;
+use App\Shared\Domain\ValueObject\Name;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -24,6 +33,8 @@ final readonly class RegisterTenantHandler
 {
     public function __construct(
         private AcademyRepository $academyRepository,
+        private CategoryFinder $categoryFinder,
+        private TeamRepository $teamRepository,
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
         private MessageBusInterface $messageBus,
@@ -40,6 +51,8 @@ final readonly class RegisterTenantHandler
         }
 
         $academyId = AcademyId::generate();
+        $categoryId = new CategoryId($data->categoryId);
+        $teamName = new Name($data->teamName);
 
         $academy = Academy::create(
             $academyId,
@@ -51,6 +64,16 @@ final readonly class RegisterTenantHandler
             null,
             AuditTrail::create(null),
         );
+
+        $category = $this->categoryFinder->findOrFail($academyId, $categoryId);
+
+        if ($category->status()->isInactive()) {
+            throw new CategoryInactiveException();
+        }
+
+        if (null !== $this->teamRepository->findOneByAcademyCategoryAndName($academyId, $categoryId, $teamName)) {
+            throw new TeamAlreadyExistsException();
+        }
 
         $this->academyRepository->save($academy);
 
@@ -66,7 +89,16 @@ final readonly class RegisterTenantHandler
         );
 
         $this->entityManager->persist($user);
-        $this->entityManager->flush();
+
+        $team = Team::create(
+            TeamId::generate(),
+            $academyId,
+            $categoryId,
+            $teamName,
+            AuditTrail::create($data->contactEmail),
+        );
+
+        $this->teamRepository->save($team);
 
         $activationUrl = sprintf('%s/api/v1/public/tenants/activate/%s', rtrim($this->publicUrl, '/'), $user->getActivationToken());
 
@@ -83,7 +115,8 @@ final readonly class RegisterTenantHandler
                 $user->getUserIdentifier(),
                 $user->getStatus(),
                 true,
-            )
+            ),
+            TeamResponse::fromTeam($team),
         );
     }
 }

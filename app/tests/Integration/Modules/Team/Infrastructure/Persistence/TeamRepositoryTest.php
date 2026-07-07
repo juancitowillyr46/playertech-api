@@ -59,5 +59,12 @@ final class TeamRepositoryTest extends KernelTestCase
         self::assertNotNull($found);
         self::assertSame($team->id()->value(), $found?->id()->value());
         self::assertCount(1, $this->teamRepository->findAllByAcademy($academyId));
+        self::assertSame(
+            $team->id()->value(),
+            $this->teamRepository
+                ->findOneByAcademyCategoryAndName($academyId, $categoryId, new Name('Sub-16'))
+                ?->id()
+                ->value()
+        );
     }
 }

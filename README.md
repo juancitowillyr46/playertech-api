@@ -19,6 +19,7 @@ La plataforma está pensada para gestionar academias, sedes, categorías, equipo
 - `app/` código fuente Symfony
 - `docker/` infraestructura local
 - `http/` colecciones HTTP
+- `postman/` colección Postman y entorno local
 - `specs/` documentación funcional y técnica
 
 ## Ejecución
@@ -35,6 +36,11 @@ composer install
 ```bash
 php bin/console
 ```
+
+## Consumo de la API
+
+- `http/*.http` contiene ejemplos operativos de consumo por módulo, con casos de éxito y error.
+- `postman/` contiene la colección y el entorno para validación manual rápida.
 
 ## Enfoque de trabajo
 

@@ -64,6 +64,7 @@ La base tecnica actual incluye:
 | Doctrine Tenant Filter | Non-Functional / Technical Enabler | Done | `untracked` | Filtro global que aísla automáticamente las consultas por `academy_id` para seguridad multi-tenant |
 | Doctrine AuditSubscriber | Non-Functional / Technical Enabler | Done | `untracked` | Filler centralizado de `auditTrail` para entidades auditable en persistencia Doctrine |
 | Cross-tenant isolation test | Technical Enabler | Done | `untracked` | Prueba de integración valida que una academia no puede leer registros de otra aunque conozca el ID |
+| Tenant signup initial team | Functional | Done | `untracked` | `POST /api/v1/public/tenants/signup` recibe `category_id` y `team_name`, valida la categoría y crea el primer equipo del tenant |
 
 ---
 
@@ -138,8 +139,8 @@ Ejemplos:
 # Next Steps
 1. Validar endpoints de Academy con usuario `ROLE_ROOT` y usuario tenant.
 2. Preparar el siguiente dominio de negocio sobre la misma base.
-2. Iniciar el desarrollo del módulo `Sports` siguiendo el patrón de referencia de `Academy`.
-3. Mantener trazabilidad por commit en cada iteracion.
+3. Iniciar el desarrollo del módulo `Sports` siguiendo el patrón de referencia de `Academy`.
+4. Mantener trazabilidad por commit en cada iteracion.
 ---
 
 # Working Rule
@@ -201,6 +202,8 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El módulo `Player` ahora incluye `category_id` como referencia opcional y el endpoint de importación masiva `POST /api/v1/academy/players/import` consume `category_key` como referencia de negocio.
 * `HU-013` de `EP-001` quedó implementada con `POST /api/v1/academy/me/shield` para subir y reemplazar el escudo institucional de la academia.
 * `HU-009` de `EP-007` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la foto del jugador.
+* `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.
+* El MVP checklist debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y foto de `Player`.
 ---
 
 # Technical Foundation Checklist
@@ -247,7 +250,6 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 
 ## Pending Features (Post-Foundation)
 
-* Completar colecciones `.http` con ejemplos de error y éxito.
 * Flujo de creación de Academia (exclusivo para Root).
 * Formalizar el onboarding de tenant como siguiente bloque funcional tras `EP-001`.
 * Reutilizar `Academy` como plantilla de implementacion para los siguientes modulos.
@@ -268,14 +270,14 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 ## Academy y Onboarding
 
 - [x] Validar runtime de endpoints de `Academy` con usuario `ROLE_ROOT` y con usuario tenant.
-- [ ] Cerrar el flujo de signup de tenant con revisión final de contrato de correo y activación.
+- [x] Cerrar el flujo de signup de tenant con revisión final de contrato de correo y activación.
 
 ## PlayerTech Core MVP
 
 - [x] `EP-007` Player base: registrar, listar, ver detalle, actualizar y gestionar estado.
 - [x] `EP-007` importación masiva de jugadores por Excel.
-- [ ] `EP-001` Escudo institucional de academia.
-- [ ] `EP-007` Foto del jugador.
+- [x] `EP-001` Escudo institucional de academia.
+- [x] `EP-007` Foto del jugador.
 - [ ] `EP-008` Relaciones jugador-acudiente.
 - [x] `EP-005` Equipos.
 - [ ] `EP-010` Matrículas.
@@ -283,7 +285,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 
 ## Base Operativa
 
-- [ ] Consolidar archivos `.http` con ejemplos de éxito y error por módulo.
-- [ ] Revisión final de `README` y guía de ejecución para el siguiente bloque funcional.
+- [x] Consolidar archivos `.http` con ejemplos de éxito y error por módulo.
+- [x] Revisión final de `README` y guía de ejecución para el siguiente bloque funcional.
 
 

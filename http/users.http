@@ -1,8 +1,10 @@
 @baseUrl = http://localhost:8081
 @adminEmail = admin@playertech.com
 @adminPassword = secret123
+@tenantToken = {{tenantToken}}
+@userId = {{userId}}
 
-### Login root
+### Login root success
 POST {{baseUrl}}/api/v1/auth/login
 Content-Type: application/json
 Accept: application/json
@@ -28,6 +30,19 @@ Accept: application/json
 {
   "full_name": "User Demo",
   "email": "user.demo@example.com",
+  "password": "secret123",
+  "role": "ROLE_ROOT"
+}
+
+### Platform: Create user error forbidden tenant
+POST {{baseUrl}}/api/v1/platform/users
+Authorization: Bearer {{tenantToken}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "full_name": "User Demo Tenant",
+  "email": "user.tenant@example.com",
   "password": "secret123",
   "role": "ROLE_ROOT"
 }
@@ -63,4 +78,3 @@ Accept: application/json
 GET {{baseUrl}}/api/v1/academy/users
 Authorization: Bearer {{tenantToken}}
 Accept: application/json
-

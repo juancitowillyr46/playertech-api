@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Modules\Team\Infrastructure\Persistence;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\Team\Domain\Team\TeamRepository as TeamRepositoryContract;
+use App\Shared\Domain\ValueObject\Name;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -32,6 +34,23 @@ final class TeamRepository extends ServiceEntityRepository implements TeamReposi
             ->andWhere('team.deletedAt IS NULL')
             ->setParameter('teamId', $teamId->value())
             ->setParameter('academyId', $academyId->value())
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneByAcademyCategoryAndName(
+        AcademyId $academyId,
+        CategoryId $categoryId,
+        Name $name
+    ): ?Team {
+        return $this->createQueryBuilder('team')
+            ->where('team.academyId = :academyId')
+            ->andWhere('team.categoryId = :categoryId')
+            ->andWhere('team.name.value = :name')
+            ->andWhere('team.deletedAt IS NULL')
+            ->setParameter('academyId', $academyId->value())
+            ->setParameter('categoryId', $categoryId->value())
+            ->setParameter('name', $name->value())
             ->getQuery()
             ->getOneOrNullResult();
     }

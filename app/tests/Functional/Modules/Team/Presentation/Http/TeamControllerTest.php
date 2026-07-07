@@ -116,6 +116,10 @@ final class TeamControllerTest extends KernelTestCase
         self::assertSame('Sub-16 A', $payload['data']['name']);
         self::assertSame($this->categoryId, $payload['data']['category_id']);
 
+        $duplicateResponse = self::$kernel->handle($request);
+
+        self::assertSame(409, $duplicateResponse->getStatusCode());
+
         $listRequest = Request::create(
             '/api/v1/academy/teams',
             'GET',

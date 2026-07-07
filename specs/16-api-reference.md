@@ -28,6 +28,70 @@ La convención general de respuestas y errores está definida en `specs/04-api.m
 
 ---
 
+# Public Tenant Signup
+
+## Tenant Signup
+
+```http
+POST /api/v1/public/tenants/signup
+```
+
+### Access
+
+* Público.
+
+### Purpose
+
+Registrar una nueva academia, crear el usuario administrador inicial y crear el primer equipo asociado a una categoría existente.
+
+### Request DTO
+
+`TenantSignupInput`
+
+```json
+{
+  "name": "Academia PlayerTech Demo",
+  "contact_email": "tenant.demo@example.com",
+  "contact_name": "Juan Perez",
+  "password": "secret12345",
+  "phone": "+51 987 654 321",
+  "address": "Jr. Secundario 789",
+  "city": "Arequipa",
+  "category_id": "uuid",
+  "team_name": "Sub 12 A"
+}
+```
+
+### Rules
+
+* `category_id` es obligatorio y debe existir.
+* La categoría debe estar activa.
+* `team_name` es obligatorio y su longitud máxima es 80 caracteres.
+* No puede existir otro equipo con el mismo nombre dentro de la misma categoría de la academia.
+
+### Success
+
+`201 Created`
+
+```json
+{
+  "data": {
+    "academy": {},
+    "user": {},
+    "team": {}
+  },
+  "meta": {}
+}
+```
+
+### Errors
+
+* `404 Not Found` si la categoría no existe.
+* `409 Conflict` si la categoría está inactiva o el equipo ya existe.
+* `422 Unprocessable Entity` si el payload no pasa validación.
+
+---
+
 # Users API
 
 ## Create User
@@ -195,9 +259,19 @@ POST /api/v1/academy/users/{userId}/enable
 
 # Example HTTP Files
 
+La carpeta `http/` agrupa ejemplos de consumo por módulo:
+
+* `http/auth.http`
+* `http/academy.http`
+* `http/category.http`
+* `http/players.http`
+* `http/users.http`
+* `http/venue.http`
+
+La colección `postman/` complementa estos ejemplos para validación manual.
+
 Para pruebas manuales sin Swagger:
 
 * `http/auth.http`
 * `http/academy.http`
 * `http/users.http`
-

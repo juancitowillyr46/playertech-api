@@ -1,8 +1,9 @@
 @baseUrl = http://localhost:8081
 @adminEmail = admin@playertech.com
 @adminPassword = secret123
+@playerId = {{playerId}}
 
-### Login
+### Login root success
 POST {{baseUrl}}/api/v1/auth/login
 Content-Type: application/json
 Accept: application/json
@@ -14,7 +15,7 @@ Accept: application/json
 
 > {% client.global.set("token", response.body.data.token); %}
 
-### Create Player
+### Create player
 POST {{baseUrl}}/api/v1/academy/players
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -27,17 +28,17 @@ Accept: application/json
   "document_number": "12345678"
 }
 
-### List Players
+### List players
 GET {{baseUrl}}/api/v1/academy/players
 Authorization: Bearer {{token}}
 Accept: application/json
 
-### Show Player
+### Show player
 GET {{baseUrl}}/api/v1/academy/players/{{playerId}}
 Authorization: Bearer {{token}}
 Accept: application/json
 
-### Update Player
+### Update player
 PUT {{baseUrl}}/api/v1/academy/players/{{playerId}}
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -50,21 +51,38 @@ Accept: application/json
   "document_number": "87654321"
 }
 
-### Inactivate Player
+### Inactivate player
 PATCH {{baseUrl}}/api/v1/academy/players/{{playerId}}/inactivate
 Authorization: Bearer {{token}}
 Accept: application/json
 
-### Activate Player
+### Activate player
 PATCH {{baseUrl}}/api/v1/academy/players/{{playerId}}/activate
 Authorization: Bearer {{token}}
 Accept: application/json
 
-### Import Players
+### Import players
 POST {{baseUrl}}/api/v1/academy/players/import
 Authorization: Bearer {{token}}
-Content-Type: multipart/form-data
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json
 
-# Adjunta un archivo .xlsx con columnas:
-# first_name, last_name, birth_date, document_number, category_key
-# En VS Code REST Client, usa el selector de archivo del cliente o una variable local para el path.
+--boundary
+Content-Disposition: form-data; name="file"; filename="players.xlsx"
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+< ./fixtures/players.xlsx
+--boundary--
+
+### Import players error invalid file
+POST {{baseUrl}}/api/v1/academy/players/import
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="players.txt"
+Content-Type: text/plain
+
+< ./fixtures/players.txt
+--boundary--

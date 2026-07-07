@@ -1,25 +1,33 @@
 @baseUrl = http://localhost:8081
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3ODI2MDE2MDMsImV4cCI6MTc4MjYwNTIwMywicm9sZXMiOlsiUk9MRV9BQ0FERU1ZX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiYWRtaW5AYWNhZGVtaWEuY29tIiwidXNlcl9pZCI6IjM0MjE4NjA0LWViZmQtNDYxZC1iY2M1LTAyMDg1ZGM3NGYxMiIsImFjYWRlbXlfaWQiOiIwMTllZjBlOC1kMjAzLTc4ZjEtOTE0OC0yZjRmMTZmOGUxYjciLCJyb2xlIjoiUk9MRV9BQ0FERU1ZX0FETUlOIn0.JoJFkTfoOtDuGtTrk85D1z0Yx57oJU5f6Lj2VuDK2V03lmIfkWl3PFqMUaual0xd4W4eBKu9K27AStNT1CaWxzy0ZrsX75lNz58QkOaMDAvV3lZPK0OSHK75_lVGEgyeU5H3BXpqZryKD9VtfK5KQOMoTlYDo3A_XAtxaGSUOIwWNDmsKADsomxgrx3p8Qg_U2yHRr8puK4k8jpaWQA7HDE_AldTjymWUdOP_zwMT7djs7LrPXQLP00VxevQWTqEi5p3SmgdArhvjWvtgmUzeUBhQqKt4ShxOrSrWjPZeuEW8VTliLxQzb2ohr6BV6qiTgrX6iMZrIa8uFVkViWPRw
-@tenantToken = {{tenantToken}}
-@academyId = {{academyId}}
-@activationToken = {{activationToken}}
+@adminEmail = admin@playertech.com
+@adminPassword = secret123
+@categoryId = 019f0654-39eb-7ecd-82a1-c11ee4097cb5
 
-### List Categories
-GET http://localhost:8081/api/v1/academy/categories
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3ODI2MDE2MDMsImV4cCI6MTc4MjYwNTIwMywicm9sZXMiOlsiUk9MRV9BQ0FERU1ZX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiYWRtaW5AYWNhZGVtaWEuY29tIiwidXNlcl9pZCI6IjM0MjE4NjA0LWViZmQtNDYxZC1iY2M1LTAyMDg1ZGM3NGYxMiIsImFjYWRlbXlfaWQiOiIwMTllZjBlOC1kMjAzLTc4ZjEtOTE0OC0yZjRmMTZmOGUxYjciLCJyb2xlIjoiUk9MRV9BQ0FERU1ZX0FETUlOIn0.JoJFkTfoOtDuGtTrk85D1z0Yx57oJU5f6Lj2VuDK2V03lmIfkWl3PFqMUaual0xd4W4eBKu9K27AStNT1CaWxzy0ZrsX75lNz58QkOaMDAvV3lZPK0OSHK75_lVGEgyeU5H3BXpqZryKD9VtfK5KQOMoTlYDo3A_XAtxaGSUOIwWNDmsKADsomxgrx3p8Qg_U2yHRr8puK4k8jpaWQA7HDE_AldTjymWUdOP_zwMT7djs7LrPXQLP00VxevQWTqEi5p3SmgdArhvjWvtgmUzeUBhQqKt4ShxOrSrWjPZeuEW8VTliLxQzb2ohr6BV6qiTgrX6iMZrIa8uFVkViWPRw
+### Login root success
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
 Accept: application/json
 
-### Show Category
-GET http://localhost:8081/api/v1/academy/categories/019f0654-39eb-7ecd-82a1-c11ee4097cb5
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3ODI2MDE2MDMsImV4cCI6MTc4MjYwNTIwMywicm9sZXMiOlsiUk9MRV9BQ0FERU1ZX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiYWRtaW5AYWNhZGVtaWEuY29tIiwidXNlcl9pZCI6IjM0MjE4NjA0LWViZmQtNDYxZC1iY2M1LTAyMDg1ZGM3NGYxMiIsImFjYWRlbXlfaWQiOiIwMTllZjBlOC1kMjAzLTc4ZjEtOTE0OC0yZjRmMTZmOGUxYjciLCJyb2xlIjoiUk9MRV9BQ0FERU1ZX0FETUlOIn0.JoJFkTfoOtDuGtTrk85D1z0Yx57oJU5f6Lj2VuDK2V03lmIfkWl3PFqMUaual0xd4W4eBKu9K27AStNT1CaWxzy0ZrsX75lNz58QkOaMDAvV3lZPK0OSHK75_lVGEgyeU5H3BXpqZryKD9VtfK5KQOMoTlYDo3A_XAtxaGSUOIwWNDmsKADsomxgrx3p8Qg_U2yHRr8puK4k8jpaWQA7HDE_AldTjymWUdOP_zwMT7djs7LrPXQLP00VxevQWTqEi5p3SmgdArhvjWvtgmUzeUBhQqKt4ShxOrSrWjPZeuEW8VTliLxQzb2ohr6BV6qiTgrX6iMZrIa8uFVkViWPRw
+{
+  "email": "{{adminEmail}}",
+  "password": "{{adminPassword}}"
+}
+
+> {% client.global.set("token", response.body.data.token); %}
+
+### List categories
+GET {{baseUrl}}/api/v1/academy/categories
+Authorization: Bearer {{token}}
 Accept: application/json
 
+### Show category
+GET {{baseUrl}}/api/v1/academy/categories/{{categoryId}}
+Authorization: Bearer {{token}}
+Accept: application/json
 
-### Create category
-### Request DTO: CreateCategoryInput
-
-POST http://localhost:8081/api/v1/academy/categories
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3ODI2MDE2MDMsImV4cCI6MTc4MjYwNTIwMywicm9sZXMiOlsiUk9MRV9BQ0FERU1ZX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiYWRtaW5AYWNhZGVtaWEuY29tIiwidXNlcl9pZCI6IjM0MjE4NjA0LWViZmQtNDYxZC1iY2M1LTAyMDg1ZGM3NGYxMiIsImFjYWRlbXlfaWQiOiIwMTllZjBlOC1kMjAzLTc4ZjEtOTE0OC0yZjRmMTZmOGUxYjciLCJyb2xlIjoiUk9MRV9BQ0FERU1ZX0FETUlOIn0.JoJFkTfoOtDuGtTrk85D1z0Yx57oJU5f6Lj2VuDK2V03lmIfkWl3PFqMUaual0xd4W4eBKu9K27AStNT1CaWxzy0ZrsX75lNz58QkOaMDAvV3lZPK0OSHK75_lVGEgyeU5H3BXpqZryKD9VtfK5KQOMoTlYDo3A_XAtxaGSUOIwWNDmsKADsomxgrx3p8Qg_U2yHRr8puK4k8jpaWQA7HDE_AldTjymWUdOP_zwMT7djs7LrPXQLP00VxevQWTqEi5p3SmgdArhvjWvtgmUzeUBhQqKt4ShxOrSrWjPZeuEW8VTliLxQzb2ohr6BV6qiTgrX6iMZrIa8uFVkViWPRw
+### Create category success
+POST {{baseUrl}}/api/v1/academy/categories
+Authorization: Bearer {{token}}
 Content-Type: application/json
 Accept: application/json
 
@@ -31,12 +39,25 @@ Accept: application/json
   "description": "Categoría para jugadores entre 10 y 12 años."
 }
 
-### Update Category
-### Request DTO: UpdateCategoryInput
-
-PUT http://localhost:8081/api/v1/academy/categories/019f0654-39eb-7ecd-82a1-c11ee4097cb5
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3ODI2MDE2MDMsImV4cCI6MTc4MjYwNTIwMywicm9sZXMiOlsiUk9MRV9BQ0FERU1ZX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiYWRtaW5AYWNhZGVtaWEuY29tIiwidXNlcl9pZCI6IjM0MjE4NjA0LWViZmQtNDYxZC1iY2M1LTAyMDg1ZGM3NGYxMiIsImFjYWRlbXlfaWQiOiIwMTllZjBlOC1kMjAzLTc4ZjEtOTE0OC0yZjRmMTZmOGUxYjciLCJyb2xlIjoiUk9MRV9BQ0FERU1ZX0FETUlOIn0.JoJFkTfoOtDuGtTrk85D1z0Yx57oJU5f6Lj2VuDK2V03lmIfkWl3PFqMUaual0xd4W4eBKu9K27AStNT1CaWxzy0ZrsX75lNz58QkOaMDAvV3lZPK0OSHK75_lVGEgyeU5H3BXpqZryKD9VtfK5KQOMoTlYDo3A_XAtxaGSUOIwWNDmsKADsomxgrx3p8Qg_U2yHRr8puK4k8jpaWQA7HDE_AldTjymWUdOP_zwMT7djs7LrPXQLP00VxevQWTqEi5p3SmgdArhvjWvtgmUzeUBhQqKt4ShxOrSrWjPZeuEW8VTliLxQzb2ohr6BV6qiTgrX6iMZrIa8uFVkViWPRw
+### Create category error duplicate key
+POST {{baseUrl}}/api/v1/academy/categories
+Authorization: Bearer {{token}}
 Content-Type: application/json
+Accept: application/json
+
+{
+  "category_key": "SUB_12",
+  "name": "Sub-12 B",
+  "min_age": 10,
+  "max_age": 12,
+  "description": "Intento duplicado."
+}
+
+### Update category
+PUT {{baseUrl}}/api/v1/academy/categories/{{categoryId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
 
 {
   "category_key": "SUB_13",
@@ -46,12 +67,12 @@ Content-Type: application/json
   "description": "Updated category"
 }
 
-### Inactivate Category
-PATCH http://localhost:8081/api/v1/academy/categories/019f0654-39eb-7ecd-82a1-c11ee4097cb5/inactivate
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3ODI2MDE2MDMsImV4cCI6MTc4MjYwNTIwMywicm9sZXMiOlsiUk9MRV9BQ0FERU1ZX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiYWRtaW5AYWNhZGVtaWEuY29tIiwidXNlcl9pZCI6IjM0MjE4NjA0LWViZmQtNDYxZC1iY2M1LTAyMDg1ZGM3NGYxMiIsImFjYWRlbXlfaWQiOiIwMTllZjBlOC1kMjAzLTc4ZjEtOTE0OC0yZjRmMTZmOGUxYjciLCJyb2xlIjoiUk9MRV9BQ0FERU1ZX0FETUlOIn0.JoJFkTfoOtDuGtTrk85D1z0Yx57oJU5f6Lj2VuDK2V03lmIfkWl3PFqMUaual0xd4W4eBKu9K27AStNT1CaWxzy0ZrsX75lNz58QkOaMDAvV3lZPK0OSHK75_lVGEgyeU5H3BXpqZryKD9VtfK5KQOMoTlYDo3A_XAtxaGSUOIwWNDmsKADsomxgrx3p8Qg_U2yHRr8puK4k8jpaWQA7HDE_AldTjymWUdOP_zwMT7djs7LrPXQLP00VxevQWTqEi5p3SmgdArhvjWvtgmUzeUBhQqKt4ShxOrSrWjPZeuEW8VTliLxQzb2ohr6BV6qiTgrX6iMZrIa8uFVkViWPRw
+### Inactivate category
+PATCH {{baseUrl}}/api/v1/academy/categories/{{categoryId}}/inactivate
+Authorization: Bearer {{token}}
 Accept: application/json
 
-### Activate Category
-PATCH http://localhost:8081/api/v1/academy/categories/019f0654-39eb-7ecd-82a1-c11ee4097cb5/activate
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3ODI2MDE2MDMsImV4cCI6MTc4MjYwNTIwMywicm9sZXMiOlsiUk9MRV9BQ0FERU1ZX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiYWRtaW5AYWNhZGVtaWEuY29tIiwidXNlcl9pZCI6IjM0MjE4NjA0LWViZmQtNDYxZC1iY2M1LTAyMDg1ZGM3NGYxMiIsImFjYWRlbXlfaWQiOiIwMTllZjBlOC1kMjAzLTc4ZjEtOTE0OC0yZjRmMTZmOGUxYjciLCJyb2xlIjoiUk9MRV9BQ0FERU1ZX0FETUlOIn0.JoJFkTfoOtDuGtTrk85D1z0Yx57oJU5f6Lj2VuDK2V03lmIfkWl3PFqMUaual0xd4W4eBKu9K27AStNT1CaWxzy0ZrsX75lNz58QkOaMDAvV3lZPK0OSHK75_lVGEgyeU5H3BXpqZryKD9VtfK5KQOMoTlYDo3A_XAtxaGSUOIwWNDmsKADsomxgrx3p8Qg_U2yHRr8puK4k8jpaWQA7HDE_AldTjymWUdOP_zwMT7djs7LrPXQLP00VxevQWTqEi5p3SmgdArhvjWvtgmUzeUBhQqKt4ShxOrSrWjPZeuEW8VTliLxQzb2ohr6BV6qiTgrX6iMZrIa8uFVkViWPRw
+### Activate category
+PATCH {{baseUrl}}/api/v1/academy/categories/{{categoryId}}/activate
+Authorization: Bearer {{token}}
 Accept: application/json
