@@ -53,6 +53,7 @@ La base tecnica actual incluye:
 | Tenant signup runtime implementation | Functional / Technical Enabler | Done | `untracked` | Signup tenant, activación por correo, Mailpit y flujo de login validado |
 | Player module base | Functional / Technical Enabler | Done | `untracked` | `Player` arranca con `POST /api/v1/academy/players`, custom type UUID, XML mapping y test unitario del alta |
 | Team module baseline | Functional / Technical Enabler | Done | `untracked` | `Team` arranca con CRUD tenant-scoped, custom type UUID, XML mapping y controladores delgados sobre `/api/v1/academy/teams` |
+| Team test baseline | Technical Enabler | Done | `untracked` | Cobertura inicial de `Team` con unit, integration y functional tests; las suites con MySQL compartido se ejecutan en serie |
 | Player list baseline | Functional / Technical Enabler | Done | `untracked` | `GET /api/v1/academy/players` lista jugadores del tenant actual con DTO resumido y prueba unitaria |
 | Player detail baseline | Functional / Technical Enabler | Done | `untracked` | `GET /api/v1/academy/players/{playerId}` devuelve detalle del jugador dentro del tenant con `PlayerResponse` y prueba unitaria |
 | Player update baseline | Functional / Technical Enabler | Done | `untracked` | `PUT /api/v1/academy/players/{playerId}` actualiza datos del jugador dentro del tenant con validación de unicidad y prueba unitaria |
@@ -188,6 +189,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El onboarding tenant ya tiene implementación base: signup público, correo de activación y endpoint de activación.
 * `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-008`, `EP-009`, `EP-010` y `EP-012`.
 * `EP-005` equipos ya quedó cubierto como base de organización deportiva y sirve como referencia de CRUD tenant-scoped.
+* La cobertura de pruebas para `Team` ya incluye dominio, persistencia Doctrine y endpoint HTTP crítico; las suites compartidas sobre MySQL se corren en serie para evitar colisiones de esquema.
 * La subida de escudo institucional para `Academy` y la foto del jugador para `Player` ya quedaron implementadas como historias de media separadas.
 * Las categorias ahora tienen `category_key` estable para soportar importaciones y contratos de integracion sin depender del UUID.
 * La auditoria Doctrine ya quedó centralizada con un `AuditSubscriber` y el filtro `SoftDelete` está activo.
@@ -283,4 +285,5 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 
 - [ ] Consolidar archivos `.http` con ejemplos de éxito y error por módulo.
 - [ ] Revisión final de `README` y guía de ejecución para el siguiente bloque funcional.
+
 
