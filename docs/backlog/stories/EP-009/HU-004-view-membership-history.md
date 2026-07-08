@@ -8,7 +8,7 @@
 | Épica | EP-009 Gestión de Matrículas y Cargos Iniciales |
 | Prioridad | Media |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---

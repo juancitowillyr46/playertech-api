@@ -8,7 +8,7 @@
 | Épica | EP-009 Gestión de Matrículas y Seguimiento de Pagos |
 | Prioridad | Alta |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---

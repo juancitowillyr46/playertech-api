@@ -8,7 +8,7 @@
 | Épica | EP-011 Gestión de Conceptos de Pago |
 | Prioridad | Alta |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
