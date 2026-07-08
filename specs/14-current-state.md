@@ -209,6 +209,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `EP-012` sigue pendiente como módulo financiero principal sobre pagos y evidencias.
 * `EP-013` sigue pendiente como dashboard operativo para visibilidad rápida de cartera y matrículas vigentes.
 * `EP-011` inició su implementación con `PaymentConcept`, validación en `Presentation`, `Finder` en `Application`, custom type UUID y mapping XML.
+* `EP-011` ya cuenta con cobertura unitaria para crear, listar, actualizar y desactivar conceptos de pago, y la documentación HTTP operativa vive en Postman.
 * `EP-005` equipos ya quedó cubierto como base de organización deportiva y sirve como referencia de CRUD tenant-scoped.
 * La cobertura de pruebas para `Team` ya incluye dominio, persistencia Doctrine y endpoint HTTP crítico; las suites compartidas sobre MySQL se corren en serie para evitar colisiones de esquema.
 * La subida de escudo institucional para `Academy` y la foto del jugador para `Player` ya quedaron implementadas como historias de media separadas.
