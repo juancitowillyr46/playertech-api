@@ -200,16 +200,12 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El onboarding tenant ya tiene implementación base: signup público, correo de activación y endpoint de activación.
 * `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-009`, `EP-010` y `EP-012`.
 * Se inició el módulo `Membership` como primer slice técnico de `EP-009`, con base de dominio, mapping XML, repositorio, controller y casos de uso de crear/consultar matrícula activa.
-* `EP-009` ya cuenta con cobertura unitaria inicial y referencia API en `specs/16-api-reference.md`; la documentación HTTP operativa se centraliza en Postman.
-* `EP-009` incorporó suspensión y retiro de matrícula como siguiente slice técnico, con handlers, pruebas unitarias y contratos HTTP documentados.
-* `EP-009` sumó la consulta de historial de matrículas como lectura operativa disponible en el mismo módulo.
+* `EP-009` quedó consolidada como módulo funcional completo: matrícula activa, cargos iniciales, historial, suspensión y retiro con cobertura unitaria y documentación HTTP operativa en Postman.
 * El bloque financiero fue reordenado: `EP-009` genera cargos iniciales pendientes, `EP-011` administra conceptos de pago, `EP-012` registra pagos y cambia cargos de `PENDIENTE` a `PAGADO`, y `EP-013` resume cartera y estado operativo.
 * `Membership` ya adopta el patrón de arquitectura esperado: validación en `Presentation`, `MembershipFinder` en `Application` y excepciones de dominio herederas de `Shared`.
-* `EP-011` sigue pendiente como condición para formalizar los conceptos financieros previos al módulo de pagos.
 * `EP-012` sigue pendiente como módulo financiero principal sobre pagos y evidencias.
 * `EP-013` sigue pendiente como dashboard operativo para visibilidad rápida de cartera y matrículas vigentes.
-* `EP-011` inició su implementación con `PaymentConcept`, validación en `Presentation`, `Finder` en `Application`, custom type UUID y mapping XML.
-* `EP-011` ya cuenta con cobertura unitaria para crear, listar, actualizar y desactivar conceptos de pago, y la documentación HTTP operativa vive en Postman.
+* `EP-011` quedó consolidada como módulo funcional completo de conceptos de pago: crear, listar, consultar, actualizar y desactivar con cobertura unitaria y documentación HTTP operativa en Postman.
 * `EP-005` equipos ya quedó cubierto como base de organización deportiva y sirve como referencia de CRUD tenant-scoped.
 * La cobertura de pruebas para `Team` ya incluye dominio, persistencia Doctrine y endpoint HTTP crítico; las suites compartidas sobre MySQL se corren en serie para evitar colisiones de esquema.
 * La subida de escudo institucional para `Academy` y la foto del jugador para `Player` ya quedaron implementadas como historias de media separadas.
@@ -226,7 +222,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.
 * El MVP checklist debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y foto de `Player`.
 * `EP-008` quedó implementada para relaciones jugador-acudiente con alta de acudiente, asociación, cambio de principal y eliminación lógica.
-* El bloque de módulos aún pendiente para el MVP se concentra en `EP-009`, `EP-010`, `EP-011`, `EP-012` y `EP-013`; `EP-008` ya se considera resuelto.
+* El bloque de módulos aún pendiente para el MVP se concentra en `EP-010`, `EP-012` y `EP-013`; `EP-008`, `EP-009` y `EP-011` ya se consideran resueltos.
 ---
 
 # Technical Foundation Checklist
@@ -285,7 +281,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * Formalizar el onboarding de tenant como siguiente bloque funcional tras `EP-001`.
 * Reutilizar `Academy` como plantilla de implementacion para los siguientes modulos.
 * Completar el backlog de `Category` con historias explícitas para listar, actualizar, activar e inactivar, porque ya existen en código.
-* Cerrar el bloque restante del MVP en este orden: `EP-009` -> `EP-011` -> `EP-012` -> `EP-013` -> `EP-010`.
+* Cerrar el bloque restante del MVP en este orden: `EP-012` -> `EP-013` -> `EP-010`.
 * A partir de ese cierre, desarrollar los ADR faltantes sobre decisiones ya estabilizadas.
 
 ---
@@ -312,9 +308,9 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] `EP-007` Foto del jugador.
 - [x] `EP-008` Relaciones jugador-acudiente.
 - [x] `EP-005` Equipos.
-- [ ] `EP-009` Matrículas y seguimiento de pagos.
+- [x] `EP-009` Matrículas y seguimiento de pagos.
 - [ ] `EP-010` Asignaciones deportivas.
-- [ ] `EP-011` Conceptos de pago.
+- [x] `EP-011` Conceptos de pago.
 - [ ] `EP-012` Pagos.
 - [ ] `EP-013` Dashboard operativo.
 
