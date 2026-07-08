@@ -200,7 +200,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El onboarding tenant ya tiene implementación base: signup público, correo de activación y endpoint de activación.
 * `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-009`, `EP-010` y `EP-012`.
 * Se inició el módulo `Membership` como primer slice técnico de `EP-009`, con base de dominio, mapping XML, repositorio, controller y casos de uso de crear/consultar matrícula activa.
-* `EP-009` ya cuenta con cobertura unitaria inicial, referencia API en `specs/16-api-reference.md` y ejemplos HTTP/Postman para matrícula activa.
+* `EP-009` ya cuenta con cobertura unitaria inicial y referencia API en `specs/16-api-reference.md`; la documentación HTTP operativa se centraliza en Postman.
 * `EP-009` incorporó suspensión y retiro de matrícula como siguiente slice técnico, con handlers, pruebas unitarias y contratos HTTP documentados.
 * `EP-009` sumó la consulta de historial de matrículas como lectura operativa disponible en el mismo módulo.
 * El bloque financiero fue reordenado: `EP-009` genera cargos iniciales pendientes, `EP-011` administra conceptos de pago, `EP-012` registra pagos y cambia cargos de `PENDIENTE` a `PAGADO`, y `EP-013` resume cartera y estado operativo.
@@ -319,7 +319,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 
 ## Base Operativa
 
-- [x] Consolidar archivos `.http` con ejemplos de éxito y error por módulo.
+- [x] Consolidar la documentación HTTP operativa en Postman y retirar los archivos `.http` duplicados.
 - [x] Revisión final de `README` y guía de ejecución para el siguiente bloque funcional.
 
 
