@@ -8,7 +8,7 @@
 | Épica | EP-005 Gestión de Equipos |
 | Prioridad | Media |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -56,3 +56,4 @@ Entonces el sistema cambia el estado a INACTIVE.
 # Permisos Requeridos
 
 * Team.Disable
+

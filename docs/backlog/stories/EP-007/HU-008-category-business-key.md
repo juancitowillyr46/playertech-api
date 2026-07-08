@@ -69,3 +69,4 @@ Para poder seleccionarlas y referenciarlas en procesos operativos sin exponer id
 * Persistencia en `category_key` con mapping XML.
 * Unico por `academy_id + category_key`.
 
+

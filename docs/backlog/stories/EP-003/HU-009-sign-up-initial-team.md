@@ -231,3 +231,4 @@ POST /api/v1/public/tenants/signup
 - Tests aprobados.
 - Colección Postman actualizada.
 - Documentación actualizada.
+

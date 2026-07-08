@@ -127,3 +127,4 @@ Dado una academia suspendida
 Cuando un usuario intenta autenticarse
 
 Entonces el sistema deniega el acceso.
+

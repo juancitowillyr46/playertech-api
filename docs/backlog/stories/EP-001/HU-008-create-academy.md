@@ -238,3 +238,4 @@ Ninguna
 La academia constituye el tenant principal dentro de PlayerTech.
 
 Referencia técnica: 419ded4
+

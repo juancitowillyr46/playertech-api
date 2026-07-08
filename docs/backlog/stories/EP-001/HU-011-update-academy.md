@@ -241,3 +241,4 @@ La implementación actual delega en Application Layer con CQRS para mantener los
 Esta historia tiene doble alcance: plataforma (`ROLE_ROOT`) y tenant (`Tenant Academy Admin`).
 
 Referencia técnica: ff61ec1
+

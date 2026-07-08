@@ -76,3 +76,4 @@ Cuando se consulta el tenant
 
 Entonces el sistema muestra al menos un usuario administrador responsable.
 
+

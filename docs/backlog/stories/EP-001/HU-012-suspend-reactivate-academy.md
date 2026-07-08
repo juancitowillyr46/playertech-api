@@ -220,3 +220,4 @@ La suspensión afecta la autenticación de todos los usuarios pertenecientes a l
 Esta historia pertenece exclusivamente al contexto de plataforma (`ROLE_ROOT`).
 
 Referencia técnica: 419ded4
+

@@ -179,3 +179,4 @@ La información debe reflejar el estado actual de la academia.
 Esta historia pertenece al contexto de plataforma (`ROLE_ROOT`).
 
 Referencia técnica: 419ded4
+

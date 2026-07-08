@@ -49,3 +49,4 @@ Para revisar su información sin editarla.
 * Endpoint: `GET /api/v1/academy/players/{playerId}`
 * Respuesta: `PlayerResponse`
 * Validación: contexto tenant obligatorio mediante `TenantContext`
+

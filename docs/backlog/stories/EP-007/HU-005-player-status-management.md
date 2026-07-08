@@ -53,3 +53,4 @@ Para retirarlo o reincorporarlo a la operación según corresponda.
 * Endpoint complementario: `PATCH /api/v1/academy/players/{playerId}/activate`
 * Respuesta: `204 No Content`
 * Validación: contexto tenant obligatorio
+

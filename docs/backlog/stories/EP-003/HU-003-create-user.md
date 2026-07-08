@@ -110,3 +110,4 @@ Dado un rol inválido
 Cuando intenta registrar el usuario
 
 Entonces el sistema informa el error.
+

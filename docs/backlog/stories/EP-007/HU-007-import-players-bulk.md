@@ -92,3 +92,4 @@ Para registrar en lote información que hoy se carga manualmente uno por uno.
 * Formato: `.xlsx`
 * Clave de categoría: `category_key`
 * Estrategia MVP: falla toda la importación si existe al menos un error de validación
+

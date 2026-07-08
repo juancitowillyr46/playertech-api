@@ -8,7 +8,7 @@
 | Épica | EP-005 Gestión de Equipos |
 | Prioridad | Alta |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -60,3 +60,4 @@ Entonces el sistema rechaza la operación.
 # Permisos Requeridos
 
 * Team.Read
+

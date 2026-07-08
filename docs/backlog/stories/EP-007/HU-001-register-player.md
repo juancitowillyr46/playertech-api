@@ -51,3 +51,4 @@ Para centralizar su información administrativa y deportiva.
 * Usa `PlayerId` como custom type UUID.
 * Usa XML mapping puro para Doctrine.
 * Responde con DTO JSON estándar.
+

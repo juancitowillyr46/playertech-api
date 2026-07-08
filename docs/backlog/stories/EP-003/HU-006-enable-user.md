@@ -25,3 +25,4 @@ Dado un usuario inactivo
 Cuando lo reactivo
 
 Entonces el sistema cambia su estado a ACTIVE.
+

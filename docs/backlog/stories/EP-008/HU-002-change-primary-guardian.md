@@ -52,3 +52,4 @@ Para mantener actualizado el responsable principal del menor según el contexto 
 * Se recomienda resolver la operación mediante un handler CQRS específico.
 * La validación de unicidad del principal debe quedar en la capa de aplicación o dominio.
 * Debe responder con DTO JSON estándar.
+

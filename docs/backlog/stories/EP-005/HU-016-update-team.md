@@ -8,7 +8,7 @@
 | Épica | EP-005 Gestión de Equipos |
 | Prioridad | Alta |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -68,3 +68,4 @@ Entonces el sistema informa los errores.
 # Permisos Requeridos
 
 * Team.Update
+

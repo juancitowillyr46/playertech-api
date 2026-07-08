@@ -53,3 +53,4 @@ Para registrar a los responsables legales del jugador y mantener su información
 * Se recomienda exponer esta operación desde un comando CQRS sobre `PlayerGuardian`.
 * Debe responder con DTO JSON estándar.
 * Debe respetar el aislamiento por `academy_id`.
+

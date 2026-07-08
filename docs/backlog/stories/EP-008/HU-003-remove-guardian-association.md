@@ -51,3 +51,4 @@ Para mantener la información de responsables del jugador actualizada y libre de
 * Se recomienda manejar la eliminación como un caso de uso CQRS.
 * La operación debe conservar integridad del agregado `Player`.
 * Debe responder con DTO JSON estándar.
+

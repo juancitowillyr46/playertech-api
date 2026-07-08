@@ -8,7 +8,7 @@
 | Épica | EP-005 Gestión de Equipos |
 | Prioridad | Alta |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -115,3 +115,4 @@ Entonces el estado inicial es ACTIVE.
 # Permisos Requeridos
 
 * Team.Create
+

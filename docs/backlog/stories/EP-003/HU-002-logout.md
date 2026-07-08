@@ -54,3 +54,4 @@ Dado una sesión finalizada
 Cuando intenta acceder a recursos protegidos
 
 Entonces el sistema solicita autenticación nuevamente.
+

@@ -50,3 +50,4 @@ Para retirarlo de la operación sin perder historial.
 * Endpoint complementario: `PATCH /api/v1/academy/players/{playerId}/activate`
 * Respuesta: `204 No Content`
 * Validación: contexto tenant obligatorio
+

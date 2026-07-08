@@ -36,3 +36,4 @@ Dado un usuario inactivo
 Cuando intenta iniciar sesión
 
 Entonces el sistema rechaza el acceso.
+

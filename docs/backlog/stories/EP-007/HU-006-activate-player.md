@@ -49,3 +49,4 @@ Para volver a incorporarlo a la operación cuando corresponda.
 * Endpoint: `PATCH /api/v1/academy/players/{playerId}/activate`
 * Respuesta: `204 No Content`
 * Validación: contexto tenant obligatorio
+

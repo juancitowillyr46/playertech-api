@@ -49,3 +49,4 @@ Para revisar rápidamente quiénes forman parte de la operación.
 * Implementado con `GET /api/v1/academy/players`.
 * Usa `PlayerListItemResponse` como DTO de salida.
 * El listado se resuelve por `academy_id` desde `TenantContext`.
+

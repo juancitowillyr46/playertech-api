@@ -41,3 +41,4 @@ Dado usuarios inactivos
 Cuando consulta usuarios
 
 Entonces el sistema muestra su estado correspondiente.
+

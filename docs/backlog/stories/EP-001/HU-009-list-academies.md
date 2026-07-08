@@ -172,3 +172,4 @@ La consulta debe soportar crecimiento futuro de academias.
 Esta historia pertenece al contexto de plataforma (`ROLE_ROOT`).
 
 Referencia técnica: 419ded4
+

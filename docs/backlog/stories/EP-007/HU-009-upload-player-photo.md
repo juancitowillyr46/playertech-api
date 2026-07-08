@@ -130,3 +130,4 @@ Entonces el sistema rechaza la operación.
 * Editor de imágenes.
 * Recorte automático.
 * Redimensionamiento avanzado.
+
