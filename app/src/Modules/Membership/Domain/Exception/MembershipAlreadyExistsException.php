@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Membership\Domain\Exception;
 
-final class MembershipAlreadyExistsException extends \DomainException
+use App\Shared\Domain\Exception\ConflictException;
+
+final class MembershipAlreadyExistsException extends ConflictException
 {
     public function __construct()
     {

@@ -9,6 +9,7 @@ use App\Modules\Membership\Application\Command\CreateMembershipCommand;
 use App\Modules\Membership\Application\Handler\CreateMembershipHandler;
 use App\Modules\Membership\Application\Handler\ShowActiveMembershipHandler;
 use App\Modules\Membership\Application\Query\ShowActiveMembershipQuery;
+use App\Modules\Membership\Application\Services\MembershipFinder;
 use App\Modules\Membership\Domain\Exception\MembershipNotFoundException;
 use App\Modules\Player\Domain\Player\PlayerId;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +20,7 @@ final class ShowActiveMembershipHandlerTest extends TestCase
     {
         $repository = new InMemoryMembershipRepository();
         $creator = new CreateMembershipHandler($repository);
-        $reader = new ShowActiveMembershipHandler($repository);
+        $reader = new ShowActiveMembershipHandler(new MembershipFinder($repository));
 
         $creator(new CreateMembershipCommand(
             '019eec93-9a11-7432-bd04-52306b2b3d8e',
@@ -38,7 +39,7 @@ final class ShowActiveMembershipHandlerTest extends TestCase
 
     public function testItThrowsWhenMembershipDoesNotExist(): void
     {
-        $reader = new ShowActiveMembershipHandler(new InMemoryMembershipRepository());
+        $reader = new ShowActiveMembershipHandler(new MembershipFinder(new InMemoryMembershipRepository()));
 
         $this->expectException(MembershipNotFoundException::class);
 

@@ -10,6 +10,7 @@ use App\Modules\Membership\Application\Handler\CreateMembershipHandler;
 use App\Modules\Membership\Application\Handler\SuspendMembershipHandler;
 use App\Modules\Membership\Application\Query\ShowActiveMembershipQuery;
 use App\Modules\Membership\Application\Handler\ShowActiveMembershipHandler;
+use App\Modules\Membership\Application\Services\MembershipFinder;
 use App\Modules\Membership\Domain\Exception\MembershipNotFoundException;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Player\Domain\Player\PlayerId;
@@ -21,8 +22,8 @@ final class SuspendMembershipHandlerTest extends TestCase
     {
         $repository = new InMemoryMembershipRepository();
         $creator = new CreateMembershipHandler($repository);
-        $suspender = new SuspendMembershipHandler($repository);
-        $reader = new ShowActiveMembershipHandler($repository);
+        $suspender = new SuspendMembershipHandler(new MembershipFinder($repository), $repository);
+        $reader = new ShowActiveMembershipHandler(new MembershipFinder($repository));
 
         $creator(new CreateMembershipCommand(
             '019eec93-9a11-7432-bd04-52306b2b3d8e',

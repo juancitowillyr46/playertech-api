@@ -29,11 +29,35 @@ final class MembershipRepository extends ServiceEntityRepository implements Memb
         return $this->createQueryBuilder('membership')
             ->where('membership.academyId = :academyId')
             ->andWhere('membership.playerId = :playerId')
-            ->andWhere('membership.status = :status')
+            ->andWhere('membership.status.value = :status')
             ->setParameter('academyId', $academyId->value())
             ->setParameter('playerId', $playerId->value())
-            ->setParameter('status', 'active')
+            ->setParameter('status', 'ACTIVE')
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findActiveByPlayerIdOrFail(AcademyId $academyId, PlayerId $playerId): Membership
+    {
+        $membership = $this->findActiveByPlayerId($academyId, $playerId);
+
+        if (null === $membership) {
+            throw new \App\Modules\Membership\Domain\Exception\MembershipNotFoundException();
+        }
+
+        return $membership;
+    }
+
+    public function findAllByPlayerId(AcademyId $academyId, PlayerId $playerId): array
+    {
+        return $this->createQueryBuilder('membership')
+            ->where('membership.academyId = :academyId')
+            ->andWhere('membership.playerId = :playerId')
+            ->andWhere('membership.deletedAt IS NULL')
+            ->setParameter('academyId', $academyId->value())
+            ->setParameter('playerId', $playerId->value())
+            ->orderBy('membership.startedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 }

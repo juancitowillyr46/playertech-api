@@ -231,6 +231,21 @@
               "path": ["api", "v1", "academy", "memberships", "{{playerId}}", "withdraw"]
             }
           }
+        },
+        {
+          "name": "Membership - History",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "academy", "memberships", "{{playerId}}", "history"]
+            }
+          }
         }
       ]
     }

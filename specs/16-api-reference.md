@@ -415,6 +415,39 @@ Consultar la matrícula activa de un jugador y su acudiente principal.
 
 * `404 Not Found` si no existe matrícula activa.
 
+## Show Membership History
+
+```http
+GET /api/v1/academy/memberships/{playerId}/history
+```
+
+### Access
+
+* Usuario autenticado con tenant context.
+
+### Purpose
+
+Consultar el historial de matrículas de un jugador.
+
+### Success
+
+`200 OK`
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "status": "ACTIVE",
+      "started_at": "2026-07-07T00:00:00+00:00",
+      "ended_at": null,
+      "primary_guardian_id": "uuid"
+    }
+  ],
+  "meta": {}
+}
+```
+
 ## Suspend Membership
 
 ```http

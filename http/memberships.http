@@ -28,3 +28,8 @@ Accept: application/json
 PATCH {{baseUrl}}/api/v1/academy/memberships/{{playerId}}/withdraw
 Authorization: Bearer {{tenantToken}}
 Accept: application/json
+
+### Membership History
+GET {{baseUrl}}/api/v1/academy/memberships/{{playerId}}/history
+Authorization: Bearer {{tenantToken}}
+Accept: application/json

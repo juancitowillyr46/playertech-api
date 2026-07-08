@@ -12,4 +12,11 @@ interface MembershipRepository
     public function save(Membership $membership): void;
 
     public function findActiveByPlayerId(AcademyId $academyId, PlayerId $playerId): ?Membership;
+
+    public function findActiveByPlayerIdOrFail(AcademyId $academyId, PlayerId $playerId): Membership;
+
+    /**
+     * @return Membership[]
+     */
+    public function findAllByPlayerId(AcademyId $academyId, PlayerId $playerId): array;
 }

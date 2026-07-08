@@ -25,7 +25,7 @@ Como administrador de academia
 
 Quiero crear la matrícula de un jugador con su acudiente principal
 
-Para dejar constancia oficial de su vínculo administrativo y del responsable financiero asociado.
+Para dejar constancia oficial de su vínculo administrativo y generar los cargos iniciales pendientes.
 
 ---
 
@@ -36,6 +36,7 @@ Para dejar constancia oficial de su vínculo administrativo y del responsable fi
 * La matrícula debe tener un acudiente principal.
 * Solo puede existir una matrícula activa por jugador dentro de una academia.
 * La matrícula se crea en estado activo salvo regla futura distinta.
+* Al crear la matrícula se generan dos cargos iniciales: matrícula y primera mensualidad.
 
 ---
 

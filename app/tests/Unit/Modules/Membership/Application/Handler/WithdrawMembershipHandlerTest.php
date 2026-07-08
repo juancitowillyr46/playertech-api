@@ -11,6 +11,7 @@ use App\Modules\Membership\Application\Handler\CreateMembershipHandler;
 use App\Modules\Membership\Application\Handler\WithdrawMembershipHandler;
 use App\Modules\Membership\Application\Handler\ShowActiveMembershipHandler;
 use App\Modules\Membership\Application\Query\ShowActiveMembershipQuery;
+use App\Modules\Membership\Application\Services\MembershipFinder;
 use App\Modules\Membership\Domain\Exception\MembershipNotFoundException;
 use App\Modules\Player\Domain\Player\PlayerId;
 use PHPUnit\Framework\TestCase;
@@ -21,8 +22,8 @@ final class WithdrawMembershipHandlerTest extends TestCase
     {
         $repository = new InMemoryMembershipRepository();
         $creator = new CreateMembershipHandler($repository);
-        $withdrawer = new WithdrawMembershipHandler($repository);
-        $reader = new ShowActiveMembershipHandler($repository);
+        $withdrawer = new WithdrawMembershipHandler(new MembershipFinder($repository), $repository);
+        $reader = new ShowActiveMembershipHandler(new MembershipFinder($repository));
 
         $creator(new CreateMembershipCommand(
             '019eec93-9a11-7432-bd04-52306b2b3d8e',

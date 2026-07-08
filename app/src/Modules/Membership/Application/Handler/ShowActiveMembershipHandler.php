@@ -6,23 +6,18 @@ namespace App\Modules\Membership\Application\Handler;
 
 use App\Modules\Membership\Application\Query\ShowActiveMembershipQuery;
 use App\Modules\Membership\Application\Response\MembershipResponse;
-use App\Modules\Membership\Domain\Exception\MembershipNotFoundException;
-use App\Modules\Membership\Domain\Membership\MembershipRepository;
+use App\Modules\Membership\Application\Services\MembershipFinder;
 
 final readonly class ShowActiveMembershipHandler
 {
     public function __construct(
-        private MembershipRepository $membershipRepository,
+        private MembershipFinder $membershipFinder,
     ) {
     }
 
     public function __invoke(ShowActiveMembershipQuery $query): MembershipResponse
     {
-        $membership = $this->membershipRepository->findActiveByPlayerId($query->academyId, $query->playerId);
-
-        if (null === $membership) {
-            throw new MembershipNotFoundException();
-        }
+        $membership = $this->membershipFinder->findActiveOrFail($query->academyId, $query->playerId);
 
         return MembershipResponse::fromMembership($membership);
     }
