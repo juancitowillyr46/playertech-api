@@ -264,11 +264,53 @@ La carpeta `http/` agrupa ejemplos de consumo por módulo:
 * `http/auth.http`
 * `http/academy.http`
 * `http/category.http`
+* `http/guardians.http`
 * `http/players.http`
+* `http/player-guardians.http`
 * `http/users.http`
 * `http/venue.http`
 
 La colección `postman/` complementa estos ejemplos para validación manual.
+
+---
+
+# Guardians API
+
+## Create Guardian
+
+```http
+POST /api/v1/academy/guardians
+```
+
+### Access
+
+* Usuario autenticado con tenant context.
+
+### Purpose
+
+Registrar un acudiente dentro de la academia actual.
+
+---
+
+# Player Guardians API
+
+## Associate Guardian
+
+```http
+POST /api/v1/academy/players/{playerId}/guardians
+```
+
+## Change Primary Guardian
+
+```http
+PATCH /api/v1/academy/players/{playerId}/guardians/{guardianId}/primary
+```
+
+## Remove Guardian Association
+
+```http
+DELETE /api/v1/academy/players/{playerId}/guardians/{guardianId}
+```
 
 Para pruebas manuales sin Swagger:
 

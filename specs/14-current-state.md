@@ -61,6 +61,8 @@ La base tecnica actual incluye:
 | Player status management story | Functional / Documentation | Done | `untracked` | HU-005 consolidada documenta desactivar y reactivar como una sola gestion de estado |
 | Player bulk import baseline | Functional / Technical Enabler | Done | `untracked` | `POST /api/v1/academy/players/import` permite carga masiva desde Excel con `category_key` y validación completa por fila |
 | Category business key foundation | Functional / Technical Enabler | Done | `untracked` | `Category` ahora expone `category_key` estable, unico por academia, para contratos API e importaciones |
+| Guardian module foundation | Functional / Technical Enabler | Done | `untracked` | `LegalGuardian` queda disponible como aggregate root con XML puro, custom type UUID y endpoint de alta dentro de Academy |
+| PlayerGuardian relation foundation | Functional / Technical Enabler | Done | `untracked` | `PlayerGuardian` cubre asociar, cambiar principal y eliminar relación con soft delete y aislamiento por academia |
 | Doctrine Tenant Filter | Non-Functional / Technical Enabler | Done | `untracked` | Filtro global que aísla automáticamente las consultas por `academy_id` para seguridad multi-tenant |
 | Doctrine AuditSubscriber | Non-Functional / Technical Enabler | Done | `untracked` | Filler centralizado de `auditTrail` para entidades auditable en persistencia Doctrine |
 | Cross-tenant isolation test | Technical Enabler | Done | `untracked` | Prueba de integración valida que una academia no puede leer registros de otra aunque conozca el ID |
@@ -188,7 +190,8 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Academy` incorpora soft delete con `deleted_at` y `deleted_by`, y Doctrine ya tiene un filtro global para excluir entidades borradas lógicamente.
 * Se documentó una épica nueva para onboarding de tenant (`EP-014`) sin alterar el flujo de creación de tenants por `ROLE_ROOT`.
 * El onboarding tenant ya tiene implementación base: signup público, correo de activación y endpoint de activación.
-* `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-008`, `EP-009`, `EP-010` y `EP-012`.
+* `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-009`, `EP-010` y `EP-012`.
+* Se inició el módulo `Membership` como primer slice técnico de `EP-009`, con base de dominio, mapping XML, repositorio, controller y casos de uso de crear/consultar matrícula activa.
 * `EP-005` equipos ya quedó cubierto como base de organización deportiva y sirve como referencia de CRUD tenant-scoped.
 * La cobertura de pruebas para `Team` ya incluye dominio, persistencia Doctrine y endpoint HTTP crítico; las suites compartidas sobre MySQL se corren en serie para evitar colisiones de esquema.
 * La subida de escudo institucional para `Academy` y la foto del jugador para `Player` ya quedaron implementadas como historias de media separadas.
@@ -204,6 +207,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-009` de `EP-007` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la foto del jugador.
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.
 * El MVP checklist debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y foto de `Player`.
+* `EP-008` quedó implementada para relaciones jugador-acudiente con alta de acudiente, asociación, cambio de principal y eliminación lógica.
 ---
 
 # Technical Foundation Checklist
@@ -254,7 +258,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * Formalizar el onboarding de tenant como siguiente bloque funcional tras `EP-001`.
 * Reutilizar `Academy` como plantilla de implementacion para los siguientes modulos.
 * Completar el backlog de `Category` con historias explícitas para listar, actualizar, activar e inactivar, porque ya existen en código.
-* Continuar con `EP-007` para cerrar `HU-002` a `HU-005` y luego retomar `EP-008` -> `EP-009` -> `EP-010` -> `EP-012`.
+* Continuar con `EP-007` para cerrar `HU-002` a `HU-005` y luego retomar `EP-009` -> `EP-010` -> `EP-012`.
 
 ---
 
@@ -278,9 +282,9 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] `EP-007` importación masiva de jugadores por Excel.
 - [x] `EP-001` Escudo institucional de academia.
 - [x] `EP-007` Foto del jugador.
-- [ ] `EP-008` Relaciones jugador-acudiente.
+- [x] `EP-008` Relaciones jugador-acudiente.
 - [x] `EP-005` Equipos.
-- [ ] `EP-010` Matrículas.
+- [ ] `EP-009` Matrículas y seguimiento de pagos.
 - [ ] `EP-012` Pagos.
 
 ## Base Operativa

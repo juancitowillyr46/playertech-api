@@ -44,6 +44,13 @@ player_controllers:
     type: attribute
     prefix: /api/v1
 
+guardian_controllers:
+    resource:
+        path: ../../src/Modules/Guardian/Presentation/Http/
+        namespace: App\Modules\Guardian\Presentation\Http
+    type: attribute
+    prefix: /api/v1
+
 team_controllers:
     resource:
         path: ../../src/Modules/Team/Presentation/Http/
