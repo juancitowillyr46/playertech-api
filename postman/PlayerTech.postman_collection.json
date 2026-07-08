@@ -163,6 +163,76 @@
           }
         }
       ]
+    },
+    {
+      "name": "Membership",
+      "item": [
+        {
+          "name": "Membership - Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/memberships",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "academy", "memberships"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"player_id\": \"{{playerId}}\",\n  \"primary_guardian_id\": \"{{guardianId}}\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Membership - Show Active",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/active",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "academy", "memberships", "{{playerId}}", "active"]
+            }
+          }
+        },
+        {
+          "name": "Membership - Suspend",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/suspend",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "academy", "memberships", "{{playerId}}", "suspend"]
+            }
+          }
+        },
+        {
+          "name": "Membership - Withdraw",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/withdraw",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "academy", "memberships", "{{playerId}}", "withdraw"]
+            }
+          }
+        }
+      ]
     }
   ],
   "event": [],

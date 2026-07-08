@@ -192,6 +192,8 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El onboarding tenant ya tiene implementación base: signup público, correo de activación y endpoint de activación.
 * `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-009`, `EP-010` y `EP-012`.
 * Se inició el módulo `Membership` como primer slice técnico de `EP-009`, con base de dominio, mapping XML, repositorio, controller y casos de uso de crear/consultar matrícula activa.
+* `EP-009` ya cuenta con cobertura unitaria inicial, referencia API en `specs/16-api-reference.md` y ejemplos HTTP/Postman para matrícula activa.
+* `EP-009` incorporó suspensión y retiro de matrícula como siguiente slice técnico, con handlers, pruebas unitarias y contratos HTTP documentados.
 * `EP-005` equipos ya quedó cubierto como base de organización deportiva y sirve como referencia de CRUD tenant-scoped.
 * La cobertura de pruebas para `Team` ya incluye dominio, persistencia Doctrine y endpoint HTTP crítico; las suites compartidas sobre MySQL se corren en serie para evitar colisiones de esquema.
 * La subida de escudo institucional para `Academy` y la foto del jugador para `Player` ya quedaron implementadas como historias de media separadas.

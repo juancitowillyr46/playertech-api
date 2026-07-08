@@ -267,6 +267,7 @@ La carpeta `http/` agrupa ejemplos de consumo por módulo:
 * `http/guardians.http`
 * `http/players.http`
 * `http/player-guardians.http`
+* `http/memberships.http`
 * `http/users.http`
 * `http/venue.http`
 
@@ -317,3 +318,143 @@ Para pruebas manuales sin Swagger:
 * `http/auth.http`
 * `http/academy.http`
 * `http/users.http`
+
+---
+
+# Membership API
+
+## Create Membership
+
+```http
+POST /api/v1/academy/memberships
+```
+
+### Access
+
+* Usuario autenticado con tenant context.
+
+### Purpose
+
+Crear la matrícula activa de un jugador asociando un acudiente principal responsable.
+
+### Request DTO
+
+`CreateMembershipCommand`
+
+```json
+{
+  "player_id": "uuid",
+  "primary_guardian_id": "uuid"
+}
+```
+
+### Rules
+
+* `player_id` es obligatorio y debe existir dentro del tenant actual.
+* `primary_guardian_id` es obligatorio y debe existir dentro del tenant actual.
+* Solo puede existir una matrícula activa por jugador dentro de una academia.
+
+### Success
+
+`201 Created`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "academy_id": "uuid",
+    "player_id": "uuid",
+    "primary_guardian_id": "uuid",
+    "status": "ACTIVE",
+    "started_at": "2026-07-07T00:00:00+00:00",
+    "ended_at": null
+  },
+  "meta": {}
+}
+```
+
+### Errors
+
+* `409 Conflict` si el jugador ya tiene una matrícula activa.
+* `422 Unprocessable Entity` si el payload no pasa validación.
+
+## Show Active Membership
+
+```http
+GET /api/v1/academy/memberships/{playerId}/active
+```
+
+### Access
+
+* Usuario autenticado con tenant context.
+
+### Purpose
+
+Consultar la matrícula activa de un jugador y su acudiente principal.
+
+### Success
+
+`200 OK`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "academy_id": "uuid",
+    "player_id": "uuid",
+    "primary_guardian_id": "uuid",
+    "status": "ACTIVE",
+    "started_at": "2026-07-07T00:00:00+00:00",
+    "ended_at": null
+  },
+  "meta": {}
+}
+```
+
+### Errors
+
+* `404 Not Found` si no existe matrícula activa.
+
+## Suspend Membership
+
+```http
+PATCH /api/v1/academy/memberships/{playerId}/suspend
+```
+
+### Access
+
+* Usuario autenticado con tenant context.
+
+### Purpose
+
+Suspender temporalmente la matrícula de un jugador.
+
+### Success
+
+`204 No Content`
+
+### Errors
+
+* `404 Not Found` si no existe matrícula activa.
+
+## Withdraw Membership
+
+```http
+PATCH /api/v1/academy/memberships/{playerId}/withdraw
+```
+
+### Access
+
+* Usuario autenticado con tenant context.
+
+### Purpose
+
+Retirar definitivamente la matrícula de un jugador.
+
+### Success
+
+`204 No Content`
+
+### Errors
+
+* `404 Not Found` si no existe matrícula activa.
