@@ -4,44 +4,14 @@ declare(strict_types=1);
 
 namespace App\Modules\Identity\Application\Dto;
 
-use App\Modules\Identity\Domain\User\AccountUser;
-use Symfony\Component\Validator\Constraints as Assert;
-
 final readonly class UpdateUserInput
 {
     public function __construct(
-        #[Assert\NotBlank(message: 'El campo "full_name" es obligatorio.')]
-        #[Assert\Length(max: 150, maxMessage: 'El campo "full_name" excede la longitud máxima permitida.')]
         public ?string $fullName,
 
-        #[Assert\NotBlank(message: 'El campo "email" es obligatorio.')]
-        #[Assert\Email(message: 'El campo "email" debe ser un correo válido.')]
-        #[Assert\Length(max: 180, maxMessage: 'El campo "email" excede la longitud máxima permitida.')]
         public ?string $email,
 
-        #[Assert\NotBlank(message: 'El campo "role" es obligatorio.')]
-        #[Assert\Choice(choices: [AccountUser::ROLE_ROOT, AccountUser::ROLE_ACADEMY_ADMIN], message: 'El campo "role" no es válido.')]
         public ?string $role,
     ) {
-    }
-
-    public static function fromArray(array $payload): self
-    {
-        return new self(
-            self::stringOrNull($payload['full_name'] ?? null),
-            self::stringOrNull($payload['email'] ?? null),
-            self::stringOrNull($payload['role'] ?? null),
-        );
-    }
-
-    private static function stringOrNull(mixed $value): ?string
-    {
-        if (null === $value) {
-            return null;
-        }
-
-        $value = trim((string) $value);
-
-        return '' === $value ? null : $value;
     }
 }

@@ -8,13 +8,13 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Modules\Player\Application\Guardian\Associate\AssociateGuardianCommand;
-use App\Modules\Player\Application\Guardian\Associate\AssociateGuardianInput;
 use App\Modules\Player\Application\Guardian\Associate\AssociateGuardianHandler;
 use App\Modules\Player\Application\Guardian\ChangePrimary\ChangePrimaryGuardianCommand;
 use App\Modules\Player\Application\Guardian\ChangePrimary\ChangePrimaryGuardianHandler;
 use App\Modules\Player\Application\Guardian\RemoveAssociation\RemoveGuardianAssociationCommand;
 use App\Modules\Player\Application\Guardian\RemoveAssociation\RemoveGuardianAssociationHandler;
 use App\Modules\Player\Domain\Player\PlayerId;
+use App\Modules\Player\Presentation\Http\Request\AssociateGuardianRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,7 +39,7 @@ final class PlayerGuardianController extends AbstractApiController
     #[Route('', name: 'api_v1_academy_player_guardians_associate', methods: ['POST'])]
     public function associate(Request $request, string $playerId): JsonResponse
     {
-        $input = AssociateGuardianInput::fromArray($request->toArray());
+        $input = AssociateGuardianRequest::fromArray($request->toArray());
         $this->assertValid($this->validator, $input);
 
         $view = ($this->associateGuardianHandler)(
@@ -47,7 +47,7 @@ final class PlayerGuardianController extends AbstractApiController
                 $this->requireAuthenticatedUserId($this->security),
                 new AcademyId($this->tenantContext->requireAcademyId()),
                 new PlayerId($playerId),
-                $input,
+                $input->toInput(),
             )
         );
 

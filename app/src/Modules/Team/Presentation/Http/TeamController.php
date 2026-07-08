@@ -10,8 +10,6 @@ use App\Modules\Team\Application\Command\ActivateTeamCommand;
 use App\Modules\Team\Application\Command\CreateTeamCommand;
 use App\Modules\Team\Application\Command\InactivateTeamCommand;
 use App\Modules\Team\Application\Command\UpdateTeamCommand;
-use App\Modules\Team\Application\Dto\CreateTeamInput;
-use App\Modules\Team\Application\Dto\UpdateTeamInput;
 use App\Modules\Team\Application\Handler\ActivateTeamHandler;
 use App\Modules\Team\Application\Handler\CreateTeamHandler;
 use App\Modules\Team\Application\Handler\InactivateTeamHandler;
@@ -21,6 +19,8 @@ use App\Modules\Team\Application\Handler\UpdateTeamHandler;
 use App\Modules\Team\Application\Query\ListTeamsQuery;
 use App\Modules\Team\Application\Query\ShowTeamQuery;
 use App\Modules\Team\Domain\Team\TeamId;
+use App\Modules\Team\Presentation\Http\Request\CreateTeamRequest;
+use App\Modules\Team\Presentation\Http\Request\UpdateTeamRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -48,7 +48,7 @@ final class TeamController extends AbstractApiController
     #[Route('', name: 'api_v1_teams_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $input = CreateTeamInput::fromArray($request->toArray());
+        $input = CreateTeamRequest::fromArray($request->toArray());
 
         $this->assertValid($this->validator, $input);
 
@@ -56,7 +56,7 @@ final class TeamController extends AbstractApiController
             new CreateTeamCommand(
                 $this->requireActorId(),
                 $this->tenantContext->requireAcademyId(),
-                $input,
+                $input->toInput(),
             )
         );
 
@@ -103,7 +103,7 @@ final class TeamController extends AbstractApiController
     #[Route('/{teamId}', name: 'api_v1_teams_update', methods: ['PUT'])]
     public function update(string $teamId, Request $request): JsonResponse
     {
-        $input = UpdateTeamInput::fromArray($request->toArray());
+        $input = UpdateTeamRequest::fromArray($request->toArray());
 
         $this->assertValid($this->validator, $input);
 
@@ -112,7 +112,7 @@ final class TeamController extends AbstractApiController
                 $this->requireActorId(),
                 $this->tenantContext->requireAcademyId(),
                 $teamId,
-                $input,
+                $input->toInput(),
             )
         );
 

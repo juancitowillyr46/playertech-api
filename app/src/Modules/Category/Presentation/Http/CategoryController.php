@@ -9,8 +9,6 @@ use App\Modules\Category\Application\Command\ActivateCategoryCommand;
 use App\Modules\Category\Application\Command\CreateCategoryCommand;
 use App\Modules\Category\Application\Command\InactivateCategoryCommand;
 use App\Modules\Category\Application\Command\UpdateCategoryCommand;
-use App\Modules\Category\Application\Dto\CreateCategoryInput;
-use App\Modules\Category\Application\Dto\UpdateCategoryInput;
 use App\Modules\Category\Application\Handler\ActivateCategoryHandler;
 use App\Modules\Category\Application\Handler\CreateCategoryHandler;
 use App\Modules\Category\Application\Handler\InactivateCategoryHandler;
@@ -21,6 +19,8 @@ use App\Modules\Category\Application\Query\ListCategoriesQuery;
 use App\Modules\Category\Application\Query\ShowCategoryQuery;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
+use App\Modules\Category\Presentation\Http\Request\CreateCategoryRequest;
+use App\Modules\Category\Presentation\Http\Request\UpdateCategoryRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,7 +46,7 @@ final class CategoryController extends AbstractApiController
     #[Route('', name: 'api_v1_categories_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse 
     {
-        $input = CreateCategoryInput::fromArray($request->toArray());
+        $input = CreateCategoryRequest::fromArray($request->toArray());
 
         $this->assertValid($this->validator, $input);
 
@@ -54,7 +54,7 @@ final class CategoryController extends AbstractApiController
             new CreateCategoryCommand(
                 $this->tenantContext->getUserId(),
                 $this->tenantContext->requireAcademyId(),
-                $input,
+                $input->toInput(),
             )
         );
 
@@ -90,7 +90,7 @@ final class CategoryController extends AbstractApiController
         Request $request,
     ): Response {
 
-        $input = UpdateCategoryInput::fromArray($request->toArray());
+        $input = UpdateCategoryRequest::fromArray($request->toArray());
         
         $this->assertValid($this->validator, $input);
 
@@ -99,7 +99,7 @@ final class CategoryController extends AbstractApiController
                 $this->tenantContext->getUserId(),
                 $this->tenantContext->requireAcademyId(),
                 $categoryId,
-                $input
+                $input->toInput()
             )
         );
 

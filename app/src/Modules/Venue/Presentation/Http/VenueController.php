@@ -11,8 +11,6 @@ use App\Modules\Venue\Application\Command\CreateVenueCommand;
 use App\Modules\Venue\Application\Command\DeleteVenueCommand;
 use App\Modules\Venue\Application\Command\InactiveVenueCommand;
 use App\Modules\Venue\Application\Command\UpdateVenueCommand;
-use App\Modules\Venue\Application\Dto\CreateVenueInput;
-use App\Modules\Venue\Application\Dto\UpdateVenueInput;
 use App\Modules\Venue\Application\Handler\ActivateVenueHandler;
 use App\Modules\Venue\Application\Handler\CreateVenueHandler;
 use App\Modules\Venue\Application\Handler\DeleteVenueHandler;
@@ -22,6 +20,8 @@ use App\Modules\Venue\Application\Handler\ShowVenueHandler;
 use App\Modules\Venue\Application\Handler\UpdateVenueHandler;
 use App\Modules\Venue\Application\Query\ListVenuesQuery;
 use App\Modules\Venue\Application\Query\ShowVenueQuery;
+use App\Modules\Venue\Presentation\Http\Request\CreateVenueRequest;
+use App\Modules\Venue\Presentation\Http\Request\UpdateVenueRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,14 +50,14 @@ final class VenueController extends AbstractApiController
     #[Route('', name: 'api_v1_venue_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $input = CreateVenueInput::fromArray($request->toArray());
+        $input = CreateVenueRequest::fromArray($request->toArray());
         $this->assertValid($this->validator, $input);
 
         $view = ($this->createVenueHandler)(
             new CreateVenueCommand(
                 $this->tenantContext->getUserId(),
                 $this->tenantContext->requireAcademyId(),
-                $input
+                $input->toInput()
             )
         );
 
@@ -104,7 +104,7 @@ final class VenueController extends AbstractApiController
     #[Route('/{venueId}', name: 'api_v1_venues_update', methods: ['PUT'])]
     public function update(string $venueId, Request $request): JsonResponse
     {
-        $input = UpdateVenueInput::fromArray($request->toArray());
+        $input = UpdateVenueRequest::fromArray($request->toArray());
         $this->assertValid($this->validator, $input);
 
         $view = ($this->updateVenueHandler)(
@@ -112,7 +112,7 @@ final class VenueController extends AbstractApiController
                 $this->requireActorId(),
                 $this->tenantContext->requireAcademyId(),
                 $venueId,
-                $input
+                $input->toInput()
             )
         );
 

@@ -6,9 +6,9 @@ namespace App\Modules\Academy\Presentation\Http\Open;
 
 use App\Modules\Academy\Application\Command\ActivateTenantCommand;
 use App\Modules\Academy\Application\Command\RegisterTenantCommand;
-use App\Modules\Academy\Application\Dto\TenantSignupInput;
 use App\Modules\Academy\Application\Handler\ActivateTenantHandler;
 use App\Modules\Academy\Application\Handler\RegisterTenantHandler;
+use App\Modules\Academy\Presentation\Http\Request\TenantSignupRequest;
 use App\Shared\Domain\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,10 +28,10 @@ final readonly class TenantSignupController
     #[Route('/signup', name: 'api_v1_public_tenant_signup', methods: ['POST'])]
     public function signup(Request $request): JsonResponse
     {
-        $input = TenantSignupInput::fromArray($request->toArray());
+        $input = TenantSignupRequest::fromArray($request->toArray());
         $this->assertValid($input);
 
-        $result = ($this->registerTenantHandler)(new RegisterTenantCommand($input));
+        $result = ($this->registerTenantHandler)(new RegisterTenantCommand($input->toInput()));
 
         return new JsonResponse([
             'data' => $result->toArray(),

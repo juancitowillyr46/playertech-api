@@ -11,9 +11,12 @@ use App\Modules\Membership\Application\Command\SuspendMembershipCommand;
 use App\Modules\Membership\Application\Command\WithdrawMembershipCommand;
 use App\Modules\Membership\Application\Handler\CreateMembershipHandler;
 use App\Modules\Membership\Application\Handler\ShowActiveMembershipHandler;
+use App\Modules\Membership\Application\Handler\ShowMembershipHistoryHandler;
 use App\Modules\Membership\Application\Handler\SuspendMembershipHandler;
 use App\Modules\Membership\Application\Handler\WithdrawMembershipHandler;
 use App\Modules\Membership\Application\Query\ShowActiveMembershipQuery;
+use App\Modules\Membership\Application\Query\ShowMembershipHistoryQuery;
+use App\Modules\Membership\Presentation\Http\Request\CreateMembershipRequest;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -30,6 +33,7 @@ final class MembershipController extends AbstractApiController
         private readonly ValidatorInterface $validator,
         private readonly CreateMembershipHandler $createMembershipHandler,
         private readonly ShowActiveMembershipHandler $showActiveMembershipHandler,
+        private readonly ShowMembershipHistoryHandler $showMembershipHistoryHandler,
         private readonly SuspendMembershipHandler $suspendMembershipHandler,
         private readonly WithdrawMembershipHandler $withdrawMembershipHandler,
         private readonly TenantContext $tenantContext,
@@ -39,20 +43,18 @@ final class MembershipController extends AbstractApiController
     #[Route('', name: 'api_v1_academy_memberships_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $payload = $request->toArray();
-
-        foreach (['player_id', 'primary_guardian_id'] as $field) {
-            if (empty($payload[$field])) {
-                throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException(sprintf('%s is required.', $field));
-            }
-        }
+        $input = new CreateMembershipRequest(
+            $request->toArray()['player_id'] ?? null,
+            $request->toArray()['primary_guardian_id'] ?? null,
+        );
+        $this->assertValid($this->validator, $input);
 
         $view = ($this->createMembershipHandler)(
             new CreateMembershipCommand(
                 $this->requireAuthenticatedUserId($this->security),
                 $this->tenantContext->requireAcademyId(),
-                (string) $payload['player_id'],
-                (string) $payload['primary_guardian_id'],
+                $input->playerId ?? '',
+                $input->primaryGuardianId ?? '',
             )
         );
 
@@ -74,6 +76,25 @@ final class MembershipController extends AbstractApiController
 
         return new JsonResponse([
             'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/{playerId}/history', name: 'api_v1_academy_memberships_history', methods: ['GET'])]
+    public function history(string $playerId): JsonResponse
+    {
+        $items = ($this->showMembershipHistoryHandler)(
+            new ShowMembershipHistoryQuery(
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                new PlayerId($playerId),
+            )
+        );
+
+        return new JsonResponse([
+            'data' => array_map(
+                static fn ($item) => $item->toArray(),
+                $items
+            ),
             'meta' => new \stdClass(),
         ]);
     }

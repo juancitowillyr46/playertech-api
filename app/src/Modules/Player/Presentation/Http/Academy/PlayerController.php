@@ -10,8 +10,6 @@ use App\Modules\Player\Application\Command\CreatePlayerCommand;
 use App\Modules\Player\Application\Command\ImportPlayersCommand;
 use App\Modules\Player\Application\Command\ActivatePlayerCommand;
 use App\Modules\Player\Application\Command\InactivatePlayerCommand;
-use App\Modules\Player\Application\Dto\CreatePlayerInput;
-use App\Modules\Player\Application\Dto\UpdatePlayerInput;
 use App\Modules\Player\Application\Photo\Upload\UploadPlayerPhotoCommand;
 use App\Modules\Player\Application\Photo\Upload\UploadPlayerPhotoHandler;
 use App\Modules\Player\Application\Handler\ActivatePlayerHandler;
@@ -25,6 +23,9 @@ use App\Modules\Player\Application\Handler\ShowPlayerHandler;
 use App\Modules\Player\Application\Query\ShowPlayerQuery;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Modules\Player\Application\Command\UpdatePlayerCommand;
+use App\Modules\Player\Presentation\Http\Request\AssociateGuardianRequest;
+use App\Modules\Player\Presentation\Http\Request\CreatePlayerRequest;
+use App\Modules\Player\Presentation\Http\Request\UpdatePlayerRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -55,14 +56,14 @@ final class PlayerController extends AbstractApiController
     #[Route('', name: 'api_v1_academy_players_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $input = CreatePlayerInput::fromArray($request->toArray());
+        $input = CreatePlayerRequest::fromArray($request->toArray());
         $this->assertValid($this->validator, $input);
 
         $view = ($this->createPlayerHandler)(
             new CreatePlayerCommand(
                 $this->requireActorId(),
                 $this->tenantContext->requireAcademyId(),
-                $input
+                $input->toInput()
             )
         );
 
@@ -141,7 +142,7 @@ final class PlayerController extends AbstractApiController
     #[Route('/{playerId}', name: 'api_v1_academy_players_update', methods: ['PUT'])]
     public function update(Request $request, string $playerId): JsonResponse
     {
-        $input = UpdatePlayerInput::fromArray($request->toArray());
+        $input = UpdatePlayerRequest::fromArray($request->toArray());
         $this->assertValid($this->validator, $input);
 
         $view = ($this->updatePlayerHandler)(
@@ -149,7 +150,7 @@ final class PlayerController extends AbstractApiController
                 $this->requireActorId(),
                 $this->tenantContext->requireAcademyId(),
                 $playerId,
-                $input
+                $input->toInput()
             )
         );
 

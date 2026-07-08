@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Presentation\Http;
 
 use App\Modules\Academy\Application\Command\UpdateAcademyCommand;
-use App\Modules\Academy\Application\Dto\UpdateAcademyInput;
 use App\Modules\Academy\Application\Handler\GetAcademyContextHandler;
 use App\Modules\Academy\Application\Handler\UpdateAcademyHandler;
 use App\Modules\Academy\Application\Query\GetAcademyContextQuery;
 use App\Modules\Academy\Application\Shield\Upload\UploadAcademyShieldCommand;
 use App\Modules\Academy\Application\Shield\Upload\UploadAcademyShieldHandler;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
+use App\Modules\Academy\Presentation\Http\Request\UpdateAcademyRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -44,14 +44,14 @@ final class AcademyMeController extends AbstractApiController
     #[Route('/academy/me', name: 'api_v1_academy_me_update', methods: ['PUT'])]
     public function update(Request $request, TenantContext $tenantContext): JsonResponse
     {
-        $input = UpdateAcademyInput::fromArray($request->toArray());
+        $input = UpdateAcademyRequest::fromArray($request->toArray());
         $this->assertValid($this->validator, $input);
 
         $view = ($this->updateAcademyHandler)(
             new UpdateAcademyCommand(
                 $this->requireActorId($tenantContext),
                 $tenantContext->requireAcademyId(),
-                $input
+                $input->toInput()
             )
         );
 

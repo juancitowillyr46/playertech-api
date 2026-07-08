@@ -8,8 +8,6 @@ use App\Modules\Identity\Application\Command\CreateUserCommand;
 use App\Modules\Identity\Application\Command\DisableUserCommand;
 use App\Modules\Identity\Application\Command\EnableUserCommand;
 use App\Modules\Identity\Application\Command\UpdateUserCommand;
-use App\Modules\Identity\Application\Dto\CreateUserInput;
-use App\Modules\Identity\Application\Dto\UpdateUserInput;
 use App\Modules\Identity\Application\Handler\CreateUserHandler;
 use App\Modules\Identity\Application\Handler\DisableUserHandler;
 use App\Modules\Identity\Application\Handler\EnableUserHandler;
@@ -19,6 +17,8 @@ use App\Modules\Identity\Application\Handler\UpdateUserHandler;
 use App\Modules\Identity\Application\Query\ListUsersQuery;
 use App\Modules\Identity\Application\Query\ShowUserQuery;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
+use App\Modules\Identity\Presentation\Http\Request\CreateUserRequest;
+use App\Modules\Identity\Presentation\Http\Request\UpdateUserRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -59,13 +59,13 @@ final class UsersController extends AbstractApiController
     #[Route('', name: 'api_v1_academy_users_create', methods: ['POST'])]
     public function create(Request $request, TenantContext $tenantContext): JsonResponse
     {
-        $input = CreateUserInput::fromArray($request->toArray());
+        $input = CreateUserRequest::fromArray($request->toArray());
         $this->assertValid($this->validator, $input);
 
         $view = ($this->createUserHandler)(
             new CreateUserCommand(
                 $this->requireActorId($tenantContext),
-                $input,
+                $input->toInput(),
                 $tenantContext->requireAcademyId()
             )
         );
@@ -90,14 +90,14 @@ final class UsersController extends AbstractApiController
     #[Route('/{userId}', name: 'api_v1_academy_users_update', methods: ['PUT'])]
     public function update(string $userId, Request $request, TenantContext $tenantContext): JsonResponse
     {
-        $input = UpdateUserInput::fromArray($request->toArray());
+        $input = UpdateUserRequest::fromArray($request->toArray());
         $this->assertValid($input);
 
         $view = ($this->updateUserHandler)(
             new UpdateUserCommand(
                 $this->requireActorId($tenantContext),
                 $userId,
-                $input,
+                $input->toInput(),
                 $tenantContext->requireAcademyId()
             )
         );

@@ -29,6 +29,14 @@ La base tecnica actual incluye:
 | Identity auth module refactor | Technical Enabler | Done | `87f6f9b` | Login resuelto por Symfony Security `json_login`; `/me`, handlers JWT y entidad movidos a `Modules/Identity` |
 | Identity technical user model | Technical Enabler | Done | `87f6f9b` | `AccountUser` usa Doctrine attributes y GUID string para acelerar la foundation sin perder compatibilidad |
 | Identity users CRUD runtime | Functional / Technical Enabler | Done | `untracked` | CRUD de users expuesto en `/api/v1/platform/users` y `/api/v1/academy/users`, con DTOs, handlers, exceptions de dominio y respuesta JSON estándar |
+| Identity validation migration | Technical Enabler | In progress | `untracked` | La validación de create/update users se movió a `Presentation` con requests dedicadas; `Application` quedó con DTOs puros para el flujo de usuarios |
+| Academy validation migration | Technical Enabler | In progress | `untracked` | La validación de create, update y tenant signup de `Academy` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
+| Category validation migration | Technical Enabler | In progress | `untracked` | La validación de create y update de `Category` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
+| Venue validation migration | Technical Enabler | In progress | `untracked` | La validación de create y update de `Venue` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
+| Team validation migration | Technical Enabler | In progress | `untracked` | La validación de create y update de `Team` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
+| Player validation migration | Technical Enabler | In progress | `untracked` | La validación de create, update y asociación de acudiente de `Player` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
+| Guardian validation migration | Technical Enabler | In progress | `untracked` | La validación de create de `Guardian` se movió a `Presentation`; `Application` quedó con DTOs puros para ese flujo |
+| PaymentConcept validation migration | Technical Enabler | In progress | `untracked` | La validación de create y update de `PaymentConcept` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
 | API controller foundation | Technical Enabler | Done | `untracked` | Base HTTP común para validación y resolución del usuario autenticado, reduciendo duplicación entre controladores |
 | First unit test baseline | Technical Enabler | Done | `untracked` | PHPUnit inicial valida `AcademyId`, `AccountUser` y `UserAdministrationPolicy` |
 | Tenant signup integration test | Technical Enabler | Done | `untracked` | `RegisterTenantHandler` valida alta de tenant contra una base de datos MySQL de test con bus de mensajes desacoplado |
@@ -194,6 +202,13 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Se inició el módulo `Membership` como primer slice técnico de `EP-009`, con base de dominio, mapping XML, repositorio, controller y casos de uso de crear/consultar matrícula activa.
 * `EP-009` ya cuenta con cobertura unitaria inicial, referencia API en `specs/16-api-reference.md` y ejemplos HTTP/Postman para matrícula activa.
 * `EP-009` incorporó suspensión y retiro de matrícula como siguiente slice técnico, con handlers, pruebas unitarias y contratos HTTP documentados.
+* `EP-009` sumó la consulta de historial de matrículas como lectura operativa disponible en el mismo módulo.
+* El bloque financiero fue reordenado: `EP-009` genera cargos iniciales pendientes, `EP-011` administra conceptos de pago, `EP-012` registra pagos y cambia cargos de `PENDIENTE` a `PAGADO`, y `EP-013` resume cartera y estado operativo.
+* `Membership` ya adopta el patrón de arquitectura esperado: validación en `Presentation`, `MembershipFinder` en `Application` y excepciones de dominio herederas de `Shared`.
+* `EP-011` sigue pendiente como condición para formalizar los conceptos financieros previos al módulo de pagos.
+* `EP-012` sigue pendiente como módulo financiero principal sobre pagos y evidencias.
+* `EP-013` sigue pendiente como dashboard operativo para visibilidad rápida de cartera y matrículas vigentes.
+* `EP-011` inició su implementación con `PaymentConcept`, validación en `Presentation`, `Finder` en `Application`, custom type UUID y mapping XML.
 * `EP-005` equipos ya quedó cubierto como base de organización deportiva y sirve como referencia de CRUD tenant-scoped.
 * La cobertura de pruebas para `Team` ya incluye dominio, persistencia Doctrine y endpoint HTTP crítico; las suites compartidas sobre MySQL se corren en serie para evitar colisiones de esquema.
 * La subida de escudo institucional para `Academy` y la foto del jugador para `Player` ya quedaron implementadas como historias de media separadas.
@@ -210,6 +225,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.
 * El MVP checklist debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y foto de `Player`.
 * `EP-008` quedó implementada para relaciones jugador-acudiente con alta de acudiente, asociación, cambio de principal y eliminación lógica.
+* El bloque de módulos aún pendiente para el MVP se concentra en `EP-009`, `EP-010`, `EP-011`, `EP-012` y `EP-013`; `EP-008` ya se considera resuelto.
 ---
 
 # Technical Foundation Checklist
@@ -226,6 +242,14 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Comando `app:user:create-root`.
 * Identity ubicado bajo `Modules/Identity`.
 * Health endpoint ubicado en `Shared`.
+* La validación de alta y actualización de usuarios en `Identity` ya vive en `Presentation`; `Application` conserva DTOs sin dependencias del framework para ese flujo.
+* La validación de `Academy` para create, update, signup y autogestión ya vive en `Presentation`; `Application` conserva DTOs sin dependencias del framework para esos flujos.
+* La validación de `Category` para create y update ya vive en `Presentation`; `Application` conserva DTOs sin dependencias del framework para esos flujos.
+* La validación de `Venue` para create y update ya vive en `Presentation`; `Application` conserva DTOs sin dependencias del framework para esos flujos.
+* La validación de `Team` para create y update ya vive en `Presentation`; `Application` conserva DTOs sin dependencias del framework para esos flujos.
+* La validación de `Player` para create, update y asociación de acudiente ya vive en `Presentation`; `Application` conserva DTOs sin dependencias del framework para esos flujos.
+* La validación de `Guardian` para create ya vive en `Presentation`; `Application` conserva DTOs sin dependencias del framework para ese flujo.
+* La validación de `PaymentConcept` para create y update ya vive en `Presentation`; `Application` conserva DTOs sin dependencias del framework para esos flujos.
 
 ## Checklist de Base Técnica Sólida (Critical Path)
 
@@ -260,7 +284,8 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * Formalizar el onboarding de tenant como siguiente bloque funcional tras `EP-001`.
 * Reutilizar `Academy` como plantilla de implementacion para los siguientes modulos.
 * Completar el backlog de `Category` con historias explícitas para listar, actualizar, activar e inactivar, porque ya existen en código.
-* Continuar con `EP-007` para cerrar `HU-002` a `HU-005` y luego retomar `EP-009` -> `EP-010` -> `EP-012`.
+* Cerrar el bloque restante del MVP en este orden: `EP-009` -> `EP-011` -> `EP-012` -> `EP-013` -> `EP-010`.
+* A partir de ese cierre, desarrollar los ADR faltantes sobre decisiones ya estabilizadas.
 
 ---
 
@@ -287,7 +312,10 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] `EP-008` Relaciones jugador-acudiente.
 - [x] `EP-005` Equipos.
 - [ ] `EP-009` Matrículas y seguimiento de pagos.
+- [ ] `EP-010` Asignaciones deportivas.
+- [ ] `EP-011` Conceptos de pago.
 - [ ] `EP-012` Pagos.
+- [ ] `EP-013` Dashboard operativo.
 
 ## Base Operativa
 

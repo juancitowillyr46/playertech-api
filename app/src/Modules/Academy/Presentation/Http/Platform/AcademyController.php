@@ -8,8 +8,6 @@ use App\Modules\Academy\Application\Command\CreateAcademyCommand;
 use App\Modules\Academy\Application\Command\ReactivateAcademyCommand;
 use App\Modules\Academy\Application\Command\SuspendAcademyCommand;
 use App\Modules\Academy\Application\Command\UpdateAcademyCommand;
-use App\Modules\Academy\Application\Dto\CreateAcademyInput;
-use App\Modules\Academy\Application\Dto\UpdateAcademyInput;
 use App\Modules\Academy\Application\Handler\CreateAcademyHandler;
 use App\Modules\Academy\Application\Handler\ListAcademiesHandler;
 use App\Modules\Academy\Application\Handler\ReactivateAcademyHandler;
@@ -18,6 +16,8 @@ use App\Modules\Academy\Application\Handler\SuspendAcademyHandler;
 use App\Modules\Academy\Application\Handler\UpdateAcademyHandler;
 use App\Modules\Academy\Application\Query\ListAcademiesQuery;
 use App\Modules\Academy\Application\Query\ShowAcademyQuery;
+use App\Modules\Academy\Presentation\Http\Request\CreateAcademyRequest;
+use App\Modules\Academy\Presentation\Http\Request\UpdateAcademyRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,13 +43,13 @@ final class AcademyController extends AbstractApiController
     #[Route('', name: 'api_v1_platform_academies_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $input = CreateAcademyInput::fromArray($request->toArray());
+        $input = CreateAcademyRequest::fromArray($request->toArray());
         $this->assertValid($this->validator, $input);
 
         $view = ($this->createAcademyHandler)(
             new CreateAcademyCommand(
                 $this->requireActorId(),
-                $input
+                $input->toInput()
             )
         );
 
@@ -87,14 +87,14 @@ final class AcademyController extends AbstractApiController
     #[Route('/{academyId}', name: 'api_v1_platform_academies_update', methods: ['PUT'])]
     public function update(string $academyId, Request $request): JsonResponse
     {
-        $input = UpdateAcademyInput::fromArray($request->toArray());
+        $input = UpdateAcademyRequest::fromArray($request->toArray());
         $this->assertValid($this->validator, $input);
 
         $view = ($this->updateAcademyHandler)(
             new UpdateAcademyCommand(
                 $this->requireActorId(),
                 $academyId,
-                $input
+                $input->toInput()
             )
         );
 
