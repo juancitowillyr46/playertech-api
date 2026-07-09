@@ -8,6 +8,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Player\Domain\Player\Player;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Modules\Player\Domain\Player\PlayerRepository as PlayerRepositoryContract;
+use App\Shared\Application\Pagination\PaginationQuery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -46,13 +47,24 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerRe
             ->getOneOrNullResult();
     }
 
-    public function findAllByAcademy(AcademyId $academyId): array
+    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
-        return $this->createQueryBuilder('player')
+        $qb = $this->createQueryBuilder('player')
             ->where('player.academyId = :academyId')
             ->setParameter('academyId', $academyId->value())
-            ->orderBy('player.auditTrail.createdAt.value', 'DESC')
+            ->orderBy(sprintf('player.%s', $pagination->sort), $pagination->direction);
+
+        $total = (int) (clone $qb)
+            ->select('COUNT(player.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $items = $qb
+            ->setFirstResult(($pagination->page - 1) * $pagination->perPage)
+            ->setMaxResults($pagination->perPage)
             ->getQuery()
             ->getResult();
+
+        return ['items' => $items, 'total' => $total];
     }
 }

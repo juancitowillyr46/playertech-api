@@ -6,6 +6,7 @@ namespace App\Modules\Category\Domain\Category;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Shared\Domain\ValueObject\Name;
+use App\Shared\Application\Pagination\PaginationQuery;
 
 interface CategoryRepository
 {
@@ -16,9 +17,9 @@ interface CategoryRepository
     public function findByCategoryKey(AcademyId $academyId, string $categoryKey): ?Category;
 
     /**
-     * @return Category[]
+     * @return array{items: Category[], total: int}
      */
-    public function findAllByAcademy(AcademyId $academyId): array;
+    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array;
 
     // public function findOneByAcademyAndName(
     //     AcademyId $academyId,

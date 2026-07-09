@@ -7,6 +7,7 @@ namespace App\Modules\Venue\Application\Handler;
 use App\Modules\Venue\Application\Query\ListVenuesQuery;
 use App\Modules\Venue\Application\Response\VenueListItemResponse;
 use App\Modules\Venue\Domain\Venue\VenueRepository;
+use App\Shared\Application\Pagination\PaginatedResult;
 
 final readonly class ListVenuesHandler
 {
@@ -18,15 +19,19 @@ final readonly class ListVenuesHandler
     /**
      * @return VenueListItemResponse[]
      */
-    public function __invoke(ListVenuesQuery $query): array
+    public function __invoke(ListVenuesQuery $query): PaginatedResult
     {
         $venues = $this->venueRepository->findAllByAcademy(
             $query->academyId
+            ,
+            $query->pagination
         );
 
-        return array_map(
+        $items = array_map(
             static fn ($venue) => VenueListItemResponse::fromVenue($venue),
-            $venues
+            $venues['items']
         );
+
+        return PaginatedResult::fromItems($items, $query->pagination, $venues['total']);
     }
 }

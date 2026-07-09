@@ -7,6 +7,7 @@ namespace App\Modules\Team\Domain\Team;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Shared\Domain\ValueObject\Name;
+use App\Shared\Application\Pagination\PaginationQuery;
 
 interface TeamRepository
 {
@@ -21,7 +22,7 @@ interface TeamRepository
     ): ?Team;
 
     /**
-     * @return Team[]
+     * @return array{items: Team[], total: int}
      */
-    public function findAllByAcademy(AcademyId $academyId): array;
+    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array;
 }

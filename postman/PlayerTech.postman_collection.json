@@ -437,6 +437,284 @@
       ]
     },
     {
+      "name": "Lists",
+      "item": [
+        {
+          "name": "Academies - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/platform/academies?page=1&per_page=20&sort=created_at&direction=DESC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "platform",
+                "academies"
+              ],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "20" },
+                { "key": "sort", "value": "created_at" },
+                { "key": "direction", "value": "DESC" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Users - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/platform/users?page=1&per_page=20&sort=full_name&direction=ASC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "platform",
+                "users"
+              ],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "20" },
+                { "key": "sort", "value": "full_name" },
+                { "key": "direction", "value": "ASC" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Academy Players - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players"
+              ],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "20" },
+                { "key": "sort", "value": "audit_trail.created_at.value" },
+                { "key": "direction", "value": "DESC" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Academy Teams - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/teams?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "teams"
+              ],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "20" },
+                { "key": "sort", "value": "audit_trail.created_at.value" },
+                { "key": "direction", "value": "DESC" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Academy Categories - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/categories?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "categories"
+              ],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "20" },
+                { "key": "sort", "value": "audit_trail.created_at.value" },
+                { "key": "direction", "value": "DESC" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Academy Venues - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/venues?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "venues"
+              ],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "20" },
+                { "key": "sort", "value": "audit_trail.created_at.value" },
+                { "key": "direction", "value": "DESC" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Payment Concepts - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payment-concepts?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payment-concepts"
+              ],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "20" },
+                { "key": "sort", "value": "audit_trail.created_at.value" },
+                { "key": "direction", "value": "DESC" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Pending Charges - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/charges/pending?page=1&per_page=20&sort=created_at&direction=DESC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "charges",
+                "pending"
+              ],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "20" },
+                { "key": "sort", "value": "created_at" },
+                { "key": "direction", "value": "DESC" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "Staff",
       "item": [
         {

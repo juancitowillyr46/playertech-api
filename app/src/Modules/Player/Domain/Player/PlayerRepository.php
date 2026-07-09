@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Player\Domain\Player;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Shared\Application\Pagination\PaginationQuery;
 
 interface PlayerRepository
 {
@@ -15,7 +16,7 @@ interface PlayerRepository
     public function findOneByDocumentNumber(AcademyId $academyId, string $documentNumber): ?Player;
 
     /**
-     * @return Player[]
+     * @return array{items: Player[], total: int}
      */
-    public function findAllByAcademy(AcademyId $academyId): array;
+    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array;
 }

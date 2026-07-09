@@ -7,6 +7,7 @@ namespace App\Modules\Academy\Application\Handler;
 use App\Modules\Academy\Application\Query\ListAcademiesQuery;
 use App\Modules\Academy\Application\Response\AcademyListItemResponse;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
+use App\Shared\Application\Pagination\PaginatedResult;
 
 final readonly class ListAcademiesHandler
 {
@@ -18,11 +19,17 @@ final readonly class ListAcademiesHandler
     /**
      * @return AcademyListItemResponse[]
      */
-    public function __invoke(ListAcademiesQuery $query): array
+    public function __invoke(ListAcademiesQuery $query): PaginatedResult
     {
-        return array_map(
-            static fn ($academy): AcademyListItemResponse => AcademyListItemResponse::fromAcademy($academy),
-            $this->academyRepository->findAllOrdered()
+        $academies = $this->academyRepository->findAllOrdered(
+            $query->pagination
         );
+
+        $items = array_map(
+            static fn ($academy): AcademyListItemResponse => AcademyListItemResponse::fromAcademy($academy),
+            $academies['items']
+        );
+
+        return PaginatedResult::fromItems($items, $query->pagination, $academies['total']);
     }
 }

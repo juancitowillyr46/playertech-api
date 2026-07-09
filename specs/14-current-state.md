@@ -207,6 +207,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `EP-012` ya tiene la base funcional y técnica materializada con `Charge`, `Payment`, `PaymentAllocation`, deuda, historial y evidencia; aún falta el cierre documental y de pruebas HTTP.
 * `EP-013` quedó materializada como dashboard operativo con jugadores activos, matrículas vigentes, cargos pendientes y resumen de cartera.
 * `EP-011` quedó consolidada como módulo funcional completo de conceptos de pago: crear, listar, consultar, actualizar y desactivar con cobertura unitaria y documentación HTTP operativa en Postman.
+* Se inició la estandarización de listados con paginación uniforme (`page`, `per_page`, `sort`, `direction`) en endpoints visibles por frontend.
 * `EP-021` quedó materializada con el desarrollo del módulo `Staff` y `TeamStaffAssignment`, cobertura unitaria base, documentación API y colección Postman para el flujo de staff por equipo.
 * `EP-010` quedó materializada con el módulo `TeamAssignment`, que introduce la relación jugador-equipo con historial, principal activo y finalización.
 * `EP-005` equipos ya quedó cubierto como base de organización deportiva y sirve como referencia de CRUD tenant-scoped.

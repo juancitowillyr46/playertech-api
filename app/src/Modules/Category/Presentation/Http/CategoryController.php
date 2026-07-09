@@ -21,7 +21,7 @@ use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Modules\Category\Presentation\Http\Request\CreateCategoryRequest;
 use App\Modules\Category\Presentation\Http\Request\UpdateCategoryRequest;
-use App\Shared\Presentation\Http\AbstractApiController;
+use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +29,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/academy/categories')]
-final class CategoryController extends AbstractApiController
+final class CategoryController extends AbstractPaginatedApiController
 {
     public function __construct(
         private readonly ValidatorInterface $validator,
@@ -65,22 +65,20 @@ final class CategoryController extends AbstractApiController
     }
 
     #[Route('', name: 'api_v1_categories_list', methods: ['GET'])]
-    public function list(): JsonResponse
+    public function list(Request $request): JsonResponse
     {
         $categories = ($this->listCategoriesHandler)(
             new ListCategoriesQuery(
                 new AcademyId(
                     $this->tenantContext->requireAcademyId()
-                )
+                ),
+                $this->paginationQueryFromRequest($request, 'audit_trail.created_at.value')
             )
         );
 
         return new JsonResponse([
-            'data' => array_map(
-                static fn ($item) => $item->toArray(),
-                $categories
-            ),
-            'meta' => new \stdClass(),
+            'data' => array_map(static fn ($item) => $item->toArray(), $categories->items),
+            'meta' => $categories->meta->toArray(),
         ]);
     }
 

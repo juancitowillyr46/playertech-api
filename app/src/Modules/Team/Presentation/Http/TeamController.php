@@ -21,7 +21,7 @@ use App\Modules\Team\Application\Query\ShowTeamQuery;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\Team\Presentation\Http\Request\CreateTeamRequest;
 use App\Modules\Team\Presentation\Http\Request\UpdateTeamRequest;
-use App\Shared\Presentation\Http\AbstractApiController;
+use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +30,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/academy/teams')]
-final class TeamController extends AbstractApiController
+final class TeamController extends AbstractPaginatedApiController
 {
     public function __construct(
         private readonly Security $security,
@@ -67,20 +67,18 @@ final class TeamController extends AbstractApiController
     }
 
     #[Route('', name: 'api_v1_teams_list', methods: ['GET'])]
-    public function list(): JsonResponse
+    public function list(Request $request): JsonResponse
     {
         $teams = ($this->listTeamsHandler)(
             new ListTeamsQuery(
                 new AcademyId($this->tenantContext->requireAcademyId()),
+                $this->paginationQueryFromRequest($request, 'audit_trail.created_at.value'),
             )
         );
 
         return new JsonResponse([
-            'data' => array_map(
-                static fn ($item) => $item->toArray(),
-                $teams
-            ),
-            'meta' => new \stdClass(),
+            'data' => array_map(static fn ($item) => $item->toArray(), $teams->items),
+            'meta' => $teams->meta->toArray(),
         ]);
     }
 

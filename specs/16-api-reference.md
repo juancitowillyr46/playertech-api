@@ -6,6 +6,31 @@ Este documento sirve como referencia operativa de la API HTTP de PlayerTech mien
 
 La convención general de respuestas y errores está definida en `specs/04-api.md`.
 
+## List Pagination
+
+Los endpoints `GET` de listados que alimentan tablas o grids exponen paginación uniforme:
+
+* `page`
+* `per_page`
+* `sort`
+* `direction`
+
+La respuesta usa el contrato:
+
+```json
+{
+  "data": [],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 0,
+    "total_pages": 1,
+    "has_next": false,
+    "has_prev": false
+  }
+}
+```
+
 ---
 
 # Access Model

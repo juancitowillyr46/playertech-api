@@ -22,7 +22,7 @@ use App\Modules\Venue\Application\Query\ListVenuesQuery;
 use App\Modules\Venue\Application\Query\ShowVenueQuery;
 use App\Modules\Venue\Presentation\Http\Request\CreateVenueRequest;
 use App\Modules\Venue\Presentation\Http\Request\UpdateVenueRequest;
-use App\Shared\Presentation\Http\AbstractApiController;
+use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -31,7 +31,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 
 #[Route('/academy/venues')]
-final class VenueController extends AbstractApiController
+final class VenueController extends AbstractPaginatedApiController
 {
     public function __construct(
         private readonly Security $security,
@@ -68,22 +68,20 @@ final class VenueController extends AbstractApiController
     }
 
     #[Route('', name: 'api_v1_venues_list', methods: ['GET'])]
-    public function list(): JsonResponse
+    public function list(Request $request): JsonResponse
     {
         $venues = ($this->listVenuesHandler)(
             new ListVenuesQuery(
                 new AcademyId(
                     $this->tenantContext->requireAcademyId()
-                )
+                ),
+                $this->paginationQueryFromRequest($request, 'audit_trail.created_at.value')
             )
         );
 
         return new JsonResponse([
-            'data' => array_map(
-                static fn ($item) => $item->toArray(),
-                $venues
-            ),
-            'meta' => new \stdClass(),
+            'data' => array_map(static fn ($item) => $item->toArray(), $venues->items),
+            'meta' => $venues->meta->toArray(),
         ]);
     }
 

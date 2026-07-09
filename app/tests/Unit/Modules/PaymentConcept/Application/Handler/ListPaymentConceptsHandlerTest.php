@@ -10,6 +10,7 @@ use App\Modules\PaymentConcept\Application\Query\ListPaymentConceptsQuery;
 use App\Modules\PaymentConcept\Domain\PaymentConcept\PaymentConcept;
 use App\Modules\PaymentConcept\Domain\PaymentConcept\PaymentConceptId;
 use App\Shared\Domain\ValueObject\AuditTrail;
+use App\Shared\Application\Pagination\PaginationQuery;
 use PHPUnit\Framework\TestCase;
 
 final class ListPaymentConceptsHandlerTest extends TestCase
@@ -29,9 +30,9 @@ final class ListPaymentConceptsHandlerTest extends TestCase
             AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
         ));
 
-        $items = $handler(new ListPaymentConceptsQuery($academyId));
+        $items = $handler(new ListPaymentConceptsQuery($academyId, new PaginationQuery()));
 
-        self::assertCount(1, $items);
-        self::assertSame('MATRICULA', $items[0]->toArray()['code']);
+        self::assertCount(1, $items->items);
+        self::assertSame('MATRICULA', $items->items[0]->toArray()['code']);
     }
 }

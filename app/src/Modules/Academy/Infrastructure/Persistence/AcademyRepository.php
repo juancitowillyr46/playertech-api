@@ -8,6 +8,7 @@ use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository as AcademyRepositoryContract;
 use App\Shared\Domain\ValueObject\Email;
+use App\Shared\Application\Pagination\PaginationQuery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -32,12 +33,12 @@ final class AcademyRepository extends ServiceEntityRepository implements Academy
     /**
      * @return Academy[]
      */
-    public function findAllOrdered(): array
+    public function findAllOrdered(PaginationQuery $pagination): array
     {
-        return $this->createQueryBuilder('academy')
-            ->orderBy('academy.auditTrail.createdAt.value', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $qb = $this->createQueryBuilder('academy')->orderBy(sprintf('academy.%s', $pagination->sort), $pagination->direction);
+        $total = (int) (clone $qb)->select('COUNT(academy.id)')->getQuery()->getSingleScalarResult();
+        $items = $qb->setFirstResult(($pagination->page - 1) * $pagination->perPage)->setMaxResults($pagination->perPage)->getQuery()->getResult();
+        return ['items' => $items, 'total' => $total];
     }
 
     public function findOneByContactEmail(Email $contactEmail): ?Academy

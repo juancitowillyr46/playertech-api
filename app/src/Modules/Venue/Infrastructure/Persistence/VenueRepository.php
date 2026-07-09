@@ -8,6 +8,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Venue\Domain\Venue\Venue;
 use App\Modules\Venue\Domain\Venue\VenueId;
 use App\Modules\Venue\Domain\Venue\VenueRepository as VenueRepositoryContract;
+use App\Shared\Application\Pagination\PaginationQuery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -35,14 +36,17 @@ final class VenueRepository extends ServiceEntityRepository implements VenueRepo
             ->getOneOrNullResult();
     }
 
-    public function findAllByAcademy(AcademyId $academyId): array
+    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
-        return $this->createQueryBuilder('venue')
+        $qb = $this->createQueryBuilder('venue')
             ->andWhere('venue.academyId = :academyId')
             ->setParameter('academyId', $academyId->value())
-            ->orderBy('venue.auditTrail.createdAt.value', 'DESC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy(sprintf('venue.%s', $pagination->sort), $pagination->direction);
+
+        $total = (int) (clone $qb)->select('COUNT(venue.id)')->getQuery()->getSingleScalarResult();
+        $items = $qb->setFirstResult(($pagination->page - 1) * $pagination->perPage)->setMaxResults($pagination->perPage)->getQuery()->getResult();
+
+        return ['items' => $items, 'total' => $total];
     }
 
     public function findByAcademyAndId(AcademyId $academyId, VenueId $venueId): ?Venue

@@ -18,7 +18,7 @@ use App\Modules\Academy\Application\Query\ListAcademiesQuery;
 use App\Modules\Academy\Application\Query\ShowAcademyQuery;
 use App\Modules\Academy\Presentation\Http\Request\CreateAcademyRequest;
 use App\Modules\Academy\Presentation\Http\Request\UpdateAcademyRequest;
-use App\Shared\Presentation\Http\AbstractApiController;
+use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/platform/academies')]
-final class AcademyController extends AbstractApiController
+final class AcademyController extends AbstractPaginatedApiController
 {
     public function __construct(
         private readonly Security $security,
@@ -60,16 +60,13 @@ final class AcademyController extends AbstractApiController
     }
 
     #[Route('', name: 'api_v1_platform_academies_list', methods: ['GET'])]
-    public function list(): JsonResponse
+    public function list(Request $request): JsonResponse
     {
-        $academies = array_map(
-            static fn ($view): array => $view->toArray(),
-            ($this->listAcademiesHandler)(new ListAcademiesQuery())
-        );
+        $academies = ($this->listAcademiesHandler)(new ListAcademiesQuery($this->paginationQueryFromRequest($request, 'audit_trail.created_at.value')));
 
         return new JsonResponse([
-            'data' => $academies,
-            'meta' => new \stdClass(),
+            'data' => array_map(static fn ($view): array => $view->toArray(), $academies->items),
+            'meta' => $academies->meta->toArray(),
         ]);
     }
 

@@ -16,7 +16,7 @@ use App\Modules\Identity\Application\Handler\ShowUserHandler;
 use App\Modules\Identity\Application\Handler\UpdateUserHandler;
 use App\Modules\Identity\Application\Query\ListUsersQuery;
 use App\Modules\Identity\Application\Query\ShowUserQuery;
-use App\Shared\Presentation\Http\AbstractApiController;
+use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use App\Modules\Identity\Presentation\Http\Request\CreateUserRequest;
 use App\Modules\Identity\Presentation\Http\Request\UpdateUserRequest;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/platform/users')]
-final class UsersController extends AbstractApiController
+final class UsersController extends AbstractPaginatedApiController
 {
     public function __construct(
         private readonly Security $security,
@@ -41,16 +41,13 @@ final class UsersController extends AbstractApiController
     }
 
     #[Route('', name: 'api_v1_platform_users_list', methods: ['GET'])]
-    public function list(): JsonResponse
+    public function list(Request $request): JsonResponse
     {
-        $users = array_map(
-            static fn ($view): array => $view->toArray(),
-            ($this->listUsersHandler)(new ListUsersQuery())
-        );
+        $users = ($this->listUsersHandler)(new ListUsersQuery(null, $this->paginationQueryFromRequest($request, 'fullName')));
 
         return new JsonResponse([
-            'data' => $users,
-            'meta' => new \stdClass(),
+            'data' => array_map(static fn ($view): array => $view->toArray(), $users->items),
+            'meta' => $users->meta->toArray(),
         ]);
     }
 

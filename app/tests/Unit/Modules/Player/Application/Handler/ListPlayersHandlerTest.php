@@ -10,6 +10,7 @@ use App\Modules\Player\Application\Query\ListPlayersQuery;
 use App\Modules\Player\Domain\Player\Player;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Shared\Domain\ValueObject\AuditTrail;
+use App\Shared\Application\Pagination\PaginationQuery;
 use PHPUnit\Framework\TestCase;
 
 final class ListPlayersHandlerTest extends TestCase
@@ -32,10 +33,10 @@ final class ListPlayersHandlerTest extends TestCase
 
         $handler = new ListPlayersHandler($repository);
 
-        $players = $handler(new ListPlayersQuery($academyId));
+        $players = $handler(new ListPlayersQuery($academyId, new PaginationQuery()));
 
-        self::assertCount(1, $players);
-        self::assertSame('Juan', $players[0]->toArray()['first_name']);
-        self::assertSame('12345678', $players[0]->toArray()['document_number']);
+        self::assertCount(1, $players->items);
+        self::assertSame('Juan', $players->items[0]->toArray()['first_name']);
+        self::assertSame('12345678', $players->items[0]->toArray()['document_number']);
     }
 }

@@ -10,6 +10,7 @@ use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\Team\Domain\Team\TeamRepository as TeamRepositoryContract;
 use App\Shared\Domain\ValueObject\Name;
+use App\Shared\Application\Pagination\PaginationQuery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -58,14 +59,17 @@ final class TeamRepository extends ServiceEntityRepository implements TeamReposi
     /**
      * @return Team[]
      */
-    public function findAllByAcademy(AcademyId $academyId): array
+    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
-        return $this->createQueryBuilder('team')
+        $qb = $this->createQueryBuilder('team')
             ->andWhere('team.academyId = :academyId')
             ->andWhere('team.deletedAt IS NULL')
             ->setParameter('academyId', $academyId->value())
-            ->orderBy('team.auditTrail.createdAt.value', 'DESC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy(sprintf('team.%s', $pagination->sort), $pagination->direction);
+
+        $total = (int) (clone $qb)->select('COUNT(team.id)')->getQuery()->getSingleScalarResult();
+        $items = $qb->setFirstResult(($pagination->page - 1) * $pagination->perPage)->setMaxResults($pagination->perPage)->getQuery()->getResult();
+
+        return ['items' => $items, 'total' => $total];
     }
 }

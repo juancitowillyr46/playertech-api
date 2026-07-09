@@ -16,7 +16,7 @@ use App\Modules\PaymentConcept\Application\Query\ShowPaymentConceptQuery;
 use App\Modules\PaymentConcept\Domain\PaymentConcept\PaymentConceptId;
 use App\Modules\PaymentConcept\Presentation\Http\Request\CreatePaymentConceptRequest;
 use App\Modules\PaymentConcept\Presentation\Http\Request\UpdatePaymentConceptRequest;
-use App\Shared\Presentation\Http\AbstractApiController;
+use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/academy/payment-concepts')]
-final class PaymentConceptController extends AbstractApiController
+final class PaymentConceptController extends AbstractPaginatedApiController
 {
     public function __construct(
         private readonly Security $security,
@@ -54,10 +54,10 @@ final class PaymentConceptController extends AbstractApiController
         return new JsonResponse(['data'=>$view->toArray(),'meta'=>new \stdClass()], 201);
     }
     #[Route('', methods:['GET'])]
-    public function list(): JsonResponse
+    public function list(Request $request): JsonResponse
     {
-        $items = ($this->listHandler)(new ListPaymentConceptsQuery(new AcademyId($this->tenantContext->requireAcademyId())));
-        return new JsonResponse(['data'=>array_map(static fn($i)=>$i->toArray(), $items),'meta'=>new \stdClass()]);
+        $items = ($this->listHandler)(new ListPaymentConceptsQuery(new AcademyId($this->tenantContext->requireAcademyId()), $this->paginationQueryFromRequest($request, 'audit_trail.created_at.value')));
+        return new JsonResponse(['data'=>array_map(static fn($i)=>$i->toArray(), $items->items),'meta'=>$items->meta->toArray()]);
     }
     #[Route('/{paymentConceptId}', methods:['GET'])]
     public function show(string $paymentConceptId): JsonResponse

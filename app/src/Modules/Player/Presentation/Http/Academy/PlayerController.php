@@ -26,7 +26,7 @@ use App\Modules\Player\Application\Command\UpdatePlayerCommand;
 use App\Modules\Player\Presentation\Http\Request\AssociateGuardianRequest;
 use App\Modules\Player\Presentation\Http\Request\CreatePlayerRequest;
 use App\Modules\Player\Presentation\Http\Request\UpdatePlayerRequest;
-use App\Shared\Presentation\Http\AbstractApiController;
+use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,7 +36,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/academy/players')]
-final class PlayerController extends AbstractApiController
+final class PlayerController extends AbstractPaginatedApiController
 {
     public function __construct(
         private readonly Security $security,
@@ -106,20 +106,18 @@ final class PlayerController extends AbstractApiController
     }
 
     #[Route('', name: 'api_v1_academy_players_list', methods: ['GET'])]
-    public function list(): JsonResponse
+    public function list(Request $request): JsonResponse
     {
         $players = ($this->listPlayersHandler)(
             new ListPlayersQuery(
-                new AcademyId($this->tenantContext->requireAcademyId())
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                $this->paginationQueryFromRequest($request, 'audit_trail.created_at.value')
             )
         );
 
         return new JsonResponse([
-            'data' => array_map(
-                static fn ($item) => $item->toArray(),
-                $players
-            ),
-            'meta' => new \stdClass(),
+            'data' => array_map(static fn ($item) => $item->toArray(), $players->items),
+            'meta' => $players->meta->toArray(),
         ]);
     }
 

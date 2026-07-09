@@ -24,7 +24,7 @@ use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Modules\Identity\Presentation\Http\Request\CreateUserRequest;
 use App\Modules\Identity\Presentation\Http\Request\InviteUserRequest;
 use App\Modules\Identity\Presentation\Http\Request\UpdateUserRequest;
-use App\Shared\Presentation\Http\AbstractApiController;
+use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +32,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/academy/users')]
-final class UsersController extends AbstractApiController
+final class UsersController extends AbstractPaginatedApiController
 {
     public function __construct(
         private readonly Security $security,
@@ -49,17 +49,14 @@ final class UsersController extends AbstractApiController
     }
 
     #[Route('', name: 'api_v1_academy_users_list', methods: ['GET'])]
-    public function list(TenantContext $tenantContext): JsonResponse
+    public function list(Request $request, TenantContext $tenantContext): JsonResponse
     {
         $academyId = $tenantContext->requireAcademyId();
-        $users = array_map(
-            static fn ($view): array => $view->toArray(),
-            ($this->listUsersHandler)(new ListUsersQuery($academyId))
-        );
+        $users = ($this->listUsersHandler)(new ListUsersQuery($academyId, $this->paginationQueryFromRequest($request, 'fullName')));
 
         return new JsonResponse([
-            'data' => $users,
-            'meta' => new \stdClass(),
+            'data' => array_map(static fn ($view): array => $view->toArray(), $users->items),
+            'meta' => $users->meta->toArray(),
         ]);
     }
 
