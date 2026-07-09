@@ -97,7 +97,7 @@ doctrine:
                 is_bundle: false
                 type: xml
                 dir: '%kernel.project_dir%/src/Modules/TeamAssignment/Infrastructure/Persistence/Doctrine/Mapping'
-                prefix: App\Modules\TeamAssignment\Domain
+                prefix: App\Modules\TeamAssignment\Domain\TeamAssignment
                 alias: TeamAssignment
             Shared:
                 is_bundle: false

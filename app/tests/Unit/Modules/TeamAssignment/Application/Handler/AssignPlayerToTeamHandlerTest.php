@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Modules\TeamAssignment\Application\Handler;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Player\Domain\Player\Player;
 use App\Modules\Player\Domain\Player\PlayerId;
+use App\Tests\Unit\Modules\Player\Application\Handler\InMemoryPlayerRepository;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\TeamAssignment\Application\Command\AssignPlayerToTeamCommand;
