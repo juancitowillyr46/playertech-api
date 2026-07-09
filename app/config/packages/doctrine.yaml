@@ -14,6 +14,7 @@ doctrine:
             payment_concept_id: App\Modules\PaymentConcept\Infrastructure\Persistence\Doctrine\Type\PaymentConceptIdType
             staff_id: App\Modules\Staff\Infrastructure\Persistence\Doctrine\Type\StaffIdType
             team_staff_assignment_id: App\Modules\Staff\Infrastructure\Persistence\Doctrine\Type\TeamStaffAssignmentIdType
+            team_assignment_id: App\Modules\TeamAssignment\Infrastructure\Persistence\Doctrine\Type\TeamAssignmentIdType
     orm:
         auto_mapping: false
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -92,6 +93,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Modules/Staff/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: App\Modules\Staff\Domain
                 alias: Staff
+            TeamAssignment:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Modules/TeamAssignment/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: App\Modules\TeamAssignment\Domain
+                alias: TeamAssignment
             Shared:
                 is_bundle: false
                 type: xml

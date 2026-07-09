@@ -29,6 +29,7 @@ services:
     App\Modules\Staff\Domain\Staff\StaffRepository: '@App\Modules\Staff\Infrastructure\Persistence\StaffRepository'
     App\Modules\Staff\Domain\TeamStaffAssignment\TeamStaffAssignmentRepository: '@App\Modules\Staff\Infrastructure\Persistence\TeamStaffAssignmentRepository'
     App\Modules\Team\Domain\Team\TeamRepository: '@App\Modules\Team\Infrastructure\Persistence\TeamRepository'
+    App\Modules\TeamAssignment\Domain\TeamAssignment\TeamAssignmentRepository: '@App\Modules\TeamAssignment\Infrastructure\Persistence\TeamAssignmentRepository'
     App\Modules\Identity\Domain\Policy\UserAdministrationPolicy: ~
 
     # Explicits

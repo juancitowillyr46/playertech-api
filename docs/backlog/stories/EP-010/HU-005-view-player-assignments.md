@@ -10,7 +10,7 @@ Media
 Sí
 
 ## Estado
-Draft
+Done
 
 ## Actor Principal
 Administrador académico

@@ -548,6 +548,78 @@ Consultar el staff activo asignado a un equipo.
   ],
   "meta": {}
 }
+
+# TeamAssignment API
+
+## Assign Player To Team
+
+```http
+POST /api/v1/academy/team-assignments
+```
+
+### Purpose
+
+Asignar un jugador a un equipo dentro de la academia actual.
+
+### Request DTO
+
+`AssignPlayerToTeamRequest`
+
+```json
+{
+  "player_id": "uuid",
+  "team_id": "uuid",
+  "start_date": "2026-07-08"
+}
+```
+
+### Success
+
+`201 Created`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "player_id": "uuid",
+    "team_id": "uuid",
+    "start_date": "2026-07-08",
+    "end_date": null,
+    "is_primary": false
+  },
+  "meta": {}
+}
+```
+
+## Mark Team Assignment Primary
+
+```http
+PATCH /api/v1/academy/team-assignments/{assignmentId}/primary
+```
+
+### Purpose
+
+Marcar una asignación activa como principal.
+
+## Finalize Team Assignment
+
+```http
+PATCH /api/v1/academy/team-assignments/{assignmentId}/finalize
+```
+
+### Purpose
+
+Finalizar una asignación sin borrar el historial.
+
+## View Player Team Assignments
+
+```http
+GET /api/v1/academy/team-assignments/players/{playerId}
+```
+
+### Purpose
+
+Consultar las asignaciones deportivas de un jugador.
 ```
 
 ## Show Membership History

@@ -10,7 +10,7 @@ Alta
 Sí
 
 ## Estado
-Draft
+Done
 
 ## Actor Principal
 Administrador académico

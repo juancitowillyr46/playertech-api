@@ -14,13 +14,26 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/auth/login",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "auth", "login"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
             },
             "body": {
               "mode": "raw",
@@ -33,13 +46,26 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/auth/me",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "auth", "me"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me"
+              ]
             }
           }
         }
@@ -53,13 +79,27 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/public/tenants/signup",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "public", "tenants", "signup"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "public",
+                "tenants",
+                "signup"
+              ]
             },
             "body": {
               "mode": "raw",
@@ -77,13 +117,26 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/platform/academies",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "platform", "academies"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "platform",
+                "academies"
+              ]
             }
           }
         },
@@ -92,14 +145,30 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/platform/academies",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "platform", "academies"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "platform",
+                "academies"
+              ]
             },
             "body": {
               "mode": "raw",
@@ -112,13 +181,26 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/platform/users",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "platform", "users"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "platform",
+                "users"
+              ]
             }
           }
         }
@@ -132,13 +214,26 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/me",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "academy", "me"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "me"
+              ]
             }
           }
         },
@@ -147,14 +242,30 @@
           "request": {
             "method": "PUT",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/me",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "academy", "me"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "me"
+              ]
             },
             "body": {
               "mode": "raw",
@@ -172,14 +283,30 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/memberships",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "academy", "memberships"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "memberships"
+              ]
             },
             "body": {
               "mode": "raw",
@@ -192,13 +319,28 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/active",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "academy", "memberships", "{{playerId}}", "active"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "memberships",
+                "{{playerId}}",
+                "active"
+              ]
             }
           }
         },
@@ -207,13 +349,28 @@
           "request": {
             "method": "PATCH",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/suspend",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "academy", "memberships", "{{playerId}}", "suspend"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "memberships",
+                "{{playerId}}",
+                "suspend"
+              ]
             }
           }
         },
@@ -222,13 +379,28 @@
           "request": {
             "method": "PATCH",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/withdraw",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "academy", "memberships", "{{playerId}}", "withdraw"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "memberships",
+                "{{playerId}}",
+                "withdraw"
+              ]
             }
           }
         },
@@ -237,13 +409,28 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/history",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "academy", "memberships", "{{playerId}}", "history"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "memberships",
+                "{{playerId}}",
+                "history"
+              ]
             }
           }
         }
@@ -257,16 +444,35 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/staff",
-              "host": ["{{baseUrl}}"],
-              "path": ["api","v1","academy","staff"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "staff"
+              ]
             },
-            "body": { "mode": "raw", "raw": "{\n  \"user_id\": \"{{userId}}\"\n}" }
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{userId}}\"\n}"
+            }
           }
         },
         {
@@ -274,16 +480,36 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/staff/assignments",
-              "host": ["{{baseUrl}}"],
-              "path": ["api","v1","academy","staff","assignments"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "staff",
+                "assignments"
+              ]
             },
-            "body": { "mode": "raw", "raw": "{\n  \"staff_id\": \"{{userId}}\",\n  \"team_id\": \"{{teamId}}\",\n  \"role\": \"HEAD_COACH\"\n}" }
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"staff_id\": \"{{userId}}\",\n  \"team_id\": \"{{teamId}}\",\n  \"role\": \"HEAD_COACH\"\n}"
+            }
           }
         },
         {
@@ -291,16 +517,38 @@
           "request": {
             "method": "PATCH",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/staff/assignments/{{assignmentId}}/role",
-              "host": ["{{baseUrl}}"],
-              "path": ["api","v1","academy","staff","assignments","{{assignmentId}}","role"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "staff",
+                "assignments",
+                "{{assignmentId}}",
+                "role"
+              ]
             },
-            "body": { "mode": "raw", "raw": "{\n  \"role\": \"ASSISTANT_COACH\"\n}" }
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"ASSISTANT_COACH\"\n}"
+            }
           }
         },
         {
@@ -308,13 +556,29 @@
           "request": {
             "method": "PATCH",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/staff/assignments/{{assignmentId}}/remove",
-              "host": ["{{baseUrl}}"],
-              "path": ["api","v1","academy","staff","assignments","{{assignmentId}}","remove"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "staff",
+                "assignments",
+                "{{assignmentId}}",
+                "remove"
+              ]
             }
           }
         },
@@ -323,13 +587,159 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/staff/teams/{{teamId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["api","v1","academy","staff","teams","{{teamId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "staff",
+                "teams",
+                "{{teamId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "TeamAssignment",
+      "item": [
+        {
+          "name": "Assign Player To Team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/team-assignments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "team-assignments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"player_id\": \"{{playerId}}\",\n  \"team_id\": \"{{teamId}}\",\n  \"start_date\": \"2026-07-08\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Mark Primary",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/team-assignments/{{assignmentId}}/primary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "team-assignments",
+                "{{assignmentId}}",
+                "primary"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Finalize Assignment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/team-assignments/{{assignmentId}}/finalize",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "team-assignments",
+                "{{assignmentId}}",
+                "finalize"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Player Assignments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/team-assignments/players/{{playerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "team-assignments",
+                "players",
+                "{{playerId}}"
+              ]
             }
           }
         }
@@ -338,10 +748,25 @@
   ],
   "event": [],
   "variable": [
-    { "key": "baseUrl", "value": "http://localhost:8081" },
-    { "key": "adminEmail", "value": "admin@playertech.com" },
-    { "key": "adminPassword", "value": "secret123" },
-    { "key": "token", "value": "" },
-    { "key": "tenantToken", "value": "" }
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "adminEmail",
+      "value": "admin@playertech.com"
+    },
+    {
+      "key": "adminPassword",
+      "value": "secret123"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "tenantToken",
+      "value": ""
+    }
   ]
 }
