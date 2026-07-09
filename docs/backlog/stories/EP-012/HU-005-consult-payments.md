@@ -5,7 +5,7 @@
 | Campo | Valor |
 | --- | --- |
 | ID | HU-005 |
-| Épica | EP-012 Gestión de Pagos |
+| Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Media |
 | MVP | Sí |
 | Estado | Draft |
@@ -39,4 +39,3 @@ Para revisar el historial de cobros realizados y pendientes.
 # Criterios de Aceptación
 
 * Dado que existen pagos registrados, cuando los consulto, entonces el sistema los lista correctamente.
-

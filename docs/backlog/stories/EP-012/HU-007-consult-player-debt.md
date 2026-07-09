@@ -5,7 +5,7 @@
 | Campo | Valor |
 | --- | --- |
 | ID | HU-007 |
-| Épica | EP-012 Gestión de Pagos |
+| Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Alta |
 | MVP | Sí |
 | Estado | Draft |
@@ -39,4 +39,3 @@ Para saber cuánto falta por pagar y tomar seguimiento.
 # Criterios de Aceptación
 
 * Dado un jugador con cargos pendientes, cuando consulto su deuda, entonces el sistema muestra el saldo correcto.
-

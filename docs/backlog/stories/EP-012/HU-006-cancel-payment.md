@@ -5,7 +5,7 @@
 | Campo | Valor |
 | --- | --- |
 | ID | HU-006 |
-| Épica | EP-012 Gestión de Pagos |
+| Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Baja |
 | MVP | Sí |
 | Estado | Draft |
@@ -39,4 +39,3 @@ Para corregir errores o reversar una transacción mal registrada.
 # Criterios de Aceptación
 
 * Dado un pago válido, cuando lo anulo, entonces el sistema lo marca como anulado correctamente.
-

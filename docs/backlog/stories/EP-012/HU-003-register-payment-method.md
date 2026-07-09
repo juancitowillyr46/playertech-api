@@ -5,7 +5,7 @@
 | Campo | Valor |
 | --- | --- |
 | ID | HU-003 |
-| Épica | EP-012 Gestión de Pagos |
+| Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Media |
 | MVP | Sí |
 | Estado | Draft |
@@ -39,4 +39,3 @@ Para saber si el cobro fue en efectivo, transferencia o billetera digital.
 # Criterios de Aceptación
 
 * Dado un pago registrado, cuando indico su medio, entonces el sistema lo conserva correctamente.
-

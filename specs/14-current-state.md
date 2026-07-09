@@ -204,7 +204,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `EP-009` quedó consolidada como módulo funcional completo: matrícula activa, cargos iniciales, historial, suspensión y retiro con cobertura unitaria y documentación HTTP operativa en Postman.
 * El bloque financiero fue reordenado: `EP-009` genera cargos iniciales pendientes, `EP-011` administra conceptos de pago, `EP-012` registra pagos y cambia cargos de `PENDIENTE` a `PAGADO`, y `EP-013` resume cartera y estado operativo.
 * `Membership` ya adopta el patrón de arquitectura esperado: validación en `Presentation`, `MembershipFinder` en `Application` y excepciones de dominio herederas de `Shared`.
-* `EP-012` sigue pendiente como módulo financiero principal sobre pagos y evidencias.
+* `EP-012` sigue pendiente como módulo financiero principal sobre cargos y pagos, con futuros pagos parciales y conciliación automática fuera del MVP.
 * `EP-013` sigue pendiente como dashboard operativo para visibilidad rápida de cartera y matrículas vigentes.
 * `EP-011` quedó consolidada como módulo funcional completo de conceptos de pago: crear, listar, consultar, actualizar y desactivar con cobertura unitaria y documentación HTTP operativa en Postman.
 * `EP-021` quedó materializada con el desarrollo del módulo `Staff` y `TeamStaffAssignment`, cobertura unitaria base, documentación API y colección Postman para el flujo de staff por equipo.

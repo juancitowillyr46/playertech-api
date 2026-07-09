@@ -5,7 +5,7 @@
 | Campo | Valor |
 | --- | --- |
 | ID | HU-001 |
-| Épica | EP-012 Gestión de Pagos |
+| Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Alta |
 | MVP | Sí |
 | Estado | Draft |
@@ -39,4 +39,3 @@ Para identificar rápidamente qué matrícula o acudiente aún tiene deuda.
 # Criterios de Aceptación
 
 * Dado un jugador con cargos pendientes, cuando consulto, entonces el sistema los muestra correctamente.
-
