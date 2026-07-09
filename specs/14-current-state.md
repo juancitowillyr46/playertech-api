@@ -36,7 +36,7 @@ La base tecnica actual incluye:
 | Team validation migration | Technical Enabler | In progress | `untracked` | La validación de create y update de `Team` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
 | Player validation migration | Technical Enabler | In progress | `untracked` | La validación de create, update y asociación de acudiente de `Player` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
 | Guardian validation migration | Technical Enabler | In progress | `untracked` | La validación de create de `Guardian` se movió a `Presentation`; `Application` quedó con DTOs puros para ese flujo |
-| PaymentConcept validation migration | Technical Enabler | In progress | `untracked` | La validación de create y update de `PaymentConcept` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
+| PaymentConcept validation migration | Technical Enabler | Done | `untracked` | La validación de create y update de `PaymentConcept` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
 | API controller foundation | Technical Enabler | Done | `untracked` | Base HTTP común para validación y resolución del usuario autenticado, reduciendo duplicación entre controladores |
 | First unit test baseline | Technical Enabler | Done | `untracked` | PHPUnit inicial valida `AcademyId`, `AccountUser` y `UserAdministrationPolicy` |
 | Tenant signup integration test | Technical Enabler | Done | `untracked` | `RegisterTenantHandler` valida alta de tenant contra una base de datos MySQL de test con bus de mensajes desacoplado |
@@ -62,7 +62,7 @@ La base tecnica actual incluye:
 | Player module base | Functional / Technical Enabler | Done | `untracked` | `Player` arranca con `POST /api/v1/academy/players`, custom type UUID, XML mapping y test unitario del alta |
 | Team module baseline | Functional / Technical Enabler | Done | `untracked` | `Team` arranca con CRUD tenant-scoped, custom type UUID, XML mapping y controladores delgados sobre `/api/v1/academy/teams` |
 | Team test baseline | Technical Enabler | Done | `untracked` | Cobertura inicial de `Team` con unit, integration y functional tests; las suites con MySQL compartido se ejecutan en serie |
-| TeamAssignment module baseline | Functional / Technical Enabler | In progress | `untracked` | `TeamAssignment` materializa la gestión de asignaciones deportivas con principal activo, finalización e historial sobre jugadores y equipos |
+| TeamAssignment module baseline | Functional / Technical Enabler | Done | `untracked` | `TeamAssignment` materializa la gestión de asignaciones deportivas con principal activo, finalización e historial sobre jugadores y equipos |
 | Player list baseline | Functional / Technical Enabler | Done | `untracked` | `GET /api/v1/academy/players` lista jugadores del tenant actual con DTO resumido y prueba unitaria |
 | Player detail baseline | Functional / Technical Enabler | Done | `untracked` | `GET /api/v1/academy/players/{playerId}` devuelve detalle del jugador dentro del tenant con `PlayerResponse` y prueba unitaria |
 | Player update baseline | Functional / Technical Enabler | Done | `untracked` | `PUT /api/v1/academy/players/{playerId}` actualiza datos del jugador dentro del tenant con validación de unicidad y prueba unitaria |
@@ -202,13 +202,13 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-009`, `EP-010` y `EP-012`.
 * Se inició el módulo `Membership` como primer slice técnico de `EP-009`, con base de dominio, mapping XML, repositorio, controller y casos de uso de crear/consultar matrícula activa.
 * `EP-009` quedó consolidada como módulo funcional completo: matrícula activa, cargos iniciales, historial, suspensión y retiro con cobertura unitaria y documentación HTTP operativa en Postman.
-* El bloque financiero fue reordenado: `EP-009` genera cargos iniciales pendientes, `EP-011` administra conceptos de pago, `EP-012` registra pagos y cambia cargos de `PENDIENTE` a `PAGADO`, y `EP-013` resume cartera y estado operativo.
+* El bloque financiero fue reordenado: `EP-009` genera cargos iniciales pendientes, `EP-011` administra conceptos de pago, `EP-012` gestiona cargos, pagos, evidencia y deuda, y `EP-013` resume cartera y estado operativo.
 * `Membership` ya adopta el patrón de arquitectura esperado: validación en `Presentation`, `MembershipFinder` en `Application` y excepciones de dominio herederas de `Shared`.
-* `EP-012` sigue pendiente como módulo financiero principal sobre cargos y pagos, con futuros pagos parciales y conciliación automática fuera del MVP.
+* `EP-012` ya tiene la base funcional y técnica materializada con `Charge`, `Payment`, `PaymentAllocation`, deuda, historial y evidencia; aún falta el cierre documental y de pruebas HTTP.
 * `EP-013` sigue pendiente como dashboard operativo para visibilidad rápida de cartera y matrículas vigentes.
 * `EP-011` quedó consolidada como módulo funcional completo de conceptos de pago: crear, listar, consultar, actualizar y desactivar con cobertura unitaria y documentación HTTP operativa en Postman.
 * `EP-021` quedó materializada con el desarrollo del módulo `Staff` y `TeamStaffAssignment`, cobertura unitaria base, documentación API y colección Postman para el flujo de staff por equipo.
-* `EP-010` inició su materialización con el módulo `TeamAssignment`, que introduce la relación jugador-equipo con historial, principal activo y finalización.
+* `EP-010` quedó materializada con el módulo `TeamAssignment`, que introduce la relación jugador-equipo con historial, principal activo y finalización.
 * `EP-005` equipos ya quedó cubierto como base de organización deportiva y sirve como referencia de CRUD tenant-scoped.
 * La cobertura de pruebas para `Team` ya incluye dominio, persistencia Doctrine y endpoint HTTP crítico; las suites compartidas sobre MySQL se corren en serie para evitar colisiones de esquema.
 * La subida de escudo institucional para `Academy` y la foto del jugador para `Player` ya quedaron implementadas como historias de media separadas.
@@ -225,7 +225,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.
 * El MVP checklist debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y foto de `Player`.
 * `EP-008` quedó implementada para relaciones jugador-acudiente con alta de acudiente, asociación, cambio de principal y eliminación lógica.
-* El bloque de módulos aún pendiente para el MVP se concentra en `EP-010`, `EP-012` y `EP-013`; `EP-008`, `EP-009` y `EP-011` ya se consideran resueltos.
+* El bloque de módulos aún pendiente para el MVP se concentra en `EP-013`; `EP-008`, `EP-009`, `EP-010`, `EP-011` y la base técnica de `EP-012` ya se consideran resueltos.
 ---
 
 # Technical Foundation Checklist
@@ -284,7 +284,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * Formalizar el onboarding de tenant como siguiente bloque funcional tras `EP-001`.
 * Reutilizar `Academy` como plantilla de implementacion para los siguientes modulos.
 * Completar el backlog de `Category` con historias explícitas para listar, actualizar, activar e inactivar, porque ya existen en código.
-* Cerrar el bloque restante del MVP en este orden: `EP-012` -> `EP-013` -> `EP-010`.
+* Cerrar el bloque restante del MVP en este orden: `EP-013`.
 * A partir de ese cierre, desarrollar los ADR faltantes sobre decisiones ya estabilizadas.
 
 ---
@@ -312,9 +312,9 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] `EP-008` Relaciones jugador-acudiente.
 - [x] `EP-005` Equipos.
 - [x] `EP-009` Matrículas y seguimiento de pagos.
-- [ ] `EP-010` Asignaciones deportivas.
+- [x] `EP-010` Asignaciones deportivas.
 - [x] `EP-011` Conceptos de pago.
-- [ ] `EP-012` Pagos.
+- [ ] `EP-012` Cargos y pagos.
 - [ ] `EP-013` Dashboard operativo.
 
 ## Base Operativa

@@ -744,6 +744,182 @@
           }
         }
       ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Register Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"membership_id\": \"{{membershipId}}\",\n  \"player_id\": \"{{playerId}}\",\n  \"guardian_id\": \"{{guardianId}}\",\n  \"payment_concept_id\": \"{{paymentConceptId}}\",\n  \"payment_date\": \"2026-07-09\",\n  \"amount\": \"100.00\",\n  \"notes\": \"Pago registrado desde Postman\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Show Player Debt",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payments/players/{{playerId}}/debt",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payments",
+                "players",
+                "{{playerId}}",
+                "debt"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Show Payment History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payments/players/{{playerId}}/history",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payments",
+                "players",
+                "{{playerId}}",
+                "history"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Apply Payment To Charge",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payments/apply",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payments",
+                "apply"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_id\": \"{{paymentId}}\",\n  \"charge_id\": \"{{chargeId}}\",\n  \"amount\": \"100.00\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Upload Payment Evidence",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payment-evidences",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payment-evidences"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_id\": \"{{paymentId}}\",\n  \"file_name\": \"comprobante.jpg\",\n  \"file_path\": \"/tmp/comprobante.jpg\",\n  \"mime_type\": \"image/jpeg\"\n}"
+            }
+          }
+        }
+      ]
     }
   ],
   "event": [],
