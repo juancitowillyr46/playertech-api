@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Modules\Payment\Domain\PaymentEvidence\PaymentEvidence" table="payment_evidences">
+        <id name="id" column="id" type="payment_evidence_id"/>
+        <field name="academyId" column="academy_id" type="academy_id"/>
+        <field name="paymentId" column="payment_id" type="payment_id"/>
+        <field name="fileName" column="file_name" type="string" length="255"/>
+        <field name="filePath" column="file_path" type="string" length="500"/>
+        <field name="mimeType" column="mime_type" type="string" length="100"/>
+        <embedded name="auditTrail" class="App\Shared\Domain\ValueObject\AuditTrail" use-column-prefix="false"/>
+        <field name="deletedAt" column="deleted_at" type="datetime_immutable" nullable="true"/>
+        <field name="deletedBy" column="deleted_by" type="guid" nullable="true"/>
+    </entity>
+</doctrine-mapping>

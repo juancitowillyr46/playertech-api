@@ -15,6 +15,7 @@ doctrine:
             charge_id: App\Modules\Charge\Infrastructure\Persistence\Doctrine\Type\ChargeIdType
             payment_id: App\Modules\Payment\Infrastructure\Persistence\Doctrine\Type\PaymentIdType
             payment_allocation_id: App\Modules\Payment\Infrastructure\Persistence\Doctrine\Type\PaymentAllocationIdType
+            payment_evidence_id: App\Modules\Payment\Infrastructure\Persistence\Doctrine\Type\PaymentEvidenceIdType
             staff_id: App\Modules\Staff\Infrastructure\Persistence\Doctrine\Type\StaffIdType
             team_staff_assignment_id: App\Modules\Staff\Infrastructure\Persistence\Doctrine\Type\TeamStaffAssignmentIdType
             team_assignment_id: App\Modules\TeamAssignment\Infrastructure\Persistence\Doctrine\Type\TeamAssignmentIdType
@@ -108,6 +109,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Modules/Payment/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: App\Modules\Payment\Domain\PaymentAllocation
                 alias: PaymentAllocation
+            PaymentEvidence:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Modules/Payment/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: App\Modules\Payment\Domain\PaymentEvidence
+                alias: PaymentEvidence
             Staff:
                 is_bundle: false
                 type: xml
