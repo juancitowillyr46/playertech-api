@@ -248,6 +248,92 @@
           }
         }
       ]
+    },
+    {
+      "name": "Staff",
+      "item": [
+        {
+          "name": "Staff - Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/staff",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","v1","academy","staff"]
+            },
+            "body": { "mode": "raw", "raw": "{\n  \"user_id\": \"{{userId}}\"\n}" }
+          }
+        },
+        {
+          "name": "Staff - Assign To Team",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/staff/assignments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","v1","academy","staff","assignments"]
+            },
+            "body": { "mode": "raw", "raw": "{\n  \"staff_id\": \"{{userId}}\",\n  \"team_id\": \"{{teamId}}\",\n  \"role\": \"HEAD_COACH\"\n}" }
+          }
+        },
+        {
+          "name": "Staff - Change Role",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/staff/assignments/{{assignmentId}}/role",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","v1","academy","staff","assignments","{{assignmentId}}","role"]
+            },
+            "body": { "mode": "raw", "raw": "{\n  \"role\": \"ASSISTANT_COACH\"\n}" }
+          }
+        },
+        {
+          "name": "Staff - Remove From Team",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/staff/assignments/{{assignmentId}}/remove",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","v1","academy","staff","assignments","{{assignmentId}}","remove"]
+            }
+          }
+        },
+        {
+          "name": "Staff - View Team Staff",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/staff/teams/{{teamId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","v1","academy","staff","teams","{{teamId}}"]
+            }
+          }
+        }
+      ]
     }
   ],
   "event": [],

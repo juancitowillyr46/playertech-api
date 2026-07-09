@@ -415,6 +415,141 @@ Consultar la matrícula activa de un jugador y su acudiente principal.
 
 * `404 Not Found` si no existe matrícula activa.
 
+---
+
+# Staff API
+
+## Register Staff Member
+
+```http
+POST /api/v1/academy/staff
+```
+
+### Access
+
+* Usuario autenticado con tenant context.
+
+### Purpose
+
+Registrar un usuario administrativo de academia como miembro del staff.
+
+### Request DTO
+
+`RegisterStaffMemberRequest`
+
+```json
+{
+  "user_id": "uuid"
+}
+```
+
+### Success
+
+`201 Created`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "academy_id": "uuid",
+    "user_id": "uuid",
+    "status": "ACTIVE"
+  },
+  "meta": {}
+}
+```
+
+## Assign Staff To Team
+
+```http
+POST /api/v1/academy/staff/assignments
+```
+
+### Purpose
+
+Asignar un miembro del staff a un equipo con un rol técnico.
+
+### Request DTO
+
+`AssignStaffToTeamRequest`
+
+```json
+{
+  "staff_id": "uuid",
+  "team_id": "uuid",
+  "role": "HEAD_COACH"
+}
+```
+
+### Success
+
+`201 Created`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "team_id": "uuid",
+    "staff_id": "uuid",
+    "role": "HEAD_COACH"
+  },
+  "meta": {}
+}
+```
+
+## Change Staff Role
+
+```http
+PATCH /api/v1/academy/staff/assignments/{assignmentId}/role
+```
+
+### Purpose
+
+Cambiar el rol técnico de una asignación de staff.
+
+## Remove Staff From Team
+
+```http
+PATCH /api/v1/academy/staff/assignments/{assignmentId}/remove
+```
+
+### Purpose
+
+Retirar una asignación técnica sin borrar el historial.
+
+### Success
+
+`204 No Content`
+
+## View Team Staff
+
+```http
+GET /api/v1/academy/staff/teams/{teamId}
+```
+
+### Purpose
+
+Consultar el staff activo asignado a un equipo.
+
+### Success
+
+`200 OK`
+
+```json
+{
+  "data": [
+    {
+      "assignment_id": "uuid",
+      "staff_id": "uuid",
+      "user_id": "uuid",
+      "team_id": "uuid",
+      "role": "HEAD_COACH"
+    }
+  ],
+  "meta": {}
+}
+```
+
 ## Show Membership History
 
 ```http

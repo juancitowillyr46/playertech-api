@@ -29,6 +29,7 @@ security:
         - { path: ^/api/v1/health$, roles: PUBLIC_ACCESS }
         - { path: ^/api/v1/auth/login$, roles: PUBLIC_ACCESS }
         - { path: ^/api/v1/public/tenants, roles: PUBLIC_ACCESS }
+        - { path: ^/api/v1/public/users, roles: PUBLIC_ACCESS }
         - { path: ^/api/v1/auth/me$, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/v1/platform, roles: ROLE_ROOT }
         - { path: ^/api/v1, roles: IS_AUTHENTICATED_FULLY }

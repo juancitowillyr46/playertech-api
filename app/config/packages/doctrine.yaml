@@ -12,6 +12,8 @@ doctrine:
             player_guardian_id: App\Modules\Player\Infrastructure\Persistence\Doctrine\Type\PlayerGuardianIdType
             membership_id: App\Modules\Membership\Infrastructure\Persistence\Doctrine\Type\MembershipIdType
             payment_concept_id: App\Modules\PaymentConcept\Infrastructure\Persistence\Doctrine\Type\PaymentConceptIdType
+            staff_id: App\Modules\Staff\Infrastructure\Persistence\Doctrine\Type\StaffIdType
+            team_staff_assignment_id: App\Modules\Staff\Infrastructure\Persistence\Doctrine\Type\TeamStaffAssignmentIdType
     orm:
         auto_mapping: false
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -84,6 +86,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Modules/PaymentConcept/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: App\Modules\PaymentConcept\Domain\PaymentConcept
                 alias: PaymentConcept
+            Staff:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Modules/Staff/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: App\Modules\Staff\Domain
+                alias: Staff
             Shared:
                 is_bundle: false
                 type: xml

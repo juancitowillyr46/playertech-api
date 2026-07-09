@@ -5,19 +5,24 @@ declare(strict_types=1);
 namespace App\Modules\Identity\Presentation\Http\Academy;
 
 use App\Modules\Identity\Application\Command\CreateUserCommand;
+use App\Modules\Identity\Application\Command\InviteUserCommand;
 use App\Modules\Identity\Application\Command\DisableUserCommand;
 use App\Modules\Identity\Application\Command\EnableUserCommand;
+use App\Modules\Identity\Application\Command\ResendUserInvitationCommand;
 use App\Modules\Identity\Application\Command\UpdateUserCommand;
 use App\Modules\Identity\Application\Handler\CreateUserHandler;
+use App\Modules\Identity\Application\Handler\InviteUserHandler;
 use App\Modules\Identity\Application\Handler\DisableUserHandler;
 use App\Modules\Identity\Application\Handler\EnableUserHandler;
 use App\Modules\Identity\Application\Handler\ListUsersHandler;
 use App\Modules\Identity\Application\Handler\ShowUserHandler;
+use App\Modules\Identity\Application\Handler\ResendUserInvitationHandler;
 use App\Modules\Identity\Application\Handler\UpdateUserHandler;
 use App\Modules\Identity\Application\Query\ListUsersQuery;
 use App\Modules\Identity\Application\Query\ShowUserQuery;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Modules\Identity\Presentation\Http\Request\CreateUserRequest;
+use App\Modules\Identity\Presentation\Http\Request\InviteUserRequest;
 use App\Modules\Identity\Presentation\Http\Request\UpdateUserRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -33,6 +38,8 @@ final class UsersController extends AbstractApiController
         private readonly Security $security,
         private readonly ValidatorInterface $validator,
         private readonly CreateUserHandler $createUserHandler,
+        private readonly InviteUserHandler $inviteUserHandler,
+        private readonly ResendUserInvitationHandler $resendUserInvitationHandler,
         private readonly ListUsersHandler $listUsersHandler,
         private readonly ShowUserHandler $showUserHandler,
         private readonly UpdateUserHandler $updateUserHandler,
@@ -64,6 +71,26 @@ final class UsersController extends AbstractApiController
 
         $view = ($this->createUserHandler)(
             new CreateUserCommand(
+                $this->requireActorId($tenantContext),
+                $input->toInput(),
+                $tenantContext->requireAcademyId()
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ], 201);
+    }
+
+    #[Route('/invite', name: 'api_v1_academy_users_invite', methods: ['POST'])]
+    public function invite(Request $request, TenantContext $tenantContext): JsonResponse
+    {
+        $input = InviteUserRequest::fromArray($request->toArray());
+        $this->assertValid($this->validator, $input);
+
+        $view = ($this->inviteUserHandler)(
+            new InviteUserCommand(
                 $this->requireActorId($tenantContext),
                 $input->toInput(),
                 $tenantContext->requireAcademyId()
@@ -130,6 +157,23 @@ final class UsersController extends AbstractApiController
     {
         $view = ($this->enableUserHandler)(
             new EnableUserCommand(
+                $this->requireActorId($tenantContext),
+                $userId,
+                $tenantContext->requireAcademyId()
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/{userId}/invitation/resend', name: 'api_v1_academy_users_resend_invitation', methods: ['POST'])]
+    public function resendInvitation(string $userId, TenantContext $tenantContext): JsonResponse
+    {
+        $view = ($this->resendUserInvitationHandler)(
+            new ResendUserInvitationCommand(
                 $this->requireActorId($tenantContext),
                 $userId,
                 $tenantContext->requireAcademyId()
