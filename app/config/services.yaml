@@ -28,6 +28,7 @@ services:
     App\Modules\PaymentConcept\Domain\PaymentConcept\PaymentConceptRepository: '@App\Modules\PaymentConcept\Infrastructure\Persistence\PaymentConceptRepository'
     App\Modules\Charge\Domain\Charge\ChargeRepository: '@App\Modules\Charge\Infrastructure\Persistence\ChargeRepository'
     App\Modules\Payment\Domain\Payment\PaymentRepository: '@App\Modules\Payment\Infrastructure\Persistence\PaymentRepository'
+    App\Modules\Payment\Domain\PaymentAllocation\PaymentAllocationRepository: '@App\Modules\Payment\Infrastructure\Persistence\PaymentAllocationRepository'
     App\Modules\Staff\Domain\Staff\StaffRepository: '@App\Modules\Staff\Infrastructure\Persistence\StaffRepository'
     App\Modules\Staff\Domain\TeamStaffAssignment\TeamStaffAssignmentRepository: '@App\Modules\Staff\Infrastructure\Persistence\TeamStaffAssignmentRepository'
     App\Modules\Team\Domain\Team\TeamRepository: '@App\Modules\Team\Infrastructure\Persistence\TeamRepository'

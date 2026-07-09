@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Modules\Payment\Domain\PaymentAllocation\PaymentAllocation" table="payment_allocations">
+        <indexes>
+            <index name="IDX_PAYMENT_ALLOCATION_ACADEMY" columns="academy_id"/>
+            <index name="IDX_PAYMENT_ALLOCATION_PAYMENT" columns="payment_id"/>
+            <index name="IDX_PAYMENT_ALLOCATION_CHARGE" columns="charge_id"/>
+        </indexes>
+        <id name="id" column="id" type="payment_allocation_id"/>
+        <field name="academyId" column="academy_id" type="academy_id"/>
+        <field name="paymentId" column="payment_id" type="payment_id"/>
+        <field name="chargeId" column="charge_id" type="charge_id"/>
+        <field name="amount" column="amount" type="decimal" precision="12" scale="2"/>
+        <embedded name="auditTrail" class="App\Shared\Domain\ValueObject\AuditTrail" use-column-prefix="false"/>
+        <field name="deletedAt" column="deleted_at" type="datetime_immutable" nullable="true"/>
+        <field name="deletedBy" column="deleted_by" type="guid" nullable="true"/>
+    </entity>
+</doctrine-mapping>
