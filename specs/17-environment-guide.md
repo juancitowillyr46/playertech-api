@@ -34,6 +34,12 @@ Uso:
 * integración contra base MySQL de test
 * ejecución en CI/CD
 
+Regla operativa:
+
+* Las suites funcionales e integraciones deben apuntar a `test` para simular el flujo real de CI/CD.
+* `local` queda para desarrollo interactivo y verificación manual en Docker.
+* Ninguna validación formal de regresión debe depender exclusivamente de `local`.
+
 ## Prod
 
 Archivo objetivo futuro:
@@ -98,4 +104,3 @@ docker exec docker-app-1 bash -lc 'cd /var/www/html && php bin/console doctrine:
 
 * `app/.env.test` crea una base MySQL de test y la deja lista antes de correr PHPUnit.
 * La estrategia de pruebas se documenta en `specs/11-testing-strategy.md`.
-

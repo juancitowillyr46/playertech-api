@@ -8,7 +8,7 @@
 | Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Media |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -33,6 +33,7 @@ Para revisar el historial de cobros realizados y pendientes.
 
 * La consulta debe restringirse a la academia actual.
 * Debe permitir filtrar por estado cuando aplique.
+* El endpoint HTTP y la colección Postman ya existen.
 
 ---
 

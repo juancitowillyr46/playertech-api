@@ -8,7 +8,7 @@
 | Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Baja |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -33,6 +33,7 @@ Para corregir errores o reversar una transacción mal registrada.
 
 * Solo se puede anular un pago válido.
 * La anulación debe conservar trazabilidad.
+* El endpoint HTTP y la colección Postman ya existen.
 
 ---
 

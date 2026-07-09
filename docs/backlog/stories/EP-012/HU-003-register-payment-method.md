@@ -8,7 +8,7 @@
 | Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Media |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -33,6 +33,7 @@ Para saber si el cobro fue en efectivo, transferencia o billetera digital.
 
 * El medio de pago debe ser uno de los valores permitidos.
 * El medio de pago debe quedar asociado al pago registrado.
+* El medio de pago se conserva dentro del registro de pago ya implementado.
 
 ---
 

@@ -8,7 +8,7 @@
 | Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Alta |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -33,6 +33,7 @@ Para identificar rápidamente qué matrícula o acudiente aún tiene deuda.
 
 * La consulta debe mostrar cargos en estado `PENDIENTE`.
 * Los cargos deben pertenecer a la academia actual.
+* El endpoint HTTP y la colección Postman ya existen.
 
 ---
 

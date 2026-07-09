@@ -8,7 +8,7 @@
 | Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Alta |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -33,6 +33,7 @@ Para saber cuánto falta por pagar y tomar seguimiento.
 
 * La deuda debe calcularse sobre cargos pendientes.
 * La deuda debe reflejar solo datos de la academia actual.
+* El endpoint HTTP y la colección Postman ya existen.
 
 ---
 

@@ -45,6 +45,17 @@ Aplican a:
 * Endpoints de API
 * Respuestas y contratos HTTP
 
+## Test on Test Database
+
+La validación prioritaria de integración y funcionalidad debe ejecutarse contra la base de datos `test`, no contra la base `local`.
+
+Esto simula el comportamiento esperado en CI/CD:
+
+* construir el esquema de prueba
+* correr integración sobre MySQL aislado
+* ejecutar funcionales HTTP sobre el mismo entorno de test
+* detectar fallas de mapping, constraints y aislamiento por tenant antes de promover cambios
+
 ## Contract Tests
 
 Aplican a:
@@ -89,6 +100,13 @@ Y como primera integración real de infraestructura:
 * `RegisterTenantHandler` contra base de datos MySQL de test y bus de mensajes desacoplado.
 
 Esta capa sirve como red de seguridad antes de incorporar pruebas funcionales de API.
+
+En ciclos de desarrollo y en CI/CD, la secuencia recomendada es:
+
+1. unit tests.
+2. integration tests contra `test`.
+3. functional tests contra `test`.
+4. contract checks de API y Postman.
 
 ---
 

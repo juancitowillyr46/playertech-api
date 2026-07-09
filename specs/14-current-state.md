@@ -183,6 +183,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Academy` queda definido como el modulo de referencia oficial para nuevos contextos: CQRS, XML puro, VOs tipados, soft delete, validacion formal, controllers delgados y separacion root/tenant.
 * Los comandos de validacion de pruebas y migraciones quedaron documentados en `specs/11-testing-strategy.md`.
 * La separacion de configuracion `local`/`test`/`prod` quedó documentada en `specs/17-environment-guide.md`.
+* La validacion principal de suites de integracion y funcionales debe correr sobre la base `test` para simular CI/CD; `local` queda para desarrollo interactivo.
 * `Mailpit` queda adoptado como la herramienta base de desarrollo local para validar envios de correo y flujos de activacion.
 * `EP-003` queda reorientada para distinguir usuarios de plataforma y usuarios tenant; la creacion del owner/admin inicial del tenant se documenta como historia explicita.
 * `Category` y `Venue` ya quedaron implementados como módulos funcionales completos y el backlog debe seguir su mismo lifecycle con historias faltantes o inconsistentes.
@@ -204,7 +205,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `EP-009` quedó consolidada como módulo funcional completo: matrícula activa, cargos iniciales, historial, suspensión y retiro con cobertura unitaria y documentación HTTP operativa en Postman.
 * El bloque financiero fue reordenado: `EP-009` genera cargos iniciales pendientes, `EP-011` administra conceptos de pago, `EP-012` gestiona cargos, pagos, evidencia y deuda, y `EP-013` resume cartera y estado operativo.
 * `Membership` ya adopta el patrón de arquitectura esperado: validación en `Presentation`, `MembershipFinder` en `Application` y excepciones de dominio herederas de `Shared`.
-* `EP-012` ya tiene la base funcional y técnica materializada con `Charge`, `Payment`, `PaymentAllocation`, deuda, historial y evidencia; aún falta el cierre documental y de pruebas HTTP.
+* `EP-012` quedó cerrado funcional y técnicamente con `Charge`, `Payment`, `PaymentAllocation`, deuda, historial, evidencia y cancelación; la validación final ya se cubrió sobre `test`.
 * `EP-013` quedó materializada como dashboard operativo con jugadores activos, matrículas vigentes, cargos pendientes y resumen de cartera.
 * `EP-011` quedó consolidada como módulo funcional completo de conceptos de pago: crear, listar, consultar, actualizar y desactivar con cobertura unitaria y documentación HTTP operativa en Postman.
 * Se inició la estandarización de listados con paginación uniforme (`page`, `per_page`, `sort`, `direction`) en endpoints visibles por frontend.
@@ -226,7 +227,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.
 * El MVP checklist debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y foto de `Player`.
 * `EP-008` quedó implementada para relaciones jugador-acudiente con alta de acudiente, asociación, cambio de principal y eliminación lógica.
-* El bloque de módulos aún pendiente para el MVP se concentra en el cierre formal de `EP-012`; `EP-008`, `EP-009`, `EP-010`, `EP-011` y `EP-013` ya se consideran resueltos.
+* El bloque de módulos aún pendiente para el MVP ya no incluye `EP-012`; `EP-008`, `EP-009`, `EP-010`, `EP-011`, `EP-012` y `EP-013` ya se consideran resueltos.
 ---
 
 # Technical Foundation Checklist
@@ -315,7 +316,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] `EP-009` Matrículas y seguimiento de pagos.
 - [x] `EP-010` Asignaciones deportivas.
 - [x] `EP-011` Conceptos de pago.
-- [ ] `EP-012` Cargos y pagos.
+- [x] `EP-012` Cargos y pagos.
 - [x] `EP-013` Dashboard operativo.
 
 ## Base Operativa

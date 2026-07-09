@@ -8,7 +8,7 @@
 | Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Media |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -33,6 +33,7 @@ Para respaldar el abono realizado por el acudiente principal.
 
 * Una evidencia debe pertenecer a un pago existente.
 * Un pago puede tener múltiples evidencias.
+* El endpoint HTTP y la colección Postman ya existen.
 
 ---
 

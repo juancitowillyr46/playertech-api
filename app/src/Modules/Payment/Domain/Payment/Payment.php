@@ -44,6 +44,11 @@ final class Payment implements Auditable
     public function status(): PaymentStatus { return $this->status; }
     public function auditTrail(): ?AuditTrail { return $this->auditTrail; }
     public function setAuditTrail(AuditTrail $auditTrail): void { $this->auditTrail = $auditTrail; }
+    public function cancel(AuditTrail $auditTrail): void
+    {
+        $this->status = PaymentStatus::cancelled();
+        $this->auditTrail = $auditTrail;
+    }
     public function deletedAt(): ?\DateTimeImmutable { return $this->deletedAt; }
     public function deletedBy(): ?string { return $this->deletedBy; }
 }

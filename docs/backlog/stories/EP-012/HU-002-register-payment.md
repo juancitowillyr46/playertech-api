@@ -8,7 +8,7 @@
 | Épica | EP-012 Gestión de Cargos y Pagos |
 | Prioridad | Alta |
 | MVP | Sí |
-| Estado | Draft |
+| Estado | Done |
 | Actor Principal | Academic Administrator |
 
 ---
@@ -34,6 +34,7 @@ Para conciliar la deuda del acudiente principal y marcar cargos como `PAGADO`.
 * El cargo debe existir y estar pendiente.
 * El pago debe registrar el medio utilizado.
 * El pago debe quedar asociado al acudiente principal.
+* El endpoint HTTP y la colección Postman ya existen.
 
 ---
 

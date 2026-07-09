@@ -1196,6 +1196,36 @@
               "raw": "{\n  \"payment_id\": \"{{paymentId}}\",\n  \"file_name\": \"comprobante.jpg\",\n  \"file_path\": \"/tmp/comprobante.jpg\",\n  \"mime_type\": \"image/jpeg\"\n}"
             }
           }
+        },
+        {
+          "name": "Cancel Payment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payments/{{paymentId}}/cancel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payments",
+                "{{paymentId}}",
+                "cancel"
+              ]
+            }
+          }
         }
       ]
     },

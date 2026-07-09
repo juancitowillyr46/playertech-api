@@ -77,6 +77,10 @@ Cada cambio relevante debe dejar una referencia clara en el estado actual.
 9. Flujo registrar pago.
 10. Flujo consultar historial y dashboard.
 
+## Validation Rule
+
+Los flujos de validación y regresión deben ejecutarse sobre la base `test` para aproximar el comportamiento de CI/CD. La base `local` sólo se usa para desarrollo interactivo y exploración manual.
+
 ---
 
 # Phase 5 - User Stories
