@@ -205,7 +205,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El bloque financiero fue reordenado: `EP-009` genera cargos iniciales pendientes, `EP-011` administra conceptos de pago, `EP-012` gestiona cargos, pagos, evidencia y deuda, y `EP-013` resume cartera y estado operativo.
 * `Membership` ya adopta el patrón de arquitectura esperado: validación en `Presentation`, `MembershipFinder` en `Application` y excepciones de dominio herederas de `Shared`.
 * `EP-012` ya tiene la base funcional y técnica materializada con `Charge`, `Payment`, `PaymentAllocation`, deuda, historial y evidencia; aún falta el cierre documental y de pruebas HTTP.
-* `EP-013` sigue pendiente como dashboard operativo para visibilidad rápida de cartera y matrículas vigentes.
+* `EP-013` quedó materializada como dashboard operativo con jugadores activos, matrículas vigentes, cargos pendientes y resumen de cartera.
 * `EP-011` quedó consolidada como módulo funcional completo de conceptos de pago: crear, listar, consultar, actualizar y desactivar con cobertura unitaria y documentación HTTP operativa en Postman.
 * `EP-021` quedó materializada con el desarrollo del módulo `Staff` y `TeamStaffAssignment`, cobertura unitaria base, documentación API y colección Postman para el flujo de staff por equipo.
 * `EP-010` quedó materializada con el módulo `TeamAssignment`, que introduce la relación jugador-equipo con historial, principal activo y finalización.
@@ -225,7 +225,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.
 * El MVP checklist debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y foto de `Player`.
 * `EP-008` quedó implementada para relaciones jugador-acudiente con alta de acudiente, asociación, cambio de principal y eliminación lógica.
-* El bloque de módulos aún pendiente para el MVP se concentra en `EP-013`; `EP-008`, `EP-009`, `EP-010`, `EP-011` y la base técnica de `EP-012` ya se consideran resueltos.
+* El bloque de módulos aún pendiente para el MVP se concentra en el cierre formal de `EP-012`; `EP-008`, `EP-009`, `EP-010`, `EP-011` y `EP-013` ya se consideran resueltos.
 ---
 
 # Technical Foundation Checklist
@@ -315,7 +315,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] `EP-010` Asignaciones deportivas.
 - [x] `EP-011` Conceptos de pago.
 - [ ] `EP-012` Cargos y pagos.
-- [ ] `EP-013` Dashboard operativo.
+- [x] `EP-013` Dashboard operativo.
 
 ## Base Operativa
 

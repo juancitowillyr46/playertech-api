@@ -620,6 +620,18 @@ GET /api/v1/academy/team-assignments/players/{playerId}
 ### Purpose
 
 Consultar las asignaciones deportivas de un jugador.
+
+# Dashboard API
+
+## Show Dashboard
+
+```http
+GET /api/v1/academy/dashboard
+```
+
+### Purpose
+
+Obtener una vista operativa resumida con jugadores activos, matrículas vigentes y cartera pendiente.
 ```
 
 ## Show Membership History
