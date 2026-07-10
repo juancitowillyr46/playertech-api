@@ -82,49 +82,49 @@ doctrine:
             Membership:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/Modules/Membership/Infrastructure/Persistence/Doctrine/Mapping'
+                dir: '%kernel.project_dir%/src/Modules/Membership/Infrastructure/Persistence/Doctrine/Mapping/Membership'
                 prefix: App\Modules\Membership\Domain\Membership
                 alias: Membership
             PaymentConcept:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/Modules/PaymentConcept/Infrastructure/Persistence/Doctrine/Mapping'
+                dir: '%kernel.project_dir%/src/Modules/PaymentConcept/Infrastructure/Persistence/Doctrine/Mapping/PaymentConcept'
                 prefix: App\Modules\PaymentConcept\Domain\PaymentConcept
                 alias: PaymentConcept
             Charge:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/Modules/Charge/Infrastructure/Persistence/Doctrine/Mapping'
+                dir: '%kernel.project_dir%/src/Modules/Charge/Infrastructure/Persistence/Doctrine/Mapping/Charge'
                 prefix: App\Modules\Charge\Domain\Charge
                 alias: Charge
             Payment:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/Modules/Payment/Infrastructure/Persistence/Doctrine/Mapping'
+                dir: '%kernel.project_dir%/src/Modules/Payment/Infrastructure/Persistence/Doctrine/Mapping/Payment'
                 prefix: App\Modules\Payment\Domain\Payment
                 alias: Payment
             PaymentAllocation:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/Modules/Payment/Infrastructure/Persistence/Doctrine/Mapping'
+                dir: '%kernel.project_dir%/src/Modules/Payment/Infrastructure/Persistence/Doctrine/Mapping/PaymentAllocation'
                 prefix: App\Modules\Payment\Domain\PaymentAllocation
                 alias: PaymentAllocation
             PaymentEvidence:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/Modules/Payment/Infrastructure/Persistence/Doctrine/Mapping'
+                dir: '%kernel.project_dir%/src/Modules/Payment/Infrastructure/Persistence/Doctrine/Mapping/PaymentEvidence'
                 prefix: App\Modules\Payment\Domain\PaymentEvidence
                 alias: PaymentEvidence
             Staff:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/Modules/Staff/Infrastructure/Persistence/Doctrine/Mapping'
-                prefix: App\Modules\Staff\Domain
+                dir: '%kernel.project_dir%/src/Modules/Staff/Infrastructure/Persistence/Doctrine/Mapping/Staff'
+                prefix: App\Modules\Staff\Domain\Staff
                 alias: Staff
             TeamAssignment:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/Modules/TeamAssignment/Infrastructure/Persistence/Doctrine/Mapping'
+                dir: '%kernel.project_dir%/src/Modules/TeamAssignment/Infrastructure/Persistence/Doctrine/Mapping/TeamAssignment'
                 prefix: App\Modules\TeamAssignment\Domain\TeamAssignment
                 alias: TeamAssignment
             Shared:
