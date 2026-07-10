@@ -6,6 +6,20 @@ Este documento sirve como referencia operativa de la API HTTP de PlayerTech mien
 
 La convención general de respuestas y errores está definida en `specs/04-api.md`.
 
+## Response Strategy
+
+La implementación actual expone la API mediante `Response DTOs` serializables:
+
+* Cada caso de uso devuelve un objeto de respuesta inmutable.
+* Las respuestas públicas se materializan con `toArray()`.
+* Los anidados se modelan como DTOs compuestos, no como entidades Doctrine.
+
+Si un contrato crece en complejidad o reutilización, el estándar preferido es:
+
+* `Response DTO` para salidas simples.
+* `ResponseTransformer` para salidas con composición o filtrado de relaciones.
+* `Presenter` si se necesita formalizar el paso entre Application y Presentation.
+
 ## Naming Convention
 
 * Query params: `snake_case`.

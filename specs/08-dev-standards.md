@@ -413,6 +413,35 @@ Nunca exponer entidades directamente.
 * Relaciones: usar DTOs anidados, no entidades Doctrine.
 * No devolver arrays crudos desde el controller si ya existe un Response DTO.
 
+### Standard de salida
+
+PlayerTech usa actualmente `Response DTOs` como contrato de salida por defecto.
+
+Regla operativa:
+
+* `Response DTO`: opción base para salidas simples, planas o de bajo acoplamiento.
+* `ResponseTransformer`: opción para salidas compuestas, anidadas o con reglas de exposición.
+* `Presenter`: opción para formalizar el contrato de salida cuando el caso de uso requiera una separación más estricta entre Application y Presentation.
+* `Resource`: opción admisible si en el futuro se adopta una convención REST más fuerte para la capa HTTP.
+
+### Estado implementado
+
+Hoy el proyecto implementa principalmente:
+
+* `Response DTOs` inmutables con `from*()` y `toArray()`.
+* DTOs anidados para relaciones cuando el contrato HTTP lo requiere.
+* Controllers delgados que delegan en handlers y retornan `JsonResponse`.
+
+No existe todavía una capa formal global de `Presenter` ni una interfaz común obligatoria de `ResponseTransformer`.
+
+### Criterio de evolución
+
+Si el mapeo de salida comienza a crecer, repetir lógica o mezclar composición de múltiples entidades, la decisión recomendada es:
+
+1. Mantener `Response DTO` si la respuesta sigue siendo pequeña y estable.
+2. Introducir `ResponseTransformer` si la salida requiere composición, filtrado o normalización de relaciones.
+3. Introducir `Presenter` si se desea una separación arquitectónica explícita entre el caso de uso y la representación HTTP.
+
 ---
 
 # Repository Pattern

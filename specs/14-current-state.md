@@ -29,13 +29,13 @@ La base tecnica actual incluye:
 | Identity auth module refactor | Technical Enabler | Done | `87f6f9b` | Login resuelto por Symfony Security `json_login`; `/me`, handlers JWT y entidad movidos a `Modules/Identity` |
 | Identity technical user model | Technical Enabler | Done | `87f6f9b` | `AccountUser` usa Doctrine attributes y GUID string para acelerar la foundation sin perder compatibilidad |
 | Identity users CRUD runtime | Functional / Technical Enabler | Done | `untracked` | CRUD de users expuesto en `/api/v1/platform/users` y `/api/v1/academy/users`, con DTOs, handlers, exceptions de dominio y respuesta JSON estándar |
-| Identity validation migration | Technical Enabler | In progress | `untracked` | La validación de create/update users se movió a `Presentation` con requests dedicadas; `Application` quedó con DTOs puros para el flujo de usuarios |
-| Academy validation migration | Technical Enabler | In progress | `untracked` | La validación de create, update y tenant signup de `Academy` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
-| Category validation migration | Technical Enabler | In progress | `untracked` | La validación de create y update de `Category` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
-| Venue validation migration | Technical Enabler | In progress | `untracked` | La validación de create y update de `Venue` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
-| Team validation migration | Technical Enabler | In progress | `untracked` | La validación de create y update de `Team` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
-| Player validation migration | Technical Enabler | In progress | `untracked` | La validación de create, update y asociación de acudiente de `Player` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
-| Guardian validation migration | Technical Enabler | In progress | `untracked` | La validación de create de `Guardian` se movió a `Presentation`; `Application` quedó con DTOs puros para ese flujo |
+| Identity validation migration | Technical Enabler | Done | `untracked` | La validación de create/update users se mueve a `Presentation` con requests dedicadas; `Application` queda con DTOs puros para el flujo de usuarios |
+| Academy validation migration | Technical Enabler | Done | `untracked` | La validación de create, update y tenant signup de `Academy` se mueve a `Presentation`; `Application` queda con DTOs puros para esos flujos |
+| Category validation migration | Technical Enabler | Done | `untracked` | La validación de create y update de `Category` se mueve a `Presentation`; `Application` queda con DTOs puros para esos flujos |
+| Venue validation migration | Technical Enabler | Done | `untracked` | La validación de create y update de `Venue` se mueve a `Presentation`; `Application` queda con DTOs puros para esos flujos |
+| Team validation migration | Technical Enabler | Done | `untracked` | La validación de create y update de `Team` se mueve a `Presentation`; `Application` queda con DTOs puros para esos flujos |
+| Player validation migration | Technical Enabler | Done | `untracked` | La validación de create, update y asociación de acudiente de `Player` se mueve a `Presentation`; `Application` queda con DTOs puros para esos flujos |
+| Guardian validation migration | Technical Enabler | Done | `untracked` | La validación de create de `Guardian` se mueve a `Presentation`; `Application` queda con DTOs puros para ese flujo |
 | PaymentConcept validation migration | Technical Enabler | Done | `untracked` | La validación de create y update de `PaymentConcept` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
 | API controller foundation | Technical Enabler | Done | `untracked` | Base HTTP común para validación y resolución del usuario autenticado, reduciendo duplicación entre controladores |
 | First unit test baseline | Technical Enabler | Done | `untracked` | PHPUnit inicial valida `AcademyId`, `AccountUser` y `UserAdministrationPolicy` |

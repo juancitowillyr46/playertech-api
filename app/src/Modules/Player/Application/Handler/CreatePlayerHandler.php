@@ -12,6 +12,7 @@ use App\Modules\Player\Domain\Player\Player;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Modules\Player\Domain\Player\PlayerRepository;
 use App\Shared\Domain\ValueObject\AuditTrail;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final readonly class CreatePlayerHandler
 {
@@ -23,18 +24,23 @@ final readonly class CreatePlayerHandler
     public function __invoke(CreatePlayerCommand $command): PlayerResponse
     {
         $academyId = new AcademyId($command->academyId);
+        $input = $command->input;
 
-        if (null !== $this->playerRepository->findOneByDocumentNumber($academyId, $command->input->documentNumber)) {
+        if (null === $input->firstName || null === $input->lastName || null === $input->birthDate || null === $input->documentNumber) {
+            throw new BadRequestHttpException('Missing required player input.');
+        }
+
+        if (null !== $this->playerRepository->findOneByDocumentNumber($academyId, $input->documentNumber)) {
             throw new PlayerAlreadyExistsException();
         }
 
         $player = Player::create(
             PlayerId::generate(),
             $academyId,
-            $command->input->firstName ?? '',
-            $command->input->lastName ?? '',
-            new \DateTimeImmutable($command->input->birthDate ?? ''),
-            $command->input->documentNumber ?? '',
+            $input->firstName,
+            $input->lastName,
+            new \DateTimeImmutable($input->birthDate),
+            $input->documentNumber,
             null,
             null,
             AuditTrail::create($command->actorId),
