@@ -19,7 +19,8 @@ final class PaymentEvidenceController extends AbstractApiController
     #[Route('', methods:['POST'])]
     public function upload(Request $request): JsonResponse
     {
-        $input = new UploadPaymentEvidenceRequest($request->toArray()['payment_id'] ?? null, $request->toArray()['file_name'] ?? null, $request->toArray()['file_path'] ?? null, $request->toArray()['mime_type'] ?? null);
+        $payload = $request->toArray();
+        $input = new UploadPaymentEvidenceRequest($payload['paymentId'] ?? null, $payload['fileName'] ?? null, $payload['filePath'] ?? null, $payload['mimeType'] ?? null);
         $this->assertValid($this->validator, $input);
         ($this->handler)(new UploadPaymentEvidenceCommand($this->requireAuthenticatedUserId($this->security), $this->tenantContext->requireAcademyId(), $input->paymentId ?? '', $input->fileName ?? '', $input->filePath ?? '', $input->mimeType ?? ''));
         return new JsonResponse(['data'=>new \stdClass(),'meta'=>new \stdClass()], Response::HTTP_CREATED);

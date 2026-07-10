@@ -18,7 +18,7 @@ final readonly class TenantSignupUserResponse
         return [
             'email' => $this->email,
             'status' => $this->status,
-            'activation_pending' => $this->activationPending,
+            'activationPending' => $this->activationPending,
         ];
     }
 }

@@ -19,10 +19,10 @@ final readonly class AssociateGuardianResponse
     {
         return [
             'id' => $this->id,
-            'academy_id' => $this->academyId,
-            'player_id' => $this->playerId,
-            'guardian_id' => $this->guardianId,
-            'is_primary' => $this->isPrimary,
+            'academyId' => $this->academyId,
+            'playerId' => $this->playerId,
+            'guardianId' => $this->guardianId,
+            'isPrimary' => $this->isPrimary,
         ];
     }
 }

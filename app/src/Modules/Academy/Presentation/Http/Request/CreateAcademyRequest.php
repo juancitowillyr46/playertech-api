@@ -14,9 +14,9 @@ final readonly class CreateAcademyRequest
         #[Assert\Length(max: 150, maxMessage: 'El campo "name" excede la longitud máxima permitida.')]
         public ?string $name,
 
-        #[Assert\NotBlank(message: 'El campo "contact_email" es obligatorio.')]
-        #[Assert\Email(message: 'El campo "contact_email" debe ser un correo válido.')]
-        #[Assert\Length(max: 180, maxMessage: 'El campo "contact_email" excede la longitud máxima permitida.')]
+        #[Assert\NotBlank(message: 'El campo "contactEmail" es obligatorio.')]
+        #[Assert\Email(message: 'El campo "contactEmail" debe ser un correo válido.')]
+        #[Assert\Length(max: 180, maxMessage: 'El campo "contactEmail" excede la longitud máxima permitida.')]
         public ?string $contactEmail,
 
         #[Assert\Length(max: 30, maxMessage: 'El campo "phone" excede la longitud máxima permitida.')]
@@ -34,7 +34,7 @@ final readonly class CreateAcademyRequest
     {
         return new self(
             self::stringOrNull($payload['name'] ?? null),
-            self::stringOrNull($payload['contact_email'] ?? null),
+            self::stringOrNull($payload['contactEmail'] ?? null),
             self::stringOrNull($payload['phone'] ?? null),
             self::stringOrNull($payload['address'] ?? null),
             self::stringOrNull($payload['city'] ?? null),

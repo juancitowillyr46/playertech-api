@@ -45,8 +45,11 @@ Todas las respuestas exitosas usarán este formato:
   "data": [],
   "meta": {
     "page": 1,
-    "limit": 20,
-    "total": 120
+    "per_page": 20,
+    "total": 120,
+    "total_pages": 6,
+    "has_next": true,
+    "has_prev": false
   }
 }
 ```
@@ -152,6 +155,13 @@ GET /api/v1/players?category_id=uuid&status=ACTIVE
 * Los filtros permitidos deben estar documentados por recurso.
 * El ordenamiento debe ser explícito y controlado.
 * No se aceptan filtros arbitrarios sin contrato.
+
+## Payload Naming
+
+* Los query params usan `snake_case`.
+* Los JSON bodies usan `camelCase`.
+* Las respuestas JSON usan `camelCase`.
+* La compatibilidad con respuestas históricas en `snake_case` ya no es el comportamiento esperado para contratos nuevos.
 
 ---
 

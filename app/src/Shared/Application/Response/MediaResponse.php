@@ -41,7 +41,7 @@ final readonly class MediaResponse
         return [
             'path' => $this->path,
             'url' => $this->url,
-            'mime_type' => $this->mimeType,
+            'mimeType' => $this->mimeType,
             'size' => $this->size,
             'checksum' => $this->checksum,
         ];

@@ -14,13 +14,13 @@ final readonly class TenantSignupRequest
         #[Assert\Length(max: 150, maxMessage: 'El campo "name" excede la longitud máxima permitida.')]
         public ?string $name,
 
-        #[Assert\NotBlank(message: 'El campo "contact_email" es obligatorio.')]
-        #[Assert\Email(message: 'El campo "contact_email" debe ser un correo válido.')]
-        #[Assert\Length(max: 180, maxMessage: 'El campo "contact_email" excede la longitud máxima permitida.')]
+        #[Assert\NotBlank(message: 'El campo "contactEmail" es obligatorio.')]
+        #[Assert\Email(message: 'El campo "contactEmail" debe ser un correo válido.')]
+        #[Assert\Length(max: 180, maxMessage: 'El campo "contactEmail" excede la longitud máxima permitida.')]
         public ?string $contactEmail,
 
-        #[Assert\NotBlank(message: 'El campo "contact_name" es obligatorio.')]
-        #[Assert\Length(max: 150, maxMessage: 'El campo "contact_name" excede la longitud máxima permitida.')]
+        #[Assert\NotBlank(message: 'El campo "contactName" es obligatorio.')]
+        #[Assert\Length(max: 150, maxMessage: 'El campo "contactName" excede la longitud máxima permitida.')]
         public ?string $contactName,
 
         #[Assert\NotBlank(message: 'El campo "password" es obligatorio.')]
@@ -36,12 +36,12 @@ final readonly class TenantSignupRequest
         #[Assert\Length(max: 120, maxMessage: 'El campo "city" excede la longitud máxima permitida.')]
         public ?string $city = null,
 
-        #[Assert\NotBlank(message: 'El campo "category_id" es obligatorio.')]
-        #[Assert\Uuid(message: 'El campo "category_id" debe ser un UUID válido.')]
+        #[Assert\NotBlank(message: 'El campo "categoryId" es obligatorio.')]
+        #[Assert\Uuid(message: 'El campo "categoryId" debe ser un UUID válido.')]
         public ?string $categoryId = null,
 
-        #[Assert\NotBlank(message: 'El campo "team_name" es obligatorio.')]
-        #[Assert\Length(max: 80, maxMessage: 'El campo "team_name" excede la longitud máxima permitida.')]
+        #[Assert\NotBlank(message: 'El campo "teamName" es obligatorio.')]
+        #[Assert\Length(max: 80, maxMessage: 'El campo "teamName" excede la longitud máxima permitida.')]
         public ?string $teamName = null,
     ) {
     }
@@ -50,14 +50,14 @@ final readonly class TenantSignupRequest
     {
         return new self(
             self::stringOrNull($payload['name'] ?? null),
-            self::stringOrNull($payload['contact_email'] ?? null),
-            self::stringOrNull($payload['contact_name'] ?? null),
+            self::stringOrNull($payload['contactEmail'] ?? null),
+            self::stringOrNull($payload['contactName'] ?? null),
             self::stringOrNull($payload['password'] ?? null),
             self::stringOrNull($payload['phone'] ?? null),
             self::stringOrNull($payload['address'] ?? null),
             self::stringOrNull($payload['city'] ?? null),
-            self::stringOrNull($payload['category_id'] ?? $payload['categoryId'] ?? null),
-            self::stringOrNull($payload['team_name'] ?? $payload['teamName'] ?? null),
+            self::stringOrNull($payload['categoryId'] ?? null),
+            self::stringOrNull($payload['teamName'] ?? null),
         );
     }
 

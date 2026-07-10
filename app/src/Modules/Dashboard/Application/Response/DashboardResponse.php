@@ -15,13 +15,13 @@ final readonly class DashboardResponse
     public function toArray(): array
     {
         return [
-            'active_players' => $this->activePlayers,
-            'pending_charges' => $this->pendingCharges,
-            'active_memberships' => $this->activeMemberships,
-            'pending_amount' => $this->pendingAmount,
-            'active_players_list' => $this->activePlayersList,
-            'pending_charges_list' => $this->pendingChargesList,
-            'active_memberships_list' => $this->activeMembershipsList,
+            'activePlayers' => $this->activePlayers,
+            'pendingCharges' => $this->pendingCharges,
+            'activeMemberships' => $this->activeMemberships,
+            'pendingAmount' => $this->pendingAmount,
+            'activePlayersList' => $this->activePlayersList,
+            'pendingChargesList' => $this->pendingChargesList,
+            'activeMembershipsList' => $this->activeMembershipsList,
         ];
     }
 }

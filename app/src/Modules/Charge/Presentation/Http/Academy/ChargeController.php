@@ -20,7 +20,8 @@ final class ChargeController extends AbstractPaginatedApiController
     #[Route('', methods:['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $input = new CreateChargeRequest($request->toArray()['membership_id'] ?? null, $request->toArray()['payment_concept_id'] ?? null, $request->toArray()['description'] ?? null, $request->toArray()['amount'] ?? null);
+        $payload = $request->toArray();
+        $input = new CreateChargeRequest($payload['membershipId'] ?? null, $payload['paymentConceptId'] ?? null, $payload['description'] ?? null, $payload['amount'] ?? null);
         $this->assertValid($this->validator, $input);
         $view = ($this->createHandler)(new CreateChargeCommand($this->requireAuthenticatedUserId($this->security), $this->tenantContext->requireAcademyId(), $input->membershipId ?? '', $input->paymentConceptId ?? '', $input->description ?? '', $input->amount ?? '0'));
         return new JsonResponse(['data'=>$view->toArray(),'meta'=>new \stdClass()], 201);

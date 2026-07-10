@@ -76,7 +76,7 @@ final class UsersControllerTest extends KernelTestCase
                 'CONTENT_TYPE' => 'application/json',
             ],
             content: json_encode([
-                'full_name' => 'Juan Perez',
+                'fullName' => 'Juan Perez',
                 'email' => 'juan@test.local',
                 'role' => AccountUser::ROLE_ACADEMY_ADMIN,
             ], JSON_THROW_ON_ERROR)

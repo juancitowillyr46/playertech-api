@@ -47,12 +47,12 @@ final readonly class PlayerResponse
     {
         return [
             'id' => $this->id,
-            'academy_id' => $this->academyId,
-            'category_id' => $this->categoryId,
-            'first_name' => $this->firstName,
-            'last_name' => $this->lastName,
-            'birth_date' => $this->birthDate,
-            'document_number' => $this->documentNumber,
+            'academyId' => $this->academyId,
+            'categoryId' => $this->categoryId,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+            'birthDate' => $this->birthDate,
+            'documentNumber' => $this->documentNumber,
             'photo' => $this->photo?->toArray(),
             'status' => $this->status,
         ];

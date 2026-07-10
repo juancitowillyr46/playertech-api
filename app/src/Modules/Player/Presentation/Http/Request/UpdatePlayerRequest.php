@@ -10,20 +10,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 final readonly class UpdatePlayerRequest
 {
     public function __construct(
-        #[Assert\NotBlank(message: 'El campo "first_name" es obligatorio.')]
-        #[Assert\Length(max: 100, maxMessage: 'El campo "first_name" excede la longitud máxima permitida.')]
+        #[Assert\NotBlank(message: 'El campo "firstName" es obligatorio.')]
+        #[Assert\Length(max: 100, maxMessage: 'El campo "firstName" excede la longitud máxima permitida.')]
         public ?string $firstName,
 
-        #[Assert\NotBlank(message: 'El campo "last_name" es obligatorio.')]
-        #[Assert\Length(max: 100, maxMessage: 'El campo "last_name" excede la longitud máxima permitida.')]
+        #[Assert\NotBlank(message: 'El campo "lastName" es obligatorio.')]
+        #[Assert\Length(max: 100, maxMessage: 'El campo "lastName" excede la longitud máxima permitida.')]
         public ?string $lastName,
 
-        #[Assert\NotBlank(message: 'El campo "birth_date" es obligatorio.')]
-        #[Assert\Date(message: 'El campo "birth_date" debe tener un formato de fecha válido.')]
+        #[Assert\NotBlank(message: 'El campo "birthDate" es obligatorio.')]
+        #[Assert\Date(message: 'El campo "birthDate" debe tener un formato de fecha válido.')]
         public ?string $birthDate,
 
-        #[Assert\NotBlank(message: 'El campo "document_number" es obligatorio.')]
-        #[Assert\Length(max: 30, maxMessage: 'El campo "document_number" excede la longitud máxima permitida.')]
+        #[Assert\NotBlank(message: 'El campo "documentNumber" es obligatorio.')]
+        #[Assert\Length(max: 30, maxMessage: 'El campo "documentNumber" excede la longitud máxima permitida.')]
         public ?string $documentNumber,
     ) {
     }
@@ -31,10 +31,10 @@ final readonly class UpdatePlayerRequest
     public static function fromArray(array $payload): self
     {
         return new self(
-            self::stringOrNull($payload['first_name'] ?? null),
-            self::stringOrNull($payload['last_name'] ?? null),
-            self::stringOrNull($payload['birth_date'] ?? null),
-            self::stringOrNull($payload['document_number'] ?? null),
+            self::stringOrNull($payload['firstName'] ?? null),
+            self::stringOrNull($payload['lastName'] ?? null),
+            self::stringOrNull($payload['birthDate'] ?? null),
+            self::stringOrNull($payload['documentNumber'] ?? null),
         );
     }
 

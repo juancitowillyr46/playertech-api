@@ -103,7 +103,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Academia PlayerTech Demo\",\n  \"contact_email\": \"tenant.demo@example.com\",\n  \"contact_name\": \"Juan Perez\",\n  \"password\": \"secret12345\",\n  \"phone\": \"+51 987 654 321\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\",\n  \"category_id\": \"{{categoryId}}\",\n  \"team_name\": \"Sub 12 A\"\n}"
+              "raw": "{\n  \"name\": \"Academia PlayerTech Demo\",\n  \"contactEmail\": \"tenant.demo@example.com\",\n  \"contactName\": \"Juan Perez\",\n  \"password\": \"secret12345\",\n  \"phone\": \"+51 987 654 321\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"teamName\": \"Sub 12 A\"\n}"
             }
           }
         }
@@ -172,7 +172,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Academia PlayerTech\",\n  \"contact_email\": \"contacto@academiaplayertech.com\",\n  \"phone\": \"+51 999 999 999\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Lima\",\n  \"logo\": \"https://cdn.example.com/logo.png\"\n}"
+              "raw": "{\n  \"name\": \"Academia PlayerTech\",\n  \"contactEmail\": \"contacto@academiaplayertech.com\",\n  \"phone\": \"+51 999 999 999\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Lima\",\n  \"logo\": \"https://cdn.example.com/logo.png\"\n}"
             }
           }
         },
@@ -269,7 +269,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Academia Tenant Demo\",\n  \"contact_email\": \"tenant@academiademo.com\",\n  \"phone\": \"+51 987 654 321\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\",\n  \"logo\": \"https://cdn.example.com/tenant-logo.png\"\n}"
+              "raw": "{\n  \"name\": \"Academia Tenant Demo\",\n  \"contactEmail\": \"tenant@academiademo.com\",\n  \"phone\": \"+51 987 654 321\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\",\n  \"logo\": \"https://cdn.example.com/tenant-logo.png\"\n}"
             }
           }
         }
@@ -310,7 +310,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"player_id\": \"{{playerId}}\",\n  \"primary_guardian_id\": \"{{guardianId}}\"\n}"
+              "raw": "{\n  \"playerId\": \"{{playerId}}\",\n  \"primaryGuardianId\": \"{{guardianId}}\"\n}"
             }
           }
         },
@@ -1058,7 +1058,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"membership_id\": \"{{membershipId}}\",\n  \"player_id\": \"{{playerId}}\",\n  \"guardian_id\": \"{{guardianId}}\",\n  \"payment_concept_id\": \"{{paymentConceptId}}\",\n  \"payment_date\": \"2026-07-09\",\n  \"amount\": \"100.00\",\n  \"notes\": \"Pago registrado desde Postman\"\n}"
+              "raw": "{\n  \"membershipId\": \"{{membershipId}}\",\n  \"playerId\": \"{{playerId}}\",\n  \"guardianId\": \"{{guardianId}}\",\n  \"paymentConceptId\": \"{{paymentConceptId}}\",\n  \"paymentDate\": \"2026-07-09\",\n  \"amount\": \"100.00\",\n  \"notes\": \"Pago registrado desde Postman\"\n}"
             }
           }
         },
@@ -1157,7 +1157,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"payment_id\": \"{{paymentId}}\",\n  \"charge_id\": \"{{chargeId}}\",\n  \"amount\": \"100.00\"\n}"
+              "raw": "{\n  \"paymentId\": \"{{paymentId}}\",\n  \"chargeId\": \"{{chargeId}}\",\n  \"amount\": \"100.00\"\n}"
             }
           }
         },
@@ -1193,7 +1193,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"payment_id\": \"{{paymentId}}\",\n  \"file_name\": \"comprobante.jpg\",\n  \"file_path\": \"/tmp/comprobante.jpg\",\n  \"mime_type\": \"image/jpeg\"\n}"
+              "raw": "{\n  \"paymentId\": \"{{paymentId}}\",\n  \"fileName\": \"comprobante.jpg\",\n  \"filePath\": \"/tmp/comprobante.jpg\",\n  \"mimeType\": \"image/jpeg\"\n}"
             }
           }
         },

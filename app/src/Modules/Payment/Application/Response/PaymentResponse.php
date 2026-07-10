@@ -11,6 +11,6 @@ final readonly class PaymentResponse
     }
     public function toArray(): array
     {
-        return ['id'=>$this->id,'membership_id'=>$this->membershipId,'player_id'=>$this->playerId,'guardian_id'=>$this->guardianId,'payment_concept_id'=>$this->paymentConceptId,'payment_date'=>$this->paymentDate,'amount'=>$this->amount,'status'=>$this->status];
+        return ['id'=>$this->id,'membershipId'=>$this->membershipId,'playerId'=>$this->playerId,'guardianId'=>$this->guardianId,'paymentConceptId'=>$this->paymentConceptId,'paymentDate'=>$this->paymentDate,'amount'=>$this->amount,'status'=>$this->status];
     }
 }

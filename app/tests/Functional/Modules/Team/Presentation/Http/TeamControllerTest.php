@@ -102,7 +102,7 @@ final class TeamControllerTest extends KernelTestCase
                 'CONTENT_TYPE' => 'application/json',
             ],
             content: json_encode([
-                'category_id' => $this->categoryId,
+                'categoryId' => $this->categoryId,
                 'name' => 'Sub-16 A',
             ], JSON_THROW_ON_ERROR)
         );
@@ -114,7 +114,7 @@ final class TeamControllerTest extends KernelTestCase
         $payload = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
         self::assertSame('Sub-16 A', $payload['data']['name']);
-        self::assertSame($this->categoryId, $payload['data']['category_id']);
+        self::assertSame($this->categoryId, $payload['data']['categoryId']);
 
         $duplicateResponse = self::$kernel->handle($request);
 

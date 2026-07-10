@@ -6,6 +6,12 @@ Este documento sirve como referencia operativa de la API HTTP de PlayerTech mien
 
 La convención general de respuestas y errores está definida en `specs/04-api.md`.
 
+## Naming Convention
+
+* Query params: `snake_case`.
+* Request bodies: `camelCase`.
+* Respuestas JSON: `camelCase`.
+
 ## List Pagination
 
 Los endpoints `GET` de listados que alimentan tablas o grids exponen paginación uniforme:

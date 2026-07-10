@@ -22,7 +22,8 @@ final class PaymentController extends AbstractApiController
     #[Route('', methods:['POST'])]
     public function register(Request $request): JsonResponse
     {
-        $input = new RegisterPaymentRequest($request->toArray()['membership_id'] ?? null, $request->toArray()['player_id'] ?? null, $request->toArray()['guardian_id'] ?? null, $request->toArray()['payment_concept_id'] ?? null, $request->toArray()['payment_date'] ?? null, $request->toArray()['amount'] ?? null, $request->toArray()['notes'] ?? null);
+        $payload = $request->toArray();
+        $input = new RegisterPaymentRequest($payload['membershipId'] ?? null, $payload['playerId'] ?? null, $payload['guardianId'] ?? null, $payload['paymentConceptId'] ?? null, $payload['paymentDate'] ?? null, $payload['amount'] ?? null, $payload['notes'] ?? null);
         $this->assertValid($this->validator, $input);
         $view = ($this->registerPaymentHandler)(new RegisterPaymentCommand($this->requireAuthenticatedUserId($this->security), $this->tenantContext->requireAcademyId(), $input->membershipId ?? '', $input->playerId ?? '', $input->guardianId ?? '', $input->paymentConceptId ?? '', $input->paymentDate ?? '', $input->amount ?? '', $input->notes));
         return new JsonResponse(['data'=>$view->toArray(),'meta'=>new \stdClass()], 201);
@@ -34,8 +35,8 @@ final class PaymentController extends AbstractApiController
         ($this->applyPaymentToChargeHandler)(new ApplyPaymentToChargeCommand(
             $this->requireAuthenticatedUserId($this->security),
             $this->tenantContext->requireAcademyId(),
-            $payload['payment_id'] ?? '',
-            $payload['charge_id'] ?? '',
+            $payload['paymentId'] ?? '',
+            $payload['chargeId'] ?? '',
             $payload['amount'] ?? '0'
         ));
         return new JsonResponse(['data'=>new \stdClass(),'meta'=>new \stdClass()]);

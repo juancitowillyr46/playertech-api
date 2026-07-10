@@ -36,10 +36,10 @@ final readonly class CategoryListItemResponse
     {
         return [
             'id' => $this->id,
-            'category_key' => $this->categoryKey,
+            'categoryKey' => $this->categoryKey,
             'name' => $this->name,
-            'min_age' => $this->minAge,
-            'max_age' => $this->maxAge,
+            'minAge' => $this->minAge,
+            'maxAge' => $this->maxAge,
             'description' => $this->description,
             'status' => $this->status,
         ];

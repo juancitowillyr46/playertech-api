@@ -10,8 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 final readonly class UpdateTeamRequest
 {
     public function __construct(
-        #[Assert\NotBlank(message: 'El campo "category_id" es obligatorio.')]
-        #[Assert\Uuid(message: 'El campo "category_id" debe ser un UUID válido.')]
+        #[Assert\NotBlank(message: 'El campo "categoryId" es obligatorio.')]
+        #[Assert\Uuid(message: 'El campo "categoryId" debe ser un UUID válido.')]
         public ?string $categoryId,
 
         #[Assert\NotBlank(message: 'El campo "name" es obligatorio.')]
@@ -23,7 +23,7 @@ final readonly class UpdateTeamRequest
     public static function fromArray(array $payload): self
     {
         return new self(
-            self::stringOrNull($payload['category_id'] ?? null),
+            self::stringOrNull($payload['categoryId'] ?? null),
             self::stringOrNull($payload['name'] ?? null),
         );
     }

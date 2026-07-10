@@ -11,6 +11,6 @@ final readonly class PaymentHistoryItemResponse
     }
     public function toArray(): array
     {
-        return ['id'=>$this->id,'payment_date'=>$this->paymentDate,'amount'=>$this->amount,'status'=>$this->status,'payment_concept_id'=>$this->paymentConceptId];
+        return ['id'=>$this->id,'paymentDate'=>$this->paymentDate,'amount'=>$this->amount,'status'=>$this->status,'paymentConceptId'=>$this->paymentConceptId];
     }
 }

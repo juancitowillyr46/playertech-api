@@ -24,10 +24,10 @@ final class CreatePlayerHandlerTest extends TestCase
             new CreatePlayerInput('Juan', 'Pérez', '2014-05-18', '12345678'),
         ));
 
-        self::assertSame('Juan', $response->toArray()['first_name']);
-        self::assertSame('Pérez', $response->toArray()['last_name']);
-        self::assertSame('2014-05-18', $response->toArray()['birth_date']);
-        self::assertSame('12345678', $response->toArray()['document_number']);
+        self::assertSame('Juan', $response->toArray()['firstName']);
+        self::assertSame('Pérez', $response->toArray()['lastName']);
+        self::assertSame('2014-05-18', $response->toArray()['birthDate']);
+        self::assertSame('12345678', $response->toArray()['documentNumber']);
         self::assertSame('ACTIVE', $response->toArray()['status']);
         self::assertCount(1, $repository->players);
     }

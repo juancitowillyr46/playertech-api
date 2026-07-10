@@ -10,8 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 final readonly class AssociateGuardianRequest
 {
     public function __construct(
-        #[Assert\NotBlank(message: 'El campo "guardian_id" es obligatorio.')]
-        #[Assert\Uuid(message: 'El campo "guardian_id" debe ser un UUID válido.')]
+        #[Assert\NotBlank(message: 'El campo "guardianId" es obligatorio.')]
+        #[Assert\Uuid(message: 'El campo "guardianId" debe ser un UUID válido.')]
         public ?string $guardianId,
 
         public ?bool $isPrimary = null,
@@ -21,8 +21,8 @@ final readonly class AssociateGuardianRequest
     public static function fromArray(array $payload): self
     {
         return new self(
-            self::stringOrNull($payload['guardian_id'] ?? null),
-            self::boolOrNull($payload['is_primary'] ?? null),
+            self::stringOrNull($payload['guardianId'] ?? null),
+            self::boolOrNull($payload['isPrimary'] ?? null),
         );
     }
 

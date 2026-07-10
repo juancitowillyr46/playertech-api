@@ -25,10 +25,10 @@ final readonly class TeamStaffMemberResponse
     public function toArray(): array
     {
         return [
-            'assignment_id' => $this->assignmentId,
-            'staff_id' => $this->staffId,
-            'user_id' => $this->userId,
-            'team_id' => $this->teamId,
+            'assignmentId' => $this->assignmentId,
+            'staffId' => $this->staffId,
+            'userId' => $this->userId,
+            'teamId' => $this->teamId,
             'role' => $this->role,
         ];
     }

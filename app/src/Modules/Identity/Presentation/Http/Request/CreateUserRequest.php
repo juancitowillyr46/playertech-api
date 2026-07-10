@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 final readonly class CreateUserRequest
 {
     public function __construct(
-        #[Assert\NotBlank(message: 'El campo "full_name" es obligatorio.')]
-        #[Assert\Length(max: 150, maxMessage: 'El campo "full_name" excede la longitud máxima permitida.')]
+        #[Assert\NotBlank(message: 'El campo "fullName" es obligatorio.')]
+        #[Assert\Length(max: 150, maxMessage: 'El campo "fullName" excede la longitud máxima permitida.')]
         public ?string $fullName,
 
         #[Assert\NotBlank(message: 'El campo "email" es obligatorio.')]
@@ -28,7 +28,7 @@ final readonly class CreateUserRequest
         #[Assert\Choice(choices: [AccountUser::ROLE_ROOT, AccountUser::ROLE_ACADEMY_ADMIN], message: 'El campo "role" no es válido.')]
         public ?string $role,
 
-        #[Assert\Length(max: 36, maxMessage: 'El campo "academy_id" excede la longitud máxima permitida.')]
+        #[Assert\Length(max: 36, maxMessage: 'El campo "academyId" excede la longitud máxima permitida.')]
         public ?string $academyId = null,
     ) {
     }
@@ -36,11 +36,11 @@ final readonly class CreateUserRequest
     public static function fromArray(array $payload): self
     {
         return new self(
-            self::stringOrNull($payload['full_name'] ?? null),
+            self::stringOrNull($payload['fullName'] ?? null),
             self::stringOrNull($payload['email'] ?? null),
             self::stringOrNull($payload['password'] ?? null),
             self::stringOrNull($payload['role'] ?? null),
-            self::stringOrNull($payload['academy_id'] ?? null),
+            self::stringOrNull($payload['academyId'] ?? null),
         );
     }
 

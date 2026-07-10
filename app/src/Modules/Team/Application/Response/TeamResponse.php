@@ -32,8 +32,8 @@ final readonly class TeamResponse
     {
         return [
             'id' => $this->id,
-            'academy_id' => $this->academyId,
-            'category_id' => $this->categoryId,
+            'academyId' => $this->academyId,
+            'categoryId' => $this->categoryId,
             'name' => $this->name,
             'status' => $this->status,
         ];

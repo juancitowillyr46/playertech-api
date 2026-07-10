@@ -31,6 +31,6 @@ final class RegisterPaymentHandlerTest extends TestCase
         $paymentRepository->expects(self::once())->method('save');
         $handler = new RegisterPaymentHandler($membershipRepository, $conceptRepository, $paymentRepository);
         $response = $handler(new RegisterPaymentCommand('actor-id', $academyId->value(), $membershipId->value(), $playerId->value(), $guardianId->value(), $conceptId->value(), '2026-07-09', '100.00'));
-        self::assertSame($membershipId->value(), $response->toArray()['membership_id']);
+        self::assertSame($membershipId->value(), $response->toArray()['membershipId']);
     }
 }

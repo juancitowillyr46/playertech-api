@@ -34,7 +34,7 @@ final class ShowActiveMembershipHandlerTest extends TestCase
             new PlayerId('019eec93-9a11-7432-bd04-52306b2b3d90'),
         ));
 
-        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d90', $response->toArray()['player_id']);
+        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d90', $response->toArray()['playerId']);
     }
 
     public function testItThrowsWhenMembershipDoesNotExist(): void

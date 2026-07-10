@@ -50,7 +50,7 @@ final readonly class AcademyResponse
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'contact_email' => $this->contactEmail,
+            'contactEmail' => $this->contactEmail,
             'phone' => $this->phone,
             'address' => $this->address,
             'city' => $this->city,

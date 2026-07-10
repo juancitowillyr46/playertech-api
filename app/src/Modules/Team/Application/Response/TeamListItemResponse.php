@@ -30,7 +30,7 @@ final readonly class TeamListItemResponse
     {
         return [
             'id' => $this->id,
-            'category_id' => $this->categoryId,
+            'categoryId' => $this->categoryId,
             'name' => $this->name,
             'status' => $this->status,
         ];

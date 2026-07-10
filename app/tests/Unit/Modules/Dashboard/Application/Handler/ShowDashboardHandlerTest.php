@@ -32,7 +32,7 @@ final class ShowDashboardHandlerTest extends TestCase
         $paymentRepo->save(Payment::create(PaymentId::generate(), $academyId, $membership->id(), $player->id(), \App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId::generate(), PaymentConceptId::generate(), new \DateTimeImmutable('2026-07-09'), 80.00, null, AuditTrail::create('actor-id')));
         $handler = new ShowDashboardHandler($playerRepo, $membershipRepo, $chargeRepo, $paymentRepo);
         $response = $handler(new ShowDashboardQuery($academyId->value()));
-        self::assertSame(1, $response->toArray()['active_players']);
-        self::assertSame(1, $response->toArray()['pending_charges']);
+        self::assertSame(1, $response->toArray()['activePlayers']);
+        self::assertSame(1, $response->toArray()['pendingCharges']);
     }
 }

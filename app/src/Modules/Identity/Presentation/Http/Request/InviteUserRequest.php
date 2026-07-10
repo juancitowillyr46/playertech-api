@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 final readonly class InviteUserRequest
 {
     public function __construct(
-        #[Assert\NotBlank(message: 'El campo "full_name" es obligatorio.')]
+        #[Assert\NotBlank(message: 'El campo "fullName" es obligatorio.')]
         #[Assert\Length(max: 150)]
         public ?string $fullName,
 
@@ -32,10 +32,10 @@ final readonly class InviteUserRequest
     public static function fromArray(array $payload): self
     {
         return new self(
-            self::stringOrNull($payload['full_name'] ?? null),
+            self::stringOrNull($payload['fullName'] ?? null),
             self::stringOrNull($payload['email'] ?? null),
             self::stringOrNull($payload['role'] ?? null),
-            self::stringOrNull($payload['academy_id'] ?? null),
+            self::stringOrNull($payload['academyId'] ?? null),
         );
     }
 

@@ -37,9 +37,9 @@ final class ShowPlayerHandlerTest extends TestCase
 
         $response = $handler(new ShowPlayerQuery($academyId, $playerId));
 
-        self::assertSame('Juan', $response->toArray()['first_name']);
-        self::assertSame('Pérez', $response->toArray()['last_name']);
-        self::assertSame('12345678', $response->toArray()['document_number']);
+        self::assertSame('Juan', $response->toArray()['firstName']);
+        self::assertSame('Pérez', $response->toArray()['lastName']);
+        self::assertSame('12345678', $response->toArray()['documentNumber']);
     }
 
     public function testItRejectsMissingPlayer(): void

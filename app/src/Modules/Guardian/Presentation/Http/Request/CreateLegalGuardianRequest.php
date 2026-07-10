@@ -10,12 +10,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 final readonly class CreateLegalGuardianRequest
 {
     public function __construct(
-        #[Assert\NotBlank(message: 'El campo "first_name" es obligatorio.')]
-        #[Assert\Length(max: 100, maxMessage: 'El campo "first_name" excede la longitud máxima permitida.')]
+        #[Assert\NotBlank(message: 'El campo "firstName" es obligatorio.')]
+        #[Assert\Length(max: 100, maxMessage: 'El campo "firstName" excede la longitud máxima permitida.')]
         public ?string $firstName,
 
-        #[Assert\NotBlank(message: 'El campo "last_name" es obligatorio.')]
-        #[Assert\Length(max: 100, maxMessage: 'El campo "last_name" excede la longitud máxima permitida.')]
+        #[Assert\NotBlank(message: 'El campo "lastName" es obligatorio.')]
+        #[Assert\Length(max: 100, maxMessage: 'El campo "lastName" excede la longitud máxima permitida.')]
         public ?string $lastName,
 
         #[Assert\Length(max: 30, maxMessage: 'El campo "phone" excede la longitud máxima permitida.')]
@@ -30,8 +30,8 @@ final readonly class CreateLegalGuardianRequest
     public static function fromArray(array $payload): self
     {
         return new self(
-            self::stringOrNull($payload['first_name'] ?? null),
-            self::stringOrNull($payload['last_name'] ?? null),
+            self::stringOrNull($payload['firstName'] ?? null),
+            self::stringOrNull($payload['lastName'] ?? null),
             self::stringOrNull($payload['phone'] ?? null),
             self::stringOrNull($payload['email'] ?? null),
         );

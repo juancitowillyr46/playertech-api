@@ -103,11 +103,11 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         $payload = $response->toArray();
 
         self::assertSame('Academia de Prueba', $payload['academy']['name']);
-        self::assertSame('tenant.test@example.com', $payload['academy']['contact_email']);
+        self::assertSame('tenant.test@example.com', $payload['academy']['contactEmail']);
         self::assertSame('tenant.test@example.com', $payload['user']['email']);
         self::assertSame(AccountUser::STATUS_PENDING_ACTIVATION, $payload['user']['status']);
-        self::assertTrue($payload['user']['activation_pending']);
-        self::assertSame($this->categoryId, $payload['team']['category_id']);
+        self::assertTrue($payload['user']['activationPending']);
+        self::assertSame($this->categoryId, $payload['team']['categoryId']);
         self::assertSame('Sub 12 A', $payload['team']['name']);
 
         $academy = $this->academyRepository->findOneByContactEmail(new Email('tenant.test@example.com'));

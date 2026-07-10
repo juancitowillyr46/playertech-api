@@ -22,7 +22,7 @@ final class RegisterStaffMemberHandlerTest extends TestCase
         $entityManager->method('getRepository')->willReturn($repo);
         $handler = new RegisterStaffMemberHandler($staffRepository, $entityManager);
         $response = $handler(new RegisterStaffMemberCommand('019eec93-9a11-7432-bd04-52306b2b3d00', '019eec93-9a11-7432-bd04-52306b2b3d8f', '019eec93-9a11-7432-bd04-52306b2b3d8e'));
-        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d8e', $response->toArray()['user_id']);
+        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d8e', $response->toArray()['userId']);
         self::assertCount(1, $staffRepository->items);
     }
     public function testItRejectsDuplicateStaffMember(): void

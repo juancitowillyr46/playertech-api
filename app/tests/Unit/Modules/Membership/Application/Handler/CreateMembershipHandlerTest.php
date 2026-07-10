@@ -23,8 +23,8 @@ final class CreateMembershipHandlerTest extends TestCase
             '019eec93-9a11-7432-bd04-52306b2b3d91',
         ));
 
-        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d90', $response->toArray()['player_id']);
-        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d91', $response->toArray()['primary_guardian_id']);
+        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d90', $response->toArray()['playerId']);
+        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d91', $response->toArray()['primaryGuardianId']);
         self::assertSame('ACTIVE', $response->toArray()['status']);
         self::assertCount(1, $repository->memberships);
     }

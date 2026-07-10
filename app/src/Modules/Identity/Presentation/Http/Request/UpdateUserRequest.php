@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 final readonly class UpdateUserRequest
 {
     public function __construct(
-        #[Assert\NotBlank(message: 'El campo "full_name" es obligatorio.')]
-        #[Assert\Length(max: 150, maxMessage: 'El campo "full_name" excede la longitud máxima permitida.')]
+        #[Assert\NotBlank(message: 'El campo "fullName" es obligatorio.')]
+        #[Assert\Length(max: 150, maxMessage: 'El campo "fullName" excede la longitud máxima permitida.')]
         public ?string $fullName,
 
         #[Assert\NotBlank(message: 'El campo "email" es obligatorio.')]
@@ -29,7 +29,7 @@ final readonly class UpdateUserRequest
     public static function fromArray(array $payload): self
     {
         return new self(
-            self::stringOrNull($payload['full_name'] ?? null),
+            self::stringOrNull($payload['fullName'] ?? null),
             self::stringOrNull($payload['email'] ?? null),
             self::stringOrNull($payload['role'] ?? null),
         );

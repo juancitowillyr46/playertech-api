@@ -181,6 +181,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Los recursos de media se estandarizan como objetos JSON con `path`, `url`, `mime_type`, `size` y `checksum`; `Academy` expone `shield` con ese contrato y `Player` heredará el mismo patrón para `photo`.
 * Existe una guia operativa para construir nuevos modulos sin depender de modelos previos.
 * `Academy` queda definido como el modulo de referencia oficial para nuevos contextos: CQRS, XML puro, VOs tipados, soft delete, validacion formal, controllers delgados y separacion root/tenant.
+* Se formalizó la regla de comunicación entre módulos: primero contratos de aplicación síncronos, luego eventos internos si aportan claridad, y `Messenger` solo ante una necesidad real de asincronía.
 * Los comandos de validacion de pruebas y migraciones quedaron documentados en `specs/11-testing-strategy.md`.
 * La separacion de configuracion `local`/`test`/`prod` quedó documentada en `specs/17-environment-guide.md`.
 * La validacion principal de suites de integracion y funcionales debe correr sobre la base `test` para simular CI/CD; `local` queda para desarrollo interactivo.

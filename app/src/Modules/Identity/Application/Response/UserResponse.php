@@ -34,9 +34,9 @@ final readonly class UserResponse
     {
         return [
             'id' => $this->id,
-            'full_name' => $this->fullName,
+            'fullName' => $this->fullName,
             'email' => $this->email,
-            'academy_id' => $this->academyId,
+            'academyId' => $this->academyId,
             'role' => $this->role,
             'status' => $this->status,
         ];

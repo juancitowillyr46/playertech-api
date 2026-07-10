@@ -28,8 +28,8 @@ final readonly class TenantSignupData
     {
         return new self(
             new Name(self::requiredString($payload, 'name', 150)),
-            new Email(self::requiredString($payload, 'contact_email', 180)),
-            self::requiredString($payload, 'contact_name', 150),
+            new Email(self::requiredString($payload, 'contactEmail', 180)),
+            self::requiredString($payload, 'contactName', 150),
             self::requiredString($payload, 'password', 255),
             self::optionalPhone($payload),
             self::optionalAddress($payload),
@@ -109,7 +109,7 @@ final readonly class TenantSignupData
             throw new BadRequestHttpException(sprintf('El campo "%s" excede la longitud máxima permitida.', $key));
         }
 
-        if ('contact_email' === $key && false === filter_var($value, FILTER_VALIDATE_EMAIL)) {
+        if ('contactEmail' === $key && false === filter_var($value, FILTER_VALIDATE_EMAIL)) {
             throw new BadRequestHttpException(sprintf('El campo "%s" debe ser un correo válido.', $key));
         }
 

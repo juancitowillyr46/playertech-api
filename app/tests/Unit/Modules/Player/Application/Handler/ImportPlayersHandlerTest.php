@@ -55,7 +55,7 @@ final class ImportPlayersHandlerTest extends TestCase
         ));
 
         self::assertCount(1, $responses);
-        self::assertSame($categoryId->value(), $responses[0]->toArray()['category_id']);
+        self::assertSame($categoryId->value(), $responses[0]->toArray()['categoryId']);
         self::assertCount(1, $playerRepository->players);
     }
 

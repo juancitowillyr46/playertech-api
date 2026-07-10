@@ -36,12 +36,12 @@ final readonly class MembershipResponse
     {
         return [
             'id' => $this->id,
-            'academy_id' => $this->academyId,
-            'player_id' => $this->playerId,
-            'primary_guardian_id' => $this->primaryGuardianId,
+            'academyId' => $this->academyId,
+            'playerId' => $this->playerId,
+            'primaryGuardianId' => $this->primaryGuardianId,
             'status' => $this->status,
-            'started_at' => $this->startedAt,
-            'ended_at' => $this->endedAt,
+            'startedAt' => $this->startedAt,
+            'endedAt' => $this->endedAt,
         ];
     }
 }

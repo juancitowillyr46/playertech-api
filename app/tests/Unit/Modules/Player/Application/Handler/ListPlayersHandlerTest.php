@@ -36,7 +36,7 @@ final class ListPlayersHandlerTest extends TestCase
         $players = $handler(new ListPlayersQuery($academyId, new PaginationQuery()));
 
         self::assertCount(1, $players->items);
-        self::assertSame('Juan', $players->items[0]->toArray()['first_name']);
-        self::assertSame('12345678', $players->items[0]->toArray()['document_number']);
+        self::assertSame('Juan', $players->items[0]->toArray()['firstName']);
+        self::assertSame('12345678', $players->items[0]->toArray()['documentNumber']);
     }
 }

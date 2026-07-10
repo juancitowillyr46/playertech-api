@@ -38,7 +38,7 @@ final readonly class VenueResponse
     {
         return [
             'id' => $this->id,
-            'academy_id' => $this->academyId,
+            'academyId' => $this->academyId,
             'name' => $this->name,
             'address' => $this->address,
             'city' => $this->city,

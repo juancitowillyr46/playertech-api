@@ -36,11 +36,11 @@ final readonly class PlayerListItemResponse
     {
         return [
             'id' => $this->id,
-            'category_id' => $this->categoryId,
-            'first_name' => $this->firstName,
-            'last_name' => $this->lastName,
-            'birth_date' => $this->birthDate,
-            'document_number' => $this->documentNumber,
+            'categoryId' => $this->categoryId,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+            'birthDate' => $this->birthDate,
+            'documentNumber' => $this->documentNumber,
             'status' => $this->status,
         ];
     }

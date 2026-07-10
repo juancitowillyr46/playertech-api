@@ -43,9 +43,10 @@ final class MembershipController extends AbstractApiController
     #[Route('', name: 'api_v1_academy_memberships_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
+        $payload = $request->toArray();
         $input = new CreateMembershipRequest(
-            $request->toArray()['player_id'] ?? null,
-            $request->toArray()['primary_guardian_id'] ?? null,
+            $payload['playerId'] ?? null,
+            $payload['primaryGuardianId'] ?? null,
         );
         $this->assertValid($this->validator, $input);
 

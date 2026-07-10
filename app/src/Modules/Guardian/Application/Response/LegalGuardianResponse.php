@@ -21,9 +21,9 @@ final readonly class LegalGuardianResponse
     {
         return [
             'id' => $this->id,
-            'academy_id' => $this->academyId,
-            'first_name' => $this->firstName,
-            'last_name' => $this->lastName,
+            'academyId' => $this->academyId,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
             'phone' => $this->phone,
             'email' => $this->email,
             'status' => $this->status,

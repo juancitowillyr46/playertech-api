@@ -19,8 +19,8 @@ final readonly class AcademyContextResponse
     {
         return [
             'mode' => $this->mode,
-            'user_id' => $this->userId,
-            'academy_id' => $this->academyId,
+            'userId' => $this->userId,
+            'academyId' => $this->academyId,
             'role' => $this->role,
             'roles' => $this->roles,
         ];

@@ -203,6 +203,32 @@ Aunque el MVP use solo dos roles iniciales, la arquitectura debe soportar crecim
 
 La comunicación entre módulos será interna y síncrona en el MVP.
 
+## Communication Decision Rule
+
+Antes de introducir un bus, evento o integración entre módulos, aplicar este orden:
+
+1. **Contrato de aplicación síncrono**: si el módulo dueño expone un caso de uso o servicio de aplicación, preferir esa vía.
+2. **Evento interno**: si otro módulo solo necesita reaccionar y no bloquear el request principal, usar un evento interno.
+3. **Bus asíncrono**: solo si existe trabajo diferido, reintentos, desacople temporal o una necesidad real de asincronía.
+
+## When Communication Is Justified
+
+La comunicación entre módulos queda justificada cuando:
+
+* un módulo necesita consultar o modificar una verdad de negocio que pertenece a otro;
+* una operación del flujo principal depende de la respuesta del módulo dueño;
+* un módulo debe ejecutar efectos secundarios sobre otro sin duplicar reglas;
+* el cruce entre contextos es estable y aporta más claridad que duplicación.
+
+## When It Is Not Justified
+
+No introducir comunicación entre módulos cuando:
+
+* basta con un dato local o una consulta simple dentro del mismo contexto;
+* se intenta usar un bus como sustituto de una regla de negocio clara;
+* el receptor solo ejecuta una notificación opcional y no afecta el resultado del caso de uso;
+* la dependencia agregada aumenta más el costo de mantenimiento que el valor funcional.
+
 ## Recommended Flow
 
 * Presentation recibe el request.
@@ -215,6 +241,7 @@ La comunicación entre módulos será interna y síncrona en el MVP.
 * Servicios de aplicación de otros módulos.
 * Eventos internos cuando aporten claridad.
 * Contratos compartidos en `Shared`.
+* `Messenger` o bus interno solo cuando exista una necesidad real de asincronía.
 
 ## Not Allowed
 

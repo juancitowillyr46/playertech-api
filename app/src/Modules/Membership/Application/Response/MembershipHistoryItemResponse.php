@@ -33,9 +33,9 @@ final readonly class MembershipHistoryItemResponse
         return [
             'id' => $this->id,
             'status' => $this->status,
-            'started_at' => $this->startedAt,
-            'ended_at' => $this->endedAt,
-            'primary_guardian_id' => $this->primaryGuardianId,
+            'startedAt' => $this->startedAt,
+            'endedAt' => $this->endedAt,
+            'primaryGuardianId' => $this->primaryGuardianId,
         ];
     }
 }

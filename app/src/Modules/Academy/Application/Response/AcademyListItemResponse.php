@@ -31,7 +31,7 @@ final readonly class AcademyListItemResponse
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'contact_email' => $this->contactEmail,
+            'contactEmail' => $this->contactEmail,
             'status' => $this->status,
         ];
     }

@@ -34,11 +34,11 @@ final readonly class TeamAssignmentResponse
     {
         return [
             'id' => $this->id,
-            'player_id' => $this->playerId,
-            'team_id' => $this->teamId,
-            'start_date' => $this->startDate,
-            'end_date' => $this->endDate,
-            'is_primary' => $this->isPrimary,
+            'playerId' => $this->playerId,
+            'teamId' => $this->teamId,
+            'startDate' => $this->startDate,
+            'endDate' => $this->endDate,
+            'isPrimary' => $this->isPrimary,
         ];
     }
 }

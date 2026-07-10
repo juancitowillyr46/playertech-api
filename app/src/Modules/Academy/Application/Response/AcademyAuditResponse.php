@@ -29,10 +29,10 @@ final readonly class AcademyAuditResponse
     public function toArray(): array
     {
         return [
-            'created_at' => $this->createdAt,
-            'created_by' => $this->createdBy,
-            'updated_at' => $this->updatedAt,
-            'updated_by' => $this->updatedBy,
+            'createdAt' => $this->createdAt,
+            'createdBy' => $this->createdBy,
+            'updatedAt' => $this->updatedAt,
+            'updatedBy' => $this->updatedBy,
         ];
     }
 }

@@ -41,17 +41,17 @@ final class UpdatePlayerHandlerTest extends TestCase
             $academyId->value(),
             $playerId->value(),
             UpdatePlayerInput::fromArray([
-                'first_name' => 'Juan Carlos',
-                'last_name' => 'Pérez Gómez',
-                'birth_date' => '2014-05-20',
-                'document_number' => '87654321',
+                'firstName' => 'Juan Carlos',
+                'lastName' => 'Pérez Gómez',
+                'birthDate' => '2014-05-20',
+                'documentNumber' => '87654321',
             ]),
         ));
 
-        self::assertSame('Juan Carlos', $response->toArray()['first_name']);
-        self::assertSame('Pérez Gómez', $response->toArray()['last_name']);
-        self::assertSame('2014-05-20', $response->toArray()['birth_date']);
-        self::assertSame('87654321', $response->toArray()['document_number']);
+        self::assertSame('Juan Carlos', $response->toArray()['firstName']);
+        self::assertSame('Pérez Gómez', $response->toArray()['lastName']);
+        self::assertSame('2014-05-20', $response->toArray()['birthDate']);
+        self::assertSame('87654321', $response->toArray()['documentNumber']);
     }
 
     public function testItRejectsDuplicateDocumentNumberWithinTheSameAcademy(): void
@@ -92,10 +92,10 @@ final class UpdatePlayerHandlerTest extends TestCase
             $academyId->value(),
             $playerId->value(),
             UpdatePlayerInput::fromArray([
-                'first_name' => 'Juan Carlos',
-                'last_name' => 'Pérez Gómez',
-                'birth_date' => '2014-05-20',
-                'document_number' => '87654321',
+                'firstName' => 'Juan Carlos',
+                'lastName' => 'Pérez Gómez',
+                'birthDate' => '2014-05-20',
+                'documentNumber' => '87654321',
             ]),
         ));
     }

@@ -56,8 +56,8 @@ final class AssignPlayerToTeamHandlerTest extends TestCase
             '2026-07-08',
         ));
 
-        self::assertSame($player->id()->value(), $response->toArray()['player_id']);
-        self::assertSame($team->id()->value(), $response->toArray()['team_id']);
+        self::assertSame($player->id()->value(), $response->toArray()['playerId']);
+        self::assertSame($team->id()->value(), $response->toArray()['teamId']);
         self::assertCount(1, $assignmentRepository->items);
     }
 }

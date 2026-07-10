@@ -109,8 +109,8 @@ final class PlayerGuardianControllerTest extends KernelTestCase
                 'CONTENT_TYPE' => 'application/json',
             ],
             content: json_encode([
-                'first_name' => 'Maria',
-                'last_name' => 'Lopez',
+                'firstName' => 'Maria',
+                'lastName' => 'Lopez',
                 'phone' => '+51 999 111 222',
                 'email' => 'maria@example.com',
             ], JSON_THROW_ON_ERROR)
@@ -127,13 +127,13 @@ final class PlayerGuardianControllerTest extends KernelTestCase
                 'CONTENT_TYPE' => 'application/json',
             ],
             content: json_encode([
-                'guardian_id' => $guardianId,
-                'is_primary' => true,
+                'guardianId' => $guardianId,
+                'isPrimary' => true,
             ], JSON_THROW_ON_ERROR)
         ));
 
         self::assertSame(201, $associateResponse->getStatusCode());
-        self::assertTrue(json_decode($associateResponse->getContent(), true, 512, JSON_THROW_ON_ERROR)['data']['is_primary']);
+        self::assertTrue(json_decode($associateResponse->getContent(), true, 512, JSON_THROW_ON_ERROR)['data']['isPrimary']);
 
         $secondGuardianResponse = self::$kernel->handle(Request::create(
             '/api/v1/academy/guardians',
@@ -143,8 +143,8 @@ final class PlayerGuardianControllerTest extends KernelTestCase
                 'CONTENT_TYPE' => 'application/json',
             ],
             content: json_encode([
-                'first_name' => 'Carlos',
-                'last_name' => 'Rojas',
+                'firstName' => 'Carlos',
+                'lastName' => 'Rojas',
                 'phone' => '+51 999 333 444',
                 'email' => 'carlos@example.com',
             ], JSON_THROW_ON_ERROR)
@@ -160,8 +160,8 @@ final class PlayerGuardianControllerTest extends KernelTestCase
                 'CONTENT_TYPE' => 'application/json',
             ],
             content: json_encode([
-                'guardian_id' => $secondGuardianId,
-                'is_primary' => false,
+                'guardianId' => $secondGuardianId,
+                'isPrimary' => false,
             ], JSON_THROW_ON_ERROR)
         ));
 
@@ -176,7 +176,7 @@ final class PlayerGuardianControllerTest extends KernelTestCase
         ));
 
         self::assertSame(200, $changePrimaryResponse->getStatusCode());
-        self::assertTrue(json_decode($changePrimaryResponse->getContent(), true, 512, JSON_THROW_ON_ERROR)['data']['is_primary']);
+        self::assertTrue(json_decode($changePrimaryResponse->getContent(), true, 512, JSON_THROW_ON_ERROR)['data']['isPrimary']);
 
         $removeResponse = self::$kernel->handle(Request::create(
             '/api/v1/academy/players/'.$this->playerId.'/guardians/'.$guardianId,
