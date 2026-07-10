@@ -40,38 +40,60 @@ final class StaffController extends AbstractApiController
         private readonly RemoveStaffFromTeamHandler $removeStaffFromTeamHandler,
         private readonly ShowTeamStaffHandler $showTeamStaffHandler,
         private readonly TenantContext $tenantContext,
-    ) {}
+    ) {
+    }
 
     #[Route('', methods: ['POST'])]
     public function register(Request $request): JsonResponse
     {
-        $input = new RegisterStaffMemberRequest($request->toArray()['user_id'] ?? null);
+        $input = new RegisterStaffMemberRequest(...$request->toArray());
         $this->assertValid($this->validator, $input);
+
         $view = ($this->registerStaffMemberHandler)(
-            new RegisterStaffMemberCommand($this->requireAuthenticatedUserId($this->security), $this->tenantContext->requireAcademyId(), $input->userId ?? '')
+            new RegisterStaffMemberCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                $this->tenantContext->requireAcademyId(),
+                $input->userId,
+            )
         );
+
         return new JsonResponse(['data' => $view->toArray(), 'meta' => new \stdClass()], 201);
     }
 
     #[Route('/assignments', methods: ['POST'])]
     public function assign(Request $request): JsonResponse
     {
-        $input = new AssignStaffToTeamRequest($request->toArray()['staff_id'] ?? null, $request->toArray()['team_id'] ?? null, $request->toArray()['role'] ?? null);
+        $input = new AssignStaffToTeamRequest(...$request->toArray());
         $this->assertValid($this->validator, $input);
+
         $view = ($this->assignStaffToTeamHandler)(
-            new AssignStaffToTeamCommand($this->requireAuthenticatedUserId($this->security), $this->tenantContext->requireAcademyId(), $input->staffId ?? '', $input->teamId ?? '', new StaffRole($input->role ?? ''))
+            new AssignStaffToTeamCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                $this->tenantContext->requireAcademyId(),
+                $input->staffId,
+                $input->teamId,
+                new StaffRole($input->role),
+            )
         );
+
         return new JsonResponse(['data' => $view->toArray(), 'meta' => new \stdClass()], 201);
     }
 
     #[Route('/assignments/{assignmentId}/role', methods: ['PATCH'])]
     public function changeRole(Request $request, string $assignmentId): JsonResponse
     {
-        $input = new ChangeStaffRoleRequest($request->toArray()['role'] ?? null);
+        $input = new ChangeStaffRoleRequest(...$request->toArray());
         $this->assertValid($this->validator, $input);
+
         $view = ($this->changeStaffRoleHandler)(
-            new ChangeStaffRoleCommand($this->requireAuthenticatedUserId($this->security), $this->tenantContext->requireAcademyId(), $assignmentId, new StaffRole($input->role ?? ''))
+            new ChangeStaffRoleCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                $this->tenantContext->requireAcademyId(),
+                $assignmentId,
+                new StaffRole($input->role),
+            )
         );
+
         return new JsonResponse(['data' => $view->toArray(), 'meta' => new \stdClass()]);
     }
 

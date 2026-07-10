@@ -272,7 +272,7 @@ Los recursos que representen archivos o imagenes no deben devolver binarios dent
 {
   "path": "var/storage/media/local/academies/01J.../shield/original/01K....png",
   "url": "https://api.playertech.test/media/academies/01J.../shield/01K....png",
-  "mime_type": "image/png",
+  "mimeType": "image/png",
   "size": 184233,
   "checksum": "sha256:..."
 }
@@ -282,7 +282,7 @@ Los recursos que representen archivos o imagenes no deben devolver binarios dent
 
 * `path` representa la referencia interna del archivo.
 * `url` representa el enlace de consumo.
-* `mime_type`, `size` y `checksum` son opcionales pero recomendados.
+* `mimeType`, `size` y `checksum` son opcionales pero recomendados.
 * Si un recurso no tiene media asociada, el campo debe responder `null`.
 * `Academy` usara el campo `shield` con este contrato.
 * `Player` usara el campo `photo` con este contrato.

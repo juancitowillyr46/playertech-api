@@ -96,22 +96,22 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
 ```json
 {
   "name": "Academia PlayerTech Demo",
-  "contact_email": "tenant.demo@example.com",
-  "contact_name": "Juan Perez",
+  "contactEmail": "tenant.demo@example.com",
+  "contactName": "Juan Perez",
   "password": "secret12345",
   "phone": "+51 987 654 321",
   "address": "Jr. Secundario 789",
   "city": "Arequipa",
-  "category_id": "uuid",
-  "team_name": "Sub 12 A"
+  "categoryId": "uuid",
+  "teamName": "Sub 12 A"
 }
 ```
 
 ### Rules
 
-* `category_id` es obligatorio y debe existir.
+* `categoryId` es obligatorio y debe existir.
 * La categoría debe estar activa.
-* `team_name` es obligatorio y su longitud máxima es 80 caracteres.
+* `teamName` es obligatorio y su longitud máxima es 80 caracteres.
 * No puede existir otro equipo con el mismo nombre dentro de la misma categoría de la academia.
 
 ### Success
@@ -159,7 +159,7 @@ Crear usuarios de plataforma o usuarios administrativos de tenant desde contexto
 
 ```json
 {
-  "full_name": "Juan Perez",
+  "fullName": "Juan Perez",
   "email": "juan@playertech.com",
   "password": "secret123",
   "role": "ROLE_ROOT",
@@ -181,7 +181,7 @@ Crear usuarios de plataforma o usuarios administrativos de tenant desde contexto
 {
   "data": {
     "id": "uuid",
-    "full_name": "Juan Perez",
+    "fullName": "Juan Perez",
     "email": "juan@playertech.com",
     "academy_id": null,
     "role": "ROLE_ROOT",
@@ -388,15 +388,15 @@ Crear la matrícula activa de un jugador asociando un acudiente principal respon
 
 ```json
 {
-  "player_id": "uuid",
-  "primary_guardian_id": "uuid"
+  "playerId": "uuid",
+  "primaryGuardianId": "uuid"
 }
 ```
 
 ### Rules
 
-* `player_id` es obligatorio y debe existir dentro del tenant actual.
-* `primary_guardian_id` es obligatorio y debe existir dentro del tenant actual.
+* `playerId` es obligatorio y debe existir dentro del tenant actual.
+* `primaryGuardianId` es obligatorio y debe existir dentro del tenant actual.
 * Solo puede existir una matrícula activa por jugador dentro de una academia.
 
 ### Success
@@ -408,8 +408,8 @@ Crear la matrícula activa de un jugador asociando un acudiente principal respon
   "data": {
     "id": "uuid",
     "academy_id": "uuid",
-    "player_id": "uuid",
-    "primary_guardian_id": "uuid",
+    "playerId": "uuid",
+    "primaryGuardianId": "uuid",
     "status": "ACTIVE",
     "started_at": "2026-07-07T00:00:00+00:00",
     "ended_at": null
@@ -446,8 +446,8 @@ Consultar la matrícula activa de un jugador y su acudiente principal.
   "data": {
     "id": "uuid",
     "academy_id": "uuid",
-    "player_id": "uuid",
-    "primary_guardian_id": "uuid",
+    "playerId": "uuid",
+    "primaryGuardianId": "uuid",
     "status": "ACTIVE",
     "started_at": "2026-07-07T00:00:00+00:00",
     "ended_at": null
@@ -484,7 +484,7 @@ Registrar un usuario administrativo de academia como miembro del staff.
 
 ```json
 {
-  "user_id": "uuid"
+  "userId": "uuid"
 }
 ```
 
@@ -497,7 +497,7 @@ Registrar un usuario administrativo de academia como miembro del staff.
   "data": {
     "id": "uuid",
     "academy_id": "uuid",
-    "user_id": "uuid",
+    "userId": "uuid",
     "status": "ACTIVE"
   },
   "meta": {}
@@ -520,8 +520,8 @@ Asignar un miembro del staff a un equipo con un rol técnico.
 
 ```json
 {
-  "staff_id": "uuid",
-  "team_id": "uuid",
+  "staffId": "uuid",
+  "teamId": "uuid",
   "role": "HEAD_COACH"
 }
 ```
@@ -534,8 +534,8 @@ Asignar un miembro del staff a un equipo con un rol técnico.
 {
   "data": {
     "id": "uuid",
-    "team_id": "uuid",
-    "staff_id": "uuid",
+    "teamId": "uuid",
+    "staffId": "uuid",
     "role": "HEAD_COACH"
   },
   "meta": {}
@@ -585,9 +585,9 @@ Consultar el staff activo asignado a un equipo.
   "data": [
     {
       "assignment_id": "uuid",
-      "staff_id": "uuid",
-      "user_id": "uuid",
-      "team_id": "uuid",
+      "staffId": "uuid",
+      "userId": "uuid",
+      "teamId": "uuid",
       "role": "HEAD_COACH"
     }
   ],
@@ -612,9 +612,9 @@ Asignar un jugador a un equipo dentro de la academia actual.
 
 ```json
 {
-  "player_id": "uuid",
-  "team_id": "uuid",
-  "start_date": "2026-07-08"
+  "playerId": "uuid",
+  "teamId": "uuid",
+  "startDate": "2026-07-08"
 }
 ```
 
@@ -626,11 +626,11 @@ Asignar un jugador a un equipo dentro de la academia actual.
 {
   "data": {
     "id": "uuid",
-    "player_id": "uuid",
-    "team_id": "uuid",
-    "start_date": "2026-07-08",
-    "end_date": null,
-    "is_primary": false
+    "playerId": "uuid",
+    "teamId": "uuid",
+    "startDate": "2026-07-08",
+    "endDate": null,
+    "isPrimary": false
   },
   "meta": {}
 }
@@ -705,7 +705,7 @@ Consultar el historial de matrículas de un jugador.
       "status": "ACTIVE",
       "started_at": "2026-07-07T00:00:00+00:00",
       "ended_at": null,
-      "primary_guardian_id": "uuid"
+      "primaryGuardianId": "uuid"
     }
   ],
   "meta": {}

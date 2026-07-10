@@ -16,20 +16,48 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/academy/charges')]
 final class ChargeController extends AbstractPaginatedApiController
 {
-    public function __construct(private readonly Security $security, private readonly ValidatorInterface $validator, private readonly CreateChargeHandler $createHandler, private readonly ListPendingChargesHandler $listPendingHandler, private readonly TenantContext $tenantContext) {}
+    public function __construct(
+        private readonly Security $security,
+        private readonly ValidatorInterface $validator,
+        private readonly CreateChargeHandler $createHandler,
+        private readonly ListPendingChargesHandler $listPendingHandler,
+        private readonly TenantContext $tenantContext,
+    ) {
+    }
+
     #[Route('', methods:['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $payload = $request->toArray();
-        $input = new CreateChargeRequest($payload['membershipId'] ?? null, $payload['paymentConceptId'] ?? null, $payload['description'] ?? null, $payload['amount'] ?? null);
+        $input = new CreateChargeRequest(...$request->toArray());
         $this->assertValid($this->validator, $input);
-        $view = ($this->createHandler)(new CreateChargeCommand($this->requireAuthenticatedUserId($this->security), $this->tenantContext->requireAcademyId(), $input->membershipId ?? '', $input->paymentConceptId ?? '', $input->description ?? '', $input->amount ?? '0'));
-        return new JsonResponse(['data'=>$view->toArray(),'meta'=>new \stdClass()], 201);
+
+        $view = ($this->createHandler)(
+            new CreateChargeCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                $this->tenantContext->requireAcademyId(),
+                $input->membershipId,
+                $input->paymentConceptId,
+                $input->description,
+                $input->amount,
+            )
+        );
+
+        return new JsonResponse(['data' => $view->toArray(), 'meta' => new \stdClass()], 201);
     }
+
     #[Route('/pending', methods:['GET'])]
     public function pending(Request $request): JsonResponse
     {
-        $items = ($this->listPendingHandler)(new ListPendingChargesQuery($this->tenantContext->requireAcademyId(), $this->paginationQueryFromRequest($request, 'created_at')));
-        return new JsonResponse(['data'=>array_map(static fn($item) => $item->toArray(), $items->items),'meta'=>$items->meta->toArray()]);
+        $items = ($this->listPendingHandler)(
+            new ListPendingChargesQuery(
+                $this->tenantContext->requireAcademyId(),
+                $this->paginationQueryFromRequest($request, 'created_at')
+            )
+        );
+
+        return new JsonResponse([
+            'data' => array_map(static fn ($item) => $item->toArray(), $items->items),
+            'meta' => $items->meta->toArray(),
+        ]);
     }
 }

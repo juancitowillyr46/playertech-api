@@ -488,7 +488,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/platform/users?page=1&per_page=20&sort=full_name&direction=ASC",
+              "raw": "{{baseUrl}}/api/v1/platform/users?page=1&per_page=20&sort=fullName&direction=ASC",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -501,7 +501,7 @@
               "query": [
                 { "key": "page", "value": "1" },
                 { "key": "per_page", "value": "20" },
-                { "key": "sort", "value": "full_name" },
+                { "key": "sort", "value": "fullName" },
                 { "key": "direction", "value": "ASC" }
               ]
             }
@@ -749,7 +749,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"user_id\": \"{{userId}}\"\n}"
+              "raw": "{\n  \"userId\": \"{{userId}}\"\n}"
             }
           }
         },
@@ -786,7 +786,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"staff_id\": \"{{userId}}\",\n  \"team_id\": \"{{teamId}}\",\n  \"role\": \"HEAD_COACH\"\n}"
+              "raw": "{\n  \"staffId\": \"{{userId}}\",\n  \"teamId\": \"{{teamId}}\",\n  \"role\": \"HEAD_COACH\"\n}"
             }
           }
         },
@@ -927,7 +927,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"player_id\": \"{{playerId}}\",\n  \"team_id\": \"{{teamId}}\",\n  \"start_date\": \"2026-07-08\"\n}"
+              "raw": "{\n  \"playerId\": \"{{playerId}}\",\n  \"teamId\": \"{{teamId}}\",\n  \"startDate\": \"2026-07-08\"\n}"
             }
           }
         },

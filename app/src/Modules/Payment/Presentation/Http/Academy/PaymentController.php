@@ -18,37 +18,68 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/academy/payments')]
 final class PaymentController extends AbstractApiController
 {
-    public function __construct(private readonly Security $security, private readonly ValidatorInterface $validator, private readonly RegisterPaymentHandler $registerPaymentHandler, private readonly ApplyPaymentToChargeHandler $applyPaymentToChargeHandler, private readonly CancelPaymentHandler $cancelPaymentHandler, private readonly TenantContext $tenantContext) {}
+    public function __construct(
+        private readonly Security $security,
+        private readonly ValidatorInterface $validator,
+        private readonly RegisterPaymentHandler $registerPaymentHandler,
+        private readonly ApplyPaymentToChargeHandler $applyPaymentToChargeHandler,
+        private readonly CancelPaymentHandler $cancelPaymentHandler,
+        private readonly TenantContext $tenantContext,
+    ) {
+    }
+
     #[Route('', methods:['POST'])]
     public function register(Request $request): JsonResponse
     {
-        $payload = $request->toArray();
-        $input = new RegisterPaymentRequest($payload['membershipId'] ?? null, $payload['playerId'] ?? null, $payload['guardianId'] ?? null, $payload['paymentConceptId'] ?? null, $payload['paymentDate'] ?? null, $payload['amount'] ?? null, $payload['notes'] ?? null);
+        $input = new RegisterPaymentRequest(...$request->toArray());
         $this->assertValid($this->validator, $input);
-        $view = ($this->registerPaymentHandler)(new RegisterPaymentCommand($this->requireAuthenticatedUserId($this->security), $this->tenantContext->requireAcademyId(), $input->membershipId ?? '', $input->playerId ?? '', $input->guardianId ?? '', $input->paymentConceptId ?? '', $input->paymentDate ?? '', $input->amount ?? '', $input->notes));
-        return new JsonResponse(['data'=>$view->toArray(),'meta'=>new \stdClass()], 201);
+
+        $view = ($this->registerPaymentHandler)(
+            new RegisterPaymentCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                $this->tenantContext->requireAcademyId(),
+                $input->membershipId,
+                $input->playerId,
+                $input->guardianId,
+                $input->paymentConceptId,
+                $input->paymentDate,
+                $input->amount,
+                $input->notes,
+            )
+        );
+
+        return new JsonResponse(['data' => $view->toArray(), 'meta' => new \stdClass()], 201);
     }
+
     #[Route('/apply', methods:['PATCH'])]
     public function apply(Request $request): JsonResponse
     {
         $payload = $request->toArray();
-        ($this->applyPaymentToChargeHandler)(new ApplyPaymentToChargeCommand(
-            $this->requireAuthenticatedUserId($this->security),
-            $this->tenantContext->requireAcademyId(),
-            $payload['paymentId'] ?? '',
-            $payload['chargeId'] ?? '',
-            $payload['amount'] ?? '0'
-        ));
-        return new JsonResponse(['data'=>new \stdClass(),'meta'=>new \stdClass()]);
+
+        ($this->applyPaymentToChargeHandler)(
+            new ApplyPaymentToChargeCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                $this->tenantContext->requireAcademyId(),
+                $payload['paymentId'],
+                $payload['chargeId'],
+                $payload['amount'],
+            )
+        );
+
+        return new JsonResponse(['data' => new \stdClass(), 'meta' => new \stdClass()]);
     }
+
     #[Route('/{paymentId}/cancel', methods:['PATCH'])]
     public function cancel(string $paymentId): JsonResponse
     {
-        ($this->cancelPaymentHandler)(new CancelPaymentCommand(
-            $this->requireAuthenticatedUserId($this->security),
-            $this->tenantContext->requireAcademyId(),
-            $paymentId
-        ));
-        return new JsonResponse(['data'=>new \stdClass(),'meta'=>new \stdClass()]);
+        ($this->cancelPaymentHandler)(
+            new CancelPaymentCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                $this->tenantContext->requireAcademyId(),
+                $paymentId
+            )
+        );
+
+        return new JsonResponse(['data' => new \stdClass(), 'meta' => new \stdClass()]);
     }
 }
