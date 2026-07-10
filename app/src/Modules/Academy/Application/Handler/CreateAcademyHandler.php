@@ -31,6 +31,8 @@ final readonly class CreateAcademyHandler
             new \App\Shared\Domain\ValueObject\Name($command->input->name),
             new \App\Shared\Domain\ValueObject\Email($command->input->contactEmail),
             null === $command->input->phone ? null : new \App\Shared\Domain\ValueObject\PhoneNumber($command->input->phone),
+            $this->normalizeCountry($command->input->country),
+            $command->input->department,
             null === $command->input->address ? null : new \App\Shared\Domain\ValueObject\Address($command->input->address),
             null === $command->input->city ? null : new \App\Shared\Domain\ValueObject\City($command->input->city),
             null,
@@ -40,5 +42,12 @@ final readonly class CreateAcademyHandler
         $this->academyRepository->save($academy);
 
         return AcademyResponse::fromAcademy($academy);
+    }
+
+    private function normalizeCountry(?string $country): string
+    {
+        $normalized = trim((string) $country);
+
+        return '' === $normalized ? 'Colombia' : $normalized;
     }
 }

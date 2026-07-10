@@ -297,6 +297,43 @@ Media
 
 ---
 
+# EP-022 Configuración de Modalidad Deportiva de la Academia
+
+## Objetivo
+
+Permitir que una academia defina su modalidad deportiva principal para que el sistema adapte reglas operativas como tamaños de equipo, validaciones de categorías y futura configuración deportiva.
+
+## Origen
+
+Identificada a partir de la necesidad de soportar academias que operan con fútbol, fútbol sala, baloncesto, vóley u otras disciplinas con reglas distintas.
+
+## Problema que Resuelve
+
+El sistema no distingue hoy entre academias deportivas según la disciplina principal, lo que dificulta parametrizar reglas como el número de jugadores por equipo o las categorías permitidas.
+
+## Valor de Negocio
+
+Mejora la parametrización del SaaS y prepara la plataforma para escenarios de multi deporte.
+
+## Actores
+
+* Academic Administrator
+* Super Admin
+
+## Historias Candidatas
+
+* Registrar modalidad deportiva de la academia.
+* Consultar modalidad deportiva de la academia.
+* Actualizar modalidad deportiva de la academia.
+* Ajustar reglas de equipo según modalidad deportiva.
+* Ajustar reglas de categorías según modalidad deportiva.
+
+## Prioridad
+
+Media
+
+---
+
 # Notas de Evolución
 
 Las siguientes necesidades fueron identificadas durante el descubrimiento del producto y deberán reevaluarse después de validar el MVP:

@@ -17,6 +17,10 @@ final readonly class TenantSignupInput
 
         public ?string $phone = null,
 
+        public ?string $country = null,
+
+        public ?string $department = null,
+
         public ?string $address = null,
 
         public ?string $city = null,
@@ -24,6 +28,10 @@ final readonly class TenantSignupInput
         public ?string $categoryId = null,
 
         public ?string $teamName = null,
+
+        public bool $acceptedTerms = false,
+
+        public bool $acceptedDataProcessing = false,
     ) {
     }
 }

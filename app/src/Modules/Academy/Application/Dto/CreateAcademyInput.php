@@ -13,6 +13,10 @@ final readonly class CreateAcademyInput
 
         public ?string $phone = null,
 
+        public ?string $country = null,
+
+        public ?string $department = null,
+
         public ?string $address = null,
 
         public ?string $city = null,

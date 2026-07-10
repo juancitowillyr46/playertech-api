@@ -30,6 +30,12 @@ final readonly class TenantSignupRequest
         #[Assert\Length(max: 30, maxMessage: 'El campo "phone" excede la longitud máxima permitida.')]
         public ?string $phone = null,
 
+        #[Assert\Length(max: 80, maxMessage: 'El campo "country" excede la longitud máxima permitida.')]
+        public ?string $country = null,
+
+        #[Assert\Length(max: 80, maxMessage: 'El campo "department" excede la longitud máxima permitida.')]
+        public ?string $department = null,
+
         #[Assert\Length(max: 255, maxMessage: 'El campo "address" excede la longitud máxima permitida.')]
         public ?string $address = null,
 
@@ -43,6 +49,12 @@ final readonly class TenantSignupRequest
         #[Assert\NotBlank(message: 'El campo "teamName" es obligatorio.')]
         #[Assert\Length(max: 80, maxMessage: 'El campo "teamName" excede la longitud máxima permitida.')]
         public ?string $teamName = null,
+
+        #[Assert\IsTrue(message: 'Debe aceptar los términos y condiciones.')]
+        public bool $acceptedTerms = false,
+
+        #[Assert\IsTrue(message: 'Debe aceptar el tratamiento de datos personales.')]
+        public bool $acceptedDataProcessing = false,
     ) {
     }
 
@@ -54,10 +66,14 @@ final readonly class TenantSignupRequest
             self::stringOrNull($payload['contactName'] ?? null),
             self::stringOrNull($payload['password'] ?? null),
             self::stringOrNull($payload['phone'] ?? null),
+            self::stringOrNull($payload['country'] ?? null),
+            self::stringOrNull($payload['department'] ?? null),
             self::stringOrNull($payload['address'] ?? null),
             self::stringOrNull($payload['city'] ?? null),
             self::stringOrNull($payload['categoryId'] ?? null),
             self::stringOrNull($payload['teamName'] ?? null),
+            (bool) ($payload['acceptedTerms'] ?? false),
+            (bool) ($payload['acceptedDataProcessing'] ?? false),
         );
     }
 
@@ -69,10 +85,14 @@ final readonly class TenantSignupRequest
             $this->contactName,
             $this->password,
             $this->phone,
+            $this->country,
+            $this->department,
             $this->address,
             $this->city,
             $this->categoryId,
             $this->teamName,
+            $this->acceptedTerms,
+            $this->acceptedDataProcessing,
         );
     }
 

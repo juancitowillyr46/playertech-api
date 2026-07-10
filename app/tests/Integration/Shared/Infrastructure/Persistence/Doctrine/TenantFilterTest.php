@@ -59,6 +59,7 @@ final class TenantFilterTest extends KernelTestCase
             null,
             null,
             null,
+            null,
             AuditTrail::create('019f1111-1111-7111-8111-111111111110'),
         );
 
@@ -66,6 +67,7 @@ final class TenantFilterTest extends KernelTestCase
             new AcademyId('019f2222-2222-7222-8222-222222222222'),
             new Name('Academia B'),
             new Email('b@example.com'),
+            null,
             null,
             null,
             null,

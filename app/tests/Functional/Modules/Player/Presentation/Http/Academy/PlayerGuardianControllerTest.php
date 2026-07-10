@@ -64,6 +64,8 @@ final class PlayerGuardianControllerTest extends KernelTestCase
             new Name('Academia Test'),
             new Email('academy@test.local'),
             new PhoneNumber('+51 999 999 999'),
+            'Colombia',
+            'Cundinamarca',
             new Address('Av. Principal 123'),
             new City('Lima'),
             null,

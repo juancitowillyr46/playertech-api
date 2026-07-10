@@ -54,6 +54,20 @@
             class="App\Shared\Domain\ValueObject\PhoneNumber"
             use-column-prefix="false"/>
 
+        <field
+            name="country"
+            column="country"
+            type="string"
+            length="80"
+            nullable="true"/>
+
+        <field
+            name="department"
+            column="department"
+            type="string"
+            length="80"
+            nullable="true"/>
+
         <embedded
             name="address"
             class="App\Shared\Domain\ValueObject\Address"

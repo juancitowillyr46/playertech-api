@@ -46,6 +46,10 @@ final readonly class RegisterTenantHandler
     {
         $data = $command->input;
 
+        if (!$data->acceptedTerms || !$data->acceptedDataProcessing) {
+            throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('Debe aceptar términos y tratamiento de datos.');
+        }
+
         if (null !== $this->academyRepository->findOneByContactEmail(new \App\Shared\Domain\ValueObject\Email($data->contactEmail))) {
             throw new AcademyAlreadyExistsException();
         }
@@ -59,6 +63,8 @@ final readonly class RegisterTenantHandler
             new \App\Shared\Domain\ValueObject\Name($data->name),
             new \App\Shared\Domain\ValueObject\Email($data->contactEmail),
             null === $data->phone ? null : new \App\Shared\Domain\ValueObject\PhoneNumber($data->phone),
+            $this->normalizeCountry($data->country),
+            $data->department,
             null === $data->address ? null : new \App\Shared\Domain\ValueObject\Address($data->address),
             null === $data->city ? null : new \App\Shared\Domain\ValueObject\City($data->city),
             null,
@@ -118,5 +124,12 @@ final readonly class RegisterTenantHandler
             ),
             TeamResponse::fromTeam($team),
         );
+    }
+
+    private function normalizeCountry(?string $country): string
+    {
+        $normalized = trim((string) $country);
+
+        return '' === $normalized ? 'Colombia' : $normalized;
     }
 }

@@ -224,6 +224,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-007` de `EP-007` quedó implementada con carga masiva de jugadores desde Excel, validación de categorías y rechazo total ante errores.
 * El módulo `Player` ahora incluye `category_id` como referencia opcional y el endpoint de importación masiva `POST /api/v1/academy/players/import` consume `category_key` como referencia de negocio.
 * `HU-013` de `EP-001` quedó implementada con `POST /api/v1/academy/me/shield` para subir y reemplazar el escudo institucional de la academia.
+* Se amplió `EP-001` con el perfil básico de academia: `country`, `department`, `city`, `address`, teléfono normalizado y consentimientos legales obligatorios en el signup de tenant.
 * `HU-009` de `EP-007` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la foto del jugador.
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.
 * El MVP checklist debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y foto de `Player`.
@@ -311,6 +312,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] `EP-007` Player base: registrar, listar, ver detalle, actualizar y gestionar estado.
 - [x] `EP-007` importación masiva de jugadores por Excel.
 - [x] `EP-001` Escudo institucional de academia.
+- [x] `EP-001` Perfil básico de academia con ubicación y consentimientos.
 - [x] `EP-007` Foto del jugador.
 - [x] `EP-008` Relaciones jugador-acudiente.
 - [x] `EP-005` Equipos.

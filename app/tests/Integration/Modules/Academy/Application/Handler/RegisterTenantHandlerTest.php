@@ -93,10 +93,14 @@ final class RegisterTenantHandlerTest extends KernelTestCase
             'Juan Perez',
             'secret123',
             '+51 999 999 999',
+            'Colombia',
+            'Cundinamarca',
             'Av. Principal 123',
             'Lima',
             $this->categoryId,
             'Sub 12 A',
+            true,
+            true,
         );
 
         $response = ($this->handler)(new RegisterTenantCommand($input));
@@ -104,6 +108,8 @@ final class RegisterTenantHandlerTest extends KernelTestCase
 
         self::assertSame('Academia de Prueba', $payload['academy']['name']);
         self::assertSame('tenant.test@example.com', $payload['academy']['contactEmail']);
+        self::assertSame('Colombia', $payload['academy']['country']);
+        self::assertSame('Cundinamarca', $payload['academy']['department']);
         self::assertSame('tenant.test@example.com', $payload['user']['email']);
         self::assertSame(AccountUser::STATUS_PENDING_ACTIVATION, $payload['user']['status']);
         self::assertTrue($payload['user']['activationPending']);

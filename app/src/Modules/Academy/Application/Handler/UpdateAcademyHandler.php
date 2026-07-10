@@ -38,6 +38,8 @@ final readonly class UpdateAcademyHandler
             new Name($command->input->name),
             new Email($command->input->contactEmail),
             null === $command->input->phone ? null : new PhoneNumber($command->input->phone),
+            $this->normalizeCountry($command->input->country),
+            $command->input->department,
             null === $command->input->address ? null : new Address($command->input->address),
             null === $command->input->city ? null : new City($command->input->city),
             $command->actorId,
@@ -61,5 +63,12 @@ final readonly class UpdateAcademyHandler
         }
 
         return $academy;
+    }
+
+    private function normalizeCountry(?string $country): string
+    {
+        $normalized = trim((string) $country);
+
+        return '' === $normalized ? 'Colombia' : $normalized;
     }
 }

@@ -23,6 +23,10 @@ final class Academy implements Auditable
 
     private ?PhoneNumber $phone;
 
+    private ?string $country;
+
+    private ?string $department;
+
     private ?Address $address;
 
     private ?City $city;
@@ -42,6 +46,8 @@ final class Academy implements Auditable
         Name $name,
         Email $contactEmail,
         ?PhoneNumber $phone,
+        ?string $country,
+        ?string $department,
         ?Address $address,
         ?City $city,
         ?Media $shield,
@@ -52,6 +58,8 @@ final class Academy implements Auditable
         $this->contactEmail = $contactEmail;
         $this->status = AcademyStatus::active();
         $this->phone = $phone;
+        $this->country = $country;
+        $this->department = $department;
         $this->address = $address;
         $this->city = $city;
         $this->shield = $shield;
@@ -63,6 +71,8 @@ final class Academy implements Auditable
         Name $name,
         Email $contactEmail,
         ?PhoneNumber $phone,
+        ?string $country,
+        ?string $department,
         ?Address $address,
         ?City $city,
         ?Media $shield,
@@ -73,6 +83,8 @@ final class Academy implements Auditable
             $name,
             $contactEmail,
             $phone,
+            $country,
+            $department,
             $address,
             $city,
             $shield,
@@ -98,6 +110,16 @@ final class Academy implements Auditable
     public function phone(): ?PhoneNumber
     {
         return $this->phone;
+    }
+
+    public function country(): ?string
+    {
+        return $this->country;
+    }
+
+    public function department(): ?string
+    {
+        return $this->department;
     }
 
     public function address(): ?Address
@@ -144,6 +166,8 @@ final class Academy implements Auditable
         Name $name,
         Email $contactEmail,
         ?PhoneNumber $phone,
+        ?string $country,
+        ?string $department,
         ?Address $address,
         ?City $city,
         string $updatedBy
@@ -151,6 +175,8 @@ final class Academy implements Auditable
         $this->name = $name;
         $this->contactEmail = $contactEmail;
         $this->phone = $phone;
+        $this->country = $country;
+        $this->department = $department;
         $this->address = $address;
         $this->city = $city;
         if ($this->auditTrail) {
