@@ -349,3 +349,46 @@ Las siguientes necesidades fueron identificadas durante el descubrimiento del pr
 * Inteligencia artificial aplicada al seguimiento deportivo.
 
 Estas funcionalidades permanecen fuera del alcance actual.
+
+---
+
+# EP-023 Información Tributaria de Academias y Comprobantes DIAN
+
+## Objetivo
+Permitir que las academias registren su información tributaria y, en una etapa posterior, emitan comprobantes de pago con integración a DIAN.
+
+## Problema que Resuelve
+La plataforma necesita prepararse para escenarios de facturación fiscal real, donde los pagos requieran datos tributarios del emisor, numeración formal y sincronización con entidades externas.
+
+## Valor de Negocio
+Habilita cumplimiento fiscal, trazabilidad documental y una futura capa de facturación electrónica para academias que la requieran.
+
+## Actores
+
+* Super Admin
+* Academy Admin
+* Acudiente
+
+## Dominios Involucrados
+
+* Academy
+* Billing
+* Payment
+* FiscalDocument
+* DIAN Integration
+
+## Historias Candidatas
+
+* Registrar información tributaria de la academia.
+* Consultar información tributaria de la academia.
+* Actualizar información tributaria de la academia.
+* Generar comprobante de pago.
+* Consultar comprobante de pago.
+* Enviar comprobante a DIAN.
+* Consultar estado DIAN del comprobante.
+* Anular comprobante emitido.
+* Reintentar envío a DIAN ante error técnico.
+
+## Prioridad
+
+Media
