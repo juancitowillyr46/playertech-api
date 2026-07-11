@@ -20,6 +20,20 @@ Si un contrato crece en complejidad o reutilización, el estándar preferido es:
 * `ResponseTransformer` para salidas con composición o filtrado de relaciones.
 * `Presenter` si se necesita formalizar el paso entre Application y Presentation.
 
+## Postman As Reference
+
+Hasta que exista Swagger/OpenAPI interactivo, la colección de Postman se considera la referencia operativa de contrato HTTP para el front y para QA.
+
+Reglas del estándar:
+
+* Cada request debe incluir método, URL, headers y body de ejemplo.
+* Cada request relevante debe incluir al menos un response de éxito.
+* Los endpoints con errores previsibles deben incluir ejemplos de error cuando el contrato ya esté estabilizado.
+* Los ejemplos de response deben reflejar camelCase y la forma real de los DTOs.
+* Si un endpoint devuelve `data` y `meta`, ese debe ser el ejemplo mostrado en Postman.
+* Si el endpoint devuelve `204 No Content`, la colección debe indicarlo explícitamente.
+* La documentación en `specs/` debe mantenerse alineada con la colección de Postman.
+
 ## Naming Convention
 
 * Query params: `snake_case`.
