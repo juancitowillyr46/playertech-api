@@ -226,6 +226,8 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-013` de `EP-001` quedó implementada con `POST /api/v1/academy/me/shield` para subir y reemplazar el escudo institucional de la academia.
 * Se amplió `EP-001` con el perfil básico de academia: `country`, `department`, `city`, `address`, teléfono normalizado y consentimientos legales obligatorios en el signup de tenant.
 * La colección Postman quedó actualizada para reflejar el nuevo contrato de `Academy` y `TenantSignup`, incluyendo `country`, `department` y los consentimientos obligatorios.
+* `HU-015` de `EP-001` quedó implementada con `POST /api/v1/platform/academies` para provisionar tenants completos desde la plataforma con academia, owner/admin inicial, correo de bienvenida y primer equipo.
+* La colección Postman quedó actualizada con contratos de ejemplo para `POST /api/v1/public/tenants/signup` y `POST /api/v1/platform/academies`.
 * Se documentó la futura épica `EP-023` para información tributaria de academias y comprobantes DIAN, separándola del perfil base de `Academy`.
 * `HU-009` de `EP-007` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la foto del jugador.
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.

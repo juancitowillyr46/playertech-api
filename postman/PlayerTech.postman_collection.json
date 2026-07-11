@@ -104,7 +104,47 @@
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"Academia PlayerTech Demo\",\n  \"contactEmail\": \"tenant.demo@example.com\",\n  \"contactName\": \"Juan Perez\",\n  \"password\": \"secret12345\",\n  \"phone\": \"+51 987 654 321\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"teamName\": \"Sub 12 A\",\n  \"acceptedTerms\": true,\n  \"acceptedDataProcessing\": true\n}"
-            }
+            },
+            "response": [
+              {
+                "name": "Tenant signup success",
+                "originalRequest": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Accept",
+                      "value": "application/json"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/v1/public/tenants/signup",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "v1",
+                      "public",
+                      "tenants",
+                      "signup"
+                    ]
+                  }
+                },
+                "status": "Created",
+                "code": 201,
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": "{\n  \"data\": {\n    \"academy\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000010\",\n      \"name\": \"Academia PlayerTech Demo\",\n      \"contactEmail\": \"tenant.demo@example.com\",\n      \"phone\": \"+51 987 654 321\",\n      \"country\": \"Colombia\",\n      \"department\": \"Cundinamarca\",\n      \"address\": \"Jr. Secundario 789\",\n      \"city\": \"Arequipa\",\n      \"shield\": null,\n      \"status\": \"ACTIVE\",\n      \"audit\": {\n        \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n        \"createdBy\": null,\n        \"updatedAt\": null,\n        \"updatedBy\": null\n      }\n    },\n    \"user\": {\n      \"email\": \"tenant.demo@example.com\",\n      \"status\": \"PENDING_ACTIVATION\",\n      \"activationPending\": true\n    },\n    \"team\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000011\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000010\",\n      \"categoryId\": \"{{categoryId}}\",\n      \"name\": \"Sub 12 A\",\n      \"status\": \"ACTIVE\"\n    }\n  },\n  \"meta\": {}\n}"
+              }
+            ]
           }
         }
       ]
@@ -141,7 +181,7 @@
           }
         },
         {
-          "name": "Academies - Create",
+          "name": "Tenants - Provision",
           "request": {
             "method": "POST",
             "header": [
@@ -172,8 +212,51 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Academia PlayerTech\",\n  \"contactEmail\": \"contacto@academiaplayertech.com\",\n  \"phone\": \"+51 999 999 999\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Lima\",\n  \"logo\": \"https://cdn.example.com/logo.png\"\n}"
-            }
+              "raw": "{\n  \"name\": \"Academia PlayerTech\",\n  \"contactEmail\": \"contacto@academiaplayertech.com\",\n  \"phone\": \"+57 312 555 8888\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Bogota\",\n  \"adminName\": \"Juan Perez\",\n  \"adminEmail\": \"admin@academiaplayertech.com\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"teamName\": \"Sub 12 A\"\n}"
+            },
+            "response": [
+              {
+                "name": "Tenant provision success",
+                "originalRequest": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{token}}"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Accept",
+                      "value": "application/json"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/v1/platform/academies",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "v1",
+                      "platform",
+                      "academies"
+                    ]
+                  }
+                },
+                "status": "Created",
+                "code": 201,
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": "{\n  \"data\": {\n    \"academy\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000001\",\n      \"name\": \"Academia PlayerTech\",\n      \"contactEmail\": \"contacto@academiaplayertech.com\",\n      \"phone\": \"+57 312 555 8888\",\n      \"country\": \"Colombia\",\n      \"department\": \"Cundinamarca\",\n      \"address\": \"Av. Principal 123\",\n      \"city\": \"Bogota\",\n      \"shield\": null,\n      \"status\": \"ACTIVE\",\n      \"audit\": {\n        \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n        \"createdBy\": \"019f0000-0000-7000-8000-000000000000\",\n        \"updatedAt\": null,\n        \"updatedBy\": null\n      }\n    },\n    \"user\": {\n      \"email\": \"admin@academiaplayertech.com\",\n      \"status\": \"PENDING_ACTIVATION\",\n      \"activationPending\": true\n    },\n    \"team\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000002\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryId\": \"{{categoryId}}\",\n      \"name\": \"Sub 12 A\",\n      \"status\": \"ACTIVE\"\n    }\n  },\n  \"meta\": {}\n}"
+              }
+            ]
           }
         },
         {
