@@ -27,6 +27,8 @@ final class Academy implements Auditable
 
     private ?string $department;
 
+    private string $registrationSource;
+
     private ?Address $address;
 
     private ?City $city;
@@ -48,6 +50,7 @@ final class Academy implements Auditable
         ?PhoneNumber $phone,
         ?string $country,
         ?string $department,
+        string $registrationSource,
         ?Address $address,
         ?City $city,
         ?Media $shield,
@@ -60,6 +63,7 @@ final class Academy implements Auditable
         $this->phone = $phone;
         $this->country = $country;
         $this->department = $department;
+        $this->registrationSource = $registrationSource;
         $this->address = $address;
         $this->city = $city;
         $this->shield = $shield;
@@ -73,6 +77,7 @@ final class Academy implements Auditable
         ?PhoneNumber $phone,
         ?string $country,
         ?string $department,
+        string $registrationSource,
         ?Address $address,
         ?City $city,
         ?Media $shield,
@@ -85,6 +90,7 @@ final class Academy implements Auditable
             $phone,
             $country,
             $department,
+            $registrationSource,
             $address,
             $city,
             $shield,
@@ -120,6 +126,11 @@ final class Academy implements Auditable
     public function department(): ?string
     {
         return $this->department;
+    }
+
+    public function registrationSource(): string
+    {
+        return $this->registrationSource;
     }
 
     public function address(): ?Address
@@ -168,6 +179,7 @@ final class Academy implements Auditable
         ?PhoneNumber $phone,
         ?string $country,
         ?string $department,
+        string $registrationSource,
         ?Address $address,
         ?City $city,
         string $updatedBy
@@ -177,6 +189,7 @@ final class Academy implements Auditable
         $this->phone = $phone;
         $this->country = $country;
         $this->department = $department;
+        $this->registrationSource = $registrationSource;
         $this->address = $address;
         $this->city = $city;
         if ($this->auditTrail) {

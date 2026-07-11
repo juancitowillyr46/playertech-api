@@ -12,6 +12,7 @@ final readonly class AcademyListItemResponse
         private string $id,
         private string $name,
         private string $contactEmail,
+        private string $registrationSource,
         private string $status,
     ) {
     }
@@ -22,6 +23,7 @@ final readonly class AcademyListItemResponse
             $academy->id()->value(),
             $academy->name()->value(),
             $academy->contactEmail()->value(),
+            $academy->registrationSource(),
             $academy->status()->value(),
         );
     }
@@ -32,6 +34,7 @@ final readonly class AcademyListItemResponse
             'id' => $this->id,
             'name' => $this->name,
             'contactEmail' => $this->contactEmail,
+            'registrationSource' => $this->registrationSource,
             'status' => $this->status,
         ];
     }

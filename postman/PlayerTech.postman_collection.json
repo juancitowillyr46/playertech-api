@@ -381,7 +381,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 0,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000001\",\n      \"name\": \"Academia PlayerTech\",\n      \"contactEmail\": \"contacto@academiaplayertech.com\",\n      \"registrationSource\": \"platform\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },
@@ -496,7 +496,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Academia PlayerTech\",\n  \"contactEmail\": \"contacto@academiaplayertech.com\",\n  \"phone\": \"+57 312 555 8888\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Bogota\",\n  \"adminName\": \"Juan Perez\",\n  \"adminEmail\": \"admin@academiaplayertech.com\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"teamName\": \"Sub 12 A\"\n}"
+                  "raw": "{\n  \"name\": \"Academia PlayerTech\",\n  \"contactEmail\": \"contacto@academiaplayertech.com\",\n  \"phone\": \"+57 312 555 8888\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"registrationSource\": \"platform\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Bogota\",\n  \"adminName\": \"Juan Perez\",\n  \"adminEmail\": \"admin@academiaplayertech.com\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"teamName\": \"Sub 12 A\"\n}"
                 },
                 "response": [
                   {
@@ -538,7 +538,7 @@
                         "value": "application/json"
                       }
                     ],
-                    "body": "{\n  \"data\": {\n    \"academy\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000001\",\n      \"name\": \"Academia PlayerTech\",\n      \"contactEmail\": \"contacto@academiaplayertech.com\",\n      \"phone\": \"+57 312 555 8888\",\n      \"country\": \"Colombia\",\n      \"department\": \"Cundinamarca\",\n      \"address\": \"Av. Principal 123\",\n      \"city\": \"Bogota\",\n      \"shield\": null,\n      \"status\": \"ACTIVE\",\n      \"audit\": {\n        \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n        \"createdBy\": \"019f0000-0000-7000-8000-000000000000\",\n        \"updatedAt\": null,\n        \"updatedBy\": null\n      }\n    },\n    \"user\": {\n      \"email\": \"admin@academiaplayertech.com\",\n      \"status\": \"PENDING_ACTIVATION\",\n      \"activationPending\": true\n    },\n    \"team\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000002\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryId\": \"{{categoryId}}\",\n      \"name\": \"Sub 12 A\",\n      \"status\": \"ACTIVE\"\n    }\n  },\n  \"meta\": {}\n}"
+                    "body": "{\n  \"data\": {\n    \"academy\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000001\",\n      \"name\": \"Academia PlayerTech\",\n      \"contactEmail\": \"contacto@academiaplayertech.com\",\n      \"phone\": \"+57 312 555 8888\",\n      \"country\": \"Colombia\",\n      \"department\": \"Cundinamarca\",\n      \"registrationSource\": \"platform\",\n      \"address\": \"Av. Principal 123\",\n      \"city\": \"Bogota\",\n      \"shield\": null,\n      \"status\": \"ACTIVE\",\n      \"audit\": {\n        \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n        \"createdBy\": \"019f0000-0000-7000-8000-000000000000\",\n        \"updatedAt\": null,\n        \"updatedBy\": null\n      }\n    },\n    \"user\": {\n      \"email\": \"admin@academiaplayertech.com\",\n      \"status\": \"PENDING_ACTIVATION\",\n      \"activationPending\": true\n    },\n    \"team\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000002\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryId\": \"{{categoryId}}\",\n      \"name\": \"Sub 12 A\",\n      \"status\": \"ACTIVE\"\n    }\n  },\n  \"meta\": {}\n}"
                   }
                 ]
               },
@@ -1168,7 +1168,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/platform/academies?page=1&per_page=20&sort=created_at&direction=DESC",
+              "raw": "{{baseUrl}}/api/v1/platform/academies?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1214,7 +1214,7 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/api/v1/platform/academies?page=1&per_page=20&sort=created_at&direction=DESC",
+                  "raw": "{{baseUrl}}/api/v1/platform/academies?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC",
                   "host": [
                     "{{baseUrl}}"
                   ],

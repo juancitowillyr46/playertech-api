@@ -62,7 +62,7 @@ final class AcademyController extends AbstractPaginatedApiController
     #[Route('', name: 'api_v1_platform_academies_list', methods: ['GET'])]
     public function list(Request $request): JsonResponse
     {
-        $academies = ($this->listAcademiesHandler)(new ListAcademiesQuery($this->paginationQueryFromRequest($request, 'audit_trail.created_at.value')));
+        $academies = ($this->listAcademiesHandler)(new ListAcademiesQuery($this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value')));
 
         return new JsonResponse([
             'data' => array_map(static fn ($view): array => $view->toArray(), $academies->items),

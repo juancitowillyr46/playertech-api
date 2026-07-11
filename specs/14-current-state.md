@@ -178,6 +178,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Los VOs compartidos ya estan versionados en git y el mapping XML de `Academy` los consume de forma consistente.
 * La capa HTTP de `Academy` quedo delgada y delega en CQRS con commands, queries y handlers.
 * `Academy` ya responde mediante DTOs de salida por caso de uso, incluyendo contratos anidados para flujos como tenant signup.
+* `Academy` ahora expone `registrationSource` para distinguir tenants creados por `signup` y por `platform`, y ese dato también aparece en los listados de academias.
 * Los recursos de media se estandarizan como objetos JSON con `path`, `url`, `mime_type`, `size` y `checksum`; `Academy` expone `shield` con ese contrato y `Player` heredará el mismo patrón para `photo`.
 * Existe una guia operativa para construir nuevos modulos sin depender de modelos previos.
 * `Academy` queda definido como el modulo de referencia oficial para nuevos contextos: CQRS, XML puro, VOs tipados, soft delete, validacion formal, controllers delgados y separacion root/tenant.
@@ -187,6 +188,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La validacion principal de suites de integracion y funcionales debe correr sobre la base `test` para simular CI/CD; `local` queda para desarrollo interactivo.
 * `Mailpit` queda adoptado como la herramienta base de desarrollo local para validar envios de correo y flujos de activacion.
 * `EP-003` queda reorientada para distinguir usuarios de plataforma y usuarios tenant; la creacion del owner/admin inicial del tenant se documenta como historia explicita.
+* La creación de tenant por `signup` y por `platform` quedó unificada con trazabilidad explícita de origen en `Academy`.
 * `Category` y `Venue` ya quedaron implementados como módulos funcionales completos y el backlog debe seguir su mismo lifecycle con historias faltantes o inconsistentes.
 * `Category` y `Venue` comparten ahora el patrón de recuperación por `Finder`, reduciendo duplicación en handlers y homogeneizando Application.
 * El backlog de `Category` ya tiene historias explícitas para listar, actualizar y cambiar estado, alineadas con el código existente.

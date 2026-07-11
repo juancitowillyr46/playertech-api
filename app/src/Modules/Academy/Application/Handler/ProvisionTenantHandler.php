@@ -11,6 +11,7 @@ use App\Modules\Academy\Application\Response\TenantSignupResponse;
 use App\Modules\Academy\Application\Response\TenantSignupUserResponse;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Academy\Domain\Academy\AcademyRegistrationSource;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
 use App\Modules\Category\Application\Services\CategoryFinder;
@@ -74,6 +75,7 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
             null === $data->phone ? null : new PhoneNumber($data->phone),
             $this->normalizeCountry($data->country),
             $data->department,
+            AcademyRegistrationSource::platform()->value(),
             null === $data->address ? null : new Address($data->address),
             null === $data->city ? null : new City($data->city),
             null,

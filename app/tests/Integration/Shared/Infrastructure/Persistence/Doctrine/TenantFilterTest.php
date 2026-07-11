@@ -43,9 +43,7 @@ final class TenantFilterTest extends KernelTestCase
         $schemaTool = new SchemaTool($this->entityManager);
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
 
-        $this->entityManager->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $this->entityManager->getConnection()->executeStatement('DROP TABLE IF EXISTS players, categories, venues, academies, users');
-        $this->entityManager->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
+        $this->dropAllTables();
         $schemaTool->createSchema($metadata);
     }
 
@@ -58,6 +56,8 @@ final class TenantFilterTest extends KernelTestCase
             null,
             null,
             null,
+            'signup',
+            null,
             null,
             null,
             AuditTrail::create('019f1111-1111-7111-8111-111111111110'),
@@ -69,6 +69,8 @@ final class TenantFilterTest extends KernelTestCase
             new Email('b@example.com'),
             null,
             null,
+            null,
+            'signup',
             null,
             null,
             null,
@@ -142,5 +144,19 @@ final class TenantFilterTest extends KernelTestCase
 
         $filter = $this->entityManager->getFilters()->enable('tenant');
         $filter->setTenantContext($tenantContext);
+    }
+
+    private function dropAllTables(): void
+    {
+        $connection = $this->entityManager->getConnection();
+        $tables = $connection->fetchFirstColumn('SHOW TABLES');
+
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
+
+        foreach ($tables as $table) {
+            $connection->executeStatement(sprintf('DROP TABLE IF EXISTS `%s`', $table));
+        }
+
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
