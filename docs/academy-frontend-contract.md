@@ -52,6 +52,10 @@ Body:
 ### Reglas
 
 - El usuario selecciona el archivo desde su escritorio.
+- El front puede abrir un modal de recorte y zoom antes de guardar.
+- El resultado del crop debe mantenerse solo en memoria/local state hasta que el usuario confirme `Guardar cambios`.
+- Al confirmar, enviar el archivo final como `multipart/form-data` en el campo `shield`.
+- El backend debe aceptar el resultado como `File` o `Blob` del recorte, no como base64.
 - El backend devuelve la referencia almacenada.
 - Esta es la vía correcta para actualizar la imagen institucional.
 
