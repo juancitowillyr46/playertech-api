@@ -10,7 +10,7 @@
 | MVP              | Sí                          |
 | Estado           | Done                        |
 | Actor Principal  | Super Admin                 |
-| Actor Secundario | Tenant Academy Admin        |
+| Actor Secundario | Owner/Admin de la academia   |
 
 ---
 
@@ -35,7 +35,7 @@ Quiero actualizar una academia
 
 Para mantener la información actualizada.
 
-Como Tenant Academy Admin
+Como Owner/Admin de la academia
 
 Quiero actualizar mi propia academia
 
@@ -89,7 +89,13 @@ El correo de contacto es obligatorio.
 * Teléfono
 * Dirección
 * Ciudad
-* Logo
+* País
+* Departamento
+
+# Imagen Institucional
+
+La imagen institucional no se actualiza por `PUT /api/v1/academy/me`.
+Debe gestionarse mediante `POST /api/v1/academy/me/shield`.
 
 ---
 
@@ -237,8 +243,9 @@ HU-008 Crear Academia
 
 La actualización no debe afectar la información histórica asociada a la academia.
 La versión tenant-scoped del flujo se ejecuta contra `/api/v1/academy/me`.
+La subida de imagen institucional se ejecuta contra `/api/v1/academy/me/shield`.
 La implementación actual delega en Application Layer con CQRS para mantener los controladores delgados.
-Esta historia tiene doble alcance: plataforma (`ROLE_ROOT`) y tenant (`Tenant Academy Admin`).
+Esta historia tiene doble alcance: plataforma (`ROLE_ROOT`) y tenant (`Owner/Admin de la academia`).
 
 Referencia técnica: ff61ec1
 
