@@ -167,12 +167,14 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `AccountUser` queda como entidad tecnica acoplada al framework por pragmatismo.
 * El almacenamiento UUID ya esta normalizado como string legible en la tabla `users`.
 * Login y `/auth/me` validados en runtime.
+* `GET /api/v1/auth/me`, `PUT /api/v1/auth/me/name` y el flujo público de restablecimiento de contraseña quedaron implementados para usuarios.
 * CRUD de users validado en runtime para contexto plataforma, incluyendo create, update, disable y enable con respuesta JSON estándar.
 * Se introdujo una base HTTP común para evitar duplicación de validación y resolución del actor autenticado.
 * La base de pruebas ya tiene su primer baseline unitario verde.
 * La primera integración de signup de tenant ya corre contra base de datos MySQL de test y valida persistencia real.
 * `ROLE_ROOT` opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext`.
 * `Academy` ya expone `GET /api/v1/academy/me` como contexto tenant, `PUT /api/v1/academy/me` para autogestión del tenant y `GET /api/v1/platform/academies` como API de plataforma.
+* La API de usuario autenticado quedó separada de la API de academia: `auth/me` expone identidad, `auth/me/name` actualiza sólo el nombre y el reset de contraseña usa endpoints públicos dedicados.
 * Los endpoints de `Academy` quedaron validados como parte del flujo base tenant/root y siguen protegidos por `TenantContext` y el filtro de persistencia.
 * `Academy` ahora usa `AcademyId` como Doctrine custom type y VOs compartidos como embeddables XML, sirviendo como referencia del patrón para los demas modulos.
 * Los VOs compartidos ya estan versionados en git y el mapping XML de `Academy` los consume de forma consistente.

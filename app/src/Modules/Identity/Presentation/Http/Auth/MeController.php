@@ -2,6 +2,7 @@
 
 namespace App\Modules\Identity\Presentation\Http\Auth;
 
+use App\Modules\Identity\Application\Response\UserResponse;
 use App\Modules\Identity\Domain\User\AccountUser;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,14 +27,7 @@ final class MeController
         }
 
         return new JsonResponse([
-            'data' => [
-                'id' => $user->getId(),
-                'full_name' => $user->getFullName(),
-                'email' => $user->getUserIdentifier(),
-                'academy_id' => $user->getAcademyId(),
-                'role' => $user->getRole(),
-                'status' => $user->getStatus(),
-            ],
+            'data' => UserResponse::fromUser($user)->toArray(),
             'meta' => new \stdClass(),
         ]);
     }

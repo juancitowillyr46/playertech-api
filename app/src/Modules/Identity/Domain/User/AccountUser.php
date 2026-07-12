@@ -76,6 +76,12 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable', name: 'activation_expires_at', nullable: true)]
     private ?\DateTimeImmutable $activationExpiresAt = null;
 
+    #[ORM\Column(type: 'string', length: 64, name: 'password_reset_token', nullable: true, unique: true)]
+    private ?string $passwordResetToken = null;
+
+    #[ORM\Column(type: 'datetime_immutable', name: 'password_reset_expires_at', nullable: true)]
+    private ?\DateTimeImmutable $passwordResetExpiresAt = null;
+
     public function __construct()
     {
         $this->id = Uuid::v4()->toRfc4122();
@@ -183,6 +189,16 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->activationExpiresAt;
     }
 
+    public function getPasswordResetToken(): ?string
+    {
+        return $this->passwordResetToken;
+    }
+
+    public function getPasswordResetExpiresAt(): ?\DateTimeImmutable
+    {
+        return $this->passwordResetExpiresAt;
+    }
+
     public function setId(Uuid|string $id): void
     {
         $this->id = $id instanceof Uuid ? $id->toRfc4122() : $id;
@@ -263,6 +279,16 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
         $this->activationExpiresAt = $activationExpiresAt;
     }
 
+    public function setPasswordResetToken(?string $passwordResetToken): void
+    {
+        $this->passwordResetToken = $passwordResetToken;
+    }
+
+    public function setPasswordResetExpiresAt(?\DateTimeImmutable $passwordResetExpiresAt): void
+    {
+        $this->passwordResetExpiresAt = $passwordResetExpiresAt;
+    }
+
     public function markPendingActivation(string $activationToken, \DateTimeImmutable $expiresAt): void
     {
         $this->setStatus(self::STATUS_PENDING_ACTIVATION);
@@ -275,5 +301,17 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
         $this->setStatus(self::STATUS_ACTIVE);
         $this->setActivationToken(null);
         $this->setActivationExpiresAt(null);
+    }
+
+    public function markPasswordResetRequested(string $token, \DateTimeImmutable $expiresAt): void
+    {
+        $this->setPasswordResetToken($token);
+        $this->setPasswordResetExpiresAt($expiresAt);
+    }
+
+    public function confirmPasswordReset(): void
+    {
+        $this->setPasswordResetToken(null);
+        $this->setPasswordResetExpiresAt(null);
     }
 }
