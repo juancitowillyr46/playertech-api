@@ -52,6 +52,7 @@ final class LegalGuardianRepositoryTest extends KernelTestCase
             'Lopez',
             '+51 999 111 222',
             'maria@example.com',
+            'Madre',
             AuditTrail::create('actor-id')
         );
 
@@ -62,6 +63,7 @@ final class LegalGuardianRepositoryTest extends KernelTestCase
         self::assertNotNull($found);
         self::assertSame($guardian->id()->value(), $found?->id()->value());
         self::assertSame('maria@example.com', $this->repository->findOneByEmail($academyId, 'maria@example.com')?->email());
+        self::assertSame('Madre', $found?->relationship());
         self::assertCount(1, $this->repository->findAllByAcademy($academyId, new PaginationQuery(1, 20, 'auditTrail.createdAt.value', 'DESC'))['items']);
     }
 }

@@ -717,7 +717,7 @@ POST /api/v1/academy/guardians
 
 ### Purpose
 
-Registrar un acudiente dentro de la academia actual.
+Registrar un acudiente dentro de la academia actual con su parentesco.
 
 ---
 

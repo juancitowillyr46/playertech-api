@@ -22,6 +22,8 @@ final class LegalGuardian implements Auditable
 
     private ?string $email;
 
+    private string $relationship;
+
     private LegalGuardianStatus $status;
 
     private ?AuditTrail $auditTrail = null;
@@ -37,6 +39,7 @@ final class LegalGuardian implements Auditable
         string $lastName,
         ?string $phone,
         ?string $email,
+        string $relationship,
         AuditTrail $auditTrail
     ) {
         $this->id = $id;
@@ -45,6 +48,7 @@ final class LegalGuardian implements Auditable
         $this->lastName = self::normalizeText($lastName, 'last name');
         $this->phone = self::normalizeNullableText($phone);
         $this->email = self::normalizeNullableEmail($email);
+        $this->relationship = self::normalizeText($relationship, 'relationship');
         $this->status = LegalGuardianStatus::active();
         $this->auditTrail = $auditTrail;
     }
@@ -56,6 +60,7 @@ final class LegalGuardian implements Auditable
         string $lastName,
         ?string $phone,
         ?string $email,
+        string $relationship,
         AuditTrail $auditTrail
     ): self {
         return new self(
@@ -65,6 +70,7 @@ final class LegalGuardian implements Auditable
             $lastName,
             $phone,
             $email,
+            $relationship,
             $auditTrail
         );
     }
@@ -97,6 +103,11 @@ final class LegalGuardian implements Auditable
     public function email(): ?string
     {
         return $this->email;
+    }
+
+    public function relationship(): string
+    {
+        return $this->relationship;
     }
 
     public function status(): LegalGuardianStatus

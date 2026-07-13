@@ -24,6 +24,10 @@ final readonly class CreateLegalGuardianRequest
         #[Assert\Email(message: 'El campo "email" debe ser un correo válido.')]
         #[Assert\Length(max: 255, maxMessage: 'El campo "email" excede la longitud máxima permitida.')]
         public ?string $email = null,
+
+        #[Assert\NotBlank(message: 'El campo "relationship" es obligatorio.')]
+        #[Assert\Length(max: 50, maxMessage: 'El campo "relationship" excede la longitud máxima permitida.')]
+        public ?string $relationship = null,
     ) {
     }
 
@@ -34,6 +38,7 @@ final readonly class CreateLegalGuardianRequest
             self::stringOrNull($payload['lastName'] ?? null),
             self::stringOrNull($payload['phone'] ?? null),
             self::stringOrNull($payload['email'] ?? null),
+            self::stringOrNull($payload['relationship'] ?? null),
         );
     }
 
@@ -44,6 +49,7 @@ final readonly class CreateLegalGuardianRequest
             $this->lastName,
             $this->phone,
             $this->email,
+            $this->relationship,
         );
     }
 

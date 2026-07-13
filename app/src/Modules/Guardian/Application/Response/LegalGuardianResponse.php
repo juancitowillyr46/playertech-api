@@ -15,6 +15,7 @@ final readonly class LegalGuardianResponse
         private string $lastName,
         private ?string $phone,
         private ?string $email,
+        private string $relationship,
         private string $status,
     ) {
     }
@@ -28,6 +29,7 @@ final readonly class LegalGuardianResponse
             $guardian->lastName(),
             $guardian->phone(),
             $guardian->email(),
+            $guardian->relationship(),
             $guardian->status()->value(),
         );
     }
@@ -41,6 +43,7 @@ final readonly class LegalGuardianResponse
             'lastName' => $this->lastName,
             'phone' => $this->phone,
             'email' => $this->email,
+            'relationship' => $this->relationship,
             'status' => $this->status,
         ];
     }

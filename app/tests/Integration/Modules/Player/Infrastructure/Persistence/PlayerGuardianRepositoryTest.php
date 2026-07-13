@@ -95,6 +95,7 @@ final class PlayerGuardianRepositoryTest extends KernelTestCase
             'Lopez',
             '+51 999 111 222',
             'maria@example.com',
+            'Madre',
             AuditTrail::create('system'),
         );
 

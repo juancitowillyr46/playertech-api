@@ -14,6 +14,8 @@ final readonly class CreateLegalGuardianInput
         public ?string $phone = null,
 
         public ?string $email = null,
+
+        public ?string $relationship = null,
     ) {
     }
 }

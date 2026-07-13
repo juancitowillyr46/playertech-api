@@ -116,6 +116,7 @@ final class PlayerGuardianControllerTest extends KernelTestCase
                 'lastName' => 'Lopez',
                 'phone' => '+51 999 111 222',
                 'email' => 'maria@example.com',
+                'relationship' => 'Madre',
             ], JSON_THROW_ON_ERROR)
         ));
 
@@ -188,6 +189,7 @@ final class PlayerGuardianControllerTest extends KernelTestCase
                 'lastName' => 'Rojas',
                 'phone' => '+51 999 333 444',
                 'email' => 'carlos@example.com',
+                'relationship' => 'Padre',
             ], JSON_THROW_ON_ERROR)
         ));
 

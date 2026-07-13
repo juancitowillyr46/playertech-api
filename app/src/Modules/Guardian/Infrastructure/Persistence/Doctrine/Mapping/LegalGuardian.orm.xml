@@ -74,6 +74,12 @@
             length="255"
             nullable="true"/>
 
+        <field
+            name="relationship"
+            column="relationship"
+            type="string"
+            length="50"/>
+
         <embedded
             name="status"
             class="App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianStatus"
