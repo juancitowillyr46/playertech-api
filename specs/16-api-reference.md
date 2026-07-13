@@ -65,6 +65,265 @@ La respuesta usa el contrato:
 }
 ```
 
+## List Response Examples
+
+Los listados más visibles para frontend usan `data` como arreglo de DTOs resumidos y `meta` con el estado de la paginación. Los campos del primer elemento de `data` son los que la UI debe usar para construir columnas, badges y acciones.
+
+### Academies
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "name": "Academia PlayerTech",
+      "contactEmail": "contacto@academiaplayertech.com",
+      "registrationSource": "platform",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 1,
+    "total_pages": 1,
+    "has_next": false,
+    "has_prev": false
+  }
+}
+```
+
+### Users
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "fullName": "Root Admin",
+      "email": "admin@playertech.com",
+      "academyId": null,
+      "roles": ["ROLE_ROOT", "ROLE_USER"],
+      "role": "ROLE_ROOT",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 1,
+    "total_pages": 1,
+    "has_next": false,
+    "has_prev": false
+  }
+}
+```
+
+### Venues
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "name": "Cancha Principal",
+      "city": "Bogota",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 1,
+    "total_pages": 1,
+    "has_next": false,
+    "has_prev": false
+  }
+}
+```
+
+### Categories
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "categoryKey": "sub-12",
+      "name": "Sub 12",
+      "minAge": 11,
+      "maxAge": 12,
+      "description": "Categoria formativa",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 1,
+    "total_pages": 1,
+    "has_next": false,
+    "has_prev": false
+  }
+}
+```
+
+### Teams
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "categoryId": "uuid",
+      "name": "Sub 12 A",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 1,
+    "total_pages": 1,
+    "has_next": false,
+    "has_prev": false
+  }
+}
+```
+
+### Players
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "categoryId": "uuid",
+      "firstName": "Juan",
+      "lastName": "Perez",
+      "birthDate": "2013-05-12",
+      "documentNumber": "12345678",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 1,
+    "total_pages": 1,
+    "has_next": false,
+    "has_prev": false
+  }
+}
+```
+
+### Payment Concepts
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "code": "MATRICULA",
+      "name": "Matrícula",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 1,
+    "total_pages": 1,
+    "has_next": false,
+    "has_prev": false
+  }
+}
+```
+
+### Pending Charges
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "membershipId": "uuid",
+      "paymentConceptId": "uuid",
+      "description": "Cuota pendiente de matrícula",
+      "amount": "150000.00",
+      "status": "PENDING"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 1,
+    "total_pages": 1,
+    "has_next": false,
+    "has_prev": false
+  }
+}
+```
+
+### Team Assignments
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "playerId": "uuid",
+      "teamId": "uuid",
+      "startDate": "2026-07-08",
+      "endDate": null,
+      "isPrimary": false
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 1,
+    "total_pages": 1,
+    "has_next": false,
+    "has_prev": false
+  }
+}
+```
+
+### Team Staff
+
+```json
+{
+  "data": [
+    {
+      "assignmentId": "uuid",
+      "staffId": "uuid",
+      "userId": "uuid",
+      "teamId": "uuid",
+      "role": "HEAD_COACH"
+    }
+  ],
+  "meta": {}
+}
+```
+
+### Membership History
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "status": "ACTIVE",
+      "startedAt": "2026-07-07T00:00:00+00:00",
+      "endedAt": null,
+      "primaryGuardianId": "uuid"
+    }
+  ],
+  "meta": {}
+}
+```
+
 ---
 
 # Access Model
