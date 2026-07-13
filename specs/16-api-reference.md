@@ -831,6 +831,48 @@ Consultar la matrícula activa de un jugador y su acudiente principal.
 
 # Staff API
 
+## List Staff
+
+```http
+GET /api/v1/academy/staff?page=1&per_page=20&sort=created_at&direction=DESC
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Listar el staff activo o histórico de la academia actual con paginación uniforme.
+
+### Success
+
+`200 OK`
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "academyId": "uuid",
+      "userId": "uuid",
+      "fullName": "Juan Perez",
+      "email": "juan@academiaplayertech.com",
+      "role": "ROLE_COACH",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 1,
+    "total_pages": 1,
+    "has_next": false,
+    "has_prev": false
+  }
+}
+```
+
 ## Onboard Staff Member
 
 ```http

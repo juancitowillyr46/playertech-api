@@ -11,9 +11,11 @@ use App\Modules\Staff\Application\Command\RemoveStaffFromTeamCommand;
 use App\Modules\Staff\Application\Handler\AssignStaffToTeamHandler;
 use App\Modules\Staff\Application\Handler\CreateStaffMemberHandler;
 use App\Modules\Staff\Application\Handler\ChangeStaffRoleHandler;
+use App\Modules\Staff\Application\Handler\ListStaffHandler;
 use App\Modules\Staff\Application\Handler\RegisterStaffMemberHandler;
 use App\Modules\Staff\Application\Handler\RemoveStaffFromTeamHandler;
 use App\Modules\Staff\Application\Handler\ShowTeamStaffHandler;
+use App\Modules\Staff\Application\Query\ListStaffQuery;
 use App\Modules\Staff\Application\Query\ShowTeamStaffQuery;
 use App\Modules\Staff\Domain\Staff\StaffId;
 use App\Modules\Staff\Domain\TeamStaffAssignment\StaffRole;
@@ -23,6 +25,7 @@ use App\Modules\Staff\Presentation\Http\Request\ChangeStaffRoleRequest;
 use App\Modules\Staff\Presentation\Http\Request\RegisterStaffMemberRequest;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Shared\Presentation\Http\AbstractApiController;
+use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,12 +35,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Modules\Staff\Presentation\Http\Request\CreateStaffMemberRequest;
 
 #[Route('/academy/staff')]
-final class StaffController extends AbstractApiController
+final class StaffController extends AbstractPaginatedApiController
 {
     public function __construct(
         private readonly Security $security,
         private readonly ValidatorInterface $validator,
         private readonly CreateStaffMemberHandler $createStaffMemberHandler,
+        private readonly ListStaffHandler $listStaffHandler,
         private readonly RegisterStaffMemberHandler $registerStaffMemberHandler,
         private readonly AssignStaffToTeamHandler $assignStaffToTeamHandler,
         private readonly ChangeStaffRoleHandler $changeStaffRoleHandler,
@@ -45,6 +49,22 @@ final class StaffController extends AbstractApiController
         private readonly ShowTeamStaffHandler $showTeamStaffHandler,
         private readonly TenantContext $tenantContext,
     ) {
+    }
+
+    #[Route('', methods: ['GET'])]
+    public function list(Request $request): JsonResponse
+    {
+        $items = ($this->listStaffHandler)(
+            new ListStaffQuery(
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                $this->paginationQueryFromRequest($request, 'created_at')
+            )
+        );
+
+        return new JsonResponse([
+            'data' => array_map(static fn ($item) => $item->toArray(), $items->items),
+            'meta' => $items->meta->toArray(),
+        ]);
     }
 
     #[Route('/onboarding', methods: ['POST'])]
