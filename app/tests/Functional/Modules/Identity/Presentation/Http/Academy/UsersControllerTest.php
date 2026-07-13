@@ -50,6 +50,7 @@ final class UsersControllerTest extends KernelTestCase
             new PhoneNumber('+51 999 999 999'),
             'Colombia',
             'Lima',
+            'signup',
             new Address('Av. Principal 123'),
             new City('Lima'),
             null,

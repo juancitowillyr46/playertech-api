@@ -20,6 +20,20 @@ Si un contrato crece en complejidad o reutilización, el estándar preferido es:
 * `ResponseTransformer` para salidas con composición o filtrado de relaciones.
 * `Presenter` si se necesita formalizar el paso entre Application y Presentation.
 
+## Postman As Reference
+
+Hasta que exista Swagger/OpenAPI interactivo, la colección de Postman se considera la referencia operativa de contrato HTTP para el front y para QA.
+
+Reglas del estándar:
+
+* Cada request debe incluir método, URL, headers y body de ejemplo.
+* Cada request relevante debe incluir al menos un response de éxito.
+* Los endpoints con errores previsibles deben incluir ejemplos de error cuando el contrato ya esté estabilizado.
+* Los ejemplos de response deben reflejar camelCase y la forma real de los DTOs.
+* Si un endpoint devuelve `data` y `meta`, ese debe ser el ejemplo mostrado en Postman.
+* Si el endpoint devuelve `204 No Content`, la colección debe indicarlo explícitamente.
+* La documentación en `specs/` debe mantenerse alineada con la colección de Postman.
+
 ## Naming Convention
 
 * Query params: `snake_case`.
@@ -100,10 +114,14 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
   "contactName": "Juan Perez",
   "password": "secret12345",
   "phone": "+51 987 654 321",
+  "country": "Colombia",
+  "department": "Cundinamarca",
   "address": "Jr. Secundario 789",
   "city": "Arequipa",
   "categoryId": "uuid",
-  "teamName": "Sub 12 A"
+  "teamName": "Sub 12 A",
+  "acceptedTerms": true,
+  "acceptedDataProcessing": true
 }
 ```
 
@@ -113,6 +131,7 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
 * La categoría debe estar activa.
 * `teamName` es obligatorio y su longitud máxima es 80 caracteres.
 * No puede existir otro equipo con el mismo nombre dentro de la misma categoría de la academia.
+* El tenant queda en onboarding con correo de activación pendiente para el usuario owner/admin inicial.
 
 ### Success
 
@@ -133,6 +152,75 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
 
 * `404 Not Found` si la categoría no existe.
 * `409 Conflict` si la categoría está inactiva o el equipo ya existe.
+* `422 Unprocessable Entity` si el payload no pasa validación.
+
+---
+
+# Platform Tenant Provisioning
+
+## Create Platform Tenant
+
+```http
+POST /api/v1/platform/academies
+```
+
+### Access
+
+* Sólo `ROLE_ROOT`.
+
+### Purpose
+
+Provisionar un tenant completo desde plataforma, creando academia, usuario owner/admin inicial, correo de bienvenida o activación y primer equipo inicial.
+
+### Request DTO
+
+`ProvisionTenantInput`
+
+```json
+{
+  "name": "Academia PlayerTech",
+  "contactEmail": "contacto@academiaplayertech.com",
+  "phone": "+57 312 555 8888",
+  "country": "Colombia",
+  "department": "Cundinamarca",
+  "address": "Av. Principal 123",
+  "city": "Bogota",
+  "adminName": "Juan Perez",
+  "adminEmail": "admin@academiaplayertech.com",
+  "categoryId": "uuid",
+  "teamName": "Sub 12 A"
+}
+```
+
+### Rules
+
+* `name`, `contactEmail`, `adminName`, `adminEmail`, `categoryId` y `teamName` son obligatorios.
+* El `contactEmail` de la academia no puede existir previamente.
+* El `adminEmail` no puede existir previamente en `users`.
+* `categoryId` debe existir y estar activa.
+* `teamName` debe ser único dentro de la academia y categoría.
+* El tenant queda listo para operar al finalizar la operación.
+
+### Success
+
+`201 Created`
+
+```json
+{
+  "data": {
+    "academy": {},
+    "user": {},
+    "team": {}
+  },
+  "meta": {}
+}
+```
+
+### Errors
+
+* `404 Not Found` si la categoría no existe.
+* `409 Conflict` si el correo de academia o el correo del admin inicial ya existen.
+* `409 Conflict` si el equipo inicial ya existe.
 * `422 Unprocessable Entity` si el payload no pasa validación.
 
 ---

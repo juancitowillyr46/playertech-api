@@ -13,6 +13,7 @@ final readonly class UserResponse
         private ?string $fullName,
         private string $email,
         private ?string $academyId,
+        private array $roles,
         private string $role,
         private string $status,
     ) {
@@ -25,6 +26,7 @@ final readonly class UserResponse
             $user->getFullName(),
             $user->getUserIdentifier(),
             $user->getAcademyId(),
+            $user->getRoles(),
             $user->getRole(),
             $user->getStatus(),
         );
@@ -37,6 +39,7 @@ final readonly class UserResponse
             'fullName' => $this->fullName,
             'email' => $this->email,
             'academyId' => $this->academyId,
+            'roles' => $this->roles,
             'role' => $this->role,
             'status' => $this->status,
         ];

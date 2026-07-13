@@ -68,6 +68,12 @@
             length="80"
             nullable="true"/>
 
+        <field
+            name="registrationSource"
+            column="registration_source"
+            type="string"
+            length="20"/>
+
         <embedded
             name="address"
             class="App\Shared\Domain\ValueObject\Address"

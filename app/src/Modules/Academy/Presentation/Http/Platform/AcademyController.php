@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Modules\Academy\Presentation\Http\Platform;
 
-use App\Modules\Academy\Application\Command\CreateAcademyCommand;
+use App\Modules\Academy\Application\Command\ProvisionTenantCommand;
 use App\Modules\Academy\Application\Command\ReactivateAcademyCommand;
 use App\Modules\Academy\Application\Command\SuspendAcademyCommand;
 use App\Modules\Academy\Application\Command\UpdateAcademyCommand;
-use App\Modules\Academy\Application\Handler\CreateAcademyHandler;
+use App\Modules\Academy\Application\Handler\ProvisionTenantHandler;
 use App\Modules\Academy\Application\Handler\ListAcademiesHandler;
 use App\Modules\Academy\Application\Handler\ReactivateAcademyHandler;
 use App\Modules\Academy\Application\Handler\ShowAcademyHandler;
@@ -16,7 +16,7 @@ use App\Modules\Academy\Application\Handler\SuspendAcademyHandler;
 use App\Modules\Academy\Application\Handler\UpdateAcademyHandler;
 use App\Modules\Academy\Application\Query\ListAcademiesQuery;
 use App\Modules\Academy\Application\Query\ShowAcademyQuery;
-use App\Modules\Academy\Presentation\Http\Request\CreateAcademyRequest;
+use App\Modules\Academy\Presentation\Http\Request\ProvisionTenantRequest;
 use App\Modules\Academy\Presentation\Http\Request\UpdateAcademyRequest;
 use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -31,7 +31,7 @@ final class AcademyController extends AbstractPaginatedApiController
     public function __construct(
         private readonly Security $security,
         private readonly ValidatorInterface $validator,
-        private readonly CreateAcademyHandler $createAcademyHandler,
+        private readonly ProvisionTenantHandler $provisionTenantHandler,
         private readonly ListAcademiesHandler $listAcademiesHandler,
         private readonly ShowAcademyHandler $showAcademyHandler,
         private readonly UpdateAcademyHandler $updateAcademyHandler,
@@ -43,11 +43,11 @@ final class AcademyController extends AbstractPaginatedApiController
     #[Route('', name: 'api_v1_platform_academies_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $input = CreateAcademyRequest::fromArray($request->toArray());
+        $input = ProvisionTenantRequest::fromArray($request->toArray());
         $this->assertValid($this->validator, $input);
 
-        $view = ($this->createAcademyHandler)(
-            new CreateAcademyCommand(
+        $view = ($this->provisionTenantHandler)(
+            new ProvisionTenantCommand(
                 $this->requireActorId(),
                 $input->toInput()
             )
@@ -62,7 +62,7 @@ final class AcademyController extends AbstractPaginatedApiController
     #[Route('', name: 'api_v1_platform_academies_list', methods: ['GET'])]
     public function list(Request $request): JsonResponse
     {
-        $academies = ($this->listAcademiesHandler)(new ListAcademiesQuery($this->paginationQueryFromRequest($request, 'audit_trail.created_at.value')));
+        $academies = ($this->listAcademiesHandler)(new ListAcademiesQuery($this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value')));
 
         return new JsonResponse([
             'data' => array_map(static fn ($view): array => $view->toArray(), $academies->items),

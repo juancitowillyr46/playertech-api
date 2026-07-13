@@ -8,6 +8,7 @@ use App\Modules\Academy\Application\Command\CreateAcademyCommand;
 use App\Modules\Academy\Application\Response\AcademyResponse;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Academy\Domain\Academy\AcademyRegistrationSource;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
 use App\Shared\Domain\ValueObject\AuditTrail;
@@ -33,6 +34,7 @@ final readonly class CreateAcademyHandler
             null === $command->input->phone ? null : new \App\Shared\Domain\ValueObject\PhoneNumber($command->input->phone),
             $this->normalizeCountry($command->input->country),
             $command->input->department,
+            AcademyRegistrationSource::platform()->value(),
             null === $command->input->address ? null : new \App\Shared\Domain\ValueObject\Address($command->input->address),
             null === $command->input->city ? null : new \App\Shared\Domain\ValueObject\City($command->input->city),
             null,

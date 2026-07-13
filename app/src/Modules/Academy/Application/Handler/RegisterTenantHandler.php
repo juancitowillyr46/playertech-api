@@ -11,6 +11,7 @@ use App\Modules\Academy\Application\Response\TenantSignupResponse;
 use App\Modules\Academy\Application\Response\TenantSignupUserResponse;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Academy\Domain\Academy\AcademyRegistrationSource;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
 use App\Modules\Category\Application\Services\CategoryFinder;
@@ -65,6 +66,7 @@ final readonly class RegisterTenantHandler
             null === $data->phone ? null : new \App\Shared\Domain\ValueObject\PhoneNumber($data->phone),
             $this->normalizeCountry($data->country),
             $data->department,
+            AcademyRegistrationSource::signup()->value(),
             null === $data->address ? null : new \App\Shared\Domain\ValueObject\Address($data->address),
             null === $data->city ? null : new \App\Shared\Domain\ValueObject\City($data->city),
             null,

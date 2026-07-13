@@ -16,6 +16,7 @@ final readonly class AcademyResponse
         private ?string $phone,
         private ?string $country,
         private ?string $department,
+        private string $registrationSource,
         private ?string $address,
         private ?string $city,
         private ?MediaResponse $shield,
@@ -35,6 +36,7 @@ final readonly class AcademyResponse
             $academy->phone()?->value(),
             $academy->country(),
             $academy->department(),
+            $academy->registrationSource(),
             $academy->address()?->value(),
             $academy->city()?->value(),
             null === $shield ? null : MediaResponse::fromDetails(
@@ -58,6 +60,7 @@ final readonly class AcademyResponse
             'phone' => $this->phone,
             'country' => $this->country,
             'department' => $this->department,
+            'registrationSource' => $this->registrationSource,
             'address' => $this->address,
             'city' => $this->city,
             'shield' => $this->shield?->toArray(),

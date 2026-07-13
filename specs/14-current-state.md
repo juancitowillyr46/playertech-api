@@ -167,17 +167,20 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `AccountUser` queda como entidad tecnica acoplada al framework por pragmatismo.
 * El almacenamiento UUID ya esta normalizado como string legible en la tabla `users`.
 * Login y `/auth/me` validados en runtime.
+* `GET /api/v1/auth/me`, `PUT /api/v1/auth/me/name` y el flujo público de restablecimiento de contraseña quedaron implementados para usuarios.
 * CRUD de users validado en runtime para contexto plataforma, incluyendo create, update, disable y enable con respuesta JSON estándar.
 * Se introdujo una base HTTP común para evitar duplicación de validación y resolución del actor autenticado.
 * La base de pruebas ya tiene su primer baseline unitario verde.
 * La primera integración de signup de tenant ya corre contra base de datos MySQL de test y valida persistencia real.
 * `ROLE_ROOT` opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext`.
 * `Academy` ya expone `GET /api/v1/academy/me` como contexto tenant, `PUT /api/v1/academy/me` para autogestión del tenant y `GET /api/v1/platform/academies` como API de plataforma.
+* La API de usuario autenticado quedó separada de la API de academia: `auth/me` expone identidad, `auth/me/name` actualiza sólo el nombre y el reset de contraseña usa endpoints públicos dedicados.
 * Los endpoints de `Academy` quedaron validados como parte del flujo base tenant/root y siguen protegidos por `TenantContext` y el filtro de persistencia.
 * `Academy` ahora usa `AcademyId` como Doctrine custom type y VOs compartidos como embeddables XML, sirviendo como referencia del patrón para los demas modulos.
 * Los VOs compartidos ya estan versionados en git y el mapping XML de `Academy` los consume de forma consistente.
 * La capa HTTP de `Academy` quedo delgada y delega en CQRS con commands, queries y handlers.
 * `Academy` ya responde mediante DTOs de salida por caso de uso, incluyendo contratos anidados para flujos como tenant signup.
+* `Academy` ahora expone `registrationSource` para distinguir tenants creados por `signup` y por `platform`, y ese dato también aparece en los listados de academias.
 * Los recursos de media se estandarizan como objetos JSON con `path`, `url`, `mime_type`, `size` y `checksum`; `Academy` expone `shield` con ese contrato y `Player` heredará el mismo patrón para `photo`.
 * Existe una guia operativa para construir nuevos modulos sin depender de modelos previos.
 * `Academy` queda definido como el modulo de referencia oficial para nuevos contextos: CQRS, XML puro, VOs tipados, soft delete, validacion formal, controllers delgados y separacion root/tenant.
@@ -187,6 +190,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La validacion principal de suites de integracion y funcionales debe correr sobre la base `test` para simular CI/CD; `local` queda para desarrollo interactivo.
 * `Mailpit` queda adoptado como la herramienta base de desarrollo local para validar envios de correo y flujos de activacion.
 * `EP-003` queda reorientada para distinguir usuarios de plataforma y usuarios tenant; la creacion del owner/admin inicial del tenant se documenta como historia explicita.
+* La creación de tenant por `signup` y por `platform` quedó unificada con trazabilidad explícita de origen en `Academy`.
 * `Category` y `Venue` ya quedaron implementados como módulos funcionales completos y el backlog debe seguir su mismo lifecycle con historias faltantes o inconsistentes.
 * `Category` y `Venue` comparten ahora el patrón de recuperación por `Finder`, reduciendo duplicación en handlers y homogeneizando Application.
 * El backlog de `Category` ya tiene historias explícitas para listar, actualizar y cambiar estado, alineadas con el código existente.
@@ -226,6 +230,9 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-013` de `EP-001` quedó implementada con `POST /api/v1/academy/me/shield` para subir y reemplazar el escudo institucional de la academia.
 * Se amplió `EP-001` con el perfil básico de academia: `country`, `department`, `city`, `address`, teléfono normalizado y consentimientos legales obligatorios en el signup de tenant.
 * La colección Postman quedó actualizada para reflejar el nuevo contrato de `Academy` y `TenantSignup`, incluyendo `country`, `department` y los consentimientos obligatorios.
+* `HU-015` de `EP-001` quedó implementada con `POST /api/v1/platform/academies` para provisionar tenants completos desde la plataforma con academia, owner/admin inicial, correo de bienvenida y primer equipo.
+* La colección Postman quedó actualizada con contratos de ejemplo para `POST /api/v1/public/tenants/signup` y `POST /api/v1/platform/academies`.
+* La colección Postman se usa como referencia operativa de contrato HTTP para el front mientras no exista Swagger/OpenAPI interactivo.
 * Se documentó la futura épica `EP-023` para información tributaria de academias y comprobantes DIAN, separándola del perfil base de `Academy`.
 * `HU-009` de `EP-007` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la foto del jugador.
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.

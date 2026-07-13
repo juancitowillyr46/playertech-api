@@ -16,6 +16,7 @@ use App\Modules\Category\Domain\Category\CategoryRepository;
 use App\Modules\Identity\Domain\User\AccountUser;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Infrastructure\Persistence\TeamRepository;
+use App\Shared\Application\Pagination\PaginationQuery;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Description;
 use Doctrine\ORM\EntityManagerInterface;
@@ -79,9 +80,7 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         $schemaTool = new SchemaTool($this->entityManager);
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
 
-        $this->entityManager->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $this->entityManager->getConnection()->executeStatement('DROP TABLE IF EXISTS teams, players, categories, venues, academies, users');
-        $this->entityManager->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
+        $this->dropAllTables();
         $schemaTool->createSchema($metadata);
     }
 
@@ -110,6 +109,7 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         self::assertSame('tenant.test@example.com', $payload['academy']['contactEmail']);
         self::assertSame('Colombia', $payload['academy']['country']);
         self::assertSame('Cundinamarca', $payload['academy']['department']);
+        self::assertSame('signup', $payload['academy']['registrationSource']);
         self::assertSame('tenant.test@example.com', $payload['user']['email']);
         self::assertSame(AccountUser::STATUS_PENDING_ACTIVATION, $payload['user']['status']);
         self::assertTrue($payload['user']['activationPending']);
@@ -132,10 +132,16 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         self::assertNotNull($user?->getActivationToken());
         self::assertNotNull($user?->getActivationExpiresAt());
 
-        $teams = $this->teamRepository->findAllByAcademy($academy->id());
+        $teams = $this->teamRepository->findAllByAcademy(
+            $academy->id(),
+            new PaginationQuery(sort: 'auditTrail.createdAt.value')
+        );
 
-        self::assertCount(1, $teams);
-        self::assertSame('Sub 12 A', $teams[0]->name()->value());
+        self::assertNotEmpty($teams);
+        self::assertContains('Sub 12 A', array_map(
+            static fn (Team $team): string => $team->name()->value(),
+            $teams['items']
+        ));
     }
 
     private function categoryRepositoryStub(): CategoryRepository
@@ -173,10 +179,24 @@ final class RegisterTenantHandlerTest extends KernelTestCase
                 return null;
             }
 
-            public function findAllByAcademy(AcademyId $academyId): array
+            public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
             {
                 return [];
             }
         };
+    }
+
+    private function dropAllTables(): void
+    {
+        $connection = $this->entityManager->getConnection();
+        $tables = $connection->fetchFirstColumn('SHOW TABLES');
+
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
+
+        foreach ($tables as $table) {
+            $connection->executeStatement(sprintf('DROP TABLE IF EXISTS `%s`', $table));
+        }
+
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

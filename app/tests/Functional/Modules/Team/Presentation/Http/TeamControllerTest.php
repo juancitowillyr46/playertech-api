@@ -60,6 +60,7 @@ final class TeamControllerTest extends KernelTestCase
             new PhoneNumber('+51 999 999 999'),
             'Colombia',
             'Cundinamarca',
+            'signup',
             new Address('Av. Principal 123'),
             new City('Lima'),
             null,

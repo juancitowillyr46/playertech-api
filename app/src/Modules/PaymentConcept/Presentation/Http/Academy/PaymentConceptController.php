@@ -56,7 +56,7 @@ final class PaymentConceptController extends AbstractPaginatedApiController
     #[Route('', methods:['GET'])]
     public function list(Request $request): JsonResponse
     {
-        $items = ($this->listHandler)(new ListPaymentConceptsQuery(new AcademyId($this->tenantContext->requireAcademyId()), $this->paginationQueryFromRequest($request, 'audit_trail.created_at.value')));
+        $items = ($this->listHandler)(new ListPaymentConceptsQuery(new AcademyId($this->tenantContext->requireAcademyId()), $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value')));
         return new JsonResponse(['data'=>array_map(static fn($i)=>$i->toArray(), $items->items),'meta'=>$items->meta->toArray()]);
     }
     #[Route('/{paymentConceptId}', methods:['GET'])]

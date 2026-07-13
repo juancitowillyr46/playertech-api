@@ -10,7 +10,7 @@
 | MVP | Sí |
 | Estado | Done |
 | Actor Principal | Super Admin |
-| Actor Secundario | Tenant Academy Admin |
+| Actor Secundario | Owner/Admin de la academia |
 
 ---
 
@@ -28,7 +28,7 @@ Quiero subir el escudo institucional de una academia
 
 Para mantener la identidad visual de la institución en la plataforma.
 
-Como Tenant Academy Admin
+Como Owner/Admin de la academia
 
 Quiero actualizar el escudo institucional de mi academia
 
@@ -112,7 +112,7 @@ Entonces el sistema rechaza la operación.
 
 ## CA-003 Aislamiento tenant
 
-Dado un usuario tenant autenticado
+Dado un usuario owner/admin autenticado
 
 Cuando intenta modificar otra academia
 
