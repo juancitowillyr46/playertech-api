@@ -2798,6 +2798,57 @@
       "name": "Staff",
       "item": [
         {
+          "name": "Staff - Onboard Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/staff/onboarding",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "staff",
+                "onboarding"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Juan Perez\",\n  \"email\": \"juan@academiaplayertech.com\",\n  \"role\": \"ROLE_COACH\",\n  \"sendInvitation\": true\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Staff - Onboard Member Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"user\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000101\",\n      \"fullName\": \"Juan Perez\",\n      \"email\": \"juan@academiaplayertech.com\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"roles\": [\n        \"ROLE_COACH\",\n        \"ROLE_USER\"\n      ],\n      \"role\": \"ROLE_COACH\",\n      \"status\": \"PENDING_ACTIVATION\"\n    },\n    \"staff\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000102\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"userId\": \"019f0000-0000-7000-8000-000000000101\",\n      \"status\": \"ACTIVE\"\n    },\n    \"accessMode\": \"INVITATION\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
           "name": "Staff - Register",
           "request": {
             "method": "POST",

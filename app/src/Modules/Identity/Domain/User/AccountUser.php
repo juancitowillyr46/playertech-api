@@ -27,6 +27,7 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
     public const STATUS_PENDING_ACTIVATION = 'PENDING_ACTIVATION';
     public const ROLE_ROOT = 'ROLE_ROOT';
     public const ROLE_ACADEMY_ADMIN = 'ROLE_ACADEMY_ADMIN';
+    public const ROLE_COACH = 'ROLE_COACH';
     public const DEFAULT_ROLE = self::ROLE_ACADEMY_ADMIN;
 
     #[ORM\Id]

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Identity\Presentation\Http\Request;
+namespace App\Modules\Staff\Presentation\Http\Request;
 
-use App\Modules\Identity\Application\Dto\InviteUserInput;
 use App\Modules\Identity\Domain\User\AccountUser;
+use App\Modules\Staff\Application\Dto\CreateStaffMemberInput;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final readonly class InviteUserRequest
+final readonly class CreateStaffMemberRequest
 {
     public function __construct(
         #[Assert\NotBlank(message: 'El campo "fullName" es obligatorio.')]
@@ -24,8 +24,13 @@ final readonly class InviteUserRequest
         #[Assert\Choice(choices: [AccountUser::ROLE_ACADEMY_ADMIN, AccountUser::ROLE_COACH], message: 'El campo "role" no es válido.')]
         public ?string $role,
 
-        #[Assert\Length(max: 36)]
-        public ?string $academyId = null,
+        public bool $sendInvitation = true,
+
+        #[Assert\Length(min: 8, max: 255)]
+        public ?string $password = null,
+
+        #[Assert\Length(min: 8, max: 255)]
+        public ?string $passwordConfirmation = null,
     ) {
     }
 
@@ -35,13 +40,22 @@ final readonly class InviteUserRequest
             self::stringOrNull($payload['fullName'] ?? null),
             self::stringOrNull($payload['email'] ?? null),
             self::stringOrNull($payload['role'] ?? null),
-            self::stringOrNull($payload['academyId'] ?? null),
+            self::boolOrTrue($payload['sendInvitation'] ?? true),
+            self::stringOrNull($payload['password'] ?? null),
+            self::stringOrNull($payload['passwordConfirmation'] ?? null),
         );
     }
 
-    public function toInput(): InviteUserInput
+    public function toInput(): CreateStaffMemberInput
     {
-        return new InviteUserInput($this->fullName, $this->email, $this->role, $this->academyId);
+        return new CreateStaffMemberInput(
+            $this->fullName,
+            $this->email,
+            $this->role,
+            $this->password,
+            $this->passwordConfirmation,
+            $this->sendInvitation,
+        );
     }
 
     private static function stringOrNull(mixed $value): ?string
@@ -53,5 +67,18 @@ final readonly class InviteUserRequest
         $value = trim((string) $value);
 
         return '' === $value ? null : $value;
+    }
+
+    private static function boolOrTrue(mixed $value): bool
+    {
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        if (is_string($value)) {
+            return in_array(strtolower(trim($value)), ['1', 'true', 'yes', 'on'], true);
+        }
+
+        return (bool) $value;
     }
 }

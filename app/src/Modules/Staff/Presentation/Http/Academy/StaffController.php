@@ -4,10 +4,12 @@ namespace App\Modules\Staff\Presentation\Http\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Modules\Staff\Application\Command\AssignStaffToTeamCommand;
+use App\Modules\Staff\Application\Command\CreateStaffMemberCommand;
 use App\Modules\Staff\Application\Command\ChangeStaffRoleCommand;
 use App\Modules\Staff\Application\Command\RegisterStaffMemberCommand;
 use App\Modules\Staff\Application\Command\RemoveStaffFromTeamCommand;
 use App\Modules\Staff\Application\Handler\AssignStaffToTeamHandler;
+use App\Modules\Staff\Application\Handler\CreateStaffMemberHandler;
 use App\Modules\Staff\Application\Handler\ChangeStaffRoleHandler;
 use App\Modules\Staff\Application\Handler\RegisterStaffMemberHandler;
 use App\Modules\Staff\Application\Handler\RemoveStaffFromTeamHandler;
@@ -27,6 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Modules\Staff\Presentation\Http\Request\CreateStaffMemberRequest;
 
 #[Route('/academy/staff')]
 final class StaffController extends AbstractApiController
@@ -34,6 +37,7 @@ final class StaffController extends AbstractApiController
     public function __construct(
         private readonly Security $security,
         private readonly ValidatorInterface $validator,
+        private readonly CreateStaffMemberHandler $createStaffMemberHandler,
         private readonly RegisterStaffMemberHandler $registerStaffMemberHandler,
         private readonly AssignStaffToTeamHandler $assignStaffToTeamHandler,
         private readonly ChangeStaffRoleHandler $changeStaffRoleHandler,
@@ -41,6 +45,26 @@ final class StaffController extends AbstractApiController
         private readonly ShowTeamStaffHandler $showTeamStaffHandler,
         private readonly TenantContext $tenantContext,
     ) {
+    }
+
+    #[Route('/onboarding', methods: ['POST'])]
+    public function onboard(Request $request): JsonResponse
+    {
+        $input = CreateStaffMemberRequest::fromArray($request->toArray());
+        $this->assertValid($this->validator, $input);
+
+        $view = ($this->createStaffMemberHandler)(
+            new CreateStaffMemberCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                $this->tenantContext->requireAcademyId(),
+                $input->toInput()
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ], 201);
     }
 
     #[Route('', methods: ['POST'])]

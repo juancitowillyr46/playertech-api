@@ -336,6 +336,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] Consolidar la documentación HTTP operativa en Postman y retirar los archivos `.http` duplicados.
 - [x] Revisión final de `README` y guía de ejecución para el siguiente bloque funcional.
 * `EP-010` ya quedó desglosada en historias explícitas para asignar, marcar principal, cambiar principal, finalizar y consultar asignaciones deportivas.
+* `EP-021` añadió el flujo unificado de alta de staff con acceso en `POST /api/v1/academy/staff/onboarding`, creando usuario y staff en una sola operación y resolviendo invitación o contraseña inicial.
 * `EP-003` ya incorporó el flujo inicial de usuarios administrativos por invitación y activación con correo, como primer slice de la evolución de staff.
 * `EP-002` amplió el contrato de sedes para exponer `address` y `phone` opcionales también en el listado, no solo en el detalle.
 

@@ -21,7 +21,7 @@ final readonly class UpdateUserRequest
         public ?string $email,
 
         #[Assert\NotBlank(message: 'El campo "role" es obligatorio.')]
-        #[Assert\Choice(choices: [AccountUser::ROLE_ROOT, AccountUser::ROLE_ACADEMY_ADMIN], message: 'El campo "role" no es válido.')]
+        #[Assert\Choice(choices: [AccountUser::ROLE_ROOT, AccountUser::ROLE_ACADEMY_ADMIN, AccountUser::ROLE_COACH], message: 'El campo "role" no es válido.')]
         public ?string $role,
     ) {
     }

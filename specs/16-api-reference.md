@@ -831,6 +831,74 @@ Consultar la matrícula activa de un jugador y su acudiente principal.
 
 # Staff API
 
+## Onboard Staff Member
+
+```http
+POST /api/v1/academy/staff/onboarding
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Crear el usuario, registrar el staff y resolver el acceso por invitación o contraseña inicial en una sola operación.
+
+### Request DTO
+
+`CreateStaffMemberInput`
+
+```json
+{
+  "fullName": "Juan Perez",
+  "email": "juan@academiaplayertech.com",
+  "role": "ROLE_COACH",
+  "sendInvitation": true
+}
+```
+
+### Rules
+
+* `fullName`, `email` y `role` son obligatorios.
+* `role` puede ser `ROLE_ACADEMY_ADMIN` o `ROLE_COACH`.
+* Si `sendInvitation = true`, el sistema envía correo y deja la cuenta pendiente de activación.
+* Si `sendInvitation = false`, `password` y `passwordConfirmation` son obligatorios.
+* La respuesta devuelve el usuario creado, el staff y el modo de acceso aplicado.
+
+### Success
+
+`201 Created`
+
+```json
+{
+  "data": {
+    "user": {
+      "id": "uuid",
+      "fullName": "Juan Perez",
+      "email": "juan@academiaplayertech.com",
+      "academyId": "uuid",
+      "roles": ["ROLE_COACH", "ROLE_USER"],
+      "role": "ROLE_COACH",
+      "status": "PENDING_ACTIVATION"
+    },
+    "staff": {
+      "id": "uuid",
+      "academyId": "uuid",
+      "userId": "uuid",
+      "status": "ACTIVE"
+    },
+    "accessMode": "INVITATION"
+  },
+  "meta": {}
+}
+```
+
+### Errors
+
+* `409 Conflict` si el correo ya existe.
+* `422 Unprocessable Entity` si el payload no pasa validación.
+
 ## Register Staff Member
 
 ```http
