@@ -127,7 +127,9 @@ Los listados más visibles para frontend usan `data` como arreglo de DTOs resumi
     {
       "id": "uuid",
       "name": "Cancha Principal",
+      "address": "Av. Principal 123",
       "city": "Bogota",
+      "phone": "+573125953354",
       "status": "ACTIVE"
     }
   ],

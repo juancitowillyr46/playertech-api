@@ -337,5 +337,6 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] Revisión final de `README` y guía de ejecución para el siguiente bloque funcional.
 * `EP-010` ya quedó desglosada en historias explícitas para asignar, marcar principal, cambiar principal, finalizar y consultar asignaciones deportivas.
 * `EP-003` ya incorporó el flujo inicial de usuarios administrativos por invitación y activación con correo, como primer slice de la evolución de staff.
+* `EP-002` amplió el contrato de sedes para exponer `address` y `phone` opcionales también en el listado, no solo en el detalle.
 
 

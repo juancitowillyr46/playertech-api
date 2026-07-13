@@ -11,7 +11,9 @@ final readonly class VenueListItemResponse
     private function __construct(
         private string $id,
         private string $name,
+        private ?string $address,
         private ?string $city,
+        private ?string $phone,
         private string $status,
     ) {
     }
@@ -21,7 +23,9 @@ final readonly class VenueListItemResponse
         return new self(
             $venue->id()->value(),
             $venue->name()->value(),
+            $venue->address()?->value(),
             $venue->city()?->value(),
+            $venue->phone()?->value(),
             $venue->status()->value(),
         );
     }
@@ -31,7 +35,9 @@ final readonly class VenueListItemResponse
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'address' => $this->address,
             'city' => $this->city,
+            'phone' => $this->phone,
             'status' => $this->status,
         ];
     }

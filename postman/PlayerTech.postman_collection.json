@@ -851,7 +851,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 0,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000020\",\n      \"name\": \"Cancha Principal\",\n      \"address\": \"Av. Principal 123\",\n      \"city\": \"Bogota\",\n      \"phone\": \"+573125953354\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         }
