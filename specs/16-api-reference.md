@@ -24,6 +24,24 @@ Si un contrato crece en complejidad o reutilización, el estándar preferido es:
 
 Hasta que exista Swagger/OpenAPI interactivo, la colección de Postman se considera la referencia operativa de contrato HTTP para el front y para QA.
 
+La colección vigente está organizada por módulos y agrupa los endpoints por contexto funcional:
+
+- `Auth`
+- `Public`
+- `Platform`
+- `Academy`
+- `Membership`
+- `Player`
+- `Team`
+- `Category`
+- `Venue`
+- `PaymentConcept`
+- `Charge`
+- `Payments`
+- `Staff`
+- `TeamAssignment`
+- `Dashboard`
+
 Reglas del estándar:
 
 * Cada request debe incluir método, URL, headers y body de ejemplo.
