@@ -8,860 +8,17 @@
   "item": [
     {
       "name": "Auth",
-      "item": [
-        {
-          "name": "Login",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/login",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "login"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}"
-            }
-          },
-          "response": [
-            {
-              "name": "Login Example",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/auth/login",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "login"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}"
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {\n    \"token\": \"eyJhbGciOi...\",\n    \"user\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000100\",\n      \"email\": \"admin@playertech.com\",\n      \"role\": \"ROLE_ROOT\"\n    }\n  },\n  \"meta\": {}\n}"
-            }
-          ]
-        },
-        {
-          "name": "Me",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/me",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "me"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "Me Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/auth/me",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "me"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000100\",\n    \"fullName\": \"Root Admin\",\n    \"email\": \"admin@playertech.com\",\n    \"academyId\": null,\n    \"roles\": [\n      \"ROLE_ROOT\",\n      \"ROLE_USER\"\n    ],\n    \"role\": \"ROLE_ROOT\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
-            }
-            ,
-            {
-              "name": "Auth - Update Name",
-              "request": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/auth/me/name",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "me",
-                    "name"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fullName\": \"Root Admin Updated\"\n}"
-                }
-              },
-              "response": [
-                {
-                  "name": "Auth name update success",
-                  "originalRequest": {
-                    "method": "PUT",
-                    "header": [
-                      {
-                        "key": "Authorization",
-                        "value": "Bearer {{token}}"
-                      },
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/api/v1/auth/me/name",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "auth",
-                        "me",
-                        "name"
-                      ]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000100\",\n    \"fullName\": \"Root Admin Updated\",\n    \"email\": \"admin@playertech.com\",\n    \"academyId\": null,\n    \"roles\": [\n      \"ROLE_ROOT\",\n      \"ROLE_USER\"\n    ],\n    \"role\": \"ROLE_ROOT\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
-                }
-              ]
-            },
-            {
-              "name": "Auth - Password Reset Request",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/public/users/password-reset/request",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "public",
-                    "users",
-                    "password-reset",
-                    "request"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"email\": \"admin@playertech.com\"\n}"
-                }
-              },
-              "response": [
-                {
-                  "name": "Password reset request success",
-                  "originalRequest": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/api/v1/public/users/password-reset/request",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "public",
-                        "users",
-                        "password-reset",
-                        "request"
-                      ]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
-                }
-              ]
-            },
-            {
-              "name": "Auth - Password Reset Confirm",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/public/users/password-reset/confirm/{{resetToken}}",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "public",
-                    "users",
-                    "password-reset",
-                    "confirm",
-                    "{{resetToken}}"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"password\": \"new-secret123\",\n  \"passwordConfirmation\": \"new-secret123\"\n}"
-                }
-              },
-              "response": [
-                {
-                  "name": "Password reset confirm success",
-                  "originalRequest": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/api/v1/public/users/password-reset/confirm/{{resetToken}}",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "public",
-                        "users",
-                        "password-reset",
-                        "confirm",
-                        "{{resetToken}}"
-                      ]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000100\",\n    \"fullName\": \"Root Admin Updated\",\n    \"email\": \"admin@playertech.com\",\n    \"academyId\": null,\n    \"roles\": [\n      \"ROLE_ROOT\",\n      \"ROLE_USER\"\n    ],\n    \"role\": \"ROLE_ROOT\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      "item": []
     },
     {
       "name": "Public",
-      "item": [
-        {
-          "name": "Tenant Signup",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/public/tenants/signup",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "public",
-                "tenants",
-                "signup"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Academia PlayerTech Demo\",\n  \"contactEmail\": \"tenant.demo@example.com\",\n  \"contactName\": \"Juan Perez\",\n  \"password\": \"secret12345\",\n  \"phone\": \"+51 987 654 321\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"teamName\": \"Sub 12 A\",\n  \"acceptedTerms\": true,\n  \"acceptedDataProcessing\": true\n}"
-            },
-            "response": [
-              {
-                "name": "Tenant signup success",
-                "originalRequest": {
-                  "method": "POST",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    },
-                    {
-                      "key": "Accept",
-                      "value": "application/json"
-                    }
-                  ],
-                  "url": {
-                    "raw": "{{baseUrl}}/api/v1/public/tenants/signup",
-                    "host": [
-                      "{{baseUrl}}"
-                    ],
-                    "path": [
-                      "api",
-                      "v1",
-                      "public",
-                      "tenants",
-                      "signup"
-                    ]
-                  }
-                },
-                "status": "Created",
-                "code": 201,
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": "{\n  \"data\": {\n    \"academy\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000010\",\n      \"name\": \"Academia PlayerTech Demo\",\n      \"contactEmail\": \"tenant.demo@example.com\",\n      \"phone\": \"+51 987 654 321\",\n      \"country\": \"Colombia\",\n      \"department\": \"Cundinamarca\",\n      \"address\": \"Jr. Secundario 789\",\n      \"city\": \"Arequipa\",\n      \"shield\": null,\n      \"status\": \"ACTIVE\",\n      \"audit\": {\n        \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n        \"createdBy\": null,\n        \"updatedAt\": null,\n        \"updatedBy\": null\n      }\n    },\n    \"user\": {\n      \"email\": \"tenant.demo@example.com\",\n      \"status\": \"PENDING_ACTIVATION\",\n      \"activationPending\": true\n    },\n    \"team\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000011\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000010\",\n      \"categoryId\": \"{{categoryId}}\",\n      \"name\": \"Sub 12 A\",\n      \"status\": \"ACTIVE\"\n    }\n  },\n  \"meta\": {}\n}"
-              }
-            ]
-          },
-          "response": [
-            {
-              "name": "Tenant Signup Example",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/public/tenants/signup",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "public",
-                    "tenants",
-                    "signup"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"Academia PlayerTech Demo\",\n  \"contactEmail\": \"tenant.demo@example.com\",\n  \"contactName\": \"Juan Perez\",\n  \"password\": \"secret12345\",\n  \"phone\": \"+51 987 654 321\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"teamName\": \"Sub 12 A\",\n  \"acceptedTerms\": true,\n  \"acceptedDataProcessing\": true\n}"
-                },
-                "response": [
-                  {
-                    "name": "Tenant signup success",
-                    "originalRequest": {
-                      "method": "POST",
-                      "header": [
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        },
-                        {
-                          "key": "Accept",
-                          "value": "application/json"
-                        }
-                      ],
-                      "url": {
-                        "raw": "{{baseUrl}}/api/v1/public/tenants/signup",
-                        "host": [
-                          "{{baseUrl}}"
-                        ],
-                        "path": [
-                          "api",
-                          "v1",
-                          "public",
-                          "tenants",
-                          "signup"
-                        ]
-                      }
-                    },
-                    "status": "Created",
-                    "code": 201,
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": "{\n  \"data\": {\n    \"academy\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000010\",\n      \"name\": \"Academia PlayerTech Demo\",\n      \"contactEmail\": \"tenant.demo@example.com\",\n      \"phone\": \"+51 987 654 321\",\n      \"country\": \"Colombia\",\n      \"department\": \"Cundinamarca\",\n      \"address\": \"Jr. Secundario 789\",\n      \"city\": \"Arequipa\",\n      \"shield\": null,\n      \"status\": \"ACTIVE\",\n      \"audit\": {\n        \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n        \"createdBy\": null,\n        \"updatedAt\": null,\n        \"updatedBy\": null\n      }\n    },\n    \"user\": {\n      \"email\": \"tenant.demo@example.com\",\n      \"status\": \"PENDING_ACTIVATION\",\n      \"activationPending\": true\n    },\n    \"team\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000011\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000010\",\n      \"categoryId\": \"{{categoryId}}\",\n      \"name\": \"Sub 12 A\",\n      \"status\": \"ACTIVE\"\n    }\n  },\n  \"meta\": {}\n}"
-                  }
-                ]
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {\n    \"academy\": {},\n    \"user\": {},\n    \"team\": {}\n  },\n  \"meta\": {}\n}"
-            }
-          ]
-        }
-      ]
+      "item": []
     },
     {
       "name": "Platform",
       "item": [
         {
-          "name": "Academies - List",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/platform/academies",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "platform",
-                "academies"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "Academies - List Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/platform/academies",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "platform",
-                    "academies"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000001\",\n      \"name\": \"Academia PlayerTech\",\n      \"contactEmail\": \"contacto@academiaplayertech.com\",\n      \"registrationSource\": \"platform\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
-            }
-          ]
-        },
-        {
-          "name": "Tenants - Provision",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/platform/academies",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "platform",
-                "academies"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Academia PlayerTech\",\n  \"contactEmail\": \"contacto@academiaplayertech.com\",\n  \"phone\": \"+57 312 555 8888\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Bogota\",\n  \"adminName\": \"Juan Perez\",\n  \"adminEmail\": \"admin@academiaplayertech.com\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"teamName\": \"Sub 12 A\"\n}"
-            },
-            "response": [
-              {
-                "name": "Tenant provision success",
-                "originalRequest": {
-                  "method": "POST",
-                  "header": [
-                    {
-                      "key": "Authorization",
-                      "value": "Bearer {{token}}"
-                    },
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    },
-                    {
-                      "key": "Accept",
-                      "value": "application/json"
-                    }
-                  ],
-                  "url": {
-                    "raw": "{{baseUrl}}/api/v1/platform/academies",
-                    "host": [
-                      "{{baseUrl}}"
-                    ],
-                    "path": [
-                      "api",
-                      "v1",
-                      "platform",
-                      "academies"
-                    ]
-                  }
-                },
-                "status": "Created",
-                "code": 201,
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": "{\n  \"data\": {\n    \"academy\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000001\",\n      \"name\": \"Academia PlayerTech\",\n      \"contactEmail\": \"contacto@academiaplayertech.com\",\n      \"phone\": \"+57 312 555 8888\",\n      \"country\": \"Colombia\",\n      \"department\": \"Cundinamarca\",\n      \"address\": \"Av. Principal 123\",\n      \"city\": \"Bogota\",\n      \"shield\": null,\n      \"status\": \"ACTIVE\",\n      \"audit\": {\n        \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n        \"createdBy\": \"019f0000-0000-7000-8000-000000000000\",\n        \"updatedAt\": null,\n        \"updatedBy\": null\n      }\n    },\n    \"user\": {\n      \"email\": \"admin@academiaplayertech.com\",\n      \"status\": \"PENDING_ACTIVATION\",\n      \"activationPending\": true\n    },\n    \"team\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000002\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryId\": \"{{categoryId}}\",\n      \"name\": \"Sub 12 A\",\n      \"status\": \"ACTIVE\"\n    }\n  },\n  \"meta\": {}\n}"
-              }
-            ]
-          },
-          "response": [
-            {
-              "name": "Tenants - Provision Example",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/platform/academies",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "platform",
-                    "academies"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"Academia PlayerTech\",\n  \"contactEmail\": \"contacto@academiaplayertech.com\",\n  \"phone\": \"+57 312 555 8888\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"registrationSource\": \"platform\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Bogota\",\n  \"adminName\": \"Juan Perez\",\n  \"adminEmail\": \"admin@academiaplayertech.com\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"teamName\": \"Sub 12 A\"\n}"
-                },
-                "response": [
-                  {
-                    "name": "Tenant provision success",
-                    "originalRequest": {
-                      "method": "POST",
-                      "header": [
-                        {
-                          "key": "Authorization",
-                          "value": "Bearer {{token}}"
-                        },
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        },
-                        {
-                          "key": "Accept",
-                          "value": "application/json"
-                        }
-                      ],
-                      "url": {
-                        "raw": "{{baseUrl}}/api/v1/platform/academies",
-                        "host": [
-                          "{{baseUrl}}"
-                        ],
-                        "path": [
-                          "api",
-                          "v1",
-                          "platform",
-                          "academies"
-                        ]
-                      }
-                    },
-                    "status": "Created",
-                    "code": 201,
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": "{\n  \"data\": {\n    \"academy\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000001\",\n      \"name\": \"Academia PlayerTech\",\n      \"contactEmail\": \"contacto@academiaplayertech.com\",\n      \"phone\": \"+57 312 555 8888\",\n      \"country\": \"Colombia\",\n      \"department\": \"Cundinamarca\",\n      \"registrationSource\": \"platform\",\n      \"address\": \"Av. Principal 123\",\n      \"city\": \"Bogota\",\n      \"shield\": null,\n      \"status\": \"ACTIVE\",\n      \"audit\": {\n        \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n        \"createdBy\": \"019f0000-0000-7000-8000-000000000000\",\n        \"updatedAt\": null,\n        \"updatedBy\": null\n      }\n    },\n    \"user\": {\n      \"email\": \"admin@academiaplayertech.com\",\n      \"status\": \"PENDING_ACTIVATION\",\n      \"activationPending\": true\n    },\n    \"team\": {\n      \"id\": \"019f0000-0000-7000-8000-000000000002\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryId\": \"{{categoryId}}\",\n      \"name\": \"Sub 12 A\",\n      \"status\": \"ACTIVE\"\n    }\n  },\n  \"meta\": {}\n}"
-                  }
-                ]
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {\n    \"academy\": {},\n    \"user\": {},\n    \"team\": {}\n  },\n  \"meta\": {}\n}"
-            }
-          ]
-        },
-        {
-          "name": "Users - List",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/platform/users",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "platform",
-                "users"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "Users - List Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/platform/users",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "platform",
-                    "users"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000020\",\n      \"name\": \"Cancha Principal\",\n      \"address\": \"Av. Principal 123\",\n      \"city\": \"Bogota\",\n      \"phone\": \"+573125953354\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Academy",
-      "item": [
-        {
-          "name": "Me - Show",
+          "name": "Academies - Show",
           "request": {
             "method": "GET",
             "header": [
@@ -875,46 +32,22 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/me",
+              "raw": "{{baseUrl}}/api/v1/platform/academies/{{academyId}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "v1",
-                "academy",
-                "me"
+                "platform",
+                "academies",
+                "{{academyId}}"
               ]
             }
           },
           "response": [
             {
-              "name": "Me - Show Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/me",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "me"
-                  ]
-                }
-              },
+              "name": "Academies - Show Example",
               "status": "OK",
               "code": 200,
               "header": [
@@ -923,12 +56,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000100\",\n    \"email\": \"admin@playertech.com\",\n    \"fullName\": \"Root Admin\",\n    \"role\": \"ROLE_ROOT\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
             }
           ]
         },
         {
-          "name": "Me - Update",
+          "name": "Academies - Update",
           "request": {
             "method": "PUT",
             "header": [
@@ -946,7 +79,155 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/me",
+              "raw": "{{baseUrl}}/api/v1/platform/academies/{{academyId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "platform",
+                "academies",
+                "{{academyId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Academia PlayerTech\",\n  \"contactEmail\": \"contacto@academiaplayertech.com\",\n  \"phone\": \"+573125953354\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Bogota\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Academies - Update Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Academies - Suspend",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/platform/academies/{{academyId}}/suspend",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "platform",
+                "academies",
+                "{{academyId}}",
+                "suspend"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Academies - Suspend Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Academies - Reactivate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/platform/academies/{{academyId}}/reactivate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "platform",
+                "academies",
+                "{{academyId}}",
+                "reactivate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Academies - Reactivate Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Academy",
+      "item": [
+        {
+          "name": "Users - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/users?page=1&per_page=20&sort=fullName&direction=ASC",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -954,52 +235,355 @@
                 "api",
                 "v1",
                 "academy",
-                "me"
+                "users?page=1&per_page=20&sort=fullName&direction=ASC"
               ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Academia Tenant Demo\",\n  \"contactEmail\": \"tenant@academiademo.com\",\n  \"phone\": \"+51 987 654 321\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\"\n}"
             }
           },
           "response": [
             {
-              "name": "Me - Update Example",
-              "originalRequest": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/me",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "me"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"Academia Tenant Demo\",\n  \"contactEmail\": \"tenant@academiademo.com\",\n  \"phone\": \"+51 987 654 321\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\"\n}"
-                }
-              },
+              "name": "Users - List Example",
               "status": "OK",
               "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Users - Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "users"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Juan Perez\",\n  \"email\": \"juan@example.com\",\n  \"password\": \"secret12345\",\n  \"role\": \"ROLE_ACADEMY_ADMIN\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Users - Create Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Users - Invite",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/users/invite",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "users",
+                "invite"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"juan@example.com\",\n  \"fullName\": \"Juan Perez\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Users - Invite Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Users - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "users",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Users - Show Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Users - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "users",
+                "{{userId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Juan Perez Updated\",\n  \"email\": \"juan@example.com\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Users - Update Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Users - Disable",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/users/{{userId}}/disable",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "users",
+                "{{userId}}",
+                "disable"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Users - Disable Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Users - Enable",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/users/{{userId}}/enable",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "users",
+                "{{userId}}",
+                "enable"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Users - Enable Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Users - Resend Invitation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/users/{{userId}}/invitation/resend",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "users",
+                "{{userId}}",
+                "invitation",
+                "resend"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Users - Resend Invitation Example",
+              "status": "Created",
+              "code": 201,
               "header": [
                 {
                   "key": "Content-Type",
@@ -1053,39 +637,6 @@
           "response": [
             {
               "name": "Membership - Create Example",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/memberships",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "memberships"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"playerId\": \"{{playerId}}\",\n  \"primaryGuardianId\": \"{{guardianId}}\"\n}"
-                }
-              },
               "status": "Created",
               "code": 201,
               "header": [
@@ -1130,33 +681,6 @@
           "response": [
             {
               "name": "Membership - Show Active Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/active",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "memberships",
-                    "{{playerId}}",
-                    "active"
-                  ]
-                }
-              },
               "status": "OK",
               "code": 200,
               "header": [
@@ -1177,6 +701,10 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
               },
               {
                 "key": "Accept",
@@ -1201,33 +729,6 @@
           "response": [
             {
               "name": "Membership - Suspend Example",
-              "originalRequest": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/suspend",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "memberships",
-                    "{{playerId}}",
-                    "suspend"
-                  ]
-                }
-              },
               "status": "OK",
               "code": 200,
               "header": [
@@ -1248,6 +749,10 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
               },
               {
                 "key": "Accept",
@@ -1272,33 +777,6 @@
           "response": [
             {
               "name": "Membership - Withdraw Example",
-              "originalRequest": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/withdraw",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "memberships",
-                    "{{playerId}}",
-                    "withdraw"
-                  ]
-                }
-              },
               "status": "OK",
               "code": 200,
               "header": [
@@ -1343,33 +821,6 @@
           "response": [
             {
               "name": "Membership - History Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/memberships/{{playerId}}/history",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "memberships",
-                    "{{playerId}}",
-                    "history"
-                  ]
-                }
-              },
               "status": "OK",
               "code": 200,
               "header": [
@@ -1385,16 +836,20 @@
       ]
     },
     {
-      "name": "Lists",
+      "name": "Player",
       "item": [
         {
-          "name": "Academies - List",
+          "name": "Player - Create",
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{token}}"
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
               },
               {
                 "key": "Accept",
@@ -1402,102 +857,49 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/platform/academies?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC",
+              "raw": "{{baseUrl}}/api/v1/academy/players",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "v1",
-                "platform",
-                "academies"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "per_page",
-                  "value": "20"
-                },
-                {
-                  "key": "sort",
-                  "value": "created_at"
-                },
-                {
-                  "key": "direction",
-                  "value": "DESC"
-                }
+                "academy",
+                "players"
               ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Juan\",\n  \"lastName\": \"Perez\",\n  \"birthDate\": \"2013-05-12\",\n  \"documentNumber\": \"12345678\",\n  \"categoryId\": \"{{categoryId}}\"\n}"
             }
           },
           "response": [
             {
-              "name": "Academies - List Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/platform/academies?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "platform",
-                    "academies"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "per_page",
-                      "value": "20"
-                    },
-                    {
-                      "key": "sort",
-                      "value": "created_at"
-                    },
-                    {
-                      "key": "direction",
-                      "value": "DESC"
-                    }
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
+              "name": "Player - Create Example",
+              "status": "Created",
+              "code": 201,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 0,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
             }
           ]
         },
         {
-          "name": "Users - List",
+          "name": "Player - Import",
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{token}}"
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
               },
               {
                 "key": "Accept",
@@ -1505,96 +907,36 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/platform/users?page=1&per_page=20&sort=fullName&direction=ASC",
+              "raw": "{{baseUrl}}/api/v1/academy/players/import",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "v1",
-                "platform",
-                "users"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "per_page",
-                  "value": "20"
-                },
-                {
-                  "key": "sort",
-                  "value": "fullName"
-                },
-                {
-                  "key": "direction",
-                  "value": "ASC"
-                }
+                "academy",
+                "players",
+                "import"
               ]
             }
           },
           "response": [
             {
-              "name": "Users - List Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/platform/users?page=1&per_page=20&sort=fullName&direction=ASC",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "platform",
-                    "users"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "per_page",
-                      "value": "20"
-                    },
-                    {
-                      "key": "sort",
-                      "value": "fullName"
-                    },
-                    {
-                      "key": "direction",
-                      "value": "ASC"
-                    }
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
+              "name": "Player - Import Example",
+              "status": "Created",
+              "code": 201,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 0,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
             }
           ]
         },
         {
-          "name": "Academy Players - List",
+          "name": "Player - List",
           "request": {
             "method": "GET",
             "header": [
@@ -1616,74 +958,13 @@
                 "api",
                 "v1",
                 "academy",
-                "players"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "per_page",
-                  "value": "20"
-                },
-                {
-                  "key": "sort",
-                  "value": "audit_trail.created_at.value"
-                },
-                {
-                  "key": "direction",
-                  "value": "DESC"
-                }
+                "players?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC"
               ]
             }
           },
           "response": [
             {
-              "name": "Academy Players - List Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/players?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "players"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "per_page",
-                      "value": "20"
-                    },
-                    {
-                      "key": "sort",
-                      "value": "audit_trail.created_at.value"
-                    },
-                    {
-                      "key": "direction",
-                      "value": "DESC"
-                    }
-                  ]
-                }
-              },
+              "name": "Player - List Example",
               "status": "OK",
               "code": 200,
               "header": [
@@ -1692,12 +973,305 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 0,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
             }
           ]
         },
         {
-          "name": "Academy Teams - List",
+          "name": "Player - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Player - Show Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Player - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Juan\",\n  \"lastName\": \"Perez\",\n  \"birthDate\": \"2013-05-12\",\n  \"documentNumber\": \"12345678\",\n  \"categoryId\": \"{{categoryId}}\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Player - Update Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Player - Photo",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/photo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "photo"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Player - Photo Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Player - Inactivate",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/inactivate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "inactivate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Player - Inactivate Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Player - Activate",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/activate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "activate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Player - Activate Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Team",
+      "item": [
+        {
+          "name": "Team - Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/teams",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "teams"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": \"{{categoryId}}\",\n  \"name\": \"Sub 12 A\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Team - Create Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Team - List",
           "request": {
             "method": "GET",
             "header": [
@@ -1719,74 +1293,13 @@
                 "api",
                 "v1",
                 "academy",
-                "teams"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "per_page",
-                  "value": "20"
-                },
-                {
-                  "key": "sort",
-                  "value": "audit_trail.created_at.value"
-                },
-                {
-                  "key": "direction",
-                  "value": "DESC"
-                }
+                "teams?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC"
               ]
             }
           },
           "response": [
             {
-              "name": "Academy Teams - List Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/teams?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "teams"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "per_page",
-                      "value": "20"
-                    },
-                    {
-                      "key": "sort",
-                      "value": "audit_trail.created_at.value"
-                    },
-                    {
-                      "key": "direction",
-                      "value": "DESC"
-                    }
-                  ]
-                }
-              },
+              "name": "Team - List Example",
               "status": "OK",
               "code": 200,
               "header": [
@@ -1795,12 +1308,257 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 0,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
             }
           ]
         },
         {
-          "name": "Academy Categories - List",
+          "name": "Team - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/teams/{{teamId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "teams",
+                "{{teamId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Team - Show Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Team - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/teams/{{teamId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "teams",
+                "{{teamId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": \"{{categoryId}}\",\n  \"name\": \"Sub 12 A\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Team - Update Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Team - Inactivate",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/teams/{{teamId}}/inactivate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "teams",
+                "{{teamId}}",
+                "inactivate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Team - Inactivate Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Team - Activate",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/teams/{{teamId}}/activate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "teams",
+                "{{teamId}}",
+                "activate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Team - Activate Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Category",
+      "item": [
+        {
+          "name": "Category - Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "categories"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryKey\": \"sub-12\",\n  \"name\": \"Sub 12\",\n  \"minAge\": 11,\n  \"maxAge\": 12,\n  \"description\": \"Categoria formativa\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Category - Create Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Category - List",
           "request": {
             "method": "GET",
             "header": [
@@ -1822,74 +1580,13 @@
                 "api",
                 "v1",
                 "academy",
-                "categories"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "per_page",
-                  "value": "20"
-                },
-                {
-                  "key": "sort",
-                  "value": "audit_trail.created_at.value"
-                },
-                {
-                  "key": "direction",
-                  "value": "DESC"
-                }
+                "categories?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC"
               ]
             }
           },
           "response": [
             {
-              "name": "Academy Categories - List Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/categories?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "categories"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "per_page",
-                      "value": "20"
-                    },
-                    {
-                      "key": "sort",
-                      "value": "audit_trail.created_at.value"
-                    },
-                    {
-                      "key": "direction",
-                      "value": "DESC"
-                    }
-                  ]
-                }
-              },
+              "name": "Category - List Example",
               "status": "OK",
               "code": 200,
               "header": [
@@ -1898,12 +1595,257 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 0,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
             }
           ]
         },
         {
-          "name": "Academy Venues - List",
+          "name": "Category - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/categories/{{categoryId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "categories",
+                "{{categoryId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Category - Show Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Category - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/categories/{{categoryId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "categories",
+                "{{categoryId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryKey\": \"sub-12\",\n  \"name\": \"Sub 12\",\n  \"minAge\": 11,\n  \"maxAge\": 12,\n  \"description\": \"Categoria formativa\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Category - Update Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Category - Inactivate",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/categories/{{categoryId}}/inactivate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "categories",
+                "{{categoryId}}",
+                "inactivate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Category - Inactivate Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Category - Activate",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/categories/{{categoryId}}/activate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "categories",
+                "{{categoryId}}",
+                "activate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Category - Activate Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Venue",
+      "item": [
+        {
+          "name": "Venue - Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/venues",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "venues"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cancha Principal\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Bogota\",\n  \"phone\": \"+573125953354\",\n  \"notes\": \"Canchas de fútbol 11\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Venue - Create Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Venue - List",
           "request": {
             "method": "GET",
             "header": [
@@ -1925,74 +1867,13 @@
                 "api",
                 "v1",
                 "academy",
-                "venues"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "per_page",
-                  "value": "20"
-                },
-                {
-                  "key": "sort",
-                  "value": "audit_trail.created_at.value"
-                },
-                {
-                  "key": "direction",
-                  "value": "DESC"
-                }
+                "venues?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC"
               ]
             }
           },
           "response": [
             {
-              "name": "Academy Venues - List Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/venues?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "venues"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "per_page",
-                      "value": "20"
-                    },
-                    {
-                      "key": "sort",
-                      "value": "audit_trail.created_at.value"
-                    },
-                    {
-                      "key": "direction",
-                      "value": "DESC"
-                    }
-                  ]
-                }
-              },
+              "name": "Venue - List Example",
               "status": "OK",
               "code": 200,
               "header": [
@@ -2001,7 +1882,341 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 0,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Venue - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/venues/{{venueId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "venues",
+                "{{venueId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Venue - Show Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Venue - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/venues/{{venueId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "venues",
+                "{{venueId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cancha Principal\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Bogota\",\n  \"phone\": \"+573125953354\",\n  \"notes\": \"Actualizada\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Venue - Update Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Venue - Inactivate",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/venues/{{venueId}}/inactivate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "venues",
+                "{{venueId}}",
+                "inactivate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Venue - Inactivate Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Venue - Activate",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/venues/{{venueId}}/activate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "venues",
+                "{{venueId}}",
+                "activate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Venue - Activate Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Venue - Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/venues/{{venueId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "venues",
+                "{{venueId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Venue - Delete Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Venue - List Example",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/venues?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "venues?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Venue - List Example Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PaymentConcept",
+      "item": [
+        {
+          "name": "Payment Concepts - Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payment-concepts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payment-concepts"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"MATRICULA\",\n  \"name\": \"Matrícula\",\n  \"description\": \"Cobro inicial\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Payment Concepts - Create Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -2028,74 +2243,13 @@
                 "api",
                 "v1",
                 "academy",
-                "payment-concepts"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "per_page",
-                  "value": "20"
-                },
-                {
-                  "key": "sort",
-                  "value": "audit_trail.created_at.value"
-                },
-                {
-                  "key": "direction",
-                  "value": "DESC"
-                }
+                "payment-concepts?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC"
               ]
             }
           },
           "response": [
             {
               "name": "Payment Concepts - List Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/payment-concepts?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "payment-concepts"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "per_page",
-                      "value": "20"
-                    },
-                    {
-                      "key": "sort",
-                      "value": "audit_trail.created_at.value"
-                    },
-                    {
-                      "key": "direction",
-                      "value": "DESC"
-                    }
-                  ]
-                }
-              },
               "status": "OK",
               "code": 200,
               "header": [
@@ -2104,12 +2258,159 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 0,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
             }
           ]
         },
         {
-          "name": "Pending Charges - List",
+          "name": "Payment Concepts - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payment-concepts/{{paymentConceptId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payment-concepts",
+                "{{paymentConceptId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Payment Concepts - Show Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Payment Concepts - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payment-concepts/{{paymentConceptId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payment-concepts",
+                "{{paymentConceptId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"MATRICULA\",\n  \"name\": \"Matrícula\",\n  \"description\": \"Cobro inicial\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Payment Concepts - Update Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Payment Concepts - Deactivate",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payment-concepts/{{paymentConceptId}}/deactivate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payment-concepts",
+                "{{paymentConceptId}}",
+                "deactivate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Payment Concepts - Deactivate Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Charge",
+      "item": [
+        {
+          "name": "Charge - List Pending",
           "request": {
             "method": "GET",
             "header": [
@@ -2132,75 +2433,13 @@
                 "v1",
                 "academy",
                 "charges",
-                "pending"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "per_page",
-                  "value": "20"
-                },
-                {
-                  "key": "sort",
-                  "value": "created_at"
-                },
-                {
-                  "key": "direction",
-                  "value": "DESC"
-                }
+                "pending?page=1&per_page=20&sort=created_at&direction=DESC"
               ]
             }
           },
           "response": [
             {
-              "name": "Pending Charges - List Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/charges/pending?page=1&per_page=20&sort=created_at&direction=DESC",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "charges",
-                    "pending"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "per_page",
-                      "value": "20"
-                    },
-                    {
-                      "key": "sort",
-                      "value": "created_at"
-                    },
-                    {
-                      "key": "direction",
-                      "value": "DESC"
-                    }
-                  ]
-                }
-              },
+              "name": "Charge - List Pending Example",
               "status": "OK",
               "code": 200,
               "header": [
@@ -2209,7 +2448,347 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 0,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Charge - Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/charges",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "charges"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"membershipId\": \"{{membershipId}}\",\n  \"paymentConceptId\": \"{{paymentConceptId}}\",\n  \"description\": \"Cuota pendiente\",\n  \"amount\": \"150000.00\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Charge - Create Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Register Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chargeId\": \"{{chargeId}}\",\n  \"amount\": \"150000.00\",\n  \"method\": \"CASH\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Register Payment Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Show Player Debt",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payments/players/{{playerId}}/debt",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payments",
+                "players",
+                "{{playerId}}",
+                "debt"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Show Player Debt Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Show Payment History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payments/players/{{playerId}}/history",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payments",
+                "players",
+                "{{playerId}}",
+                "history"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Show Payment History Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Apply Payment To Charge",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payments/apply",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payments",
+                "apply"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentId\": \"{{paymentId}}\",\n  \"chargeId\": \"{{chargeId}}\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Apply Payment To Charge Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Upload Payment Evidence",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payment-evidences",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payment-evidences"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Upload Payment Evidence Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Cancel Payment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payments/{{paymentId}}/cancel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payments",
+                "{{paymentId}}",
+                "cancel"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Cancel Payment Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
             }
           ]
         }
@@ -2256,39 +2835,6 @@
           "response": [
             {
               "name": "Staff - Register Example",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/staff",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "staff"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"userId\": \"{{userId}}\"\n}"
-                }
-              },
               "status": "Created",
               "code": 201,
               "header": [
@@ -2340,40 +2886,6 @@
           "response": [
             {
               "name": "Staff - Assign To Team Example",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/staff/assignments",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "staff",
-                    "assignments"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"staffId\": \"{{userId}}\",\n  \"teamId\": \"{{teamId}}\",\n  \"role\": \"HEAD_COACH\"\n}"
-                }
-              },
               "status": "Created",
               "code": 201,
               "header": [
@@ -2427,42 +2939,6 @@
           "response": [
             {
               "name": "Staff - Change Role Example",
-              "originalRequest": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/staff/assignments/{{assignmentId}}/role",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "staff",
-                    "assignments",
-                    "{{assignmentId}}",
-                    "role"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"role\": \"ASSISTANT_COACH\"\n}"
-                }
-              },
               "status": "OK",
               "code": 200,
               "header": [
@@ -2483,6 +2959,10 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
               },
               {
                 "key": "Accept",
@@ -2508,34 +2988,6 @@
           "response": [
             {
               "name": "Staff - Remove From Team Example",
-              "originalRequest": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/staff/assignments/{{assignmentId}}/remove",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "staff",
-                    "assignments",
-                    "{{assignmentId}}",
-                    "remove"
-                  ]
-                }
-              },
               "status": "OK",
               "code": 200,
               "header": [
@@ -2580,33 +3032,6 @@
           "response": [
             {
               "name": "Staff - View Team Staff Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{tenantToken}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/staff/teams/{{teamId}}",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "staff",
-                    "teams",
-                    "{{teamId}}"
-                  ]
-                }
-              },
               "status": "OK",
               "code": 200,
               "header": [
@@ -2630,16 +3055,16 @@
             "method": "POST",
             "header": [
               {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
                 "key": "Content-Type",
                 "value": "application/json"
               },
               {
                 "key": "Accept",
                 "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
               }
             ],
             "url": {
@@ -2662,39 +3087,6 @@
           "response": [
             {
               "name": "Assign Player To Team Example",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/team-assignments",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "team-assignments"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"playerId\": \"{{playerId}}\",\n  \"teamId\": \"{{teamId}}\",\n  \"startDate\": \"2026-07-08\"\n}"
-                }
-              },
               "status": "Created",
               "code": 201,
               "header": [
@@ -2713,12 +3105,16 @@
             "method": "PATCH",
             "header": [
               {
-                "key": "Accept",
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
                 "value": "application/json"
               },
               {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
+                "key": "Accept",
+                "value": "application/json"
               }
             ],
             "url": {
@@ -2739,35 +3135,8 @@
           "response": [
             {
               "name": "Mark Primary Example",
-              "originalRequest": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/team-assignments/{{assignmentId}}/primary",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "team-assignments",
-                    "{{assignmentId}}",
-                    "primary"
-                  ]
-                }
-              },
-              "status": "Created",
-              "code": 201,
+              "status": "OK",
+              "code": 200,
               "header": [
                 {
                   "key": "Content-Type",
@@ -2784,12 +3153,16 @@
             "method": "PATCH",
             "header": [
               {
-                "key": "Accept",
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
                 "value": "application/json"
               },
               {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
+                "key": "Accept",
+                "value": "application/json"
               }
             ],
             "url": {
@@ -2810,35 +3183,8 @@
           "response": [
             {
               "name": "Finalize Assignment Example",
-              "originalRequest": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/team-assignments/{{assignmentId}}/finalize",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "team-assignments",
-                    "{{assignmentId}}",
-                    "finalize"
-                  ]
-                }
-              },
-              "status": "Created",
-              "code": 201,
+              "status": "OK",
+              "code": 200,
               "header": [
                 {
                   "key": "Content-Type",
@@ -2855,12 +3201,12 @@
             "method": "GET",
             "header": [
               {
-                "key": "Accept",
-                "value": "application/json"
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
               },
               {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
+                "key": "Accept",
+                "value": "application/json"
               }
             ],
             "url": {
@@ -2881,506 +3227,6 @@
           "response": [
             {
               "name": "List Player Assignments Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/team-assignments/players/{{playerId}}",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "team-assignments",
-                    "players",
-                    "{{playerId}}"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 0,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Payments",
-      "item": [
-        {
-          "name": "Register Payment",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/payments",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "academy",
-                "payments"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"membershipId\": \"{{membershipId}}\",\n  \"playerId\": \"{{playerId}}\",\n  \"guardianId\": \"{{guardianId}}\",\n  \"paymentConceptId\": \"{{paymentConceptId}}\",\n  \"paymentDate\": \"2026-07-09\",\n  \"amount\": \"100.00\",\n  \"notes\": \"Pago registrado desde Postman\"\n}"
-            }
-          },
-          "response": [
-            {
-              "name": "Register Payment Example",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/payments",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "payments"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"membershipId\": \"{{membershipId}}\",\n  \"playerId\": \"{{playerId}}\",\n  \"guardianId\": \"{{guardianId}}\",\n  \"paymentConceptId\": \"{{paymentConceptId}}\",\n  \"paymentDate\": \"2026-07-09\",\n  \"amount\": \"100.00\",\n  \"notes\": \"Pago registrado desde Postman\"\n}"
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
-            }
-          ]
-        },
-        {
-          "name": "Show Player Debt",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/payments/players/{{playerId}}/debt",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "academy",
-                "payments",
-                "players",
-                "{{playerId}}",
-                "debt"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "Show Player Debt Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/payments/players/{{playerId}}/debt",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "payments",
-                    "players",
-                    "{{playerId}}",
-                    "debt"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
-            }
-          ]
-        },
-        {
-          "name": "Show Payment History",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/payments/players/{{playerId}}/history",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "academy",
-                "payments",
-                "players",
-                "{{playerId}}",
-                "history"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "Show Payment History Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/payments/players/{{playerId}}/history",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "payments",
-                    "players",
-                    "{{playerId}}",
-                    "history"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
-            }
-          ]
-        },
-        {
-          "name": "Apply Payment To Charge",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/payments/apply",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "academy",
-                "payments",
-                "apply"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"paymentId\": \"{{paymentId}}\",\n  \"chargeId\": \"{{chargeId}}\",\n  \"amount\": \"100.00\"\n}"
-            }
-          },
-          "response": [
-            {
-              "name": "Apply Payment To Charge Example",
-              "originalRequest": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/payments/apply",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "payments",
-                    "apply"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"paymentId\": \"{{paymentId}}\",\n  \"chargeId\": \"{{chargeId}}\",\n  \"amount\": \"100.00\"\n}"
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
-            }
-          ]
-        },
-        {
-          "name": "Upload Payment Evidence",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/payment-evidences",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "academy",
-                "payment-evidences"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"paymentId\": \"{{paymentId}}\",\n  \"fileName\": \"comprobante.jpg\",\n  \"filePath\": \"/tmp/comprobante.jpg\",\n  \"mimeType\": \"image/jpeg\"\n}"
-            }
-          },
-          "response": [
-            {
-              "name": "Upload Payment Evidence Example",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/payment-evidences",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "payment-evidences"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"paymentId\": \"{{paymentId}}\",\n  \"fileName\": \"comprobante.jpg\",\n  \"filePath\": \"/tmp/comprobante.jpg\",\n  \"mimeType\": \"image/jpeg\"\n}"
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
-            }
-          ]
-        },
-        {
-          "name": "Cancel Payment",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/payments/{{paymentId}}/cancel",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "academy",
-                "payments",
-                "{{paymentId}}",
-                "cancel"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "Cancel Payment Example",
-              "originalRequest": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/payments/{{paymentId}}/cancel",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "payments",
-                    "{{paymentId}}",
-                    "cancel"
-                  ]
-                }
-              },
               "status": "OK",
               "code": 200,
               "header": [
@@ -3404,12 +3250,12 @@
             "method": "GET",
             "header": [
               {
-                "key": "Accept",
-                "value": "application/json"
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
               },
               {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
+                "key": "Accept",
+                "value": "application/json"
               }
             ],
             "url": {
@@ -3428,31 +3274,6 @@
           "response": [
             {
               "name": "Show Dashboard Example",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{token}}"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/academy/dashboard",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "academy",
-                    "dashboard"
-                  ]
-                }
-              },
               "status": "OK",
               "code": 200,
               "header": [
