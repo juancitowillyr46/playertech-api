@@ -138,6 +138,44 @@ final class PlayerGuardianControllerTest extends KernelTestCase
         self::assertSame(201, $associateResponse->getStatusCode());
         self::assertTrue(json_decode($associateResponse->getContent(), true, 512, JSON_THROW_ON_ERROR)['data']['isPrimary']);
 
+        $playerGuardiansResponse = self::$kernel->handle(Request::create(
+            '/api/v1/academy/players/'.$this->playerId.'/guardians',
+            'GET',
+            server: [
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->jwtToken,
+                'CONTENT_TYPE' => 'application/json',
+            ]
+        ));
+
+        self::assertSame(200, $playerGuardiansResponse->getStatusCode());
+        $playerGuardiansPayload = json_decode($playerGuardiansResponse->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        self::assertCount(1, $playerGuardiansPayload['data']);
+        self::assertSame($guardianId, $playerGuardiansPayload['data'][0]['guardian']['id']);
+
+        $guardianListResponse = self::$kernel->handle(Request::create(
+            '/api/v1/academy/guardians',
+            'GET',
+            server: [
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->jwtToken,
+                'CONTENT_TYPE' => 'application/json',
+            ]
+        ));
+
+        self::assertSame(200, $guardianListResponse->getStatusCode());
+        self::assertNotEmpty(json_decode($guardianListResponse->getContent(), true, 512, JSON_THROW_ON_ERROR)['data']);
+
+        $guardianDetailResponse = self::$kernel->handle(Request::create(
+            '/api/v1/academy/guardians/'.$guardianId,
+            'GET',
+            server: [
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->jwtToken,
+                'CONTENT_TYPE' => 'application/json',
+            ]
+        ));
+
+        self::assertSame(200, $guardianDetailResponse->getStatusCode());
+        self::assertSame($guardianId, json_decode($guardianDetailResponse->getContent(), true, 512, JSON_THROW_ON_ERROR)['data']['id']);
+
         $secondGuardianResponse = self::$kernel->handle(Request::create(
             '/api/v1/academy/guardians',
             'POST',

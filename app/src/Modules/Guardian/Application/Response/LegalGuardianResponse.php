@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Guardian\Application\Response;
 
+use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardian;
+
 final readonly class LegalGuardianResponse
 {
     public function __construct(
@@ -15,6 +17,19 @@ final readonly class LegalGuardianResponse
         private ?string $email,
         private string $status,
     ) {
+    }
+
+    public static function fromLegalGuardian(LegalGuardian $guardian): self
+    {
+        return new self(
+            $guardian->id()->value(),
+            $guardian->academyId()->value(),
+            $guardian->firstName(),
+            $guardian->lastName(),
+            $guardian->phone(),
+            $guardian->email(),
+            $guardian->status()->value(),
+        );
     }
 
     public function toArray(): array

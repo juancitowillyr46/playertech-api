@@ -7,6 +7,8 @@ namespace App\Modules\Player\Presentation\Http\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
+use App\Modules\Player\Application\Guardian\ListByPlayer\ListPlayerGuardiansHandler;
+use App\Modules\Player\Application\Guardian\ListByPlayer\ListPlayerGuardiansQuery;
 use App\Modules\Player\Application\Guardian\Associate\AssociateGuardianCommand;
 use App\Modules\Player\Application\Guardian\Associate\AssociateGuardianHandler;
 use App\Modules\Player\Application\Guardian\ChangePrimary\ChangePrimaryGuardianCommand;
@@ -29,11 +31,28 @@ final class PlayerGuardianController extends AbstractApiController
     public function __construct(
         private readonly Security $security,
         private readonly ValidatorInterface $validator,
+        private readonly ListPlayerGuardiansHandler $listPlayerGuardiansHandler,
         private readonly AssociateGuardianHandler $associateGuardianHandler,
         private readonly ChangePrimaryGuardianHandler $changePrimaryGuardianHandler,
         private readonly RemoveGuardianAssociationHandler $removeGuardianAssociationHandler,
         private readonly TenantContext $tenantContext,
     ) {
+    }
+
+    #[Route('', name: 'api_v1_academy_player_guardians_list', methods: ['GET'])]
+    public function list(string $playerId): JsonResponse
+    {
+        $items = ($this->listPlayerGuardiansHandler)(
+            new ListPlayerGuardiansQuery(
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                new PlayerId($playerId),
+            )
+        );
+
+        return new JsonResponse([
+            'data' => array_map(static fn ($item) => $item->toArray(), $items),
+            'meta' => new \stdClass(),
+        ]);
     }
 
     #[Route('', name: 'api_v1_academy_player_guardians_associate', methods: ['POST'])]

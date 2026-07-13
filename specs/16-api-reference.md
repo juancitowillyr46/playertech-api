@@ -689,6 +689,22 @@ La colección `postman/` complementa estos ejemplos para validación manual.
 
 # Guardians API
 
+## List Guardians
+
+```http
+GET /api/v1/academy/guardians?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC
+```
+
+### Purpose
+
+Consultar el listado paginado de acudientes de la academia actual.
+
+## Show Guardian
+
+```http
+GET /api/v1/academy/guardians/{guardianId}
+```
+
 ## Create Guardian
 
 ```http
@@ -706,6 +722,12 @@ Registrar un acudiente dentro de la academia actual.
 ---
 
 # Player Guardians API
+
+## List Player Guardians
+
+```http
+GET /api/v1/academy/players/{playerId}/guardians
+```
 
 ## Associate Guardian
 

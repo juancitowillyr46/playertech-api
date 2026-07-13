@@ -11,6 +11,195 @@
       "item": []
     },
     {
+  "name": "Guardian",
+  "item": [
+    {
+      "name": "Guardian - List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tenantToken}}"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/academy/guardians?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "academy",
+            "guardians?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Guardian - List Example",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000401\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"firstName\": \"Maria\",\n      \"lastName\": \"Lopez\",\n      \"phone\": \"+51 999 111 222\",\n      \"email\": \"maria@example.com\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Guardian - Show",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tenantToken}}"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/academy/guardians/{{guardianId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "academy",
+            "guardians",
+            "{{guardianId}}"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Guardian - Show Example",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000401\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Lopez\",\n    \"phone\": \"+51 999 111 222\",\n    \"email\": \"maria@example.com\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
+        }
+      ]
+    },
+    {
+      "name": "Guardian - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tenantToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/academy/guardians",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "academy",
+            "guardians"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Maria\",\n  \"lastName\": \"Lopez\",\n  \"phone\": \"+51 999 111 222\",\n  \"email\": \"maria@example.com\"\n}"
+        }
+      },
+      "response": [
+        {
+          "name": "Guardian - Create Example",
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000401\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Lopez\",\n    \"phone\": \"+51 999 111 222\",\n    \"email\": \"maria@example.com\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
+        }
+      ]
+    }
+  ]
+},
+    {
+  "name": "Player Guardians",
+  "item": [
+    {
+      "name": "Player Guardians - List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tenantToken}}"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/guardians",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "academy",
+            "players",
+            "{{playerId}}",
+            "guardians"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Player Guardians - List Example",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000501\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"playerId\": \"019f0000-0000-7000-8000-000000000300\",\n      \"isPrimary\": true,\n      \"guardian\": {\n        \"id\": \"019f0000-0000-7000-8000-000000000401\",\n        \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n        \"firstName\": \"Maria\",\n        \"lastName\": \"Lopez\",\n        \"phone\": \"+51 999 111 222\",\n        \"email\": \"maria@example.com\",\n        \"status\": \"ACTIVE\"\n      }\n    }\n  ],\n  \"meta\": {}\n}"
+        }
+      ]
+    }
+  ]
+},
+    {
       "name": "Public",
       "item": []
     },

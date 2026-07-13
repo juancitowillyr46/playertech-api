@@ -237,7 +237,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-009` de `EP-007` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la foto del jugador.
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.
 * El MVP checklist debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y foto de `Player`.
-* `EP-008` quedó implementada para relaciones jugador-acudiente con alta de acudiente, asociación, cambio de principal y eliminación lógica.
+* `EP-006` ya expone lectura y creación de acudientes por academia en HTTP, y `EP-008` ya cubre la relación jugador-acudiente con alta de acudiente, asociación, cambio de principal, eliminación lógica y vista por jugador.
 * El bloque de módulos aún pendiente para el MVP ya no incluye `EP-012`; `EP-008`, `EP-009`, `EP-010`, `EP-011`, `EP-012` y `EP-013` ya se consideran resueltos.
 ---
 
@@ -337,6 +337,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] Revisión final de `README` y guía de ejecución para el siguiente bloque funcional.
 * `EP-010` ya quedó desglosada en historias explícitas para asignar, marcar principal, cambiar principal, finalizar y consultar asignaciones deportivas.
 * `EP-021` añadió el flujo unificado de alta de staff con acceso en `POST /api/v1/academy/staff/onboarding`, creando usuario y staff en una sola operación y resolviendo invitación o contraseña inicial.
+* `EP-006` funciona como módulo maestro de acudientes con listado, detalle y creación; `EP-008` queda como módulo operativo para relaciones jugador-acudiente y vista de acudientes por jugador.
 * `EP-003` ya incorporó el flujo inicial de usuarios administrativos por invitación y activación con correo, como primer slice de la evolución de staff.
 * `EP-002` amplió el contrato de sedes para exponer `address` y `phone` opcionales también en el listado, no solo en el detalle.
 

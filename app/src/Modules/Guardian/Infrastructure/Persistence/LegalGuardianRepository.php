@@ -8,6 +8,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardian;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianRepository as LegalGuardianRepositoryContract;
+use App\Shared\Application\Pagination\PaginationQuery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -48,14 +49,28 @@ final class LegalGuardianRepository extends ServiceEntityRepository implements L
             ->getOneOrNullResult();
     }
 
-    public function findAllByAcademy(AcademyId $academyId): array
+    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
-        return $this->createQueryBuilder('guardian')
+        $qb = $this->createQueryBuilder('guardian')
             ->where('guardian.academyId = :academyId')
             ->andWhere('guardian.deletedAt IS NULL')
             ->setParameter('academyId', $academyId->value())
-            ->orderBy('guardian.auditTrail.createdAt.value', 'DESC')
+            ->orderBy(sprintf('guardian.%s', $pagination->sort), $pagination->direction);
+
+        $total = (int) (clone $qb)
+            ->select('COUNT(guardian.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $items = $qb
+            ->setFirstResult(($pagination->page - 1) * $pagination->perPage)
+            ->setMaxResults($pagination->perPage)
             ->getQuery()
             ->getResult();
+
+        return [
+            'items' => $items,
+            'total' => $total,
+        ];
     }
 }

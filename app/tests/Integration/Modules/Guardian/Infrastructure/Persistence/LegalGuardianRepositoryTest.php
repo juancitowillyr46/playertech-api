@@ -8,6 +8,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardian;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
 use App\Modules\Guardian\Infrastructure\Persistence\LegalGuardianRepository;
+use App\Shared\Application\Pagination\PaginationQuery;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -61,6 +62,6 @@ final class LegalGuardianRepositoryTest extends KernelTestCase
         self::assertNotNull($found);
         self::assertSame($guardian->id()->value(), $found?->id()->value());
         self::assertSame('maria@example.com', $this->repository->findOneByEmail($academyId, 'maria@example.com')?->email());
-        self::assertCount(1, $this->repository->findAllByAcademy($academyId));
+        self::assertCount(1, $this->repository->findAllByAcademy($academyId, new PaginationQuery(1, 20, 'auditTrail.createdAt.value', 'DESC'))['items']);
     }
 }
