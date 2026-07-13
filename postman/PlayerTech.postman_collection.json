@@ -56,7 +56,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000001\",\n    \"name\": \"Academia PlayerTech\",\n    \"contactEmail\": \"contacto@academiaplayertech.com\",\n    \"phone\": \"+573125953354\",\n    \"country\": \"Colombia\",\n    \"department\": \"Cundinamarca\",\n    \"registrationSource\": \"platform\",\n    \"address\": \"Av. Principal 123\",\n    \"city\": \"Bogota\",\n    \"shield\": {\n      \"path\": \"var/storage/media/local/academies/01J.../shield/original/01K....png\",\n      \"url\": \"https://api.playertech.test/media/academies/01J.../shield/01K....png\",\n      \"mimeType\": \"image/png\",\n      \"size\": 184233,\n      \"checksum\": \"sha256:...\"\n    },\n    \"status\": \"ACTIVE\",\n    \"audit\": {\n      \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n      \"createdBy\": \"019f0000-0000-7000-8000-000000000000\",\n      \"updatedAt\": null,\n      \"updatedBy\": null\n    }\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -250,7 +250,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000100\",\n      \"fullName\": \"Root Admin\",\n      \"email\": \"admin@playertech.com\",\n      \"academyId\": null,\n      \"roles\": [\n        \"ROLE_ROOT\",\n        \"ROLE_USER\"\n      ],\n      \"role\": \"ROLE_ROOT\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },
@@ -394,7 +394,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000100\",\n    \"fullName\": \"Root Admin\",\n    \"email\": \"admin@playertech.com\",\n    \"academyId\": null,\n    \"roles\": [\n      \"ROLE_ROOT\",\n      \"ROLE_USER\"\n    ],\n    \"role\": \"ROLE_ROOT\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -689,7 +689,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000200\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000300\",\n    \"primaryGuardianId\": \"019f0000-0000-7000-8000-000000000400\",\n    \"status\": \"ACTIVE\",\n    \"startedAt\": \"2026-07-07T00:00:00+00:00\",\n    \"endedAt\": null\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -829,7 +829,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000200\",\n      \"status\": \"ACTIVE\",\n      \"startedAt\": \"2026-07-07T00:00:00+00:00\",\n      \"endedAt\": null,\n      \"primaryGuardianId\": \"019f0000-0000-7000-8000-000000000400\"\n    }\n  ],\n  \"meta\": {}\n}"
             }
           ]
         }
@@ -973,7 +973,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000300\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n      \"firstName\": \"Juan\",\n      \"lastName\": \"Perez\",\n      \"birthDate\": \"2013-05-12\",\n      \"documentNumber\": \"12345678\",\n      \"photo\": {\n        \"path\": \"var/storage/media/local/players/01J.../photo/original/01K....png\",\n        \"url\": \"https://api.playertech.test/media/players/01J.../photo/01K....png\",\n        \"mimeType\": \"image/png\",\n        \"size\": 122233,\n        \"checksum\": \"sha256:...\"\n      },\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },
@@ -1016,7 +1016,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000300\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"firstName\": \"Juan\",\n    \"lastName\": \"Perez\",\n    \"birthDate\": \"2013-05-12\",\n    \"documentNumber\": \"12345678\",\n    \"photo\": {\n      \"path\": \"var/storage/media/local/players/01J.../photo/original/01K....png\",\n      \"url\": \"https://api.playertech.test/media/players/01J.../photo/01K....png\",\n      \"mimeType\": \"image/png\",\n      \"size\": 122233,\n      \"checksum\": \"sha256:...\"\n    },\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -1308,7 +1308,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000011\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n      \"name\": \"Sub 12 A\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },
@@ -1351,7 +1351,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000011\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"name\": \"Sub 12 A\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -1595,7 +1595,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000012\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryKey\": \"sub-12\",\n      \"name\": \"Sub 12\",\n      \"minAge\": 11,\n      \"maxAge\": 12,\n      \"description\": \"Categoria formativa\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },
@@ -1638,7 +1638,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000012\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"categoryKey\": \"sub-12\",\n    \"name\": \"Sub 12\",\n    \"minAge\": 11,\n    \"maxAge\": 12,\n    \"description\": \"Categoria formativa\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -1882,7 +1882,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000020\",\n      \"name\": \"Cancha Principal\",\n      \"address\": \"Av. Principal 123\",\n      \"city\": \"Bogota\",\n      \"phone\": \"+573125953354\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },
@@ -1925,7 +1925,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000020\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"name\": \"Cancha Principal\",\n    \"address\": \"Av. Principal 123\",\n    \"city\": \"Bogota\",\n    \"phone\": \"+573125953354\",\n    \"notes\": \"Canchas de fútbol 11\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -2161,7 +2161,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000020\",\n      \"name\": \"Cancha Principal\",\n      \"address\": \"Av. Principal 123\",\n      \"city\": \"Bogota\",\n      \"phone\": \"+573125953354\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         }
@@ -2258,7 +2258,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000030\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"code\": \"MATRICULA\",\n      \"name\": \"Matrícula\",\n      \"description\": \"Cobro inicial\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },
@@ -2301,7 +2301,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000030\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"code\": \"MATRICULA\",\n    \"name\": \"Matrícula\",\n    \"description\": \"Cobro inicial\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -2448,7 +2448,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000040\",\n      \"membershipId\": \"019f0000-0000-7000-8000-000000000200\",\n      \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000030\",\n      \"description\": \"Cuota pendiente de matrícula\",\n      \"amount\": \"150000.00\",\n      \"status\": \"PENDING\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },
@@ -2598,7 +2598,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"playerId\": \"019f0000-0000-7000-8000-000000000300\",\n    \"pendingAmount\": \"150000.00\",\n    \"pendingCharges\": 1\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -2643,7 +2643,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000050\",\n      \"paymentDate\": \"2026-07-08T10:30:00+00:00\",\n      \"amount\": \"150000.00\",\n      \"status\": \"PAID\",\n      \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000030\"\n    }\n  ],\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -3040,7 +3040,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"assignmentId\": \"019f0000-0000-7000-8000-000000000060\",\n      \"staffId\": \"019f0000-0000-7000-8000-000000000061\",\n      \"userId\": \"019f0000-0000-7000-8000-000000000062\",\n      \"teamId\": \"019f0000-0000-7000-8000-000000000011\",\n      \"role\": \"HEAD_COACH\"\n    }\n  ],\n  \"meta\": {}\n}"
             }
           ]
         }
@@ -3235,7 +3235,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000070\",\n      \"playerId\": \"019f0000-0000-7000-8000-000000000300\",\n      \"teamId\": \"019f0000-0000-7000-8000-000000000011\",\n      \"startDate\": \"2026-07-08\",\n      \"endDate\": null,\n      \"isPrimary\": true\n    }\n  ],\n  \"meta\": {}\n}"
             }
           ]
         }
@@ -3282,7 +3282,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"activePlayers\": 1,\n    \"pendingCharges\": 1,\n    \"activeMemberships\": 1,\n    \"pendingAmount\": \"150000.00\",\n    \"activePlayersList\": [\n      {\n        \"id\": \"019f0000-0000-7000-8000-000000000300\",\n        \"firstName\": \"Juan\",\n        \"lastName\": \"Perez\"\n      }\n    ],\n    \"pendingChargesList\": [\n      {\n        \"id\": \"019f0000-0000-7000-8000-000000000040\",\n        \"description\": \"Cuota pendiente de matrícula\",\n        \"amount\": \"150000.00\"\n      }\n    ],\n    \"activeMembershipsList\": [\n      {\n        \"id\": \"019f0000-0000-7000-8000-000000000200\",\n        \"playerId\": \"019f0000-0000-7000-8000-000000000300\",\n        \"status\": \"ACTIVE\"\n      }\n    ]\n  },\n  \"meta\": {}\n}"
             }
           ]
         }
