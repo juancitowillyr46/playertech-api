@@ -12,6 +12,9 @@ final readonly class RegisterPaymentCommand
         public string $paymentConceptId,
         public string $paymentDate,
         public string $amount,
+        public string $method,
+        /** @var array<int, array{chargeId:string, amount:string}> */
+        public array $allocations = [],
         public ?string $notes = null
     ) {}
 }

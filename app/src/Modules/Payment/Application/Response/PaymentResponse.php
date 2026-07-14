@@ -12,6 +12,8 @@ final readonly class PaymentResponse
         public string $paymentConceptId,
         public string $paymentDate,
         public string $amount,
+        public string $method,
+        public array $allocations,
         public string $status,
     ) {
     }
@@ -26,6 +28,8 @@ final readonly class PaymentResponse
             $payment->paymentConceptId()->value(),
             $payment->paymentDate()->format('Y-m-d'),
             number_format((float) $payment->amount(), 2, '.', ''),
+            $payment->method(),
+            $payment->allocations(),
             $payment->status()->value(),
         );
     }
@@ -40,6 +44,8 @@ final readonly class PaymentResponse
             'paymentConceptId' => $this->paymentConceptId,
             'paymentDate' => $this->paymentDate,
             'amount' => $this->amount,
+            'method' => $this->method,
+            'allocations' => $this->allocations,
             'status' => $this->status,
         ];
     }

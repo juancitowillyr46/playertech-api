@@ -10,6 +10,7 @@ use App\Modules\Charge\Domain\Charge\ChargeRepository;
 use App\Modules\Membership\Domain\Membership\MembershipId;
 use App\Modules\Membership\Domain\Membership\MembershipRepository;
 use App\Modules\PaymentConcept\Domain\PaymentConcept\PaymentConceptRepository;
+use App\Modules\Player\Domain\Player\PlayerId;
 use App\Shared\Domain\ValueObject\AuditTrail;
 final readonly class CreateChargeHandler
 {
@@ -17,10 +18,11 @@ final readonly class CreateChargeHandler
     public function __invoke(CreateChargeCommand $command): ChargeResponse
     {
         $academyId = new AcademyId($command->academyId);
-        $membership = $this->membershipRepository->findActiveByPlayerId($academyId, new MembershipId($command->membershipId));
+        $playerId = new PlayerId($command->playerId);
+        $membership = $this->membershipRepository->findActiveByPlayerId($academyId, $playerId);
         if (null === $membership) { throw new \App\Modules\Charge\Domain\Exception\ChargeNotFoundException(); }
         if (null === $this->paymentConceptRepository->findById($academyId, new \App\Modules\PaymentConcept\Domain\PaymentConcept\PaymentConceptId($command->paymentConceptId))) { throw new \App\Modules\Charge\Domain\Exception\ChargeNotFoundException(); }
-        $charge = Charge::create(ChargeId::generate(), $academyId, $membership->id(), new \App\Modules\PaymentConcept\Domain\PaymentConcept\PaymentConceptId($command->paymentConceptId), $command->description, (float) $command->amount, AuditTrail::create($command->actorId));
+        $charge = Charge::create(ChargeId::generate(), $academyId, $playerId, $membership->id(), new \App\Modules\PaymentConcept\Domain\PaymentConcept\PaymentConceptId($command->paymentConceptId), $command->description, (float) $command->amount, new \DateTimeImmutable($command->dueDate), $command->source, AuditTrail::create($command->actorId));
         $this->chargeRepository->save($charge);
         return ChargeResponse::fromCharge($charge);
     }

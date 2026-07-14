@@ -35,10 +35,13 @@ final class ChargeController extends AbstractPaginatedApiController
             new CreateChargeCommand(
                 $this->requireAuthenticatedUserId($this->security),
                 $this->tenantContext->requireAcademyId(),
+                $input->playerId,
                 $input->membershipId,
                 $input->paymentConceptId,
                 $input->description,
                 $input->amount,
+                $input->dueDate,
+                $input->source,
             )
         );
 

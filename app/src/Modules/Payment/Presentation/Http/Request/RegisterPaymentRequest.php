@@ -21,6 +21,10 @@ final readonly class RegisterPaymentRequest
         public ?string $paymentDate = null,
         #[Assert\NotBlank(message: 'El campo "amount" es obligatorio.')]
         public ?string $amount = null,
+        #[Assert\NotBlank(message: 'El campo "method" es obligatorio.')]
+        public ?string $method = null,
+        /** @var array<int, array<string, mixed>> */
+        public array $allocations = [],
         public ?string $notes = null,
     ) {}
 }

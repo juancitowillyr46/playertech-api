@@ -18,19 +18,23 @@ final class Payment implements Auditable
     private PaymentConceptId $paymentConceptId;
     private \DateTimeImmutable $paymentDate;
     private float $amount;
+    private string $method;
     private ?string $notes;
+    /** @var array<int, array{chargeId:string, amount:float}> */
+    private array $allocations = [];
     private PaymentStatus $status;
     private ?AuditTrail $auditTrail = null;
     private ?\DateTimeImmutable $deletedAt = null;
     private ?string $deletedBy = null;
-    private function __construct(PaymentId $id, AcademyId $academyId, MembershipId $membershipId, PlayerId $playerId, LegalGuardianId $guardianId, PaymentConceptId $paymentConceptId, \DateTimeImmutable $paymentDate, float $amount, ?string $notes, AuditTrail $auditTrail)
+    private function __construct(PaymentId $id, AcademyId $academyId, MembershipId $membershipId, PlayerId $playerId, LegalGuardianId $guardianId, PaymentConceptId $paymentConceptId, \DateTimeImmutable $paymentDate, float $amount, string $method, ?string $notes, AuditTrail $auditTrail)
     {
-        $this->id = $id; $this->academyId = $academyId; $this->membershipId = $membershipId; $this->playerId = $playerId; $this->guardianId = $guardianId; $this->paymentConceptId = $paymentConceptId; $this->paymentDate = $paymentDate; $this->amount = $amount; $this->notes = $notes; $this->status = PaymentStatus::registered(); $this->auditTrail = $auditTrail;
+        $this->id = $id; $this->academyId = $academyId; $this->membershipId = $membershipId; $this->playerId = $playerId; $this->guardianId = $guardianId; $this->paymentConceptId = $paymentConceptId; $this->paymentDate = $paymentDate; $this->amount = $amount; $this->method = strtoupper(trim($method)); $this->notes = $notes; $this->status = PaymentStatus::registered(); $this->auditTrail = $auditTrail;
     }
-    public static function create(PaymentId $id, AcademyId $academyId, MembershipId $membershipId, PlayerId $playerId, LegalGuardianId $guardianId, PaymentConceptId $paymentConceptId, \DateTimeImmutable $paymentDate, float $amount, ?string $notes, AuditTrail $auditTrail): self
+    public static function create(PaymentId $id, AcademyId $academyId, MembershipId $membershipId, PlayerId $playerId, LegalGuardianId $guardianId, PaymentConceptId $paymentConceptId, \DateTimeImmutable $paymentDate, float $amount, string $method, ?string $notes, AuditTrail $auditTrail): self
     {
         if ($amount <= 0) { throw new \InvalidArgumentException('Payment amount must be greater than zero.'); }
-        return new self($id, $academyId, $membershipId, $playerId, $guardianId, $paymentConceptId, $paymentDate, $amount, $notes, $auditTrail);
+        if (!in_array(strtoupper(trim($method)), ['CASH', 'TRANSFER', 'DIGITAL_WALLET'], true)) { throw new \InvalidArgumentException('Payment method is invalid.'); }
+        return new self($id, $academyId, $membershipId, $playerId, $guardianId, $paymentConceptId, $paymentDate, $amount, $method, $notes, $auditTrail);
     }
     public function id(): PaymentId { return $this->id; }
     public function academyId(): AcademyId { return $this->academyId; }
@@ -40,10 +44,21 @@ final class Payment implements Auditable
     public function paymentConceptId(): PaymentConceptId { return $this->paymentConceptId; }
     public function paymentDate(): \DateTimeImmutable { return $this->paymentDate; }
     public function amount(): float { return $this->amount; }
+    public function method(): string { return $this->method; }
     public function notes(): ?string { return $this->notes; }
+    /** @return array<int, array{chargeId:string, amount:float}> */
+    public function allocations(): array { return $this->allocations; }
     public function status(): PaymentStatus { return $this->status; }
     public function auditTrail(): ?AuditTrail { return $this->auditTrail; }
     public function setAuditTrail(AuditTrail $auditTrail): void { $this->auditTrail = $auditTrail; }
+    public function addAllocation(string $chargeId, float $amount): void
+    {
+        if ($amount <= 0) {
+            throw new \InvalidArgumentException('Allocation amount must be greater than zero.');
+        }
+
+        $this->allocations[] = ['chargeId' => $chargeId, 'amount' => round($amount, 2)];
+    }
     public function cancel(AuditTrail $auditTrail): void
     {
         $this->status = PaymentStatus::cancelled();

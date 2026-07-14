@@ -7,10 +7,14 @@
         </indexes>
         <id name="id" column="id" type="charge_id"/>
         <field name="academyId" column="academy_id" type="academy_id"/>
+        <field name="playerId" column="player_id" type="player_id"/>
         <field name="membershipId" column="membership_id" type="membership_id"/>
         <field name="paymentConceptId" column="payment_concept_id" type="payment_concept_id"/>
         <field name="description" column="description" type="string" length="255"/>
         <field name="amount" column="amount" type="decimal" precision="12" scale="2"/>
+        <field name="allocatedAmount" column="allocated_amount" type="decimal" precision="12" scale="2"/>
+        <field name="dueDate" column="due_date" type="date_immutable"/>
+        <field name="source" column="source" type="string" length="20"/>
         <field name="status" column="status" type="string" length="20"/>
         <embedded name="auditTrail" class="App\Shared\Domain\ValueObject\AuditTrail" use-column-prefix="false"/>
         <field name="deletedAt" column="deleted_at" type="datetime_immutable" nullable="true"/>

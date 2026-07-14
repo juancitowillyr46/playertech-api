@@ -11,9 +11,8 @@ final readonly class ShowPlayerDebtHandler
     public function __construct(private ChargeRepository $chargeRepository) {}
     public function __invoke(ShowPlayerDebtQuery $query): PlayerDebtResponse
     {
-        $charges = $this->chargeRepository->findPendingByAcademy(new AcademyId($query->academyId));
-        $pendingCharges = array_filter($charges, static fn ($charge) => $charge->membershipId() !== null);
-        $pendingAmount = array_reduce($pendingCharges, static fn (float $carry, $charge) => $carry + (float) $charge->amount(), 0.0);
-        return new PlayerDebtResponse($query->playerId, number_format($pendingAmount, 2, '.', ''), count($pendingCharges));
+        $charges = $this->chargeRepository->findPendingByPlayer(new AcademyId($query->academyId), new PlayerId($query->playerId));
+        $pendingAmount = array_reduce($charges, static fn (float $carry, $charge) => $carry + (float) $charge->pendingBalance(), 0.0);
+        return new PlayerDebtResponse($query->playerId, number_format($pendingAmount, 2, '.', ''), count($charges));
     }
 }

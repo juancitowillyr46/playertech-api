@@ -5,6 +5,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 final readonly class CreateChargeRequest
 {
     public function __construct(
+        #[Assert\NotBlank(message: 'El campo "playerId" es obligatorio.')]
+        #[Assert\Uuid(message: 'El campo "playerId" debe ser un UUID válido.')]
+        public ?string $playerId = null,
         #[Assert\NotBlank(message: 'El campo "membershipId" es obligatorio.')]
         #[Assert\Uuid(message: 'El campo "membershipId" debe ser un UUID válido.')]
         public ?string $membershipId = null,
@@ -15,5 +18,9 @@ final readonly class CreateChargeRequest
         public ?string $description = null,
         #[Assert\NotBlank(message: 'El campo "amount" es obligatorio.')]
         public ?string $amount = null,
+        #[Assert\NotBlank(message: 'El campo "dueDate" es obligatorio.')]
+        public ?string $dueDate = null,
+        #[Assert\NotBlank(message: 'El campo "source" es obligatorio.')]
+        public ?string $source = null,
     ) {}
 }

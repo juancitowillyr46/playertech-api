@@ -23,8 +23,11 @@ final readonly class ApplyPaymentToChargeHandler
         $charge = $this->chargeRepository->findById($academyId, $chargeId) ?? throw new \RuntimeException('Charge not found.');
         if (null !== $this->allocationRepository->findByPaymentAndCharge($academyId, $paymentId->value(), $chargeId->value())) { return; }
         $amount = (float) $command->amount;
+        if ($amount > $charge->pendingBalance() + 0.00001) {
+            throw new \InvalidArgumentException('Allocation amount exceeds charge pending balance.');
+        }
         $allocation = PaymentAllocation::create(PaymentAllocationId::generate(), $academyId, $paymentId, $chargeId, $amount, AuditTrail::create($command->actorId));
-        $charge->markPaid($command->actorId);
+        $charge->applyAllocation($amount, $command->actorId);
         $this->allocationRepository->save($allocation);
         $this->chargeRepository->save($charge);
     }

@@ -13,6 +13,7 @@
         <field name="paymentConceptId" column="payment_concept_id" type="payment_concept_id"/>
         <field name="paymentDate" column="payment_date" type="date_immutable"/>
         <field name="amount" column="amount" type="decimal" precision="12" scale="2"/>
+        <field name="method" column="method" type="string" length="30"/>
         <field name="notes" column="notes" type="text" nullable="true"/>
         <embedded name="status" class="App\Modules\Payment\Domain\Payment\PaymentStatus" use-column-prefix="false"/>
         <embedded name="auditTrail" class="App\Shared\Domain\ValueObject\AuditTrail" use-column-prefix="false"/>

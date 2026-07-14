@@ -44,6 +44,8 @@ final class PaymentController extends AbstractApiController
                 $input->paymentConceptId,
                 $input->paymentDate,
                 $input->amount,
+                $input->method,
+                $input->allocations,
                 $input->notes,
             )
         );

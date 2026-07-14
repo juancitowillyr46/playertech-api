@@ -30,7 +30,7 @@ final class PaymentConcept implements Auditable
     ) {
         $this->id = $id;
         $this->academyId = $academyId;
-        $this->code = self::normalizeCode($code);
+        $this->code = self::normalizeCodeValue($code);
         $this->name = self::normalizeName($name);
         $this->description = self::normalizeNullableText($description);
         $this->status = PaymentConceptStatus::active();
@@ -79,6 +79,15 @@ final class PaymentConcept implements Auditable
         if (mb_strlen($value) > 100) { throw new \InvalidArgumentException('Payment concept name is too long.'); }
         return $value;
     }
+
+    private static function normalizeCodeValue(string $value): string
+    {
+        $value = trim($value);
+        if ('' === $value) { throw new \InvalidArgumentException('Payment concept code cannot be empty.'); }
+        if (mb_strlen($value) > 50) { throw new \InvalidArgumentException('Payment concept code is too long.'); }
+        return strtoupper($value);
+    }
+
     private static function normalizeNullableText(?string $value): ?string
     {
         if (null === $value) return null;
