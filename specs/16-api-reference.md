@@ -1228,6 +1228,32 @@ GET /api/v1/academy/team-assignments/players/{playerId}
 
 Consultar las asignaciones deportivas de un jugador.
 
+### Success
+
+`200 OK`
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "playerId": "uuid",
+      "teamId": "uuid",
+      "startDate": "2026-07-08",
+      "endDate": null,
+      "isPrimary": true,
+      "team": {
+        "id": "uuid",
+        "name": "Sub 12 A",
+        "categoryId": "uuid",
+        "categoryName": "Sub 12"
+      }
+    }
+  ],
+  "meta": {}
+}
+```
+
 # Dashboard API
 
 ## Show Dashboard

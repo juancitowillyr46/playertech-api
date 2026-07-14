@@ -338,6 +338,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 - [x] Consolidar la documentación HTTP operativa en Postman y retirar los archivos `.http` duplicados.
 - [x] Revisión final de `README` y guía de ejecución para el siguiente bloque funcional.
 * `EP-010` ya quedó desglosada en historias explícitas para asignar, marcar principal, cambiar principal, finalizar y consultar asignaciones deportivas.
+* La consulta de `EP-010` para asignaciones de jugador ahora se orienta a una respuesta compuesta con `team` anidado para evitar lookups adicionales en frontend.
 * `EP-021` añadió el flujo unificado de alta de staff con acceso en `POST /api/v1/academy/staff/onboarding`, creando usuario y staff en una sola operación y resolviendo invitación o contraseña inicial.
 * `EP-006` funciona como módulo maestro de acudientes con listado, detalle y creación; `EP-008` queda como módulo operativo para relaciones jugador-acudiente y vista de acudientes por jugador.
 * `EP-003` ya incorporó el flujo inicial de usuarios administrativos por invitación y activación con correo, como primer slice de la evolución de staff.

@@ -2837,6 +2837,50 @@
           ]
         },
         {
+          "name": "Team Assignments - List By Player",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/team-assignments/players/{{playerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "team-assignments",
+                "players",
+                "{{playerId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Team Assignments - List By Player Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000701\",\n      \"playerId\": \"019f0000-0000-7000-8000-000000000200\",\n      \"teamId\": \"019f0000-0000-7000-8000-000000000300\",\n      \"startDate\": \"2026-07-08\",\n      \"endDate\": null,\n      \"isPrimary\": true,\n      \"team\": {\n        \"id\": \"019f0000-0000-7000-8000-000000000300\",\n        \"name\": \"Sub 12 A\",\n        \"categoryId\": \"019f0000-0000-7000-8000-000000000400\",\n        \"categoryName\": \"Sub 12\"\n      }\n    }\n  ],\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
           "name": "Show Guardian Payment History",
           "request": {
             "method": "GET",
