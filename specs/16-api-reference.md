@@ -851,6 +851,69 @@ Consultar la matrícula activa de un jugador y su acudiente principal.
 
 ---
 
+# Payment Concepts API
+
+## Create Payment Concept
+
+```http
+POST /api/v1/academy/payment-concepts
+```
+
+### Request
+
+```json
+{
+  "name": "Matrícula",
+  "description": "Cobro inicial"
+}
+```
+
+### Success
+
+`201 Created`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "academyId": "uuid",
+    "code": "MATRICULA",
+    "name": "Matrícula",
+    "description": "Cobro inicial",
+    "status": "ACTIVE"
+  },
+  "meta": {}
+}
+```
+
+### Rules
+
+* `code` no se envía desde frontend.
+* `code` se genera en backend desde `name`.
+* Si hay colisión, el backend resuelve el código con sufijo determinístico.
+
+## Update Payment Concept
+
+```http
+PUT /api/v1/academy/payment-concepts/{paymentConceptId}
+```
+
+### Request
+
+```json
+{
+  "name": "Matrícula",
+  "description": "Cobro inicial"
+}
+```
+
+### Rules
+
+* `code` no es editable desde frontend.
+* El código original se conserva en la actualización.
+
+---
+
 # Staff API
 
 ## List Staff

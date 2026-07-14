@@ -212,7 +212,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Membership` ya adopta el patrón de arquitectura esperado: validación en `Presentation`, `MembershipFinder` en `Application` y excepciones de dominio herederas de `Shared`.
 * `EP-012` quedó cerrado funcional y técnicamente con `Charge`, `Payment`, `PaymentAllocation`, deuda, historial, evidencia y cancelación; la validación final ya se cubrió sobre `test`.
 * `EP-013` quedó materializada como dashboard operativo con jugadores activos, matrículas vigentes, cargos pendientes y resumen de cartera.
-* `EP-011` quedó consolidada como módulo funcional completo de conceptos de pago: crear, listar, consultar, actualizar y desactivar con cobertura unitaria y documentación HTTP operativa en Postman.
+* `EP-011` quedó consolidada como módulo funcional completo de conceptos de pago: crear, listar, consultar, actualizar, desactivar y generar automáticamente el `code` desde el `name`, con cobertura unitaria y documentación HTTP operativa en Postman.
 * Se inició la estandarización de listados con paginación uniforme (`page`, `per_page`, `sort`, `direction`) en endpoints visibles por frontend.
 * `EP-021` quedó materializada con el desarrollo del módulo `Staff` y `TeamStaffAssignment`, cobertura unitaria base, documentación API y colección Postman para el flujo de staff por equipo.
 * `EP-010` quedó materializada con el módulo `TeamAssignment`, que introduce la relación jugador-equipo con historial, principal activo y finalización.

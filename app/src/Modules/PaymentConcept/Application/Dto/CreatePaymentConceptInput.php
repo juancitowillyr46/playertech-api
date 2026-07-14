@@ -7,7 +7,6 @@ namespace App\Modules\PaymentConcept\Application\Dto;
 final readonly class CreatePaymentConceptInput
 {
     public function __construct(
-        public ?string $code = null,
         public ?string $name = null,
         public ?string $description = null,
     ) {

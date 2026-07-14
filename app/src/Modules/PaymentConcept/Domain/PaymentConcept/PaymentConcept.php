@@ -59,9 +59,8 @@ final class PaymentConcept implements Auditable
     public function deletedAt(): ?\DateTimeImmutable { return $this->deletedAt; }
     public function deletedBy(): ?string { return $this->deletedBy; }
 
-    public function update(string $code, string $name, ?string $description, string $updatedBy): void
+    public function update(string $name, ?string $description, string $updatedBy): void
     {
-        $this->code = self::normalizeCode($code);
         $this->name = self::normalizeName($name);
         $this->description = self::normalizeNullableText($description);
         if ($this->auditTrail) { $this->auditTrail->touch($updatedBy); }
@@ -73,14 +72,6 @@ final class PaymentConcept implements Auditable
         if ($this->auditTrail) { $this->auditTrail->touch($updatedBy); }
     }
 
-    private static function normalizeCode(string $value): string
-    {
-        $value = strtoupper(trim($value));
-        if ('' === $value) { throw new \InvalidArgumentException('Payment concept code cannot be empty.'); }
-        if (mb_strlen($value) > 50) { throw new \InvalidArgumentException('Payment concept code is too long.'); }
-        if (!preg_match('/^[A-Z0-9][A-Z0-9_-]*$/', $value)) { throw new \InvalidArgumentException('Payment concept code has invalid format.'); }
-        return $value;
-    }
     private static function normalizeName(string $value): string
     {
         $value = trim($value);
