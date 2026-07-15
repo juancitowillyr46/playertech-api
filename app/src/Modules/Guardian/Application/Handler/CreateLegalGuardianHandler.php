@@ -34,6 +34,9 @@ final readonly class CreateLegalGuardianHandler
             $input->lastName ?? '',
             $input->phone,
             $input->email,
+            $input->documentType,
+            $input->documentNumber,
+            $input->address,
             $input->relationship ?? '',
             AuditTrail::create($command->actorId),
         );
@@ -47,6 +50,9 @@ final readonly class CreateLegalGuardianHandler
             $guardian->lastName(),
             $guardian->phone(),
             $guardian->email(),
+            $guardian->documentType(),
+            $guardian->documentNumber(),
+            $guardian->address(),
             $guardian->relationship(),
             $guardian->status()->value(),
         );

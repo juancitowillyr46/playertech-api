@@ -69,6 +69,34 @@
             nullable="true"/>
 
         <field
+            name="taxIdType"
+            column="tax_id_type"
+            type="string"
+            length="40"
+            nullable="true"/>
+
+        <field
+            name="taxIdNumber"
+            column="tax_id_number"
+            type="string"
+            length="40"
+            nullable="true"/>
+
+        <field
+            name="taxRegime"
+            column="tax_regime"
+            type="string"
+            length="80"
+            nullable="true"/>
+
+        <field
+            name="billingEmail"
+            column="billing_email"
+            type="string"
+            length="180"
+            nullable="true"/>
+
+        <field
             name="registrationSource"
             column="registration_source"
             type="string"

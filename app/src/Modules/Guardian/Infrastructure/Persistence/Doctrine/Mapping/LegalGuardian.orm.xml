@@ -75,6 +75,27 @@
             nullable="true"/>
 
         <field
+            name="documentType"
+            column="document_type"
+            type="string"
+            length="50"
+            nullable="true"/>
+
+        <field
+            name="documentNumber"
+            column="document_number"
+            type="string"
+            length="30"
+            nullable="true"/>
+
+        <field
+            name="address"
+            column="address"
+            type="string"
+            length="255"
+            nullable="true"/>
+
+        <field
             name="relationship"
             column="relationship"
             type="string"

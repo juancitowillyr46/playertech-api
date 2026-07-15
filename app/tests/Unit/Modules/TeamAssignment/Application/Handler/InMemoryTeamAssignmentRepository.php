@@ -34,12 +34,13 @@ final class InMemoryTeamAssignmentRepository implements TeamAssignmentRepository
         return null;
     }
 
-    public function findByPlayerAndTeam(AcademyId $academyId, PlayerId $playerId, TeamId $teamId): ?TeamAssignment
+    public function findActiveByPlayerAndTeam(AcademyId $academyId, PlayerId $playerId, TeamId $teamId): ?TeamAssignment
     {
         foreach ($this->items as $item) {
             if ($item->academyId()->value() === $academyId->value()
                 && $item->playerId()->value() === $playerId->value()
                 && $item->teamId()->value() === $teamId->value()
+                && $item->isActive()
                 && null === $item->deletedAt()) {
                 return $item;
             }

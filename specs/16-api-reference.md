@@ -111,6 +111,21 @@ Los listados más visibles para frontend usan `data` como arreglo de DTOs resumi
 }
 ```
 
+### Academy Tax Profile
+
+```json
+{
+  "data": {
+    "academyId": "uuid",
+    "taxIdType": "NIT",
+    "taxIdNumber": "901234567-8",
+    "taxRegime": "RESPONSABLE_IVA",
+    "billingEmail": "facturacion@academiaplayertech.com"
+  },
+  "meta": {}
+}
+```
+
 ### Users
 
 ```json
@@ -504,6 +519,170 @@ Provisionar un tenant completo desde plataforma, creando academia, usuario owner
 
 ---
 
+# Academy Tax Profile
+
+## Show Academy Tax Profile
+
+```http
+GET /api/v1/academy/me/tax-profile
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Consultar la información tributaria registrada para la academia actual.
+
+## Update Academy Tax Profile
+
+```http
+PUT /api/v1/academy/me/tax-profile
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Actualizar la información tributaria de la academia actual.
+
+### Request DTO
+
+`UpdateAcademyTaxProfileRequest`
+
+```json
+{
+  "taxIdType": "NIT",
+  "taxIdNumber": "901234567-8",
+  "taxRegime": "RESPONSABLE_IVA",
+  "billingEmail": "facturacion@academiaplayertech.com"
+}
+```
+
+## Platform Academy Tax Profile
+
+```http
+GET /api/v1/platform/academies/{academyId}/tax-profile
+PUT /api/v1/platform/academies/{academyId}/tax-profile
+```
+
+### Access
+
+* Sólo `ROLE_ROOT`.
+
+### Purpose
+
+Consultar o actualizar el perfil tributario de una academia desde plataforma.
+
+---
+
+# Payment Receipts
+
+## Show Payment Receipt
+
+```http
+GET /api/v1/academy/payments/{paymentId}/receipt
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Obtener el comprobante operativo de un pago registrado.
+
+### Success
+
+`200 OK`
+
+```json
+{
+  "data": {
+    "receiptNumber": "RCPT-20260714-000050",
+    "paymentId": "uuid",
+    "academyId": "uuid",
+    "academyTaxIdType": "NIT",
+    "academyTaxIdNumber": "901234567-8",
+    "academyTaxRegime": "RESPONSABLE_IVA",
+    "academyBillingEmail": "facturacion@academiaplayertech.com",
+    "academyAddress": "Av. Principal 123",
+    "academyCity": "Bogota",
+    "guardianId": "uuid",
+    "playerId": "uuid",
+    "paymentDate": "2026-07-14",
+    "amount": "150000.00",
+    "method": "CASH",
+    "conceptCode": "MATRICULA",
+    "conceptName": "Matrícula",
+    "allocations": [
+      {
+        "chargeId": "uuid",
+        "amount": 150000
+      }
+    ]
+  },
+  "meta": {}
+}
+```
+
+## Link Fiscal Attachment
+
+```http
+POST /api/v1/academy/fiscal-attachments
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Vincular un soporte fiscal en PDF descargado desde otra aplicación a un pago registrado.
+
+### Request DTO
+
+`LinkFiscalAttachmentRequest`
+
+```json
+{
+  "paymentId": "uuid",
+  "providerName": "App Externa",
+  "documentNumber": "PDF-2026-000123",
+  "documentUrl": "https://external-system.example/documents/PDF-2026-000123",
+  "status": "ATTACHED"
+}
+```
+
+### Success
+
+`201 Created`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "academyId": "uuid",
+    "paymentId": "uuid",
+    "providerName": "App Externa",
+    "documentNumber": "PDF-2026-000123",
+    "documentUrl": "https://external-system.example/documents/PDF-2026-000123",
+    "status": "ATTACHED"
+  },
+  "meta": {}
+}
+```
+
+### Errors
+
+* `404 Not Found` si el pago no existe.
+* `422 Unprocessable Entity` si el payload no pasa validación.
+
+---
+
 # Users API
 
 ## Create User
@@ -718,6 +897,46 @@ POST /api/v1/academy/guardians
 ### Purpose
 
 Registrar un acudiente dentro de la academia actual con su parentesco.
+
+### Request DTO
+
+`CreateLegalGuardianRequest`
+
+```json
+{
+  "firstName": "Maria",
+  "lastName": "Lopez",
+  "phone": "+51 999 111 222",
+  "email": "maria@example.com",
+  "documentType": "DNI",
+  "documentNumber": "12345678",
+  "address": "Av. Central 123",
+  "relationship": "Madre"
+}
+```
+
+### Success
+
+`201 Created`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "academyId": "uuid",
+    "firstName": "Maria",
+    "lastName": "Lopez",
+    "phone": "+51 999 111 222",
+    "email": "maria@example.com",
+    "documentType": "DNI",
+    "documentNumber": "12345678",
+    "address": "Av. Central 123",
+    "relationship": "Madre",
+    "status": "ACTIVE"
+  },
+  "meta": {}
+}
+```
 
 ---
 
@@ -1180,6 +1399,12 @@ Asignar un jugador a un equipo dentro de la academia actual.
 }
 ```
 
+### Business rules
+
+* No se admite `markAsPrimary` en este contrato.
+* Si el jugador ya tiene una asignación activa para el mismo equipo, el alta se rechaza.
+* Si la asignación creada luego debe quedar como principal, el flujo recomendado es llamar después a `PATCH /primary`.
+
 ### Success
 
 `201 Created`
@@ -1217,6 +1442,11 @@ PATCH /api/v1/academy/team-assignments/{assignmentId}/finalize
 ### Purpose
 
 Finalizar una asignación sin borrar el historial.
+
+### Business rules
+
+* Si la asignación finalizada era principal y existe otra asignación activa del mismo jugador, el backend la promueve automáticamente como principal.
+* Si no existe otra asignación activa, el jugador queda sin principal hasta una nueva asignación o marca explícita.
 
 ## View Player Team Assignments
 

@@ -11,194 +11,194 @@
       "item": []
     },
     {
-  "name": "Guardian",
-  "item": [
-    {
-      "name": "Guardian - List",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{tenantToken}}"
-          },
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/v1/academy/guardians?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "v1",
-            "academy",
-            "guardians?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC"
-          ]
-        }
-      },
-      "response": [
+      "name": "Guardian",
+      "item": [
         {
-          "name": "Guardian - List Example",
-          "status": "OK",
-          "code": 200,
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
+          "name": "Guardian - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/guardians?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "guardians?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC"
+              ]
             }
-          ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000401\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"firstName\": \"Maria\",\n      \"lastName\": \"Lopez\",\n      \"phone\": \"+51 999 111 222\",\n      \"email\": \"maria@example.com\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
-        }
-      ]
-    },
-    {
-      "name": "Guardian - Show",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{tenantToken}}"
           },
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/v1/academy/guardians/{{guardianId}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "v1",
-            "academy",
-            "guardians",
-            "{{guardianId}}"
-          ]
-        }
-      },
-      "response": [
-        {
-          "name": "Guardian - Show Example",
-          "status": "OK",
-          "code": 200,
-          "header": [
+          "response": [
             {
-              "key": "Content-Type",
-              "value": "application/json"
+              "name": "Guardian - List Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000401\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"firstName\": \"Maria\",\n      \"lastName\": \"Lopez\",\n      \"phone\": \"+51 999 111 222\",\n      \"email\": \"maria@example.com\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
-          ],
-          "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000401\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Lopez\",\n    \"phone\": \"+51 999 111 222\",\n    \"email\": \"maria@example.com\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
-        }
-      ]
-    },
-    {
-      "name": "Guardian - Create",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{tenantToken}}"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/v1/academy/guardians",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "v1",
-            "academy",
-            "guardians"
           ]
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"firstName\": \"Maria\",\n  \"lastName\": \"Lopez\",\n  \"phone\": \"+51 999 111 222\",\n  \"email\": \"maria@example.com\"\n}"
-        }
-      },
-      "response": [
         {
-          "name": "Guardian - Create Example",
-          "status": "Created",
-          "code": 201,
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
+          "name": "Guardian - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/guardians/{{guardianId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "guardians",
+                "{{guardianId}}"
+              ]
             }
-          ],
-          "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000401\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Lopez\",\n    \"phone\": \"+51 999 111 222\",\n    \"email\": \"maria@example.com\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
-        }
-      ]
-    }
-  ]
-},
-    {
-  "name": "Player Guardians",
-  "item": [
-    {
-      "name": "Player Guardians - List",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{tenantToken}}"
           },
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/guardians",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "v1",
-            "academy",
-            "players",
-            "{{playerId}}",
-            "guardians"
+          "response": [
+            {
+              "name": "Guardian - Show Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000401\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Lopez\",\n    \"phone\": \"+51 999 111 222\",\n    \"email\": \"maria@example.com\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Guardian - Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/guardians",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "guardians"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Maria\",\n  \"lastName\": \"Lopez\",\n  \"phone\": \"+51 999 111 222\",\n  \"email\": \"maria@example.com\",\n  \"documentType\": \"DNI\",\n  \"documentNumber\": \"12345678\",\n  \"address\": \"Av. Central 123\",\n  \"relationship\": \"Madre\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Guardian - Create Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000401\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Lopez\",\n    \"phone\": \"+51 999 111 222\",\n    \"email\": \"maria@example.com\",\n    \"documentType\": \"DNI\",\n    \"documentNumber\": \"12345678\",\n    \"address\": \"Av. Central 123\",\n    \"relationship\": \"Madre\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
+            }
           ]
         }
-      },
-      "response": [
+      ]
+    },
+    {
+      "name": "Player Guardians",
+      "item": [
         {
-          "name": "Player Guardians - List Example",
-          "status": "OK",
-          "code": 200,
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
+          "name": "Player Guardians - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/guardians",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "guardians"
+              ]
             }
-          ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000501\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"playerId\": \"019f0000-0000-7000-8000-000000000300\",\n      \"isPrimary\": true,\n      \"guardian\": {\n        \"id\": \"019f0000-0000-7000-8000-000000000401\",\n        \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n        \"firstName\": \"Maria\",\n        \"lastName\": \"Lopez\",\n        \"phone\": \"+51 999 111 222\",\n        \"email\": \"maria@example.com\",\n        \"status\": \"ACTIVE\"\n      }\n    }\n  ],\n  \"meta\": {}\n}"
+          },
+          "response": [
+            {
+              "name": "Player Guardians - List Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000501\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"playerId\": \"019f0000-0000-7000-8000-000000000300\",\n      \"isPrimary\": true,\n      \"guardian\": {\n        \"id\": \"019f0000-0000-7000-8000-000000000401\",\n        \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n        \"firstName\": \"Maria\",\n        \"lastName\": \"Lopez\",\n        \"phone\": \"+51 999 111 222\",\n        \"email\": \"maria@example.com\",\n        \"status\": \"ACTIVE\"\n      }\n    }\n  ],\n  \"meta\": {}\n}"
+            }
+          ]
         }
       ]
-    }
-  ]
-},
+    },
     {
       "name": "Public",
       "item": []
@@ -393,6 +393,102 @@
                 }
               ],
               "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000050\",\n    \"membershipId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000040\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ],\n    \"status\": \"REGISTERED\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Academies - Tax Profile - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{rootToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/platform/academies/{{academyId}}/tax-profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "platform",
+                "academies",
+                "{{academyId}}",
+                "tax-profile"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Academies - Tax Profile - Show Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Academies - Tax Profile - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{rootToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"taxIdType\": \"NIT\",\n  \"taxIdNumber\": \"901234567-8\",\n  \"taxRegime\": \"RESPONSABLE_IVA\",\n  \"billingEmail\": \"facturacion@academiaplayertech.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/platform/academies/{{academyId}}/tax-profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "platform",
+                "academies",
+                "{{academyId}}",
+                "tax-profile"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Academies - Tax Profile - Update Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         }
@@ -780,6 +876,100 @@
                 }
               ],
               "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000050\",\n    \"membershipId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000040\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ],\n    \"status\": \"REGISTERED\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Academy - Tax Profile - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/me/tax-profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "me",
+                "tax-profile"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Academy - Tax Profile - Show Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Academy - Tax Profile - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"taxIdType\": \"NIT\",\n  \"taxIdNumber\": \"901234567-8\",\n  \"taxRegime\": \"RESPONSABLE_IVA\",\n  \"billingEmail\": \"facturacion@academiaplayertech.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/me/tax-profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "me",
+                "tax-profile"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Academy - Tax Profile - Update Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         }
@@ -3069,6 +3259,100 @@
               "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000050\",\n    \"membershipId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000040\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ],\n    \"status\": \"REGISTERED\"\n  },\n  \"meta\": {}\n}"
             }
           ]
+        },
+        {
+          "name": "Payment Receipt - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/payments/{{paymentId}}/receipt",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "payments",
+                "{{paymentId}}",
+                "receipt"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Payment Receipt - Show Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"receiptNumber\": \"RCPT-20260714-000050\",\n    \"paymentId\": \"019f0000-0000-7000-8000-000000000050\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"conceptCode\": \"MATRICULA\",\n    \"conceptName\": \"Matrícula\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ]\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Fiscal Attachment - Link",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentId\": \"{{paymentId}}\",\n  \"providerName\": \"App Externa\",\n  \"documentNumber\": \"PDF-2026-000123\",\n  \"documentUrl\": \"https://external-system.example/documents/PDF-2026-000123\",\n  \"status\": \"ATTACHED\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/fiscal-attachments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "fiscal-attachments"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Fiscal Attachment - Link Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000900\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"paymentId\": \"019f0000-0000-7000-8000-000000000050\",\n    \"providerName\": \"App Externa\",\n    \"documentNumber\": \"PDF-2026-000123\",\n    \"documentUrl\": \"https://external-system.example/documents/PDF-2026-000123\",\n    \"status\": \"ATTACHED\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
         }
       ]
     },
@@ -3702,4 +3986,3 @@
     }
   ]
 }
-

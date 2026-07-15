@@ -352,16 +352,16 @@ Estas funcionalidades permanecen fuera del alcance actual.
 
 ---
 
-# EP-023 Información Tributaria de Academias y Comprobantes DIAN
+# EP-023 Soportes Fiscales en PDF
 
 ## Objetivo
-Permitir que las academias registren su información tributaria y, en una etapa posterior, emitan comprobantes de pago con integración a DIAN.
+Permitir que las academias registren su información tributaria y, en una etapa posterior, adjunten soportes fiscales en PDF descargados desde otras aplicaciones.
 
 ## Problema que Resuelve
-La plataforma necesita prepararse para escenarios de facturación fiscal real, donde los pagos requieran datos tributarios del emisor, numeración formal y sincronización con entidades externas.
+La plataforma necesita prepararse para escenarios donde el equipo administrativo quiera conservar soportes fiscales externos como archivos PDF vinculados a los pagos.
 
 ## Valor de Negocio
-Habilita cumplimiento fiscal, trazabilidad documental y una futura capa de facturación electrónica para academias que la requieran.
+Habilita trazabilidad documental y deja la facturación electrónica como una evolución futura separada.
 
 ## Actores
 
@@ -372,10 +372,9 @@ Habilita cumplimiento fiscal, trazabilidad documental y una futura capa de factu
 ## Dominios Involucrados
 
 * Academy
-* Billing
 * Payment
-* FiscalDocument
-* DIAN Integration
+* PaymentReceipt
+* FiscalAttachment
 
 ## Historias Candidatas
 
@@ -384,10 +383,42 @@ Habilita cumplimiento fiscal, trazabilidad documental y una futura capa de factu
 * Actualizar información tributaria de la academia.
 * Generar comprobante de pago.
 * Consultar comprobante de pago.
-* Enviar comprobante a DIAN.
-* Consultar estado DIAN del comprobante.
-* Anular comprobante emitido.
-* Reintentar envío a DIAN ante error técnico.
+* Adjuntar soporte fiscal en PDF.
+* Consultar soporte fiscal adjunto.
+* Reemplazar soporte fiscal adjunto.
+
+## Prioridad
+
+Media
+
+---
+
+# EP-024 Facturación Electrónica
+
+## Objetivo
+
+Permitir generar, enviar y consultar facturas electrónicas cuando la academia o la regulación lo requieran.
+
+## Problema que Resuelve
+
+El sistema hoy conserva soportes y comprobantes operativos, pero todavía no administra emisión fiscal formal.
+
+## Valor de Negocio
+
+Habilita una capa fiscal completa para academias que necesiten factura electrónica.
+
+## Actores
+
+* Super Admin
+* Academy Admin
+
+## Historias Candidatas
+
+* Emitir factura electrónica.
+* Consultar estado de factura electrónica.
+* Reintentar envío de factura electrónica.
+* Anular factura electrónica.
+* Sincronizar respuesta del proveedor fiscal.
 
 ## Prioridad
 

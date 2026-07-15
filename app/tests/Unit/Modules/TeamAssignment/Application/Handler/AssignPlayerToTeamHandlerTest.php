@@ -12,6 +12,8 @@ use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\TeamAssignment\Application\Command\AssignPlayerToTeamCommand;
 use App\Modules\TeamAssignment\Application\Handler\AssignPlayerToTeamHandler;
+use App\Modules\TeamAssignment\Domain\TeamAssignment\TeamAssignment;
+use App\Modules\TeamAssignment\Domain\TeamAssignment\TeamAssignmentId;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Name;
 use PHPUnit\Framework\TestCase;
@@ -59,5 +61,58 @@ final class AssignPlayerToTeamHandlerTest extends TestCase
         self::assertSame($player->id()->value(), $response->toArray()['playerId']);
         self::assertSame($team->id()->value(), $response->toArray()['teamId']);
         self::assertCount(1, $assignmentRepository->items);
+    }
+
+    public function testItAllowsReassigningToSameTeamWhenPreviousAssignmentIsFinalized(): void
+    {
+        $academyId = AcademyId::generate();
+        $playerRepository = new InMemoryPlayerRepository();
+        $teamRepository = $this->createMock(\App\Modules\Team\Domain\Team\TeamRepository::class);
+        $assignmentRepository = new InMemoryTeamAssignmentRepository();
+
+        $player = Player::create(
+            PlayerId::generate(),
+            $academyId,
+            'Juan',
+            'Pérez',
+            new \DateTimeImmutable('2014-05-18'),
+            '12345678',
+            null,
+            null,
+            AuditTrail::create('actor-id'),
+        );
+        $playerRepository->save($player);
+
+        $team = Team::create(
+            TeamId::generate(),
+            $academyId,
+            \App\Modules\Category\Domain\Category\CategoryId::generate(),
+            new Name('Sub-12 A'),
+            AuditTrail::create('actor-id'),
+        );
+        $teamRepository->method('findById')->willReturn($team);
+
+        $previous = TeamAssignment::create(
+            TeamAssignmentId::generate(),
+            $academyId,
+            $player->id(),
+            $team->id(),
+            new \DateTimeImmutable('2026-07-07'),
+            AuditTrail::create('actor-id'),
+        );
+        $previous->finalize(new \DateTimeImmutable('2026-07-08'), 'actor-id');
+        $assignmentRepository->save($previous);
+
+        $handler = new AssignPlayerToTeamHandler($playerRepository, $teamRepository, $assignmentRepository);
+        $response = $handler(new AssignPlayerToTeamCommand(
+            'actor-id',
+            $academyId->value(),
+            $player->id()->value(),
+            $team->id()->value(),
+            '2026-07-09',
+        ));
+
+        self::assertSame($player->id()->value(), $response->toArray()['playerId']);
+        self::assertSame(2, count($assignmentRepository->items));
     }
 }

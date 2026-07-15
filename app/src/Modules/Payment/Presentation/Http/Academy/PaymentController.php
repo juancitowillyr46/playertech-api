@@ -8,6 +8,8 @@ use App\Modules\Payment\Application\Handler\ApplyPaymentToChargeHandler;
 use App\Modules\Payment\Application\Handler\CancelPaymentHandler;
 use App\Modules\Payment\Application\Command\RegisterPaymentCommand;
 use App\Modules\Payment\Application\Handler\RegisterPaymentHandler;
+use App\Modules\Payment\Application\Handler\ShowPaymentReceiptHandler;
+use App\Modules\Payment\Application\Query\ShowPaymentReceiptQuery;
 use App\Modules\Payment\Presentation\Http\Request\RegisterPaymentRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -24,6 +26,7 @@ final class PaymentController extends AbstractApiController
         private readonly RegisterPaymentHandler $registerPaymentHandler,
         private readonly ApplyPaymentToChargeHandler $applyPaymentToChargeHandler,
         private readonly CancelPaymentHandler $cancelPaymentHandler,
+        private readonly ShowPaymentReceiptHandler $showPaymentReceiptHandler,
         private readonly TenantContext $tenantContext,
     ) {
     }
@@ -83,5 +86,18 @@ final class PaymentController extends AbstractApiController
         );
 
         return new JsonResponse(['data' => new \stdClass(), 'meta' => new \stdClass()]);
+    }
+
+    #[Route('/{paymentId}/receipt', methods:['GET'])]
+    public function receipt(string $paymentId): JsonResponse
+    {
+        $view = ($this->showPaymentReceiptHandler)(
+            new ShowPaymentReceiptQuery(
+                $this->tenantContext->requireAcademyId(),
+                $paymentId
+            )
+        );
+
+        return new JsonResponse(['data' => $view->toArray(), 'meta' => new \stdClass()]);
     }
 }

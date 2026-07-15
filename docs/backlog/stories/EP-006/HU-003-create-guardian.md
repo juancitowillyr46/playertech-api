@@ -15,7 +15,7 @@
 
 # Objetivo
 
-Permitir registrar un acudiente dentro de la academia actual.
+Permitir registrar un acudiente dentro de la academia actual con sus datos de identificación y contacto básicos.
 
 ---
 
@@ -25,13 +25,15 @@ Como administrador de academia
 
 Quiero crear un acudiente
 
-Para asociarlo posteriormente a uno o varios jugadores.
+Para asociarlo posteriormente a uno o varios jugadores y conservar sus datos de identificación y contacto útiles para comprobantes y gestión documental.
 
 ---
 
 # Reglas de Negocio
 
 * El acudiente debe pertenecer a la academia actual.
+* El tipo y número de documento deben poder registrarse como información principal del acudiente.
+* La dirección y el correo pueden registrarse como datos opcionales.
 * El correo debe ser único dentro de la academia si aplica.
 * El registro debe quedar disponible para asociación con jugadores.
 

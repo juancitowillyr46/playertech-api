@@ -182,6 +182,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Academy` ya responde mediante DTOs de salida por caso de uso, incluyendo contratos anidados para flujos como tenant signup.
 * `Academy` ahora expone `registrationSource` para distinguir tenants creados por `signup` y por `platform`, y ese dato también aparece en los listados de academias.
 * Los recursos de media se estandarizan como objetos JSON con `path`, `url`, `mime_type`, `size` y `checksum`; `Academy` expone `shield` con ese contrato y `Player` heredará el mismo patrón para `photo`.
+* Los adjuntos documentales usan un contrato separado de `Media`, con `fileName` y `source`, para soportes PDF y documentos externos sin mezclarlo con imágenes.
 * Existe una guia operativa para construir nuevos modulos sin depender de modelos previos.
 * `Academy` queda definido como el modulo de referencia oficial para nuevos contextos: CQRS, XML puro, VOs tipados, soft delete, validacion formal, controllers delgados y separacion root/tenant.
 * Se formalizó la regla de comunicación entre módulos: primero contratos de aplicación síncronos, luego eventos internos si aportan claridad, y `Messenger` solo ante una necesidad real de asincronía.
@@ -217,7 +218,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El historial financiero ahora puede consultarse también por `guardianId` y el registro de pagos admite `allocations[]` para distribuir un pago entre varios cargos, manteniendo la conciliación parcial fuera del MVP.
 * Se inició la estandarización de listados con paginación uniforme (`page`, `per_page`, `sort`, `direction`) en endpoints visibles por frontend.
 * `EP-021` quedó materializada con el desarrollo del módulo `Staff` y `TeamStaffAssignment`, cobertura unitaria base, documentación API y colección Postman para el flujo de staff por equipo.
-* `EP-010` quedó materializada con el módulo `TeamAssignment`, que introduce la relación jugador-equipo con historial, principal activo y finalización.
+* `EP-010` quedó materializada con el módulo `TeamAssignment`, que introduce la relación jugador-equipo con historial, principal activo y finalización, y ahora deja explícito que la duplicidad solo se bloquea si existe una asignación activa al mismo equipo.
 * `EP-005` equipos ya quedó cubierto como base de organización deportiva y sirve como referencia de CRUD tenant-scoped.
 * La cobertura de pruebas para `Team` ya incluye dominio, persistencia Doctrine y endpoint HTTP crítico; las suites compartidas sobre MySQL se corren en serie para evitar colisiones de esquema.
 * La subida de escudo institucional para `Academy` y la foto del jugador para `Player` ya quedaron implementadas como historias de media separadas.
@@ -236,11 +237,20 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La colección Postman quedó actualizada con contratos de ejemplo para `POST /api/v1/public/tenants/signup` y `POST /api/v1/platform/academies`.
 * La colección Postman se usa como referencia operativa de contrato HTTP para el front mientras no exista Swagger/OpenAPI interactivo.
 * Se documentó la futura épica `EP-023` para información tributaria de academias y comprobantes DIAN, separándola del perfil base de `Academy`.
+* `EP-023` quedó refinada para cubrir información tributaria, comprobantes operativos descargables y soporte fiscal externo, dejando la capa DIAN como evolución futura.
+* `EP-023` ya tiene su primera rebanada técnica implementada: perfil tributario de academia con endpoints de consulta y actualización desde `academy/me` y `platform/academies`.
+* `EP-023` añadió el comprobante operativo de pago como recurso HTTP consultable desde `/api/v1/academy/payments/{paymentId}/receipt`, generado a partir del pago y del concepto asociado.
+* `EP-023` añadió la vinculación de soportes fiscales en PDF con `POST /api/v1/academy/fiscal-attachments`, manteniendo la emisión fiscal fuera del core.
+* `EP-023` quedó como fuente principal para los datos fiscales de la academia usados en comprobantes, mientras `EP-006` complementa la información del acudiente con documento, dirección y correo opcional.
+* El comprobante operativo de pago ahora toma los datos fiscales principales de la academia para que la emisión parta de un emisor principal/default coherente.
+* La documentación operativa de `EP-006` ya refleja el alta de acudientes con `documentType`, `documentNumber`, `address` y `relationship` para que el front consuma el contrato actualizado.
+* Los comprobantes de pago del MVP deben tomar siempre la academia marcada como principal/default para los datos fiscales del emisor.
 * `HU-009` de `EP-007` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la foto del jugador.
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.
 * El MVP checklist debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y foto de `Player`.
 * `EP-006` ya expone lectura y creación de acudientes por academia en HTTP, incluyendo el campo `relationship`, y `EP-008` ya cubre la relación jugador-acudiente con alta de acudiente, asociación, cambio de principal, eliminación lógica y vista por jugador.
 * El bloque de módulos aún pendiente para el MVP ya no incluye `EP-012`; `EP-008`, `EP-009`, `EP-010`, `EP-011`, `EP-012` y `EP-013` ya se consideran resueltos.
+* La capa fiscal formal sigue fuera del MVP y quedó concentrada en `EP-023`.
 ---
 
 # Technical Foundation Checklist

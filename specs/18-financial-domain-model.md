@@ -352,6 +352,15 @@ Contrato recomendado:
 * HU-008 Cancelar pago.
 * HU-009 Ver trazabilidad de pagos por jugador.
 
+## EP-023
+
+* Registrar información tributaria de academia.
+* Consultar información tributaria de academia.
+* Actualizar información tributaria de academia.
+* Generar comprobante de pago operativo.
+* Consultar comprobante de pago operativo.
+* Vincular soporte fiscal PDF externo.
+
 ## EP-009
 
 * HU-001 Crear matrícula con acudiente principal.

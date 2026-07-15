@@ -43,7 +43,7 @@ final readonly class AssignPlayerToTeamHandler
             throw new TeamAssignmentNotFoundException();
         }
 
-        if (null !== $this->assignmentRepository->findByPlayerAndTeam($academyId, $playerId, $teamId)) {
+        if (null !== $this->assignmentRepository->findActiveByPlayerAndTeam($academyId, $playerId, $teamId)) {
             throw new TeamAssignmentAlreadyExistsException();
         }
 

@@ -8,16 +8,21 @@ use App\Modules\Academy\Application\Command\ProvisionTenantCommand;
 use App\Modules\Academy\Application\Command\ReactivateAcademyCommand;
 use App\Modules\Academy\Application\Command\SuspendAcademyCommand;
 use App\Modules\Academy\Application\Command\UpdateAcademyCommand;
+use App\Modules\Academy\Application\Command\UpdateAcademyTaxProfileCommand;
 use App\Modules\Academy\Application\Handler\ProvisionTenantHandler;
 use App\Modules\Academy\Application\Handler\ListAcademiesHandler;
 use App\Modules\Academy\Application\Handler\ReactivateAcademyHandler;
 use App\Modules\Academy\Application\Handler\ShowAcademyHandler;
+use App\Modules\Academy\Application\Handler\ShowAcademyTaxProfileHandler;
 use App\Modules\Academy\Application\Handler\SuspendAcademyHandler;
 use App\Modules\Academy\Application\Handler\UpdateAcademyHandler;
+use App\Modules\Academy\Application\Handler\UpdateAcademyTaxProfileHandler;
 use App\Modules\Academy\Application\Query\ListAcademiesQuery;
 use App\Modules\Academy\Application\Query\ShowAcademyQuery;
+use App\Modules\Academy\Application\Query\ShowAcademyTaxProfileQuery;
 use App\Modules\Academy\Presentation\Http\Request\ProvisionTenantRequest;
 use App\Modules\Academy\Presentation\Http\Request\UpdateAcademyRequest;
+use App\Modules\Academy\Presentation\Http\Request\UpdateAcademyTaxProfileRequest;
 use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,7 +39,9 @@ final class AcademyController extends AbstractPaginatedApiController
         private readonly ProvisionTenantHandler $provisionTenantHandler,
         private readonly ListAcademiesHandler $listAcademiesHandler,
         private readonly ShowAcademyHandler $showAcademyHandler,
+        private readonly ShowAcademyTaxProfileHandler $showAcademyTaxProfileHandler,
         private readonly UpdateAcademyHandler $updateAcademyHandler,
+        private readonly UpdateAcademyTaxProfileHandler $updateAcademyTaxProfileHandler,
         private readonly SuspendAcademyHandler $suspendAcademyHandler,
         private readonly ReactivateAcademyHandler $reactivateAcademyHandler,
     ) {
@@ -81,6 +88,17 @@ final class AcademyController extends AbstractPaginatedApiController
         ]);
     }
 
+    #[Route('/{academyId}/tax-profile', name: 'api_v1_platform_academies_tax_profile_show', methods: ['GET'])]
+    public function showTaxProfile(string $academyId): JsonResponse
+    {
+        $view = ($this->showAcademyTaxProfileHandler)(new ShowAcademyTaxProfileQuery($academyId));
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
     #[Route('/{academyId}', name: 'api_v1_platform_academies_update', methods: ['PUT'])]
     public function update(string $academyId, Request $request): JsonResponse
     {
@@ -89,6 +107,26 @@ final class AcademyController extends AbstractPaginatedApiController
 
         $view = ($this->updateAcademyHandler)(
             new UpdateAcademyCommand(
+                $this->requireActorId(),
+                $academyId,
+                $input->toInput()
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/{academyId}/tax-profile', name: 'api_v1_platform_academies_tax_profile_update', methods: ['PUT'])]
+    public function updateTaxProfile(string $academyId, Request $request): JsonResponse
+    {
+        $input = UpdateAcademyTaxProfileRequest::fromArray($request->toArray());
+        $this->assertValid($this->validator, $input);
+
+        $view = ($this->updateAcademyTaxProfileHandler)(
+            new UpdateAcademyTaxProfileCommand(
                 $this->requireActorId(),
                 $academyId,
                 $input->toInput()

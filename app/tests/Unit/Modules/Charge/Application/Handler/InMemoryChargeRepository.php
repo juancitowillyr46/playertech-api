@@ -5,6 +5,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Charge\Domain\Charge\Charge;
 use App\Modules\Charge\Domain\Charge\ChargeId;
 use App\Modules\Charge\Domain\Charge\ChargeRepository;
+use App\Modules\Player\Domain\Player\PlayerId;
 use App\Shared\Application\Pagination\PaginationQuery;
 final class InMemoryChargeRepository implements ChargeRepository
 {
@@ -12,6 +13,7 @@ final class InMemoryChargeRepository implements ChargeRepository
     public array $items = [];
     public function save(Charge $charge): void { $this->items[$charge->id()->value()] = $charge; }
     public function findById(AcademyId $academyId, ChargeId $chargeId): ?Charge { return $this->items[$chargeId->value()] ?? null; }
+    public function findPendingByPlayer(AcademyId $academyId, PlayerId $playerId): array { return array_values(array_filter($this->items, static fn (Charge $charge): bool => $charge->academyId()->equals($academyId) && $charge->playerId()->equals($playerId) && $charge->status()->isPending())); }
     public function findPendingByAcademy(AcademyId $academyId, PaginationQuery $pagination): array {
         $items = array_values(array_filter($this->items, static fn (Charge $charge): bool => $charge->academyId()->equals($academyId) && $charge->status()->isPending()));
         return ['items' => array_slice($items, ($pagination->page - 1) * $pagination->perPage, $pagination->perPage), 'total' => count($items)];

@@ -287,6 +287,34 @@ Los recursos que representen archivos o imagenes no deben devolver binarios dent
 * `Academy` usara el campo `shield` con este contrato.
 * `Player` usara el campo `photo` con este contrato.
 
+## Attachment Responses
+
+Los soportes documentales y PDFs descargados desde otras aplicaciones deben usar un contrato separado al de `Media`.
+
+### Standard Shape
+
+```json
+{
+  "path": "var/storage/attachments/local/payments/01J.../fiscal-attachments/original/01K....pdf",
+  "url": "https://api.playertech.test/attachments/payments/01J.../fiscal-attachments/01K....pdf",
+  "fileName": "comprobante-pago.pdf",
+  "mimeType": "application/pdf",
+  "size": 245991,
+  "checksum": "sha256:...",
+  "source": "external"
+}
+```
+
+### Rules
+
+* `path` representa la referencia interna del archivo.
+* `url` representa el enlace de consumo.
+* `fileName` conserva el nombre visible del archivo.
+* `mimeType`, `size` y `checksum` son obligatorios para adjuntos documentales.
+* `source` identifica el origen del archivo, por ejemplo `external`.
+* Si un recurso no tiene adjunto asociado, el campo debe responder `null`.
+* `FiscalAttachment` usara este contrato para soportes PDF vinculados a pagos.
+
 ---
 
 # Status Codes

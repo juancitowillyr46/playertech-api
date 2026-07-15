@@ -13,7 +13,7 @@ interface TeamAssignmentRepository
 
     public function findById(AcademyId $academyId, TeamAssignmentId $assignmentId): ?TeamAssignment;
 
-    public function findByPlayerAndTeam(AcademyId $academyId, PlayerId $playerId, \App\Modules\Team\Domain\Team\TeamId $teamId): ?TeamAssignment;
+    public function findActiveByPlayerAndTeam(AcademyId $academyId, PlayerId $playerId, \App\Modules\Team\Domain\Team\TeamId $teamId): ?TeamAssignment;
 
     /**
      * @return TeamAssignment[]

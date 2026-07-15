@@ -19,8 +19,9 @@ final class ApplyPaymentToChargeHandlerTest extends TestCase
     public function testItAppliesPaymentAndMarksChargePaid(): void
     {
         $academyId = AcademyId::generate();
-        $payment = Payment::create(PaymentId::generate(), $academyId, MembershipId::generate(), PlayerId::generate(), LegalGuardianId::generate(), PaymentConceptId::generate(), new \DateTimeImmutable('2026-07-09'), 100.00, null, AuditTrail::create('actor-id'));
-        $charge = Charge::create(ChargeId::generate(), $academyId, MembershipId::generate(), PaymentConceptId::generate(), 'Uniforme', 100.00, AuditTrail::create('actor-id'));
+        $playerId = PlayerId::generate();
+        $payment = Payment::create(PaymentId::generate(), $academyId, MembershipId::generate(), $playerId, LegalGuardianId::generate(), PaymentConceptId::generate(), new \DateTimeImmutable('2026-07-09'), 100.00, 'CASH', null, AuditTrail::create('actor-id'));
+        $charge = Charge::create(ChargeId::generate(), $academyId, $playerId, MembershipId::generate(), PaymentConceptId::generate(), 'Uniforme', 100.00, new \DateTimeImmutable('2026-07-31'), 'MANUAL', AuditTrail::create('actor-id'));
         $paymentRepo = new InMemoryPaymentRepository();
         $chargeRepo = new InMemoryChargeRepository();
         $allocationRepo = new InMemoryPaymentAllocationRepository();

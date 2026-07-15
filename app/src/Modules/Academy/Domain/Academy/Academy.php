@@ -27,6 +27,14 @@ final class Academy implements Auditable
 
     private ?string $department;
 
+    private ?string $taxIdType;
+
+    private ?string $taxIdNumber;
+
+    private ?string $taxRegime;
+
+    private ?string $billingEmail;
+
     private string $registrationSource;
 
     private ?Address $address;
@@ -50,6 +58,10 @@ final class Academy implements Auditable
         ?PhoneNumber $phone,
         ?string $country,
         ?string $department,
+        ?string $taxIdType,
+        ?string $taxIdNumber,
+        ?string $taxRegime,
+        ?string $billingEmail,
         string $registrationSource,
         ?Address $address,
         ?City $city,
@@ -63,6 +75,10 @@ final class Academy implements Auditable
         $this->phone = $phone;
         $this->country = $country;
         $this->department = $department;
+        $this->taxIdType = $taxIdType;
+        $this->taxIdNumber = $taxIdNumber;
+        $this->taxRegime = $taxRegime;
+        $this->billingEmail = $billingEmail;
         $this->registrationSource = $registrationSource;
         $this->address = $address;
         $this->city = $city;
@@ -77,6 +93,10 @@ final class Academy implements Auditable
         ?PhoneNumber $phone,
         ?string $country,
         ?string $department,
+        ?string $taxIdType,
+        ?string $taxIdNumber,
+        ?string $taxRegime,
+        ?string $billingEmail,
         string $registrationSource,
         ?Address $address,
         ?City $city,
@@ -90,6 +110,10 @@ final class Academy implements Auditable
             $phone,
             $country,
             $department,
+            $taxIdType,
+            $taxIdNumber,
+            $taxRegime,
+            $billingEmail,
             $registrationSource,
             $address,
             $city,
@@ -126,6 +150,26 @@ final class Academy implements Auditable
     public function department(): ?string
     {
         return $this->department;
+    }
+
+    public function taxIdType(): ?string
+    {
+        return $this->taxIdType;
+    }
+
+    public function taxIdNumber(): ?string
+    {
+        return $this->taxIdNumber;
+    }
+
+    public function taxRegime(): ?string
+    {
+        return $this->taxRegime;
+    }
+
+    public function billingEmail(): ?string
+    {
+        return $this->billingEmail;
     }
 
     public function registrationSource(): string
@@ -179,6 +223,10 @@ final class Academy implements Auditable
         ?PhoneNumber $phone,
         ?string $country,
         ?string $department,
+        ?string $taxIdType,
+        ?string $taxIdNumber,
+        ?string $taxRegime,
+        ?string $billingEmail,
         string $registrationSource,
         ?Address $address,
         ?City $city,
@@ -189,6 +237,10 @@ final class Academy implements Auditable
         $this->phone = $phone;
         $this->country = $country;
         $this->department = $department;
+        $this->taxIdType = $taxIdType;
+        $this->taxIdNumber = $taxIdNumber;
+        $this->taxRegime = $taxRegime;
+        $this->billingEmail = $billingEmail;
         $this->registrationSource = $registrationSource;
         $this->address = $address;
         $this->city = $city;
@@ -200,6 +252,22 @@ final class Academy implements Auditable
     public function updateShield(?Media $newShield, string $updatedBy): void
     {
         $this->shield = $newShield;
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
+    }
+
+    public function updateTaxProfile(
+        ?string $taxIdType,
+        ?string $taxIdNumber,
+        ?string $taxRegime,
+        ?string $billingEmail,
+        string $updatedBy
+    ): void {
+        $this->taxIdType = $taxIdType;
+        $this->taxIdNumber = $taxIdNumber;
+        $this->taxRegime = $taxRegime;
+        $this->billingEmail = $billingEmail;
         if ($this->auditTrail) {
             $this->auditTrail->touch($updatedBy);
         }

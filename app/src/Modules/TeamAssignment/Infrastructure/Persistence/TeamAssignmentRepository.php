@@ -38,12 +38,13 @@ final class TeamAssignmentRepository extends ServiceEntityRepository implements 
             ->getOneOrNullResult();
     }
 
-    public function findByPlayerAndTeam(AcademyId $academyId, PlayerId $playerId, TeamId $teamId): ?TeamAssignment
+    public function findActiveByPlayerAndTeam(AcademyId $academyId, PlayerId $playerId, TeamId $teamId): ?TeamAssignment
     {
         return $this->createQueryBuilder('assignment')
             ->where('assignment.academyId = :academyId')
             ->andWhere('assignment.playerId = :playerId')
             ->andWhere('assignment.teamId = :teamId')
+            ->andWhere('assignment.endDate IS NULL')
             ->andWhere('assignment.deletedAt IS NULL')
             ->setParameter('academyId', $academyId->value())
             ->setParameter('playerId', $playerId->value())

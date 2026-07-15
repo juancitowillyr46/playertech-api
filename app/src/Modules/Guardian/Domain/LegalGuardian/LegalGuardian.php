@@ -22,6 +22,12 @@ final class LegalGuardian implements Auditable
 
     private ?string $email;
 
+    private ?string $documentType;
+
+    private ?string $documentNumber;
+
+    private ?string $address;
+
     private string $relationship;
 
     private LegalGuardianStatus $status;
@@ -39,6 +45,9 @@ final class LegalGuardian implements Auditable
         string $lastName,
         ?string $phone,
         ?string $email,
+        ?string $documentType,
+        ?string $documentNumber,
+        ?string $address,
         string $relationship,
         AuditTrail $auditTrail
     ) {
@@ -48,6 +57,9 @@ final class LegalGuardian implements Auditable
         $this->lastName = self::normalizeText($lastName, 'last name');
         $this->phone = self::normalizeNullableText($phone);
         $this->email = self::normalizeNullableEmail($email);
+        $this->documentType = self::normalizeNullableText($documentType);
+        $this->documentNumber = self::normalizeNullableText($documentNumber);
+        $this->address = self::normalizeNullableText($address);
         $this->relationship = self::normalizeText($relationship, 'relationship');
         $this->status = LegalGuardianStatus::active();
         $this->auditTrail = $auditTrail;
@@ -60,6 +72,9 @@ final class LegalGuardian implements Auditable
         string $lastName,
         ?string $phone,
         ?string $email,
+        ?string $documentType,
+        ?string $documentNumber,
+        ?string $address,
         string $relationship,
         AuditTrail $auditTrail
     ): self {
@@ -70,6 +85,9 @@ final class LegalGuardian implements Auditable
             $lastName,
             $phone,
             $email,
+            $documentType,
+            $documentNumber,
+            $address,
             $relationship,
             $auditTrail
         );
@@ -103,6 +121,21 @@ final class LegalGuardian implements Auditable
     public function email(): ?string
     {
         return $this->email;
+    }
+
+    public function documentType(): ?string
+    {
+        return $this->documentType;
+    }
+
+    public function documentNumber(): ?string
+    {
+        return $this->documentNumber;
+    }
+
+    public function address(): ?string
+    {
+        return $this->address;
     }
 
     public function relationship(): string

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/doctrine-mapping.xsd">
+    <entity name="App\Modules\Payment\Domain\FiscalAttachment\FiscalAttachment" table="fiscal_attachments">
+        <id name="id" column="id" type="fiscal_attachment_id"/>
+        <field name="academyId" column="academy_id" type="academy_id"/>
+        <field name="paymentId" column="payment_id" type="payment_id"/>
+        <field name="providerName" column="provider_name" type="string" length="120"/>
+        <field name="documentNumber" column="document_number" type="string" length="120"/>
+        <field name="documentUrl" column="document_url" type="string" length="500" nullable="true"/>
+        <field name="status" column="status" type="string" length="30" nullable="true"/>
+        <embedded name="auditTrail" class="App\Shared\Domain\ValueObject\AuditTrail" use-column-prefix="false"/>
+        <field name="deletedAt" column="deleted_at" type="datetime_immutable" nullable="true"/>
+        <field name="deletedBy" column="deleted_by" type="guid" nullable="true"/>
+    </entity>
+</doctrine-mapping>

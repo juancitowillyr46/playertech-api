@@ -28,6 +28,19 @@ final readonly class UpdateAcademyRequest
         #[Assert\Length(max: 80, maxMessage: 'El campo "department" excede la longitud máxima permitida.')]
         public ?string $department = null,
 
+        #[Assert\Length(max: 40, maxMessage: 'El campo "taxIdType" excede la longitud máxima permitida.')]
+        public ?string $taxIdType = null,
+
+        #[Assert\Length(max: 40, maxMessage: 'El campo "taxIdNumber" excede la longitud máxima permitida.')]
+        public ?string $taxIdNumber = null,
+
+        #[Assert\Length(max: 80, maxMessage: 'El campo "taxRegime" excede la longitud máxima permitida.')]
+        public ?string $taxRegime = null,
+
+        #[Assert\Email(message: 'El campo "billingEmail" debe ser un correo válido.')]
+        #[Assert\Length(max: 180, maxMessage: 'El campo "billingEmail" excede la longitud máxima permitida.')]
+        public ?string $billingEmail = null,
+
         #[Assert\Length(max: 255, maxMessage: 'El campo "address" excede la longitud máxima permitida.')]
         public ?string $address = null,
 
@@ -44,6 +57,10 @@ final readonly class UpdateAcademyRequest
             self::stringOrNull($payload['phone'] ?? null),
             self::stringOrNull($payload['country'] ?? null),
             self::stringOrNull($payload['department'] ?? null),
+            self::stringOrNull($payload['taxIdType'] ?? null),
+            self::stringOrNull($payload['taxIdNumber'] ?? null),
+            self::stringOrNull($payload['taxRegime'] ?? null),
+            self::stringOrNull($payload['billingEmail'] ?? null),
             self::stringOrNull($payload['address'] ?? null),
             self::stringOrNull($payload['city'] ?? null),
         );
@@ -57,6 +74,10 @@ final readonly class UpdateAcademyRequest
             $this->phone,
             $this->country,
             $this->department,
+            $this->taxIdType,
+            $this->taxIdNumber,
+            $this->taxRegime,
+            $this->billingEmail,
             $this->address,
             $this->city,
         );
