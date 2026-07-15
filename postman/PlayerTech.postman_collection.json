@@ -436,7 +436,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxCheckDigit\": \"8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -460,7 +460,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"taxIdType\": \"NIT\",\n  \"taxIdNumber\": \"901234567-8\",\n  \"taxRegime\": \"RESPONSABLE_IVA\",\n  \"billingEmail\": \"facturacion@academiaplayertech.com\"\n}"
+              "raw": "{\n  \"taxIdType\": \"NIT\",\n  \"taxIdNumber\": \"901234567-8\",\n  \"taxCheckDigit\": \"8\",\n  \"taxRegime\": \"RESPONSABLE_IVA\",\n  \"billingEmail\": \"facturacion@academiaplayertech.com\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/v1/platform/academies/{{academyId}}/tax-profile",
@@ -488,7 +488,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxCheckDigit\": \"8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         }
@@ -918,7 +918,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxCheckDigit\": \"8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -942,7 +942,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"taxIdType\": \"NIT\",\n  \"taxIdNumber\": \"901234567-8\",\n  \"taxRegime\": \"RESPONSABLE_IVA\",\n  \"billingEmail\": \"facturacion@academiaplayertech.com\"\n}"
+              "raw": "{\n  \"taxIdType\": \"NIT\",\n  \"taxIdNumber\": \"901234567-8\",\n  \"taxCheckDigit\": \"8\",\n  \"taxRegime\": \"RESPONSABLE_IVA\",\n  \"billingEmail\": \"facturacion@academiaplayertech.com\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/me/tax-profile",
@@ -969,7 +969,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxCheckDigit\": \"8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         }
@@ -3300,7 +3300,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"receiptNumber\": \"RCPT-20260714-000050\",\n    \"paymentId\": \"019f0000-0000-7000-8000-000000000050\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"conceptCode\": \"MATRICULA\",\n    \"conceptName\": \"Matrícula\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ]\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"receiptNumber\": \"RCPT-20260714-000050\",\n    \"paymentId\": \"019f0000-0000-7000-8000-000000000050\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"academyTaxIdType\": \"NIT\",\n    \"academyTaxIdNumber\": \"901234567-8\",\n    \"academyTaxCheckDigit\": \"8\",\n    \"academyTaxRegime\": \"RESPONSABLE_IVA\",\n    \"academyBillingEmail\": \"facturacion@academiaplayertech.com\",\n    \"academyAddress\": \"Av. Principal 123\",\n    \"academyCity\": \"Bogota\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"conceptCode\": \"MATRICULA\",\n    \"conceptName\": \"Matrícula\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ]\n  },\n  \"meta\": {}\n}"
             }
           ]
         },

@@ -34,6 +34,9 @@ final readonly class UpdateAcademyRequest
         #[Assert\Length(max: 40, maxMessage: 'El campo "taxIdNumber" excede la longitud máxima permitida.')]
         public ?string $taxIdNumber = null,
 
+        #[Assert\Length(max: 10, maxMessage: 'El campo "taxCheckDigit" excede la longitud máxima permitida.')]
+        public ?string $taxCheckDigit = null,
+
         #[Assert\Length(max: 80, maxMessage: 'El campo "taxRegime" excede la longitud máxima permitida.')]
         public ?string $taxRegime = null,
 
@@ -59,6 +62,7 @@ final readonly class UpdateAcademyRequest
             self::stringOrNull($payload['department'] ?? null),
             self::stringOrNull($payload['taxIdType'] ?? null),
             self::stringOrNull($payload['taxIdNumber'] ?? null),
+            self::stringOrNull($payload['taxCheckDigit'] ?? null),
             self::stringOrNull($payload['taxRegime'] ?? null),
             self::stringOrNull($payload['billingEmail'] ?? null),
             self::stringOrNull($payload['address'] ?? null),
@@ -76,6 +80,7 @@ final readonly class UpdateAcademyRequest
             $this->department,
             $this->taxIdType,
             $this->taxIdNumber,
+            $this->taxCheckDigit,
             $this->taxRegime,
             $this->billingEmail,
             $this->address,

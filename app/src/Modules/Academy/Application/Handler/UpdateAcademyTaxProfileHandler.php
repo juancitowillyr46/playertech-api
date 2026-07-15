@@ -26,6 +26,7 @@ final readonly class UpdateAcademyTaxProfileHandler
         $academy->updateTaxProfile(
             $command->input->taxIdType,
             $command->input->taxIdNumber,
+            $command->input->taxCheckDigit,
             $command->input->taxRegime,
             $command->input->billingEmail,
             $command->actorId,

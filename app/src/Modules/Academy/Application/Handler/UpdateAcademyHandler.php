@@ -42,6 +42,7 @@ final readonly class UpdateAcademyHandler
             $command->input->department,
             $command->input->taxIdType,
             $command->input->taxIdNumber,
+            $command->input->taxCheckDigit,
             $command->input->taxRegime,
             $command->input->billingEmail,
             null === $command->input->address ? null : new Address($command->input->address),

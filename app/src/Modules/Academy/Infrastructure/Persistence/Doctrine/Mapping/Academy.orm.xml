@@ -83,6 +83,13 @@
             nullable="true"/>
 
         <field
+            name="taxCheckDigit"
+            column="tax_check_digit"
+            type="string"
+            length="10"
+            nullable="true"/>
+
+        <field
             name="taxRegime"
             column="tax_regime"
             type="string"

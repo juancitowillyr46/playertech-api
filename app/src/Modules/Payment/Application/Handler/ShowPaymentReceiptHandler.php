@@ -47,6 +47,7 @@ final readonly class ShowPaymentReceiptHandler
             $concept->name()->value(),
             $academy->taxIdType(),
             $academy->taxIdNumber(),
+            $academy->taxCheckDigit(),
             $academy->taxRegime(),
             $academy->billingEmail(),
             $academy->address()?->value(),

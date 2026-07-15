@@ -119,6 +119,7 @@ Los listados más visibles para frontend usan `data` como arreglo de DTOs resumi
     "academyId": "uuid",
     "taxIdType": "NIT",
     "taxIdNumber": "901234567-8",
+    "taxCheckDigit": "8",
     "taxRegime": "RESPONSABLE_IVA",
     "billingEmail": "facturacion@academiaplayertech.com"
   },
@@ -521,6 +522,11 @@ Provisionar un tenant completo desde plataforma, creando academia, usuario owner
 
 # Academy Tax Profile
 
+> UI label recomendado para frontend: `Información fiscal`.
+> El backend mantiene el contrato técnico actual con `taxIdType`, `taxIdNumber`, `taxRegime` y `billingEmail`.
+> A nivel de negocio, la academia maneja un único perfil fiscal principal o default.
+> Para el MVP se agrega `taxCheckDigit` como dígito de verificación opcional.
+
 ## Show Academy Tax Profile
 
 ```http
@@ -534,6 +540,16 @@ GET /api/v1/academy/me/tax-profile
 ### Purpose
 
 Consultar la información tributaria registrada para la academia actual.
+
+### Field mapping recomendado
+
+* `taxIdType` -> tipo de identificación
+* `taxIdNumber` -> número de identificación
+* `taxCheckDigit` -> dígito de verificación
+* `taxRegime` -> condición o régimen tributario
+* `billingEmail` -> correo para facturación
+
+> Los campos `razón social`, `dirección fiscal`, `ciudad`, `país` y `dígito de verificación` forman parte del perfil fiscal funcional, pero pueden seguir evolucionando en el contrato técnico según el alcance de la academia.
 
 ## Update Academy Tax Profile
 
@@ -549,6 +565,15 @@ PUT /api/v1/academy/me/tax-profile
 
 Actualizar la información tributaria de la academia actual.
 
+### Validations
+
+* `taxIdType`, si se envía, debe ser una cadena no vacía y de longitud válida.
+* `taxIdNumber`, si se envía, debe ser una cadena no vacía y de longitud válida.
+* `taxCheckDigit`, si se envía, debe ser una cadena corta no vacía.
+* `taxRegime`, si se envía, debe ser una cadena no vacía y de longitud válida.
+* `billingEmail`, si se envía, debe ser un correo válido.
+* El perfil sigue siendo único por academia.
+
 ### Request DTO
 
 `UpdateAcademyTaxProfileRequest`
@@ -557,6 +582,7 @@ Actualizar la información tributaria de la academia actual.
 {
   "taxIdType": "NIT",
   "taxIdNumber": "901234567-8",
+  "taxCheckDigit": "8",
   "taxRegime": "RESPONSABLE_IVA",
   "billingEmail": "facturacion@academiaplayertech.com"
 }
@@ -607,6 +633,7 @@ Obtener el comprobante operativo de un pago registrado.
     "academyId": "uuid",
     "academyTaxIdType": "NIT",
     "academyTaxIdNumber": "901234567-8",
+    "academyTaxCheckDigit": "8",
     "academyTaxRegime": "RESPONSABLE_IVA",
     "academyBillingEmail": "facturacion@academiaplayertech.com",
     "academyAddress": "Av. Principal 123",

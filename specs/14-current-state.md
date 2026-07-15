@@ -243,6 +243,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `EP-023` añadió la vinculación de soportes fiscales en PDF con `POST /api/v1/academy/fiscal-attachments`, manteniendo la emisión fiscal fuera del core.
 * `EP-023` quedó como fuente principal para los datos fiscales de la academia usados en comprobantes, mientras `EP-006` complementa la información del acudiente con documento, dirección y correo opcional.
 * El comprobante operativo de pago ahora toma los datos fiscales principales de la academia para que la emisión parta de un emisor principal/default coherente.
+* El perfil fiscal del MVP se presenta al usuario como `Información fiscal` y se mantiene como un único perfil principal por academia.
 * La documentación operativa de `EP-006` ya refleja el alta de acudientes con `documentType`, `documentNumber`, `address` y `relationship` para que el front consuma el contrato actualizado.
 * Los comprobantes de pago del MVP deben tomar siempre la academia marcada como principal/default para los datos fiscales del emisor.
 * `HU-009` de `EP-007` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la foto del jugador.

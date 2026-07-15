@@ -21,6 +21,8 @@ final readonly class UpdateAcademyInput
 
         public ?string $taxIdNumber = null,
 
+        public ?string $taxCheckDigit = null,
+
         public ?string $taxRegime = null,
 
         public ?string $billingEmail = null,

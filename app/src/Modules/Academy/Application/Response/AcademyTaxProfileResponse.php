@@ -12,6 +12,7 @@ final readonly class AcademyTaxProfileResponse
         private string $academyId,
         private ?string $taxIdType,
         private ?string $taxIdNumber,
+        private ?string $taxCheckDigit,
         private ?string $taxRegime,
         private ?string $billingEmail,
     ) {
@@ -23,6 +24,7 @@ final readonly class AcademyTaxProfileResponse
             $academy->id()->value(),
             $academy->taxIdType(),
             $academy->taxIdNumber(),
+            $academy->taxCheckDigit(),
             $academy->taxRegime(),
             $academy->billingEmail(),
         );
@@ -34,6 +36,7 @@ final readonly class AcademyTaxProfileResponse
             'academyId' => $this->academyId,
             'taxIdType' => $this->taxIdType,
             'taxIdNumber' => $this->taxIdNumber,
+            'taxCheckDigit' => $this->taxCheckDigit,
             'taxRegime' => $this->taxRegime,
             'billingEmail' => $this->billingEmail,
         ];

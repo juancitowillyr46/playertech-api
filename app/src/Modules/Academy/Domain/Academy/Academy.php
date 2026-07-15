@@ -35,6 +35,8 @@ final class Academy implements Auditable
 
     private ?string $billingEmail;
 
+    private ?string $taxCheckDigit;
+
     private string $registrationSource;
 
     private ?Address $address;
@@ -66,7 +68,8 @@ final class Academy implements Auditable
         ?Address $address,
         ?City $city,
         ?Media $shield,
-        AuditTrail $auditTrail
+        AuditTrail $auditTrail,
+        ?string $taxCheckDigit = null
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -79,6 +82,7 @@ final class Academy implements Auditable
         $this->taxIdNumber = $taxIdNumber;
         $this->taxRegime = $taxRegime;
         $this->billingEmail = $billingEmail;
+        $this->taxCheckDigit = self::normalizeNullableText($taxCheckDigit);
         $this->registrationSource = $registrationSource;
         $this->address = $address;
         $this->city = $city;
@@ -101,7 +105,8 @@ final class Academy implements Auditable
         ?Address $address,
         ?City $city,
         ?Media $shield,
-        AuditTrail $auditTrail
+        AuditTrail $auditTrail,
+        ?string $taxCheckDigit = null
     ): self {
         return new self(
             $id,
@@ -118,7 +123,8 @@ final class Academy implements Auditable
             $address,
             $city,
             $shield,
-            $auditTrail
+            $auditTrail,
+            $taxCheckDigit
         );
     }
 
@@ -170,6 +176,11 @@ final class Academy implements Auditable
     public function billingEmail(): ?string
     {
         return $this->billingEmail;
+    }
+
+    public function taxCheckDigit(): ?string
+    {
+        return $this->taxCheckDigit;
     }
 
     public function registrationSource(): string
@@ -225,6 +236,7 @@ final class Academy implements Auditable
         ?string $department,
         ?string $taxIdType,
         ?string $taxIdNumber,
+        ?string $taxCheckDigit,
         ?string $taxRegime,
         ?string $billingEmail,
         string $registrationSource,
@@ -239,6 +251,7 @@ final class Academy implements Auditable
         $this->department = $department;
         $this->taxIdType = $taxIdType;
         $this->taxIdNumber = $taxIdNumber;
+        $this->taxCheckDigit = self::normalizeNullableText($taxCheckDigit);
         $this->taxRegime = $taxRegime;
         $this->billingEmail = $billingEmail;
         $this->registrationSource = $registrationSource;
@@ -260,12 +273,14 @@ final class Academy implements Auditable
     public function updateTaxProfile(
         ?string $taxIdType,
         ?string $taxIdNumber,
+        ?string $taxCheckDigit,
         ?string $taxRegime,
         ?string $billingEmail,
         string $updatedBy
     ): void {
         $this->taxIdType = $taxIdType;
         $this->taxIdNumber = $taxIdNumber;
+        $this->taxCheckDigit = self::normalizeNullableText($taxCheckDigit);
         $this->taxRegime = $taxRegime;
         $this->billingEmail = $billingEmail;
         if ($this->auditTrail) {
