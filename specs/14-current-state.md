@@ -252,6 +252,11 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `EP-006` ya expone lectura y creación de acudientes por academia en HTTP, incluyendo el campo `relationship`, y `EP-008` ya cubre la relación jugador-acudiente con alta de acudiente, asociación, cambio de principal, eliminación lógica y vista por jugador.
 * El bloque de módulos aún pendiente para el MVP ya no incluye `EP-012`; `EP-008`, `EP-009`, `EP-010`, `EP-011`, `EP-012` y `EP-013` ya se consideran resueltos.
 * La capa fiscal formal sigue fuera del MVP y quedó concentrada en `EP-023`.
+* Se documentó una auditoría SDD del backend en `docs/architecture/SDD-backend-audit.md`, con diagnóstico de madurez, vacíos de trazabilidad y propuesta incremental de adopción.
+* Se adoptó una versión liviana de SDD para trabajo individual: `specs/16-api-reference.md` queda como referencia HTTP operativa principal y `AGENTS.md` incorpora reglas simples de canonicidad y trazabilidad mínima.
+* Se consolidó un índice de contratos HTTP en `docs/contracts/api-reference.md` para centralizar la sincronización con frontend y QA sin duplicar la especificación operativa.
+* Se formalizó una política SDD escalonada en `docs/architecture/sdd-policy.md` y dos plantillas de cambio en `docs/architecture/change-template-light.md` y `docs/architecture/change-template-full.md` para futuras features.
+* Se documentó la evolución del modelo de cobro de `EP-009` en `docs/architecture/EP-009-billing-model-evolution.md`, incluyendo el estado actual, casos de uso reales y los diagramas de flujo actual y objetivo.
 ---
 
 # Technical Foundation Checklist
@@ -346,7 +351,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 
 ## Base Operativa
 
-- [x] Consolidar la documentación HTTP operativa en Postman y retirar los archivos `.http` duplicados.
+- [x] Consolidar la documentación HTTP operativa en Postman y retirar los archivos HTTP duplicados.
 - [x] Revisión final de `README` y guía de ejecución para el siguiente bloque funcional.
 * `EP-010` ya quedó desglosada en historias explícitas para asignar, marcar principal, cambiar principal, finalizar y consultar asignaciones deportivas.
 * La consulta de `EP-010` para asignaciones de jugador ahora se orienta a una respuesta compuesta con `team` anidado para evitar lookups adicionales en frontend.
