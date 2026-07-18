@@ -83,7 +83,7 @@ final readonly class RegisterTenantHandler
             null,
             null,
             AcademyRegistrationSource::signup()->value(),
-            null === $data->address ? null : new \App\Shared\Domain\ValueObject\Address($data->address),
+            null,
             null === $data->city ? null : new \App\Shared\Domain\ValueObject\City($data->city),
             null,
             AuditTrail::create(null),

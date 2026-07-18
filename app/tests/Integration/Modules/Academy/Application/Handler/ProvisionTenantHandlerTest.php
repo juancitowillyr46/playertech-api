@@ -100,7 +100,6 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
             '+57 312 555 8888',
             'Colombia',
             'Cundinamarca',
-            'Av. Principal 123',
             'Bogota',
             'Juan Perez',
             'admin.test@example.com',

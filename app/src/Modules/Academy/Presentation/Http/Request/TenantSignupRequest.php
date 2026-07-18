@@ -36,9 +36,6 @@ final readonly class TenantSignupRequest
         #[Assert\Length(max: 80, maxMessage: 'El campo "department" excede la longitud máxima permitida.')]
         public ?string $department = null,
 
-        #[Assert\Length(max: 255, maxMessage: 'El campo "address" excede la longitud máxima permitida.')]
-        public ?string $address = null,
-
         #[Assert\Length(max: 120, maxMessage: 'El campo "city" excede la longitud máxima permitida.')]
         public ?string $city = null,
 
@@ -68,7 +65,6 @@ final readonly class TenantSignupRequest
             self::stringOrNull($payload['phone'] ?? null),
             self::stringOrNull($payload['country'] ?? null),
             self::stringOrNull($payload['department'] ?? null),
-            self::stringOrNull($payload['address'] ?? null),
             self::stringOrNull($payload['city'] ?? null),
             self::stringOrNull($payload['onboardingCategoryId'] ?? null),
             self::stringOrNull($payload['teamName'] ?? null),
@@ -87,7 +83,6 @@ final readonly class TenantSignupRequest
             $this->phone,
             $this->country,
             $this->department,
-            $this->address,
             $this->city,
             $this->onboardingCategoryId,
             $this->teamName,

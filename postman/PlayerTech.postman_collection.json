@@ -503,7 +503,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Academia PlayerTech Demo\",\n  \"contactEmail\": \"tenant.demo@example.com\",\n  \"contactName\": \"Juan Perez\",\n  \"password\": \"secret12345\",\n  \"phone\": \"+51 987 654 321\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\",\n  \"onboardingCategoryId\": \"{{onboardingCategoryId}}\",\n  \"teamName\": \"Sub 19 A\",\n  \"acceptedTerms\": true,\n  \"acceptedDataProcessing\": true\n}"
+              "raw": "{\n  \"name\": \"Academia PlayerTech Demo\",\n  \"contactEmail\": \"tenant.demo@example.com\",\n  \"contactName\": \"Juan Perez\",\n  \"password\": \"secret12345\",\n  \"phone\": \"+51 987 654 321\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"city\": \"Arequipa\",\n  \"onboardingCategoryId\": \"{{onboardingCategoryId}}\",\n  \"teamName\": \"Sub 19 A\",\n  \"acceptedTerms\": true,\n  \"acceptedDataProcessing\": true\n}"
             }
           },
           "response": [

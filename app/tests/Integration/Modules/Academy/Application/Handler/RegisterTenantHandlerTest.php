@@ -99,7 +99,6 @@ final class RegisterTenantHandlerTest extends KernelTestCase
             '+51 999 999 999',
             'Colombia',
             'Cundinamarca',
-            'Av. Principal 123',
             'Lima',
             $this->onboardingCategoryId,
             'Sub 12 A',

@@ -495,7 +495,6 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
   "phone": "+51 987 654 321",
   "country": "Colombia",
   "department": "Cundinamarca",
-  "address": "Jr. Secundario 789",
   "city": "Arequipa",
   "onboardingCategoryId": "uuid",
   "teamName": "Sub 12 A",
@@ -511,6 +510,7 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
 * Durante el signup se crea una categoría nueva dentro de la academia usando la definición seleccionada.
 * `teamName` es obligatorio y su longitud máxima es 80 caracteres.
 * No puede existir otro equipo con el mismo nombre dentro de la misma categoría clonada de la academia.
+* `address` ya no forma parte del contrato de signup público.
 * El tenant queda en onboarding con correo de activación pendiente para el usuario owner/admin inicial.
 
 ### Success
@@ -563,7 +563,6 @@ Provisionar un tenant completo desde plataforma, creando academia, usuario owner
   "phone": "+57 312 555 8888",
   "country": "Colombia",
   "department": "Cundinamarca",
-  "address": "Av. Principal 123",
   "city": "Bogota",
   "adminName": "Juan Perez",
   "adminEmail": "admin@academiaplayertech.com",
@@ -580,6 +579,7 @@ Provisionar un tenant completo desde plataforma, creando academia, usuario owner
 * `onboardingCategoryId` debe existir en el catálogo público y estar activa.
 * Durante la provision se crea una categoría nueva dentro de la academia usando la definición seleccionada.
 * `teamName` debe ser único dentro de la academia y de la categoría clonada.
+* `address` sigue disponible en provisionamiento de plataforma, pero no en signup público.
 * El tenant queda listo para operar al finalizar la operación.
 
 ### Success

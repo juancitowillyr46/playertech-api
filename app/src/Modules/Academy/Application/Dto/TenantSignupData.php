@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Modules\Academy\Application\Dto;
 
-use App\Shared\Domain\ValueObject\Address;
 use App\Shared\Domain\ValueObject\City;
 use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\Name;
@@ -19,7 +18,6 @@ final readonly class TenantSignupData
         private string $contactName,
         private string $plainPassword,
         private ?PhoneNumber $phone,
-        private ?Address $address,
         private ?City $city,
     ) {
     }
@@ -32,7 +30,6 @@ final readonly class TenantSignupData
             self::requiredString($payload, 'contactName', 150),
             self::requiredString($payload, 'password', 255),
             self::optionalPhone($payload),
-            self::optionalAddress($payload),
             self::optionalCity($payload),
         );
     }
@@ -62,11 +59,6 @@ final readonly class TenantSignupData
         return $this->phone;
     }
 
-    public function address(): ?Address
-    {
-        return $this->address;
-    }
-
     public function city(): ?City
     {
         return $this->city;
@@ -77,13 +69,6 @@ final readonly class TenantSignupData
         $value = self::optionalString($payload, 'phone', 30);
 
         return null === $value ? null : new PhoneNumber($value);
-    }
-
-    private static function optionalAddress(array $payload): ?Address
-    {
-        $value = self::optionalString($payload, 'address', 255);
-
-        return null === $value ? null : new Address($value);
     }
 
     private static function optionalCity(array $payload): ?City
