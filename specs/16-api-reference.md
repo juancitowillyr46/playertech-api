@@ -395,6 +395,45 @@ Los listados más visibles para frontend usan `data` como arreglo de DTOs resumi
 
 # Public Tenant Signup
 
+## Public Onboarding Categories
+
+```http
+GET /api/v1/public/categories
+```
+
+### Access
+
+* Público.
+
+### Purpose
+
+Exponer el catálogo global de categorías de onboarding para que el frontend pueda poblar el selector inicial del alta de tenant sin hardcodear valores.
+
+### Response
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "code": "SUB-14",
+      "name": "Sub 14",
+      "minAge": 13,
+      "maxAge": 14,
+      "description": "Categoria formativa",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {}
+}
+```
+
+### Rules
+
+* El catálogo público representa plantillas de onboarding, no categorías de academia.
+* El identificador expuesto por este endpoint es el `onboardingCategoryId`.
+* Las categorías del catálogo deben estar activas para poder seleccionarse.
+
 ## Tenant Signup
 
 ```http
@@ -424,7 +463,7 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
   "department": "Cundinamarca",
   "address": "Jr. Secundario 789",
   "city": "Arequipa",
-  "categoryId": "uuid",
+  "onboardingCategoryId": "uuid",
   "teamName": "Sub 12 A",
   "acceptedTerms": true,
   "acceptedDataProcessing": true
@@ -433,10 +472,11 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
 
 ### Rules
 
-* `categoryId` es obligatorio y debe existir.
-* La categoría debe estar activa.
+* `onboardingCategoryId` es obligatorio y debe existir en el catálogo público.
+* La categoría del catálogo debe estar activa.
+* Durante el signup se crea una categoría nueva dentro de la academia usando la definición seleccionada.
 * `teamName` es obligatorio y su longitud máxima es 80 caracteres.
-* No puede existir otro equipo con el mismo nombre dentro de la misma categoría de la academia.
+* No puede existir otro equipo con el mismo nombre dentro de la misma categoría clonada de la academia.
 * El tenant queda en onboarding con correo de activación pendiente para el usuario owner/admin inicial.
 
 ### Success
@@ -456,8 +496,8 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
 
 ### Errors
 
-* `404 Not Found` si la categoría no existe.
-* `409 Conflict` si la categoría está inactiva o el equipo ya existe.
+* `404 Not Found` si el catálogo no existe.
+* `409 Conflict` si el catálogo está inactivo o el equipo ya existe.
 * `422 Unprocessable Entity` si el payload no pasa validación.
 
 ---
@@ -493,18 +533,19 @@ Provisionar un tenant completo desde plataforma, creando academia, usuario owner
   "city": "Bogota",
   "adminName": "Juan Perez",
   "adminEmail": "admin@academiaplayertech.com",
-  "categoryId": "uuid",
+  "onboardingCategoryId": "uuid",
   "teamName": "Sub 12 A"
 }
 ```
 
 ### Rules
 
-* `name`, `contactEmail`, `adminName`, `adminEmail`, `categoryId` y `teamName` son obligatorios.
+* `name`, `contactEmail`, `adminName`, `adminEmail`, `onboardingCategoryId` y `teamName` son obligatorios.
 * El `contactEmail` de la academia no puede existir previamente.
 * El `adminEmail` no puede existir previamente en `users`.
-* `categoryId` debe existir y estar activa.
-* `teamName` debe ser único dentro de la academia y categoría.
+* `onboardingCategoryId` debe existir en el catálogo público y estar activa.
+* Durante la provision se crea una categoría nueva dentro de la academia usando la definición seleccionada.
+* `teamName` debe ser único dentro de la academia y de la categoría clonada.
 * El tenant queda listo para operar al finalizar la operación.
 
 ### Success
@@ -524,7 +565,7 @@ Provisionar un tenant completo desde plataforma, creando academia, usuario owner
 
 ### Errors
 
-* `404 Not Found` si la categoría no existe.
+* `404 Not Found` si el catálogo no existe.
 * `409 Conflict` si el correo de academia o el correo del admin inicial ya existen.
 * `409 Conflict` si el equipo inicial ya existe.
 * `422 Unprocessable Entity` si el payload no pasa validación.

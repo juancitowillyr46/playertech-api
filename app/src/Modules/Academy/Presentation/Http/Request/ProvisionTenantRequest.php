@@ -43,9 +43,9 @@ final readonly class ProvisionTenantRequest
         #[Assert\Length(max: 180, maxMessage: 'El campo "adminEmail" excede la longitud máxima permitida.')]
         public ?string $adminEmail = null,
 
-        #[Assert\NotBlank(message: 'El campo "categoryId" es obligatorio.')]
-        #[Assert\Uuid(message: 'El campo "categoryId" debe ser un UUID válido.')]
-        public ?string $categoryId = null,
+        #[Assert\NotBlank(message: 'El campo "onboardingCategoryId" es obligatorio.')]
+        #[Assert\Uuid(message: 'El campo "onboardingCategoryId" debe ser un UUID válido.')]
+        public ?string $onboardingCategoryId = null,
 
         #[Assert\NotBlank(message: 'El campo "teamName" es obligatorio.')]
         #[Assert\Length(max: 80, maxMessage: 'El campo "teamName" excede la longitud máxima permitida.')]
@@ -65,7 +65,7 @@ final readonly class ProvisionTenantRequest
             self::stringOrNull($payload['city'] ?? null),
             self::stringOrNull($payload['adminName'] ?? null),
             self::stringOrNull($payload['adminEmail'] ?? null),
-            self::stringOrNull($payload['categoryId'] ?? null),
+            self::stringOrNull($payload['onboardingCategoryId'] ?? null),
             self::stringOrNull($payload['teamName'] ?? null),
         );
     }
@@ -82,7 +82,7 @@ final readonly class ProvisionTenantRequest
             $this->city,
             $this->adminName,
             $this->adminEmail,
-            $this->categoryId,
+            $this->onboardingCategoryId,
             $this->teamName,
         );
     }

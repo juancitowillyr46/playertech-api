@@ -14,7 +14,8 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRegistrationSource;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
-use App\Modules\Category\Application\Services\CategoryFinder;
+use App\Modules\Category\Domain\Exception\CategoryNotFoundException;
+use App\Modules\Category\Domain\Category\OnboardingCategoryRepository;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Category\Domain\Exception\CategoryInactiveException;
 use App\Modules\Identity\Domain\User\AccountUser;
@@ -34,7 +35,7 @@ final readonly class RegisterTenantHandler
 {
     public function __construct(
         private AcademyRepository $academyRepository,
-        private CategoryFinder $categoryFinder,
+        private OnboardingCategoryRepository $onboardingCategoryRepository,
         private TeamRepository $teamRepository,
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
@@ -56,8 +57,18 @@ final readonly class RegisterTenantHandler
         }
 
         $academyId = AcademyId::generate();
-        $categoryId = new CategoryId($data->categoryId);
+        $onboardingCategoryId = $data->onboardingCategoryId;
         $teamName = new Name($data->teamName);
+
+        $onboardingCategory = $this->onboardingCategoryRepository->findById($onboardingCategoryId);
+
+        if (null === $onboardingCategory) {
+            throw new CategoryNotFoundException();
+        }
+
+        if (!$onboardingCategory->isActive()) {
+            throw new CategoryInactiveException();
+        }
 
         $academy = Academy::create(
             $academyId,
@@ -77,59 +88,78 @@ final readonly class RegisterTenantHandler
             AuditTrail::create(null),
         );
 
-        $category = $this->categoryFinder->findOrFail($academyId, $categoryId);
-
-        if ($category->status()->isInactive()) {
-            throw new CategoryInactiveException();
-        }
+        $categoryId = CategoryId::generate();
+        $category = \App\Modules\Category\Domain\Category\Category::create(
+            $categoryId,
+            $academyId,
+            $onboardingCategory->code(),
+            $onboardingCategory->name(),
+            $onboardingCategory->minAge(),
+            $onboardingCategory->maxAge(),
+            $onboardingCategory->description(),
+            AuditTrail::create($data->contactEmail),
+        );
 
         if (null !== $this->teamRepository->findOneByAcademyCategoryAndName($academyId, $categoryId, $teamName)) {
             throw new TeamAlreadyExistsException();
         }
 
-        $this->academyRepository->save($academy);
+        $this->entityManager->beginTransaction();
 
-        $user = new AccountUser();
-        $user->setEmail($data->contactEmail);
-        $user->setAcademyId($academyId->value());
-        $user->setRole(AccountUser::ROLE_ACADEMY_ADMIN);
-        $user->setStatus(AccountUser::STATUS_PENDING_ACTIVATION);
-        $user->setPasswordHash($this->passwordHasher->hashPassword($user, $data->password));
-        $user->markPendingActivation(
-            Uuid::v4()->toRfc4122(),
-            (new \DateTimeImmutable())->modify('+24 hours')
-        );
+        try {
+            $this->academyRepository->save($academy);
+            $this->entityManager->persist($category);
 
-        $this->entityManager->persist($user);
+            $user = new AccountUser();
+            $user->setEmail($data->contactEmail);
+            $user->setAcademyId($academyId->value());
+            $user->setRole(AccountUser::ROLE_ACADEMY_ADMIN);
+            $user->setStatus(AccountUser::STATUS_PENDING_ACTIVATION);
+            $user->setPasswordHash($this->passwordHasher->hashPassword($user, $data->password));
+            $user->markPendingActivation(
+                Uuid::v4()->toRfc4122(),
+                (new \DateTimeImmutable())->modify('+24 hours')
+            );
 
-        $team = Team::create(
-            TeamId::generate(),
-            $academyId,
-            $categoryId,
-            $teamName,
-            AuditTrail::create($data->contactEmail),
-        );
+            $this->entityManager->persist($user);
 
-        $this->teamRepository->save($team);
+            $team = Team::create(
+                TeamId::generate(),
+                $academyId,
+                $categoryId,
+                $teamName,
+                AuditTrail::create($data->contactEmail),
+            );
 
-        $activationUrl = sprintf('%s/api/v1/public/tenants/activate/%s', rtrim($this->publicUrl, '/'), $user->getActivationToken());
+            $this->teamRepository->save($team);
+            $this->entityManager->flush();
+            $this->entityManager->commit();
 
-        $this->messageBus->dispatch(new SendTenantActivationEmailMessage(
-            $data->contactEmail,
-            $data->contactName,
-            $data->name,
-            $activationUrl
-        ));
+            $activationUrl = sprintf('%s/api/v1/public/tenants/activate/%s', rtrim($this->publicUrl, '/'), $user->getActivationToken());
 
-        return new TenantSignupResponse(
-            AcademyResponse::fromAcademy($academy),
-            new TenantSignupUserResponse(
-                $user->getUserIdentifier(),
-                $user->getStatus(),
-                true,
-            ),
-            TeamResponse::fromTeam($team),
-        );
+            $this->messageBus->dispatch(new SendTenantActivationEmailMessage(
+                $data->contactEmail,
+                $data->contactName,
+                $data->name,
+                $activationUrl
+            ));
+
+            return new TenantSignupResponse(
+                AcademyResponse::fromAcademy($academy),
+                new TenantSignupUserResponse(
+                    $user->getUserIdentifier(),
+                    $user->getStatus(),
+                    true,
+                ),
+                TeamResponse::fromTeam($team),
+            );
+        } catch (\Throwable $throwable) {
+            if ($this->entityManager->getConnection()->isTransactionActive()) {
+                $this->entityManager->rollback();
+            }
+
+            throw $throwable;
+        }
     }
 
     private function normalizeCountry(?string $country): string

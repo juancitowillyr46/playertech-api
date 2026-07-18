@@ -25,7 +25,7 @@ final readonly class ProvisionTenantInput
 
         public ?string $adminEmail = null,
 
-        public ?string $categoryId = null,
+        public ?string $onboardingCategoryId = null,
 
         public ?string $teamName = null,
     ) {

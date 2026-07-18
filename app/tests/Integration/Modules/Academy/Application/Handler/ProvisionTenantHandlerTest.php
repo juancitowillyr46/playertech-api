@@ -11,10 +11,12 @@ use App\Modules\Academy\Application\Message\SendTenantActivationEmailMessage;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Infrastructure\Persistence\AcademyRepository;
-use App\Modules\Category\Application\Services\CategoryFinder;
 use App\Modules\Category\Domain\Category\Category;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Category\Domain\Category\CategoryRepository;
+use App\Modules\Category\Domain\Category\OnboardingCategory;
+use App\Modules\Category\Domain\Category\OnboardingCategoryRepository;
+use App\Modules\Category\Infrastructure\Persistence\CategoryRepository as DoctrineCategoryRepository;
 use App\Modules\Identity\Domain\User\AccountUser;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Infrastructure\Persistence\TeamRepository;
@@ -37,8 +39,9 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
     private EntityManagerInterface $entityManager;
     private ProvisionTenantHandler $handler;
     private AcademyRepository $academyRepository;
+    private DoctrineCategoryRepository $categoryRepository;
     private TeamRepository $teamRepository;
-    private string $categoryId;
+    private string $onboardingCategoryId;
 
     protected function setUp(): void
     {
@@ -47,12 +50,13 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
         $doctrine = self::$kernel->getContainer()->get('doctrine');
         $this->entityManager = $doctrine->getManager();
         $this->academyRepository = new AcademyRepository($doctrine);
+        $this->categoryRepository = new DoctrineCategoryRepository($doctrine);
         $this->teamRepository = new TeamRepository($doctrine);
-        $this->categoryId = CategoryId::generate()->value();
+        $this->onboardingCategoryId = '019f7000-0000-7000-8000-000000000004';
 
         $this->handler = new ProvisionTenantHandler(
             $this->academyRepository,
-            new CategoryFinder($this->categoryRepositoryStub()),
+            $this->onboardingCategoryRepositoryStub(),
             $this->teamRepository,
             $this->entityManager,
             new class implements UserPasswordHasherInterface {
@@ -102,7 +106,7 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
             'Bogota',
             'Juan Perez',
             'admin.test@example.com',
-            $this->categoryId,
+            $this->onboardingCategoryId,
             'Sub 12 A',
         );
 
@@ -117,11 +121,19 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
         self::assertSame('admin.test@example.com', $payload['user']['email']);
         self::assertSame(AccountUser::STATUS_PENDING_ACTIVATION, $payload['user']['status']);
         self::assertTrue($payload['user']['activationPending']);
-        self::assertSame($this->categoryId, $payload['team']['categoryId']);
         self::assertSame('Sub 12 A', $payload['team']['name']);
 
         $academy = $this->academyRepository->findOneByContactEmail(new Email('academy.test@example.com'));
         self::assertNotNull($academy);
+
+        $categories = $this->categoryRepository->findAllByAcademy(
+            $academy->id(),
+            new PaginationQuery(sort: 'auditTrail.createdAt.value')
+        );
+
+        self::assertCount(1, $categories['items']);
+        self::assertSame('SUB-14', $categories['items'][0]->categoryKey());
+        self::assertNotSame($this->onboardingCategoryId, $categories['items'][0]->id()->value());
 
         /** @var AccountUser|null $user */
         $user = $this->entityManager->getRepository(AccountUser::class)->findOneBy([
@@ -137,7 +149,7 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
 
         $team = $this->teamRepository->findOneByAcademyCategoryAndName(
             $academy->id(),
-            new CategoryId($this->categoryId),
+            $categories['items'][0]->id(),
             new Name('Sub 12 A')
         );
 
@@ -145,44 +157,34 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
         self::assertSame('Sub 12 A', $team?->name()->value());
     }
 
-    private function categoryRepositoryStub(): CategoryRepository
+    private function onboardingCategoryRepositoryStub(): OnboardingCategoryRepository
     {
-        return new class($this->categoryId) implements CategoryRepository {
+        return new class($this->onboardingCategoryId) implements OnboardingCategoryRepository {
             public function __construct(
                 private readonly string $categoryId,
             ) {
             }
 
-            public function save(Category $category): void
+            public function findAllActive(): array
             {
+                return [$this->findById($this->categoryId)];
             }
 
-            public function findById(AcademyId $academyId, CategoryId $categoryId): ?Category
+            public function findById(string $id): ?OnboardingCategory
             {
-                if ($categoryId->value() !== $this->categoryId) {
+                if ($id !== $this->categoryId) {
                     return null;
                 }
 
-                return Category::create(
-                    $categoryId,
-                    $academyId,
-                    'SUB12',
-                    new Name('Sub 12'),
-                    new MinimumAge(10),
-                    new MaximumAge(12),
+                return OnboardingCategory::create(
+                    $id,
+                    'SUB-14',
+                    new Name('Sub 14'),
+                    new MinimumAge(13),
+                    new MaximumAge(14),
                     new Description('Base category'),
-                    AuditTrail::create('system'),
+                    'ACTIVE',
                 );
-            }
-
-            public function findByCategoryKey(AcademyId $academyId, string $categoryKey): ?Category
-            {
-                return null;
-            }
-
-            public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
-            {
-                return [];
             }
         };
     }

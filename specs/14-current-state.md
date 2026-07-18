@@ -207,6 +207,8 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Academy` incorpora soft delete con `deleted_at` y `deleted_by`, y Doctrine ya tiene un filtro global para excluir entidades borradas lógicamente.
 * Se documentó una épica nueva para onboarding de tenant (`EP-014`) sin alterar el flujo de creación de tenants por `ROLE_ROOT`.
 * El onboarding tenant ya tiene implementación base: signup público, correo de activación y endpoint de activación.
+* El contrato público de onboarding pasa a usar un catálogo global de categorías y el signup clonará la categoría elegida dentro de la academia; la implementación sigue pendiente.
+* Se pobló el catálogo `onboarding_categories` con el rango `Sub 4` a `Sub 20` como base pública de onboarding para frontend y signup.
 * `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-009`, `EP-010` y `EP-012`.
 * Se inició el módulo `Membership` como primer slice técnico de `EP-009`, con base de dominio, mapping XML, repositorio, controller y casos de uso de crear/consultar matrícula activa.
 * `EP-009` quedó consolidada como módulo funcional completo: matrícula activa, cargos iniciales, historial, suspensión y retiro con cobertura unitaria y documentación HTTP operativa en Postman.

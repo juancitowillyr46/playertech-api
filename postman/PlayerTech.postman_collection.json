@@ -435,7 +435,93 @@
     },
     {
       "name": "Public",
-      "item": []
+      "item": [
+        {
+          "name": "Public Categories - List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/public/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "public",
+                "categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Public Categories - List Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f7000-0000-7000-8000-000000000001\",\n      \"code\": \"SUB-04\",\n      \"name\": \"Sub 4\",\n      \"minAge\": 3,\n      \"maxAge\": 4,\n      \"description\": \"Categoria formativa\",\n      \"status\": \"ACTIVE\"\n    },\n    {\n      \"id\": \"019f7000-0000-7000-8000-000000000016\",\n      \"code\": \"SUB-19\",\n      \"name\": \"Sub 19\",\n      \"minAge\": 18,\n      \"maxAge\": 19,\n      \"description\": \"Categoria formativa\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Public Tenant Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/public/tenants/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "public",
+                "tenants",
+                "signup"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Academia PlayerTech Demo\",\n  \"contactEmail\": \"tenant.demo@example.com\",\n  \"contactName\": \"Juan Perez\",\n  \"password\": \"secret12345\",\n  \"phone\": \"+51 987 654 321\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Jr. Secundario 789\",\n  \"city\": \"Arequipa\",\n  \"onboardingCategoryId\": \"{{onboardingCategoryId}}\",\n  \"teamName\": \"Sub 19 A\",\n  \"acceptedTerms\": true,\n  \"acceptedDataProcessing\": true\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Public Tenant Signup Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"academy\": {\n      \"id\": \"019f7000-0000-7000-8000-000000000101\",\n      \"name\": \"Academia PlayerTech Demo\",\n      \"contactEmail\": \"tenant.demo@example.com\",\n      \"country\": \"Colombia\",\n      \"department\": \"Cundinamarca\",\n      \"registrationSource\": \"signup\"\n    },\n    \"user\": {\n      \"id\": \"019f7000-0000-7000-8000-000000000102\",\n      \"email\": \"tenant.demo@example.com\",\n      \"status\": \"PENDING_ACTIVATION\",\n      \"activationPending\": true\n    },\n    \"team\": {\n      \"id\": \"019f7000-0000-7000-8000-000000000103\",\n      \"categoryId\": \"019f7000-0000-7000-8000-000000000104\",\n      \"name\": \"Sub 19 A\",\n      \"status\": \"ACTIVE\"\n    }\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Platform",

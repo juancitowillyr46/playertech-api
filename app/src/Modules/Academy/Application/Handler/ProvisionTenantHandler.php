@@ -14,7 +14,8 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRegistrationSource;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
-use App\Modules\Category\Application\Services\CategoryFinder;
+use App\Modules\Category\Domain\Exception\CategoryNotFoundException;
+use App\Modules\Category\Domain\Category\OnboardingCategoryRepository;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Category\Domain\Exception\CategoryInactiveException;
 use App\Modules\Identity\Application\Handler\AbstractUserHandler;
@@ -40,7 +41,7 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
 {
     public function __construct(
         private AcademyRepository $academyRepository,
-        private CategoryFinder $categoryFinder,
+        private OnboardingCategoryRepository $onboardingCategoryRepository,
         private TeamRepository $teamRepository,
         EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
@@ -57,7 +58,7 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
         $academyContactEmail = new Email($data->contactEmail);
         $adminEmail = new Email($data->adminEmail);
         $academyId = AcademyId::generate();
-        $categoryId = new CategoryId($data->categoryId);
+        $onboardingCategoryId = $data->onboardingCategoryId;
         $teamName = new Name($data->teamName);
 
         if (null !== $this->academyRepository->findOneByContactEmail($academyContactEmail)) {
@@ -66,6 +67,16 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
 
         if (null !== $this->findUserByEmail($adminEmail->value())) {
             throw new UserAlreadyExistsException();
+        }
+
+        $onboardingCategory = $this->onboardingCategoryRepository->findById($onboardingCategoryId);
+
+        if (null === $onboardingCategory) {
+            throw new CategoryNotFoundException();
+        }
+
+        if (!$onboardingCategory->isActive()) {
+            throw new CategoryInactiveException();
         }
 
         $academy = Academy::create(
@@ -86,60 +97,79 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
             AuditTrail::create($command->actorId),
         );
 
-        $category = $this->categoryFinder->findOrFail($academyId, $categoryId);
-
-        if ($category->status()->isInactive()) {
-            throw new CategoryInactiveException();
-        }
+        $categoryId = CategoryId::generate();
+        $category = \App\Modules\Category\Domain\Category\Category::create(
+            $categoryId,
+            $academyId,
+            $onboardingCategory->code(),
+            $onboardingCategory->name(),
+            $onboardingCategory->minAge(),
+            $onboardingCategory->maxAge(),
+            $onboardingCategory->description(),
+            AuditTrail::create($command->actorId),
+        );
 
         if (null !== $this->teamRepository->findOneByAcademyCategoryAndName($academyId, $categoryId, $teamName)) {
             throw new TeamAlreadyExistsException();
         }
 
-        $this->academyRepository->save($academy);
+        $this->entityManager->beginTransaction();
 
-        $user = new AccountUser();
-        $user->setFullName((string) $data->adminName);
-        $user->setEmail($adminEmail->value());
-        $user->setAcademyId($academyId->value());
-        $user->setRole(AccountUser::ROLE_ACADEMY_ADMIN);
-        $user->setStatus(AccountUser::STATUS_PENDING_ACTIVATION);
-        $user->setPasswordHash($this->passwordHasher->hashPassword($user, Uuid::v4()->toRfc4122()));
-        $user->markPendingActivation(
-            Uuid::v4()->toRfc4122(),
-            (new \DateTimeImmutable())->modify('+24 hours')
-        );
+        try {
+            $this->academyRepository->save($academy);
+            $this->entityManager->persist($category);
 
-        $this->entityManager->persist($user);
+            $user = new AccountUser();
+            $user->setFullName((string) $data->adminName);
+            $user->setEmail($adminEmail->value());
+            $user->setAcademyId($academyId->value());
+            $user->setRole(AccountUser::ROLE_ACADEMY_ADMIN);
+            $user->setStatus(AccountUser::STATUS_PENDING_ACTIVATION);
+            $user->setPasswordHash($this->passwordHasher->hashPassword($user, Uuid::v4()->toRfc4122()));
+            $user->markPendingActivation(
+                Uuid::v4()->toRfc4122(),
+                (new \DateTimeImmutable())->modify('+24 hours')
+            );
 
-        $team = Team::create(
-            TeamId::generate(),
-            $academyId,
-            $categoryId,
-            $teamName,
-            AuditTrail::create($command->actorId),
-        );
+            $this->entityManager->persist($user);
 
-        $this->teamRepository->save($team);
+            $team = Team::create(
+                TeamId::generate(),
+                $academyId,
+                $categoryId,
+                $teamName,
+                AuditTrail::create($command->actorId),
+            );
 
-        $activationUrl = sprintf('%s/api/v1/public/tenants/activate/%s', rtrim($this->publicUrl, '/'), $user->getActivationToken());
+            $this->teamRepository->save($team);
+            $this->entityManager->flush();
+            $this->entityManager->commit();
 
-        $this->messageBus->dispatch(new SendTenantActivationEmailMessage(
-            $adminEmail->value(),
-            (string) $data->adminName,
-            $data->name,
-            $activationUrl
-        ));
+            $activationUrl = sprintf('%s/api/v1/public/tenants/activate/%s', rtrim($this->publicUrl, '/'), $user->getActivationToken());
 
-        return new TenantSignupResponse(
-            AcademyResponse::fromAcademy($academy),
-            new TenantSignupUserResponse(
-                $user->getUserIdentifier(),
-                $user->getStatus(),
-                true,
-            ),
-            TeamResponse::fromTeam($team),
-        );
+            $this->messageBus->dispatch(new SendTenantActivationEmailMessage(
+                $adminEmail->value(),
+                (string) $data->adminName,
+                $data->name,
+                $activationUrl
+            ));
+
+            return new TenantSignupResponse(
+                AcademyResponse::fromAcademy($academy),
+                new TenantSignupUserResponse(
+                    $user->getUserIdentifier(),
+                    $user->getStatus(),
+                    true,
+                ),
+                TeamResponse::fromTeam($team),
+            );
+        } catch (\Throwable $throwable) {
+            if ($this->entityManager->getConnection()->isTransactionActive()) {
+                $this->entityManager->rollback();
+            }
+
+            throw $throwable;
+        }
     }
 
     private function normalizeCountry(?string $country): string

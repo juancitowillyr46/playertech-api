@@ -9,10 +9,12 @@ use App\Modules\Academy\Application\Dto\TenantSignupInput;
 use App\Modules\Academy\Application\Handler\RegisterTenantHandler;
 use App\Modules\Academy\Infrastructure\Persistence\AcademyRepository;
 use App\Modules\Academy\Domain\Academy\AcademyId;
-use App\Modules\Category\Application\Services\CategoryFinder;
 use App\Modules\Category\Domain\Category\Category;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Category\Domain\Category\CategoryRepository;
+use App\Modules\Category\Domain\Category\OnboardingCategory;
+use App\Modules\Category\Domain\Category\OnboardingCategoryRepository;
+use App\Modules\Category\Infrastructure\Persistence\CategoryRepository as DoctrineCategoryRepository;
 use App\Modules\Identity\Domain\User\AccountUser;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Infrastructure\Persistence\TeamRepository;
@@ -35,8 +37,9 @@ final class RegisterTenantHandlerTest extends KernelTestCase
     private EntityManagerInterface $entityManager;
     private RegisterTenantHandler $handler;
     private AcademyRepository $academyRepository;
+    private DoctrineCategoryRepository $categoryRepository;
     private TeamRepository $teamRepository;
-    private string $categoryId;
+    private string $onboardingCategoryId;
 
     protected function setUp(): void
     {
@@ -45,11 +48,12 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         $doctrine = self::$kernel->getContainer()->get('doctrine');
         $this->entityManager = $doctrine->getManager();
         $this->academyRepository = new AcademyRepository($doctrine);
+        $this->categoryRepository = new DoctrineCategoryRepository($doctrine);
         $this->teamRepository = new TeamRepository($doctrine);
-        $this->categoryId = CategoryId::generate()->value();
+        $this->onboardingCategoryId = '019f7000-0000-7000-8000-000000000004';
         $this->handler = new RegisterTenantHandler(
             $this->academyRepository,
-            new CategoryFinder($this->categoryRepositoryStub()),
+            $this->onboardingCategoryRepositoryStub(),
             $this->teamRepository,
             $this->entityManager,
             new class implements UserPasswordHasherInterface {
@@ -80,7 +84,7 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         $schemaTool = new SchemaTool($this->entityManager);
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
 
-        $this->dropAllTables();
+        $schemaTool->dropSchema($metadata);
         $schemaTool->createSchema($metadata);
     }
 
@@ -96,7 +100,7 @@ final class RegisterTenantHandlerTest extends KernelTestCase
             'Cundinamarca',
             'Av. Principal 123',
             'Lima',
-            $this->categoryId,
+            $this->onboardingCategoryId,
             'Sub 12 A',
             true,
             true,
@@ -113,12 +117,21 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         self::assertSame('tenant.test@example.com', $payload['user']['email']);
         self::assertSame(AccountUser::STATUS_PENDING_ACTIVATION, $payload['user']['status']);
         self::assertTrue($payload['user']['activationPending']);
-        self::assertSame($this->categoryId, $payload['team']['categoryId']);
         self::assertSame('Sub 12 A', $payload['team']['name']);
 
         $academy = $this->academyRepository->findOneByContactEmail(new Email('tenant.test@example.com'));
 
         self::assertNotNull($academy);
+
+        $categories = $this->categoryRepository->findAllByAcademy(
+            $academy->id(),
+            new PaginationQuery(sort: 'auditTrail.createdAt.value')
+        );
+
+        self::assertCount(1, $categories['items']);
+        self::assertSame('SUB-14', $categories['items'][0]->categoryKey());
+        self::assertSame('Sub 14', $categories['items'][0]->name()->value());
+        self::assertNotSame($this->onboardingCategoryId, $categories['items'][0]->id()->value());
 
         /** @var AccountUser|null $user */
         $user = $this->entityManager->getRepository(AccountUser::class)->findOneBy([
@@ -142,61 +155,39 @@ final class RegisterTenantHandlerTest extends KernelTestCase
             static fn (Team $team): string => $team->name()->value(),
             $teams['items']
         ));
+        self::assertSame($categories['items'][0]->id()->value(), $teams['items'][0]->categoryId()->value());
     }
 
-    private function categoryRepositoryStub(): CategoryRepository
+    private function onboardingCategoryRepositoryStub(): OnboardingCategoryRepository
     {
-        return new class($this->categoryId) implements CategoryRepository {
+        return new class($this->onboardingCategoryId) implements OnboardingCategoryRepository {
             public function __construct(
                 private readonly string $categoryId,
             ) {
             }
 
-            public function save(Category $category): void
+            public function findAllActive(): array
             {
+                return [$this->findById($this->categoryId)];
             }
 
-            public function findById(AcademyId $academyId, CategoryId $categoryId): ?Category
+            public function findById(string $id): ?OnboardingCategory
             {
-                if ($categoryId->value() !== $this->categoryId) {
+                if ($id !== $this->categoryId) {
                     return null;
                 }
 
-                return Category::create(
-                    $categoryId,
-                    $academyId,
-                    'SUB12',
-                    new Name('Sub 12'),
-                    new MinimumAge(10),
-                    new MaximumAge(12),
+                return OnboardingCategory::create(
+                    $id,
+                    'SUB-14',
+                    new Name('Sub 14'),
+                    new MinimumAge(13),
+                    new MaximumAge(14),
                     new Description('Base category'),
-                    AuditTrail::create('system'),
+                    'ACTIVE',
                 );
-            }
-
-            public function findByCategoryKey(AcademyId $academyId, string $categoryKey): ?Category
-            {
-                return null;
-            }
-
-            public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
-            {
-                return [];
             }
         };
     }
 
-    private function dropAllTables(): void
-    {
-        $connection = $this->entityManager->getConnection();
-        $tables = $connection->fetchFirstColumn('SHOW TABLES');
-
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-
-        foreach ($tables as $table) {
-            $connection->executeStatement(sprintf('DROP TABLE IF EXISTS `%s`', $table));
-        }
-
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
-    }
 }

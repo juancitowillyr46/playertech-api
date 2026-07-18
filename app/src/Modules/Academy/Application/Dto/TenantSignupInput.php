@@ -25,7 +25,7 @@ final readonly class TenantSignupInput
 
         public ?string $city = null,
 
-        public ?string $categoryId = null,
+        public ?string $onboardingCategoryId = null,
 
         public ?string $teamName = null,
 

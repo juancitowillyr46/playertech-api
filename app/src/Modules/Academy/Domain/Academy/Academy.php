@@ -337,4 +337,15 @@ final class Academy implements Auditable
             $this->auditTrail->touch($updatedBy);
         }
     }
+
+    private static function normalizeNullableText(?string $value): ?string
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        $normalized = trim($value);
+
+        return '' === $normalized ? null : $normalized;
+    }
 }

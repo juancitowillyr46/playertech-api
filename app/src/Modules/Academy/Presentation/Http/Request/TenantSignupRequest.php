@@ -42,9 +42,9 @@ final readonly class TenantSignupRequest
         #[Assert\Length(max: 120, maxMessage: 'El campo "city" excede la longitud máxima permitida.')]
         public ?string $city = null,
 
-        #[Assert\NotBlank(message: 'El campo "categoryId" es obligatorio.')]
-        #[Assert\Uuid(message: 'El campo "categoryId" debe ser un UUID válido.')]
-        public ?string $categoryId = null,
+        #[Assert\NotBlank(message: 'El campo "onboardingCategoryId" es obligatorio.')]
+        #[Assert\Uuid(message: 'El campo "onboardingCategoryId" debe ser un UUID válido.')]
+        public ?string $onboardingCategoryId = null,
 
         #[Assert\NotBlank(message: 'El campo "teamName" es obligatorio.')]
         #[Assert\Length(max: 80, maxMessage: 'El campo "teamName" excede la longitud máxima permitida.')]
@@ -70,7 +70,7 @@ final readonly class TenantSignupRequest
             self::stringOrNull($payload['department'] ?? null),
             self::stringOrNull($payload['address'] ?? null),
             self::stringOrNull($payload['city'] ?? null),
-            self::stringOrNull($payload['categoryId'] ?? null),
+            self::stringOrNull($payload['onboardingCategoryId'] ?? null),
             self::stringOrNull($payload['teamName'] ?? null),
             (bool) ($payload['acceptedTerms'] ?? false),
             (bool) ($payload['acceptedDataProcessing'] ?? false),
@@ -89,7 +89,7 @@ final readonly class TenantSignupRequest
             $this->department,
             $this->address,
             $this->city,
-            $this->categoryId,
+            $this->onboardingCategoryId,
             $this->teamName,
             $this->acceptedTerms,
             $this->acceptedDataProcessing,
