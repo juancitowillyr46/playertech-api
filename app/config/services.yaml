@@ -9,6 +9,7 @@ services:
         public: false
         bind:
             string $publicUrl: '%env(APP_PUBLIC_URL)%'
+            string $tenantActivationUrl: '%env(APP_TENANT_ACTIVATION_URL)%'
             string $mailFrom: '%env(MAIL_FROM)%'
 
     App\:

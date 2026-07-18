@@ -32,6 +32,7 @@ final readonly class ActivateTenantHandler
             throw new NotFoundHttpException('Token de activación inválido o expirado.');
         }
 
+        $alreadyActivated = $user->isActive();
         $user->activate();
         $user->setUpdatedAt(new \DateTimeImmutable());
 
@@ -41,6 +42,7 @@ final readonly class ActivateTenantHandler
             $user->getUserIdentifier(),
             $user->getStatus(),
             true,
+            $alreadyActivated,
         );
     }
 }

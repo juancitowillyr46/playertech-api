@@ -26,8 +26,9 @@ final class Version20260623003937 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE venues');
+        if ($this->tableExists('venues')) {
+            $this->addSql('DROP TABLE venues');
+        }
     }
 
     private function tableExists(string $table): bool

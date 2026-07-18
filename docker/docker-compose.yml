@@ -17,6 +17,7 @@ services:
       MAILER_DSN: smtp://mailpit:1025
       MAIL_FROM: no-reply@playertech.local
       APP_PUBLIC_URL: http://localhost:8081
+      APP_TENANT_ACTIVATION_URL: http://localhost:4200/tenant/activate
 
   mysql:
     image: mysql:8.0

@@ -395,6 +395,40 @@ Los listados más visibles para frontend usan `data` como arreglo de DTOs resumi
 
 # Public Tenant Signup
 
+## Tenant Activation
+
+```http
+GET /api/v1/public/tenants/activate/{token}
+```
+
+### Access
+
+* Público.
+
+### Purpose
+
+Activar la cuenta del usuario owner/admin inicial del tenant al seguir el enlace enviado por correo.
+
+### Rules
+
+* Si el token existe y sigue vigente, el backend activa la cuenta.
+* Si el usuario vuelve a abrir el mismo enlace y el token sigue disponible, la respuesta incluye `alreadyActivated = true`.
+* Si el token no existe o expiró, el backend responde `404 Not Found` con Problem Details.
+
+### Success
+
+```json
+{
+  "data": {
+    "email": "admin@academiaplayertech.com",
+    "status": "ACTIVE",
+    "activated": true,
+    "alreadyActivated": false
+  },
+  "meta": {}
+}
+```
+
 ## Public Onboarding Categories
 
 ```http

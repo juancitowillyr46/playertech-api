@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Throwable;
 
@@ -146,6 +147,16 @@ final class ProblemDetailsExceptionSubscriber implements EventSubscriberInterfac
                 Response::HTTP_FORBIDDEN,
                 'https://api.playertech/errors/forbidden',
                 'Forbidden',
+                $throwable->getMessage(),
+                $instance,
+            );
+        }
+
+        if ($throwable instanceof NotFoundHttpException) {
+            return $this->problem(
+                Response::HTTP_NOT_FOUND,
+                'https://api.playertech/errors/not-found',
+                'Not Found',
                 $throwable->getMessage(),
                 $instance,
             );

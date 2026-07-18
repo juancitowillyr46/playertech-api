@@ -31,8 +31,13 @@ final class Version20260630000100 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP INDEX UNIQ_CATEGORY_ACADEMY_KEY ON categories');
-        $this->addSql('ALTER TABLE categories DROP category_key');
+        if ($this->indexExists('categories', 'UNIQ_CATEGORY_ACADEMY_KEY')) {
+            $this->addSql('DROP INDEX UNIQ_CATEGORY_ACADEMY_KEY ON categories');
+        }
+
+        if ($this->columnExists('categories', 'category_key')) {
+            $this->addSql('ALTER TABLE categories DROP category_key');
+        }
     }
 
     private function columnExists(string $table, string $column): bool

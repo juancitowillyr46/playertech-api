@@ -46,13 +46,27 @@ final class Version20260626213608 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX IDX_VENUE_CREATED_BY ON venues');
-        $this->addSql('DROP INDEX IDX_VENUE_UPDATED_BY ON venues');
-        $this->addSql('DROP INDEX IDX_VENUE_DELETED_BY ON venues');
-        $this->addSql('ALTER TABLE venues RENAME INDEX idx_venue_academy TO IDX_CATEGORY_ACADEMY');
-        $this->addSql('ALTER TABLE venues RENAME INDEX idx_venue_status TO IDX_CATEGORY_STATUS');
-        $this->addSql('ALTER TABLE venues RENAME INDEX uniq_venue_academy_name TO UNIQ_CATEGORY_ACADEMY_NAME');
+        foreach ([
+            'IDX_VENUE_CREATED_BY',
+            'IDX_VENUE_UPDATED_BY',
+            'IDX_VENUE_DELETED_BY',
+        ] as $index) {
+            if ($this->indexExists('venues', $index)) {
+                $this->addSql(sprintf('DROP INDEX %s ON venues', $index));
+            }
+        }
+
+        if ($this->indexExists('venues', 'IDX_VENUE_ACADEMY') && !$this->indexExists('venues', 'idx_venue_academy')) {
+            $this->addSql('ALTER TABLE venues RENAME INDEX IDX_VENUE_ACADEMY TO idx_venue_academy');
+        }
+
+        if ($this->indexExists('venues', 'IDX_VENUE_STATUS') && !$this->indexExists('venues', 'idx_venue_status')) {
+            $this->addSql('ALTER TABLE venues RENAME INDEX IDX_VENUE_STATUS TO idx_venue_status');
+        }
+
+        if ($this->indexExists('venues', 'UNIQ_VENUE_ACADEMY_NAME') && !$this->indexExists('venues', 'uniq_venue_academy_name')) {
+            $this->addSql('ALTER TABLE venues RENAME INDEX UNIQ_VENUE_ACADEMY_NAME TO uniq_venue_academy_name');
+        }
     }
 
     private function indexExists(string $table, string $index): bool

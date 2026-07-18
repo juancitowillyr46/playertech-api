@@ -47,6 +47,10 @@ final class Version20260718000300 extends AbstractMigration
         }
 
         foreach ($catalog as [$id, $code, $name, $minAge, $maxAge, $description]) {
+            if ($this->rowExists('onboarding_categories', 'id', $id) || $this->rowExists('onboarding_categories', 'code', $code)) {
+                continue;
+            }
+
             $this->addSql(
                 'INSERT INTO onboarding_categories (id, code, name, min_age, max_age, description, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NULL)',
                 [$id, $code, $name, $minAge, $maxAge, $description, 'ACTIVE']
@@ -66,6 +70,14 @@ final class Version20260718000300 extends AbstractMigration
         return false !== $this->connection->fetchOne(
             'SELECT 1 FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?',
             [$table]
+        );
+    }
+
+    private function rowExists(string $table, string $column, string $value): bool
+    {
+        return false !== $this->connection->fetchOne(
+            sprintf('SELECT 1 FROM %s WHERE %s = ? LIMIT 1', $table, $column),
+            [$value]
         );
     }
 }

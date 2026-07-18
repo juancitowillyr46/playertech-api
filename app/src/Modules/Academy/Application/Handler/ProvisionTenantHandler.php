@@ -47,6 +47,7 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
         private UserPasswordHasherInterface $passwordHasher,
         private MessageBusInterface $messageBus,
         private string $publicUrl,
+        private string $tenantActivationUrl,
     ) {
         parent::__construct($entityManager);
     }
@@ -145,7 +146,7 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
             $this->entityManager->flush();
             $this->entityManager->commit();
 
-            $activationUrl = sprintf('%s/api/v1/public/tenants/activate/%s', rtrim($this->publicUrl, '/'), $user->getActivationToken());
+            $activationUrl = sprintf('%s?token=%s', rtrim($this->tenantActivationUrl, '/'), $user->getActivationToken());
 
             $this->messageBus->dispatch(new SendTenantActivationEmailMessage(
                 $adminEmail->value(),

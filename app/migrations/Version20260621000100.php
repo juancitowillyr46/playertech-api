@@ -31,8 +31,23 @@ final class Version20260621000100 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP INDEX IDX_ACADEMIES_DELETED_BY ON academies');
-        $this->addSql('ALTER TABLE academies DROP deleted_at, DROP deleted_by');
+        if ($this->indexExists('academies', 'IDX_ACADEMIES_DELETED_BY')) {
+            $this->addSql('DROP INDEX IDX_ACADEMIES_DELETED_BY ON academies');
+        }
+
+        $dropColumns = [];
+
+        if ($this->columnExists('academies', 'deleted_at')) {
+            $dropColumns[] = 'DROP deleted_at';
+        }
+
+        if ($this->columnExists('academies', 'deleted_by')) {
+            $dropColumns[] = 'DROP deleted_by';
+        }
+
+        if ([] !== $dropColumns) {
+            $this->addSql(sprintf('ALTER TABLE academies %s', implode(', ', $dropColumns)));
+        }
     }
 
     private function columnExists(string $table, string $column): bool

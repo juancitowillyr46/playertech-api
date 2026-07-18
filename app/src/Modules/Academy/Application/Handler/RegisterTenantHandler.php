@@ -41,6 +41,7 @@ final readonly class RegisterTenantHandler
         private UserPasswordHasherInterface $passwordHasher,
         private MessageBusInterface $messageBus,
         private string $publicUrl,
+        private string $tenantActivationUrl,
     ) {
     }
 
@@ -135,7 +136,7 @@ final readonly class RegisterTenantHandler
             $this->entityManager->flush();
             $this->entityManager->commit();
 
-            $activationUrl = sprintf('%s/api/v1/public/tenants/activate/%s', rtrim($this->publicUrl, '/'), $user->getActivationToken());
+            $activationUrl = sprintf('%s?token=%s', rtrim($this->tenantActivationUrl, '/'), $user->getActivationToken());
 
             $this->messageBus->dispatch(new SendTenantActivationEmailMessage(
                 $data->contactEmail,

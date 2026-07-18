@@ -300,8 +300,6 @@ class AccountUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function activate(): void
     {
         $this->setStatus(self::STATUS_ACTIVE);
-        $this->setActivationToken(null);
-        $this->setActivationExpiresAt(null);
     }
 
     public function markPasswordResetRequested(string $token, \DateTimeImmutable $expiresAt): void

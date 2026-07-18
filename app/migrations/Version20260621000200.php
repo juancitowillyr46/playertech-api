@@ -16,11 +16,9 @@ final class Version20260621000200 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        if ($this->columnExists('users', 'activation_token') && $this->columnExists('users', 'activation_expires_at')) {
-            return;
+        if (!$this->columnExists('users', 'activation_token') || !$this->columnExists('users', 'activation_expires_at')) {
+            $this->addSql('ALTER TABLE users ADD activation_token VARCHAR(64) DEFAULT NULL, ADD activation_expires_at DATETIME DEFAULT NULL');
         }
-
-        $this->addSql('ALTER TABLE users ADD activation_token VARCHAR(64) DEFAULT NULL, ADD activation_expires_at DATETIME DEFAULT NULL');
 
         if (!$this->indexExists('users', 'UNIQ_USERS_ACTIVATION_TOKEN')) {
             $this->addSql('CREATE UNIQUE INDEX UNIQ_USERS_ACTIVATION_TOKEN ON users (activation_token)');
@@ -33,8 +31,18 @@ final class Version20260621000200 extends AbstractMigration
             $this->addSql('DROP INDEX UNIQ_USERS_ACTIVATION_TOKEN ON users');
         }
 
-        if ($this->columnExists('users', 'activation_token') || $this->columnExists('users', 'activation_expires_at')) {
-            $this->addSql('ALTER TABLE users DROP activation_token, DROP activation_expires_at');
+        $dropColumns = [];
+
+        if ($this->columnExists('users', 'activation_token')) {
+            $dropColumns[] = 'DROP activation_token';
+        }
+
+        if ($this->columnExists('users', 'activation_expires_at')) {
+            $dropColumns[] = 'DROP activation_expires_at';
+        }
+
+        if ([] !== $dropColumns) {
+            $this->addSql(sprintf('ALTER TABLE users %s', implode(', ', $dropColumns)));
         }
     }
 

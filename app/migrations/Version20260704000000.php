@@ -19,13 +19,77 @@ final class Version20260704000000 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE academies ADD shield_path VARCHAR(255) DEFAULT NULL, ADD shield_url VARCHAR(255) DEFAULT NULL, ADD shield_mime_type VARCHAR(64) DEFAULT NULL, ADD shield_size INT DEFAULT NULL, ADD shield_checksum VARCHAR(255) DEFAULT NULL, DROP logo');
+        $addShieldColumns = [];
+
+        if (!$this->columnExists('academies', 'shield_path')) {
+            $addShieldColumns[] = 'ADD shield_path VARCHAR(255) DEFAULT NULL';
+        }
+
+        if (!$this->columnExists('academies', 'shield_url')) {
+            $addShieldColumns[] = 'ADD shield_url VARCHAR(255) DEFAULT NULL';
+        }
+
+        if (!$this->columnExists('academies', 'shield_mime_type')) {
+            $addShieldColumns[] = 'ADD shield_mime_type VARCHAR(64) DEFAULT NULL';
+        }
+
+        if (!$this->columnExists('academies', 'shield_size')) {
+            $addShieldColumns[] = 'ADD shield_size INT DEFAULT NULL';
+        }
+
+        if (!$this->columnExists('academies', 'shield_checksum')) {
+            $addShieldColumns[] = 'ADD shield_checksum VARCHAR(255) DEFAULT NULL';
+        }
+
+        if ($this->columnExists('academies', 'logo')) {
+            $addShieldColumns[] = 'DROP logo';
+        }
+
+        if ([] === $addShieldColumns) {
+            return;
+        }
+
+        $this->addSql(sprintf(
+            'ALTER TABLE academies %s',
+            implode(', ', $addShieldColumns)
+        ));
     }
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE academies ADD logo VARCHAR(255) DEFAULT NULL, DROP shield_path, DROP shield_url, DROP shield_mime_type, DROP shield_size, DROP shield_checksum');
+        $downParts = [];
+
+        if (!$this->columnExists('academies', 'logo')) {
+            $downParts[] = 'ADD logo VARCHAR(255) DEFAULT NULL';
+        }
+
+        foreach ([
+            'shield_path',
+            'shield_url',
+            'shield_mime_type',
+            'shield_size',
+            'shield_checksum',
+        ] as $column) {
+            if ($this->columnExists('academies', $column)) {
+                $downParts[] = sprintf('DROP %s', $column);
+            }
+        }
+
+        if ([] === $downParts) {
+            return;
+        }
+
+        $this->addSql(sprintf(
+            'ALTER TABLE academies %s',
+            implode(', ', $downParts)
+        ));
+    }
+
+    private function columnExists(string $table, string $column): bool
+    {
+        return false !== $this->connection->fetchOne(
+            'SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?',
+            [$table, $column]
+        );
     }
 }

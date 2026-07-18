@@ -10,6 +10,7 @@ final readonly class TenantActivationResponse
         private string $email,
         private string $status,
         private bool $activated,
+        private bool $alreadyActivated = false,
     ) {
     }
 
@@ -19,6 +20,7 @@ final readonly class TenantActivationResponse
             'email' => $this->email,
             'status' => $this->status,
             'activated' => $this->activated,
+            'alreadyActivated' => $this->alreadyActivated,
         ];
     }
 }

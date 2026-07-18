@@ -79,6 +79,7 @@ final class RegisterTenantHandlerTest extends KernelTestCase
                 }
             },
             'http://localhost:8081',
+            'http://localhost:4200/tenant/activate',
         );
 
         $schemaTool = new SchemaTool($this->entityManager);

@@ -82,14 +82,12 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
                 }
             },
             'http://localhost:8081',
+            'http://localhost:4200/tenant/activate',
         );
 
         $schemaTool = new SchemaTool($this->entityManager);
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
 
-        $this->entityManager->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $this->entityManager->getConnection()->executeStatement('DROP TABLE IF EXISTS teams, players, categories, venues, academies, users');
-        $this->entityManager->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
         $schemaTool->dropSchema($metadata);
         $schemaTool->createSchema($metadata);
     }

@@ -22,6 +22,13 @@ if ('test' === ($_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? null) && is_string($d
     $databaseName = isset($parts['path']) ? ltrim((string) $parts['path'], '/') : null;
 
     if (is_string($databaseName) && '' !== $databaseName) {
+        if (!str_ends_with($databaseName, '_test')) {
+            throw new RuntimeException(sprintf(
+                'PHPUnit must use a test database. Current DATABASE_URL points to "%s".',
+                $databaseName
+            ));
+        }
+
         $pdo = new PDO('mysql:host=mysql;port=3306;charset=utf8mb4', 'root', 'root', [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         ]);

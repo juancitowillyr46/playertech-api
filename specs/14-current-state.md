@@ -76,6 +76,8 @@ La base tecnica actual incluye:
 | Doctrine AuditSubscriber | Non-Functional / Technical Enabler | Done | `untracked` | Filler centralizado de `auditTrail` para entidades auditable en persistencia Doctrine |
 | Cross-tenant isolation test | Technical Enabler | Done | `untracked` | Prueba de integración valida que una academia no puede leer registros de otra aunque conozca el ID |
 | Tenant signup initial team | Functional | Done | `untracked` | `POST /api/v1/public/tenants/signup` recibe `category_id` y `team_name`, valida la categoría y crea el primer equipo del tenant |
+| Tenant activation idempotency | Functional / Technical Enabler | Done | `untracked` | `GET /api/v1/public/tenants/activate/{token}` ahora devuelve `alreadyActivated` cuando el token sigue vigente y responde `404` problem-details si el token es inválido o expiró |
+| Test database guard rail | Technical Enabler | Done | `untracked` | `tests/bootstrap.php` ahora falla si PHPUnit intenta usar una base distinta de `*_test` |
 
 ---
 
@@ -207,6 +209,9 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Academy` incorpora soft delete con `deleted_at` y `deleted_by`, y Doctrine ya tiene un filtro global para excluir entidades borradas lógicamente.
 * Se documentó una épica nueva para onboarding de tenant (`EP-014`) sin alterar el flujo de creación de tenants por `ROLE_ROOT`.
 * El onboarding tenant ya tiene implementación base: signup público, correo de activación y endpoint de activación.
+* El endpoint público de activación ahora es idempotente cuando el token sigue disponible: si el usuario vuelve a entrar al enlace, el backend puede marcar `alreadyActivated`; si el token no existe o expiró, responde `404` en Problem Details en lugar de `500`.
+* La base de desarrollo `playertech` y la base de pruebas `playertech_test` están separadas por configuración; además, el bootstrap de PHPUnit ahora bloquea el uso accidental de una base que no termine en `_test`.
+* Existe deuda en migraciones antiguas: `Version20260704000000` falla al reejecutarse por un `DROP COLUMN logo` sobre una columna ya ausente, así que el `migrate` completo de `dev` queda bloqueado hasta corregir esa versión histórica.
 * El contrato público de onboarding pasa a usar un catálogo global de categorías y el signup clonará la categoría elegida dentro de la academia; la implementación sigue pendiente.
 * Se pobló el catálogo `onboarding_categories` con el rango `Sub 4` a `Sub 20` como base pública de onboarding para frontend y signup.
 * `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-009`, `EP-010` y `EP-012`.
