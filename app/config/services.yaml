@@ -40,6 +40,12 @@ services:
     App\Shared\Infrastructure\EventSubscriber\DoctrineAuditSubscriber:
         tags: ['doctrine.event_subscriber']
 
+    App\Shared\Infrastructure\EventSubscriber\CorsSubscriber:
+        arguments:
+            $allowedOrigins:
+                - 'http://localhost:4200'
+                - 'http://127.0.0.1:4200'
+
     App\Shared\Domain\Contracts\FileStorage:
         class: App\Shared\Infrastructure\Storage\LocalStorage
         arguments:
