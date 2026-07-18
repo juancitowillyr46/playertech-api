@@ -38,11 +38,19 @@ final class Version20260627193502 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX IDX_CATEGORY_CREATED_BY ON categories');
-        $this->addSql('DROP INDEX IDX_CATEGORY_UPDATED_BY ON categories');
-        $this->addSql('DROP INDEX IDX_CATEGORY_DELETED_BY ON categories');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_CATEGORY_ACADEMY_NAME ON categories (academy_id, name)');
+        foreach ([
+            'IDX_CATEGORY_CREATED_BY',
+            'IDX_CATEGORY_UPDATED_BY',
+            'IDX_CATEGORY_DELETED_BY',
+        ] as $index) {
+            if ($this->indexExists('categories', $index)) {
+                $this->addSql(sprintf('DROP INDEX %s ON categories', $index));
+            }
+        }
+
+        if (!$this->indexExists('categories', 'UNIQ_CATEGORY_ACADEMY_NAME')) {
+            $this->addSql('CREATE UNIQUE INDEX UNIQ_CATEGORY_ACADEMY_NAME ON categories (academy_id, name)');
+        }
     }
 
     private function indexExists(string $table, string $index): bool

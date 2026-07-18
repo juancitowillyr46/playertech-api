@@ -39,24 +39,22 @@ final class Version20260718000100 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        if ($this->columnExists('players', 'dominant_foot')) {
-            $this->addSql('ALTER TABLE players DROP dominant_foot');
+        $dropColumns = [];
+
+        foreach ([
+            'dominant_foot',
+            'federation_id',
+            'gender',
+            'nationality',
+            'document_type',
+        ] as $column) {
+            if ($this->columnExists('players', $column)) {
+                $dropColumns[] = sprintf('DROP %s', $column);
+            }
         }
 
-        if ($this->columnExists('players', 'federation_id')) {
-            $this->addSql('ALTER TABLE players DROP federation_id');
-        }
-
-        if ($this->columnExists('players', 'gender')) {
-            $this->addSql('ALTER TABLE players DROP gender');
-        }
-
-        if ($this->columnExists('players', 'nationality')) {
-            $this->addSql('ALTER TABLE players DROP nationality');
-        }
-
-        if ($this->columnExists('players', 'document_type')) {
-            $this->addSql('ALTER TABLE players DROP document_type');
+        if ([] !== $dropColumns) {
+            $this->addSql(sprintf('ALTER TABLE players %s', implode(', ', $dropColumns)));
         }
     }
 
