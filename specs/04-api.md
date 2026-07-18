@@ -4,6 +4,10 @@
 
 La API de PlayerTech será una REST API versionada, consistente y segura, diseñada para operar sobre un modelo multi-tenant con JWT.
 
+> Contrato operativo actual:
+> `specs/16-api-reference.md` y `postman/` concentran la referencia HTTP vigente.
+> Este documento conserva el marco general y las decisiones transversales.
+
 ---
 
 # Base URL
@@ -125,7 +129,7 @@ POST /api/v1/auth/login
 Los listados deben aceptar paginación estándar:
 
 ```http
-GET /api/v1/players?page=1&limit=20
+GET /api/v1/players?page=1&per_page=20
 ```
 
 ### Pagination Metadata
@@ -133,8 +137,11 @@ GET /api/v1/players?page=1&limit=20
 ```json
 {
   "page": 1,
-  "limit": 20,
-  "total": 120
+  "per_page": 20,
+  "total": 120,
+  "total_pages": 6,
+  "has_next": true,
+  "has_prev": false
 }
 ```
 

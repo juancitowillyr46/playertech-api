@@ -30,8 +30,23 @@ Antes de proponer o ejecutar cambios, revisar en este orden:
 16. `docs/backlog/future-epics.md`
 17. `docs/backlog/epics/*`
 18. `docs/backlog/stories/*`
-19. `docs/arquitecture/*`
+19. `docs/architecture/*`
 20. `docs/commands/command.md`
+
+## SDD liviano para trabajo individual
+
+Si el proyecto lo trabaja una sola persona, aplicar estas reglas antes que un flujo documental pesado:
+
+- Mantener `specs/` como fuente canónica de reglas y contratos vigentes.
+- Usar `docs/backlog/` para intención funcional, descubrimiento y futuras HUs.
+- Usar `docs/architecture/` para ADR y auditorías técnicas.
+- Usar `specs/14-current-state.md` como bitácora breve de cambios relevantes.
+- Usar `docs/architecture/sdd-policy.md` como guía de adopción SDD escalonada.
+- Preferir una sola referencia operativa HTTP para frontend y QA.
+- No duplicar una misma regla en varios documentos sin declarar cuál manda.
+- Si una regla solo existe en código y aún no está madura, documentarla como inferencia o vacío, no como verdad definitiva.
+- Si un cambio no altera comportamiento, no requiere documentación extensa.
+- Si un cambio altera contrato, estado o trazabilidad, sí debe quedar registrado.
 
 ---
 

@@ -66,7 +66,7 @@ El token debe transportar al menos:
 El MVP utilizará estos roles iniciales:
 
 * `ROLE_ROOT`
-* `ROLE_ACADEMIC_ADMIN`
+* `ROLE_ACADEMY_ADMIN`
 
 ## Future RBAC Structure
 
@@ -90,7 +90,7 @@ Los roles iniciales no limitan la evolución futura del modelo.
 * Activación y suspensión de academias.
 * Operaciones de plataforma.
 
-## ROLE_ACADEMIC_ADMIN
+## ROLE_ACADEMY_ADMIN
 
 * Operación diaria dentro de una academia.
 * Gestión de sedes, categorías, equipos, jugadores, acudientes, matrículas y pagos.

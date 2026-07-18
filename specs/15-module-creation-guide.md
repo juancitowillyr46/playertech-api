@@ -192,7 +192,7 @@ Actualizar:
 5. Crear controllers finos.
 6. Validar con `php bin/console doctrine:mapping:info`.
 7. Validar con `php -l`.
-8. Probar via `.http`.
+8. Probar via Postman.
 
 ---
 

@@ -634,6 +634,7 @@ Toda API deberá documentarse en el repositorio con dos capas complementarias:
 
 * Referencia técnica en `specs/16-api-reference.md`.
 * Colección importable en Postman bajo `postman/`.
+* Índice operativo de contratos en `docs/contracts/api-reference.md`.
 
 OpenAPI puede existir como apoyo, pero no es obligatorio como fuente principal si la colección y la referencia están completas y sincronizadas.
 

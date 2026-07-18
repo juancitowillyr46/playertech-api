@@ -12,6 +12,11 @@ Antes de iniciar cada nueva iteracion, revisar:
 * el commit mas reciente
 * la clasificacion funcional o no funcional del cambio a realizar
 
+Para contratos HTTP y sincronizacion con frontend, revisar ademas:
+
+* [`specs/16-api-reference.md`](./16-api-reference.md)
+* [`docs/contracts/api-reference.md`](../docs/contracts/api-reference.md)
+
 Cada cambio relevante debe dejar una referencia clara en el estado actual.
 
 ---

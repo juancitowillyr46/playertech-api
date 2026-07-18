@@ -22,6 +22,15 @@ Ese archivo debe resumir:
 * Como levantar la base tecnica.
 * Que documentacion tecnica debe leerse primero.
 
+La referencia documental mínima para trabajar en el proyecto es:
+
+1. `README.md`
+2. `specs/14-current-state.md`
+3. `specs/12-execution-order.md`
+4. `specs/16-api-reference.md`
+5. `docs/contracts/api-reference.md`
+6. `docs/architecture/*`
+
 ---
 
 # Architectural Decision
@@ -189,7 +198,6 @@ playtech/
 ├── docs/
 ├── specs/
 ├── docker/
-├── http/
 └── README.md
 ```
 
@@ -208,10 +216,6 @@ Contiene la documentacion tecnica y arquitectonica que gobierna el arranque y la
 ## docker
 
 Contiene configuracion de infraestructura local.
-
-## http
-
-Contiene colecciones HTTP para probar la API.
 
 ## README.md
 
@@ -358,6 +362,3 @@ No se implementaran todavia:
 * MinIO.
 * Integraciones externas.
 * Logica completa de HUs antes de cerrar la base tecnica.
-
-
-

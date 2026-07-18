@@ -8,7 +8,241 @@
   "item": [
     {
       "name": "Auth",
-      "item": []
+      "item": [
+        {
+          "name": "Auth - Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@playertech.com\",\n  \"password\": \"secret12345\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Auth - Login Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"token\": \"jwt_token_here\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Auth - Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Auth - Me Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000100\",\n    \"fullName\": \"Root Admin\",\n    \"email\": \"admin@playertech.com\",\n    \"academyId\": null,\n    \"roles\": [\n      \"ROLE_ROOT\",\n      \"ROLE_USER\"\n    ],\n    \"role\": \"ROLE_ROOT\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Public User - Activate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/public/users/activate/{{activationToken}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "public",
+                "users",
+                "activate",
+                "{{activationToken}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"secret12345\",\n  \"passwordConfirmation\": \"secret12345\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Public User - Activate Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000101\",\n    \"fullName\": \"Juan Perez\",\n    \"email\": \"juan@example.com\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"roles\": [\n      \"ROLE_ACADEMY_ADMIN\",\n      \"ROLE_USER\"\n    ],\n    \"role\": \"ROLE_ACADEMY_ADMIN\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Public Password Reset - Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/public/users/password-reset/request",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "public",
+                "users",
+                "password-reset",
+                "request"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"juan@example.com\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Public Password Reset - Request Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Public Password Reset - Confirm",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/public/users/password-reset/confirm/{{resetToken}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "public",
+                "users",
+                "password-reset",
+                "confirm",
+                "{{resetToken}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"secret12345\",\n  \"passwordConfirmation\": \"secret12345\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Public Password Reset - Confirm Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000101\",\n    \"fullName\": \"Juan Perez\",\n    \"email\": \"juan@example.com\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"roles\": [\n      \"ROLE_ACADEMY_ADMIN\",\n      \"ROLE_USER\"\n    ],\n    \"role\": \"ROLE_ACADEMY_ADMIN\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Guardian",

@@ -18,9 +18,10 @@ La plataforma está pensada para gestionar academias, sedes, categorías, equipo
 
 - `app/` código fuente Symfony
 - `docker/` infraestructura local
-- `http/` colecciones HTTP
 - `postman/` colección Postman y entorno local
 - `specs/` documentación funcional y técnica
+- `docs/architecture/` ADRs, auditorías y decisiones técnicas
+- `docs/contracts/` índice de contratos HTTP y sincronización con frontend
 
 ## Ejecución
 
@@ -39,8 +40,9 @@ php bin/console
 
 ## Consumo de la API
 
-- `http/*.http` contiene ejemplos operativos de consumo por módulo, con casos de éxito y error.
+- `specs/16-api-reference.md` es la referencia HTTP operativa principal.
 - `postman/` contiene la colección y el entorno para validación manual rápida.
+- `docs/contracts/api-reference.md` agrupa el índice de contratos vigentes.
 
 ## Enfoque de trabajo
 
@@ -60,3 +62,10 @@ php bin/console
 - `specs/11-testing-strategy.md`
 - `specs/12-execution-order.md`
 - `specs/13-user-story-rebuild-guide.md`
+- `specs/14-current-state.md`
+- `specs/16-api-reference.md`
+- `docs/architecture/sdd-policy.md`
+- `docs/architecture/change-template-light.md`
+- `docs/architecture/change-template-full.md`
+- `docs/architecture/SDD-backend-audit.md`
+- `docs/contracts/api-reference.md`

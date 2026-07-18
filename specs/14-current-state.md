@@ -175,6 +175,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `ROLE_ROOT` opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext`.
 * `Academy` ya expone `GET /api/v1/academy/me` como contexto tenant, `PUT /api/v1/academy/me` para autogestión del tenant y `GET /api/v1/platform/academies` como API de plataforma.
 * La API de usuario autenticado quedó separada de la API de academia: `auth/me` expone identidad, `auth/me/name` actualiza sólo el nombre y el reset de contraseña usa endpoints públicos dedicados.
+* La nomenclatura funcional de roles quedó alineada a `ROLE_ACADEMY_ADMIN` en docs y Postman; `ROLE_ROOT` sigue siendo el rol de plataforma sin tenant.
 * Los endpoints de `Academy` quedaron validados como parte del flujo base tenant/root y siguen protegidos por `TenantContext` y el filtro de persistencia.
 * `Academy` ahora usa `AcademyId` como Doctrine custom type y VOs compartidos como embeddables XML, sirviendo como referencia del patrón para los demas modulos.
 * Los VOs compartidos ya estan versionados en git y el mapping XML de `Academy` los consume de forma consistente.
