@@ -44,9 +44,9 @@ final class Version20260707000100 extends AbstractMigration
         if (!$this->tableExists('player_guardians')) {
             $this->addSql('CREATE TABLE player_guardians (
                 id CHAR(36) NOT NULL,
-                academy_id CHAR(36) NOT NULL,
-                player_id CHAR(36) NOT NULL,
-                guardian_id CHAR(36) NOT NULL,
+                academy_id CHAR(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+                player_id CHAR(36) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                guardian_id CHAR(36) COLLATE utf8mb4_unicode_ci NOT NULL,
                 is_primary TINYINT(1) NOT NULL DEFAULT 0,
                 created_at DATETIME NOT NULL,
                 created_by CHAR(36) DEFAULT NULL,

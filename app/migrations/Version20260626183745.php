@@ -22,18 +22,6 @@ final class Version20260626183745 extends AbstractMigration
         if (!$this->tableExists('categories')) {
             $this->addSql('CREATE TABLE categories (academy_id CHAR(36) NOT NULL, deleted_at DATETIME DEFAULT NULL, deleted_by CHAR(36) DEFAULT NULL, id CHAR(36) NOT NULL, name VARCHAR(150) NOT NULL, min_age SMALLINT NOT NULL, max_age SMALLINT NOT NULL, description VARCHAR(150) NOT NULL, status VARCHAR(20) NOT NULL, created_by CHAR(36) DEFAULT NULL, updated_by CHAR(36) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, INDEX IDX_CATEGORY_ACADEMY (academy_id), INDEX IDX_CATEGORY_STATUS (status), UNIQUE INDEX UNIQ_CATEGORY_ACADEMY_NAME (academy_id, name), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         }
-
-        if (!$this->indexExists('categories', 'IDX_CATEGORY_ACADEMY')) {
-            $this->addSql('CREATE INDEX IDX_CATEGORY_ACADEMY ON categories (academy_id)');
-        }
-
-        if (!$this->indexExists('categories', 'IDX_CATEGORY_STATUS')) {
-            $this->addSql('CREATE INDEX IDX_CATEGORY_STATUS ON categories (status)');
-        }
-
-        if (!$this->indexExists('categories', 'UNIQ_CATEGORY_ACADEMY_NAME')) {
-            $this->addSql('CREATE UNIQUE INDEX UNIQ_CATEGORY_ACADEMY_NAME ON categories (academy_id, name)');
-        }
     }
 
     public function down(Schema $schema): void

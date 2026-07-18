@@ -16,6 +16,10 @@ final class Version20260611000200 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+        if ($this->isStringUuidUsersTable()) {
+            return;
+        }
+
         $this->addSql('CREATE TABLE users_v2 (
             id CHAR(36) NOT NULL,
             academy_id CHAR(36) DEFAULT NULL,
@@ -47,6 +51,10 @@ final class Version20260611000200 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
+        if ($this->isStringUuidUsersTable()) {
+            return;
+        }
+
         $this->addSql('CREATE TABLE users_v2 (
             id BINARY(16) NOT NULL,
             academy_id BINARY(16) DEFAULT NULL,
@@ -74,5 +82,15 @@ final class Version20260611000200 extends AbstractMigration
 
         $this->addSql('DROP TABLE users');
         $this->addSql('RENAME TABLE users_v2 TO users');
+    }
+
+    private function isStringUuidUsersTable(): bool
+    {
+        $idType = $this->connection->fetchOne(
+            'SELECT DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?',
+            ['users', 'id']
+        );
+
+        return 'char' === strtolower((string) $idType);
     }
 }
