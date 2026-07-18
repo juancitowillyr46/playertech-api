@@ -257,6 +257,9 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Se consolidó un índice de contratos HTTP en `docs/contracts/api-reference.md` para centralizar la sincronización con frontend y QA sin duplicar la especificación operativa.
 * Se formalizó una política SDD escalonada en `docs/architecture/sdd-policy.md` y dos plantillas de cambio en `docs/architecture/change-template-light.md` y `docs/architecture/change-template-full.md` para futuras features.
 * Se documentó la evolución del modelo de cobro de `EP-009` en `docs/architecture/EP-009-billing-model-evolution.md`, incluyendo el estado actual, casos de uso reales y los diagramas de flujo actual y objetivo.
+* Se redefinió el perfil base de `Player` en `specs/02-domains.md` para separar identidad, atributos deportivos y datos que deben vivir en asignaciones o compras.
+* Se documentó un criterio SDD para la evolución del perfil de `Player` en `docs/architecture/player-profile-evolution-sdd.md`, con reglas para decidir qué atributos viven en el aggregate y cuáles deben quedar fuera.
+* El perfil base de `Player` incorporó `email` y `phone` como datos de contacto opcionales, sincronizados entre dominio, API, Postman y persistencia.
 ---
 
 # Technical Foundation Checklist

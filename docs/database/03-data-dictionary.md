@@ -111,10 +111,17 @@ Representa un jugador.
 | id | UUID | No | Identificador |
 | academy_id | UUID | No | Academia |
 | category_id | UUID | No | Categoría administrativa |
+| document_type | VARCHAR(50) | No | Tipo de documento |
 | first_name | VARCHAR(100) | No | Nombres |
 | last_name | VARCHAR(100) | No | Apellidos |
 | birth_date | DATE | No | Fecha de nacimiento |
 | document_number | VARCHAR(50) | No | Documento |
+| email | VARCHAR(255) | Sí | Correo electrónico |
+| phone | VARCHAR(50) | Sí | Teléfono celular |
+| nationality | VARCHAR(100) | Sí | Nacionalidad |
+| gender | VARCHAR(20) | Sí | Género |
+| federation_id | VARCHAR(80) | Sí | Identificador de federación |
+| dominant_foot | VARCHAR(20) | Sí | Pie dominante |
 | status | VARCHAR(20) | No | Estado |
 
 > La categoría representa la clasificación administrativa del jugador.

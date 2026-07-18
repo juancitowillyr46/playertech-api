@@ -245,10 +245,17 @@ deleted_by
 ```sql
 id
 academy_id
+document_type
 first_name
 last_name
 birth_date
 document_number
+email
+phone
+nationality
+gender
+federation_id
+dominant_foot
 status
 created_at
 created_by

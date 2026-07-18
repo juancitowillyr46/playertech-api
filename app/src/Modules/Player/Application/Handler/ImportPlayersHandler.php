@@ -39,12 +39,23 @@ final readonly class ImportPlayersHandler
 
         foreach ($rows as $index => $row) {
             $line = $index + 2;
+            $documentType = trim((string) ($row['document_type'] ?? ''));
             $firstName = trim((string) ($row['first_name'] ?? ''));
             $lastName = trim((string) ($row['last_name'] ?? ''));
             $birthDate = trim((string) ($row['birth_date'] ?? ''));
             $documentNumber = trim((string) ($row['document_number'] ?? ''));
+            $email = trim((string) ($row['email'] ?? ''));
+            $phone = trim((string) ($row['phone'] ?? ''));
+            $nationality = trim((string) ($row['nationality'] ?? ''));
+            $gender = trim((string) ($row['gender'] ?? ''));
+            $federationId = trim((string) ($row['federation_id'] ?? ''));
+            $dominantFoot = trim((string) ($row['dominant_foot'] ?? ''));
             $categoryKey = trim((string) ($row['category_key'] ?? ''));
             $category = null;
+
+            if ('' === $documentType) {
+                $violations->add($this->violation("rows[$line].document_type", 'El campo "document_type" es obligatorio.'));
+            }
 
             if ('' === $firstName) {
                 $violations->add($this->violation("rows[$line].first_name", 'El campo "first_name" es obligatorio.'));
@@ -89,10 +100,17 @@ final readonly class ImportPlayersHandler
             $players[] = Player::create(
                 PlayerId::generate(),
                 $academyId,
+                $documentType,
                 $firstName,
                 $lastName,
                 $parsedBirthDate,
                 $documentNumber,
+                $email ?: null,
+                $phone ?: null,
+                $nationality ?: null,
+                $gender ?: null,
+                $federationId ?: null,
+                $dominantFoot ?: null,
                 $category->id(),
                 null,
                 AuditTrail::create($command->actorId),
@@ -136,7 +154,7 @@ final readonly class ImportPlayersHandler
         }
 
         $header = array_map('strtolower', array_map('trim', array_values(array_shift($rows))));
-        $expected = ['first_name', 'last_name', 'birth_date', 'document_number', 'category_key'];
+        $expected = ['document_type', 'first_name', 'last_name', 'birth_date', 'document_number', 'email', 'phone', 'nationality', 'gender', 'federation_id', 'dominant_foot', 'category_key'];
 
         if ($header !== $expected) {
             throw new ValidationException(new ConstraintViolationList([

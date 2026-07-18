@@ -26,7 +26,7 @@ final readonly class CreatePlayerHandler
         $academyId = new AcademyId($command->academyId);
         $input = $command->input;
 
-        if (null === $input->firstName || null === $input->lastName || null === $input->birthDate || null === $input->documentNumber) {
+        if (null === $input->documentType || null === $input->firstName || null === $input->lastName || null === $input->birthDate || null === $input->documentNumber) {
             throw new BadRequestHttpException('Missing required player input.');
         }
 
@@ -37,10 +37,17 @@ final readonly class CreatePlayerHandler
         $player = Player::create(
             PlayerId::generate(),
             $academyId,
+            $input->documentType,
             $input->firstName,
             $input->lastName,
             new \DateTimeImmutable($input->birthDate),
             $input->documentNumber,
+            $input->email,
+            $input->phone,
+            $input->nationality,
+            $input->gender,
+            $input->federationId,
+            $input->dominantFoot,
             null,
             null,
             AuditTrail::create($command->actorId),

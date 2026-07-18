@@ -32,10 +32,17 @@ final readonly class UpdatePlayerHandler
         }
 
         $player->updateProfile(
-            $command->input->firstName(),
-            $command->input->lastName(),
-            new \DateTimeImmutable($command->input->birthDate()),
-            $command->input->documentNumber(),
+            $command->input->documentType,
+            $command->input->firstName,
+            $command->input->lastName,
+            new \DateTimeImmutable($command->input->birthDate),
+            $command->input->documentNumber,
+            $command->input->email,
+            $command->input->phone,
+            $command->input->nationality,
+            $command->input->gender,
+            $command->input->federationId,
+            $command->input->dominantFoot,
             $command->actorId,
         );
 

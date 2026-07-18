@@ -16,6 +16,8 @@ final class Player implements Auditable
 
     private AcademyId $academyId;
 
+    private string $documentType;
+
     private string $firstName;
 
     private string $lastName;
@@ -23,6 +25,18 @@ final class Player implements Auditable
     private \DateTimeImmutable $birthDate;
 
     private string $documentNumber;
+
+    private ?string $email;
+
+    private ?string $phone;
+
+    private ?string $nationality;
+
+    private ?string $gender;
+
+    private ?string $federationId;
+
+    private ?string $dominantFoot;
 
     private ?CategoryId $categoryId;
 
@@ -39,20 +53,34 @@ final class Player implements Auditable
     private function __construct(
         PlayerId $id,
         AcademyId $academyId,
+        string $documentType,
         string $firstName,
         string $lastName,
         \DateTimeImmutable $birthDate,
         string $documentNumber,
+        ?string $email,
+        ?string $phone,
+        ?string $nationality,
+        ?string $gender,
+        ?string $federationId,
+        ?string $dominantFoot,
         ?CategoryId $categoryId,
         ?Media $photo,
         AuditTrail $auditTrail
     ) {
         $this->id = $id;
         $this->academyId = $academyId;
+        $this->documentType = self::normalizeText($documentType, 'document type');
         $this->firstName = self::normalizeText($firstName, 'first name');
         $this->lastName = self::normalizeText($lastName, 'last name');
         $this->birthDate = $birthDate;
         $this->documentNumber = self::normalizeText($documentNumber, 'document number');
+        $this->email = self::normalizeNullableText($email);
+        $this->phone = self::normalizeNullableText($phone);
+        $this->nationality = self::normalizeNullableText($nationality);
+        $this->gender = self::normalizeNullableText($gender);
+        $this->federationId = self::normalizeNullableText($federationId);
+        $this->dominantFoot = self::normalizeNullableText($dominantFoot);
         $this->categoryId = $categoryId;
         $this->photo = $photo;
         $this->status = PlayerStatus::active();
@@ -62,10 +90,17 @@ final class Player implements Auditable
     public static function create(
         PlayerId $id,
         AcademyId $academyId,
+        string $documentType,
         string $firstName,
         string $lastName,
         \DateTimeImmutable $birthDate,
         string $documentNumber,
+        ?string $email,
+        ?string $phone,
+        ?string $nationality,
+        ?string $gender,
+        ?string $federationId,
+        ?string $dominantFoot,
         ?CategoryId $categoryId,
         ?Media $photo,
         AuditTrail $auditTrail
@@ -73,10 +108,17 @@ final class Player implements Auditable
         return new self(
             $id,
             $academyId,
+            $documentType,
             $firstName,
             $lastName,
             $birthDate,
             $documentNumber,
+            $email,
+            $phone,
+            $nationality,
+            $gender,
+            $federationId,
+            $dominantFoot,
             $categoryId,
             $photo,
             $auditTrail
@@ -91,6 +133,11 @@ final class Player implements Auditable
     public function academyId(): AcademyId
     {
         return $this->academyId;
+    }
+
+    public function documentType(): string
+    {
+        return $this->documentType;
     }
 
     public function firstName(): string
@@ -111,6 +158,36 @@ final class Player implements Auditable
     public function documentNumber(): string
     {
         return $this->documentNumber;
+    }
+
+    public function email(): ?string
+    {
+        return $this->email;
+    }
+
+    public function phone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function nationality(): ?string
+    {
+        return $this->nationality;
+    }
+
+    public function gender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function federationId(): ?string
+    {
+        return $this->federationId;
+    }
+
+    public function dominantFoot(): ?string
+    {
+        return $this->dominantFoot;
     }
 
     public function categoryId(): ?CategoryId
@@ -139,16 +216,30 @@ final class Player implements Auditable
     }
 
     public function updateProfile(
+        string $documentType,
         string $firstName,
         string $lastName,
         \DateTimeImmutable $birthDate,
         string $documentNumber,
+        ?string $email,
+        ?string $phone,
+        ?string $nationality,
+        ?string $gender,
+        ?string $federationId,
+        ?string $dominantFoot,
         string $updatedBy,
     ): void {
+        $this->documentType = self::normalizeText($documentType, 'document type');
         $this->firstName = self::normalizeText($firstName, 'first name');
         $this->lastName = self::normalizeText($lastName, 'last name');
         $this->birthDate = $birthDate;
         $this->documentNumber = self::normalizeText($documentNumber, 'document number');
+        $this->email = self::normalizeNullableText($email);
+        $this->phone = self::normalizeNullableText($phone);
+        $this->nationality = self::normalizeNullableText($nationality);
+        $this->gender = self::normalizeNullableText($gender);
+        $this->federationId = self::normalizeNullableText($federationId);
+        $this->dominantFoot = self::normalizeNullableText($dominantFoot);
         if ($this->auditTrail) {
             $this->auditTrail->touch($updatedBy);
         }
@@ -197,5 +288,16 @@ final class Player implements Auditable
         }
 
         return $value;
+    }
+
+    private static function normalizeNullableText(?string $value): ?string
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        return '' === $value ? null : $value;
     }
 }

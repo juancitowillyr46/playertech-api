@@ -1249,7 +1249,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"firstName\": \"Juan\",\n  \"lastName\": \"Perez\",\n  \"birthDate\": \"2013-05-12\",\n  \"documentNumber\": \"12345678\",\n  \"categoryId\": \"{{categoryId}}\"\n}"
+              "raw": "{\n  \"documentType\": \"DNI\",\n  \"firstName\": \"Juan\",\n  \"lastName\": \"Perez\",\n  \"birthDate\": \"2013-05-12\",\n  \"documentNumber\": \"12345678\",\n  \"email\": \"juan@example.com\",\n  \"phone\": \"+573001112233\",\n  \"categoryId\": \"{{categoryId}}\"\n}"
             }
           },
           "response": [
@@ -1352,7 +1352,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000300\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n      \"firstName\": \"Juan\",\n      \"lastName\": \"Perez\",\n      \"birthDate\": \"2013-05-12\",\n      \"documentNumber\": \"12345678\",\n      \"photo\": {\n        \"path\": \"var/storage/media/local/players/01J.../photo/original/01K....png\",\n        \"url\": \"https://api.playertech.test/media/players/01J.../photo/01K....png\",\n        \"mimeType\": \"image/png\",\n        \"size\": 122233,\n        \"checksum\": \"sha256:...\"\n      },\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000300\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n      \"documentType\": \"DNI\",\n      \"firstName\": \"Juan\",\n      \"lastName\": \"Perez\",\n      \"birthDate\": \"2013-05-12\",\n      \"documentNumber\": \"12345678\",\n      \"email\": \"juan@example.com\",\n      \"phone\": \"+573001112233\",\n      \"nationality\": \"Colombiana\",\n      \"gender\": \"Masculino\",\n      \"federationId\": \"F001\",\n      \"dominantFoot\": \"Derecho\",\n      \"photo\": {\n        \"path\": \"var/storage/media/local/players/01J.../photo/original/01K....png\",\n        \"url\": \"https://api.playertech.test/media/players/01J.../photo/01K....png\",\n        \"mimeType\": \"image/png\",\n        \"size\": 122233,\n        \"checksum\": \"sha256:...\"\n      },\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },
@@ -1395,7 +1395,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000300\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"firstName\": \"Juan\",\n    \"lastName\": \"Perez\",\n    \"birthDate\": \"2013-05-12\",\n    \"documentNumber\": \"12345678\",\n    \"photo\": {\n      \"path\": \"var/storage/media/local/players/01J.../photo/original/01K....png\",\n      \"url\": \"https://api.playertech.test/media/players/01J.../photo/01K....png\",\n      \"mimeType\": \"image/png\",\n      \"size\": 122233,\n      \"checksum\": \"sha256:...\"\n    },\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000300\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"documentType\": \"DNI\",\n    \"firstName\": \"Juan\",\n    \"lastName\": \"Perez\",\n    \"birthDate\": \"2013-05-12\",\n    \"documentNumber\": \"12345678\",\n    \"email\": \"juan@example.com\",\n    \"phone\": \"+573001112233\",\n    \"nationality\": \"Colombiana\",\n    \"gender\": \"Masculino\",\n    \"federationId\": \"F001\",\n    \"dominantFoot\": \"Derecho\",\n    \"photo\": {\n      \"path\": \"var/storage/media/local/players/01J.../photo/original/01K....png\",\n      \"url\": \"https://api.playertech.test/media/players/01J.../photo/01K....png\",\n      \"mimeType\": \"image/png\",\n      \"size\": 122233,\n      \"checksum\": \"sha256:...\"\n    },\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -1432,7 +1432,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"firstName\": \"Juan\",\n  \"lastName\": \"Perez\",\n  \"birthDate\": \"2013-05-12\",\n  \"documentNumber\": \"12345678\",\n  \"categoryId\": \"{{categoryId}}\"\n}"
+              "raw": "{\n  \"documentType\": \"DNI\",\n  \"firstName\": \"Juan\",\n  \"lastName\": \"Perez\",\n  \"birthDate\": \"2013-05-12\",\n  \"documentNumber\": \"12345678\",\n  \"email\": \"juan@example.com\",\n  \"phone\": \"+573001112233\",\n  \"categoryId\": \"{{categoryId}}\"\n}"
             }
           },
           "response": [
@@ -3986,3 +3986,5 @@
     }
   ]
 }
+
+

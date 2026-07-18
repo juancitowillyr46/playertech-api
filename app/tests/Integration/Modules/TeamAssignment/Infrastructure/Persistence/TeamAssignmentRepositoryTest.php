@@ -49,7 +49,7 @@ final class TeamAssignmentRepositoryTest extends KernelTestCase
     public function testItPersistsAndFindsAssignmentsByPlayer(): void
     {
         $academyId = AcademyId::generate();
-        $player = Player::create(PlayerId::generate(), $academyId, 'Juan', 'Pérez', new \DateTimeImmutable('2014-05-18'), '12345678', null, null, AuditTrail::create('actor-id'));
+        $player = Player::create(PlayerId::generate(), $academyId, 'DNI', 'Juan', 'Pérez', new \DateTimeImmutable('2014-05-18'), '12345678', null, null, null, null, null, null, AuditTrail::create('actor-id'));
         $team = Team::create(TeamId::generate(), $academyId, \App\Modules\Category\Domain\Category\CategoryId::generate(), new Name('Sub-12 A'), AuditTrail::create('actor-id'));
 
         $this->entityManager->persist($player);

@@ -24,7 +24,7 @@ final class ShowDashboardHandlerTest extends TestCase
         $membershipRepo = new InMemoryMembershipRepository();
         $chargeRepo = new InMemoryChargeRepository();
         $paymentRepo = new InMemoryPaymentRepository();
-        $player = Player::create(PlayerId::generate(), $academyId, 'Juan', 'Pérez', new \DateTimeImmutable('2014-05-18'), '12345678', null, null, AuditTrail::create('actor-id'));
+        $player = Player::create(PlayerId::generate(), $academyId, 'DNI', 'Juan', 'Pérez', new \DateTimeImmutable('2014-05-18'), '12345678', null, null, null, null, null, null, AuditTrail::create('actor-id'));
         $playerRepo->save($player);
         $membership = Membership::create(MembershipId::generate(), $academyId, $player->id(), \App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId::generate(), AuditTrail::create('actor-id'));
         $membershipRepo->save($membership);

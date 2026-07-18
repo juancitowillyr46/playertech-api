@@ -49,6 +49,12 @@
             type="academy_id"/>
 
         <field
+            name="documentType"
+            column="document_type"
+            type="string"
+            length="50"/>
+
+        <field
             name="firstName"
             column="first_name"
             type="string"
@@ -70,6 +76,48 @@
             column="document_number"
             type="string"
             length="30"/>
+
+        <field
+            name="email"
+            column="email"
+            type="string"
+            length="255"
+            nullable="true"/>
+
+        <field
+            name="phone"
+            column="phone"
+            type="string"
+            length="50"
+            nullable="true"/>
+
+        <field
+            name="nationality"
+            column="nationality"
+            type="string"
+            length="100"
+            nullable="true"/>
+
+        <field
+            name="gender"
+            column="gender"
+            type="string"
+            length="20"
+            nullable="true"/>
+
+        <field
+            name="federationId"
+            column="federation_id"
+            type="string"
+            length="80"
+            nullable="true"/>
+
+        <field
+            name="dominantFoot"
+            column="dominant_foot"
+            type="string"
+            length="20"
+            nullable="true"/>
 
         <field
             name="categoryId"

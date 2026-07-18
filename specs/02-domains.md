@@ -155,22 +155,38 @@ El jugador es la entidad principal del dominio deportivo.
 - Puede tener múltiples matrículas a lo largo de su permanencia.
 - Puede participar simultáneamente en múltiples equipos competitivos.
 
-## Atributos MVP
+## Atributos base
 
+- Tipo de documento
+- Número de documento
 - Nombres
 - Apellidos
 - Fecha de nacimiento
-- Número de documento
+
+## Atributos de evolución próxima
+
+- Nacionalidad
+- Género
+- Identificador de federación
+- Pie dominante
+- Posición preferida
+
+## Atributos de contacto opcional
+
+- Correo electrónico
+- Teléfono celular
+
+## Atributos que no deben vivir en `Jugador`
+
+- Número asignado en camiseta
+- Nombre impreso en camiseta
+
+Estos dos campos dependen de una asignación deportiva, de un equipo, de una temporada o de una compra puntual. No describen al jugador como identidad base.
 
 ## Atributos futuros
 
 - Fotografía
-- Correo electrónico
-- Teléfono
-- Nacionalidad
-- Posición preferida
 - Perfil dominante
-- Identificador de federación
 
 ## Estados
 

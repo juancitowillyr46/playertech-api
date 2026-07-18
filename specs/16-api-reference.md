@@ -6,6 +6,12 @@ Este documento sirve como referencia operativa de la API HTTP de PlayerTech mien
 
 La convención general de respuestas y errores está definida en `specs/04-api.md`.
 
+## Canonical Use
+
+Para trabajo individual y validación manual, este documento debe considerarse la referencia HTTP operativa principal junto con la colección de Postman.
+
+`specs/04-api.md` conserva el marco general de la API, pero las decisiones de contrato ya estabilizadas deben vivir aquí para evitar duplicidad.
+
 ## Response Strategy
 
 La implementación actual expone la API mediante `Response DTOs` serializables:
@@ -235,10 +241,15 @@ Los listados más visibles para frontend usan `data` como arreglo de DTOs resumi
     {
       "id": "uuid",
       "categoryId": "uuid",
+      "documentType": "DNI",
       "firstName": "Juan",
       "lastName": "Perez",
       "birthDate": "2013-05-12",
       "documentNumber": "12345678",
+      "nationality": "Colombiana",
+      "gender": "Masculino",
+      "federationId": "F001",
+      "dominantFoot": "Derecho",
       "status": "ACTIVE"
     }
   ],
@@ -875,22 +886,6 @@ POST /api/v1/academy/users/{userId}/enable
 
 ---
 
-# Example HTTP Files
-
-La carpeta `http/` agrupa ejemplos de consumo por módulo:
-
-* `http/auth.http`
-* `http/academy.http`
-* `http/category.http`
-* `http/guardians.http`
-* `http/players.http`
-* `http/player-guardians.http`
-* `http/memberships.http`
-* `http/users.http`
-* `http/venue.http`
-
-La colección `postman/` complementa estos ejemplos para validación manual.
-
 ---
 
 # Guardians API
@@ -995,9 +990,7 @@ DELETE /api/v1/academy/players/{playerId}/guardians/{guardianId}
 
 Para pruebas manuales sin Swagger:
 
-* `http/auth.http`
-* `http/academy.http`
-* `http/users.http`
+* Usar la colección de Postman como referencia operativa.
 
 ---
 
@@ -1600,3 +1593,5 @@ Retirar definitivamente la matrícula de un jugador.
 ### Errors
 
 * `404 Not Found` si no existe matrícula activa.
+
+

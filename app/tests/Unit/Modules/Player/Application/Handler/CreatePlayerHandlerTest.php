@@ -21,9 +21,10 @@ final class CreatePlayerHandlerTest extends TestCase
         $response = $handler(new CreatePlayerCommand(
             '019eec93-9a11-7432-bd04-52306b2b3d8e',
             '019eec93-9a11-7432-bd04-52306b2b3d8f',
-            new CreatePlayerInput('Juan', 'Pérez', '2014-05-18', '12345678'),
+            new CreatePlayerInput('DNI', 'Juan', 'Pérez', '2014-05-18', '12345678'),
         ));
 
+        self::assertSame('DNI', $response->toArray()['documentType']);
         self::assertSame('Juan', $response->toArray()['firstName']);
         self::assertSame('Pérez', $response->toArray()['lastName']);
         self::assertSame('2014-05-18', $response->toArray()['birthDate']);
@@ -40,7 +41,7 @@ final class CreatePlayerHandlerTest extends TestCase
         $command = new CreatePlayerCommand(
             '019eec93-9a11-7432-bd04-52306b2b3d8e',
             '019eec93-9a11-7432-bd04-52306b2b3d8f',
-            new CreatePlayerInput('Juan', 'Pérez', '2014-05-18', '12345678'),
+            new CreatePlayerInput('DNI', 'Juan', 'Pérez', '2014-05-18', '12345678'),
         );
 
         $handler($command);
