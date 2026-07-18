@@ -78,6 +78,7 @@ La base tecnica actual incluye:
 | Tenant signup initial team | Functional | Done | `untracked` | `POST /api/v1/public/tenants/signup` recibe `category_id` y `team_name`, valida la categoría y crea el primer equipo del tenant |
 | Tenant activation idempotency | Functional / Technical Enabler | Done | `untracked` | `GET /api/v1/public/tenants/activate/{token}` ahora devuelve `alreadyActivated` cuando el token sigue vigente y responde `404` problem-details si el token es inválido o expiró |
 | Test database guard rail | Technical Enabler | Done | `untracked` | `tests/bootstrap.php` ahora falla si PHPUnit intenta usar una base distinta de `*_test` |
+| Onboarding catalog repair command | Technical Enabler | Done | `untracked` | Se agregó `app:category:seed-onboarding` para reponer el catálogo público de onboarding en `playertech` sin tocar migraciones |
 
 ---
 
@@ -212,6 +213,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El endpoint público de activación ahora es idempotente cuando el token sigue disponible: si el usuario vuelve a entrar al enlace, el backend puede marcar `alreadyActivated`; si el token no existe o expiró, responde `404` en Problem Details en lugar de `500`.
 * La base de desarrollo `playertech` y la base de pruebas `playertech_test` están separadas por configuración; además, el bootstrap de PHPUnit ahora bloquea el uso accidental de una base que no termine en `_test`.
 * Existe deuda en migraciones antiguas: `Version20260704000000` falla al reejecutarse por un `DROP COLUMN logo` sobre una columna ya ausente, así que el `migrate` completo de `dev` queda bloqueado hasta corregir esa versión histórica.
+* Para reparar el catálogo público de onboarding en `playertech` existe el comando `app:category:seed-onboarding`, útil cuando la tabla se vacía pero la migración ya figura como ejecutada.
 * El contrato público de onboarding pasa a usar un catálogo global de categorías y el signup clonará la categoría elegida dentro de la academia; la implementación sigue pendiente.
 * Se pobló el catálogo `onboarding_categories` con el rango `Sub 4` a `Sub 20` como base pública de onboarding para frontend y signup.
 * `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-009`, `EP-010` y `EP-012`.
@@ -268,6 +270,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Se redefinió el perfil base de `Player` en `specs/02-domains.md` para separar identidad, atributos deportivos y datos que deben vivir en asignaciones o compras.
 * Se documentó un criterio SDD para la evolución del perfil de `Player` en `docs/architecture/player-profile-evolution-sdd.md`, con reglas para decidir qué atributos viven en el aggregate y cuáles deben quedar fuera.
 * El perfil base de `Player` incorporó `email` y `phone` como datos de contacto opcionales, sincronizados entre dominio, API, Postman y persistencia.
+* Se documentó una estrategia local-first de observabilidad en `specs/19-observability-local.md` para logs estructurados, correlation id y metricas basicas sin depender aun de una plataforma externa.
 ---
 
 # Technical Foundation Checklist
