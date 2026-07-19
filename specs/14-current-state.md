@@ -175,6 +175,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Se introdujo una base HTTP común para evitar duplicación de validación y resolución del actor autenticado.
 * La base de pruebas ya tiene su primer baseline unitario verde.
 * La primera integración de signup de tenant ya corre contra base de datos MySQL de test y valida persistencia real.
+* La estrategia de pruebas quedó separada por intención: unit tests sin BD y con mocks; integration y functional tests sobre `playertech_test`, usando `SchemaResetter` solo cuando el escenario necesita recrear el esquema completo.
 * `ROLE_ROOT` opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext`.
 * `Academy` ya expone `GET /api/v1/academy/me` como contexto tenant, `PUT /api/v1/academy/me` para autogestión del tenant y `GET /api/v1/platform/academies` como API de plataforma.
 * La API de usuario autenticado quedó separada de la API de academia: `auth/me` expone identidad, `auth/me/name` actualiza sólo el nombre y el reset de contraseña usa endpoints públicos dedicados.

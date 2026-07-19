@@ -27,6 +27,12 @@ Aplican a:
 * Domain invariants
 * Application rules sin infraestructura
 
+Regla operativa:
+
+* No deben tocar Doctrine, HTTP ni base de datos.
+* Deben usar mocks, stubs o fakes cuando haya dependencias externas.
+* Si un test necesita `KernelTestCase`, persistencia o schema reset, ya no es unitario.
+
 ## Integration Tests
 
 Aplican a:
@@ -36,6 +42,12 @@ Aplican a:
 * Tenant filters
 * Database constraints
 
+Regla operativa:
+
+* Sí usan base de datos `test`.
+* Validan persistencia real, pero no deberían depender de flujo HTTP salvo que sea necesario para cerrar el contrato técnico.
+* Son la capa adecuada para comprobar que mapping, constraints y repositorios funcionan con MySQL aislado.
+
 ## Functional Tests
 
 Aplican a:
@@ -44,6 +56,13 @@ Aplican a:
 * Autorización
 * Endpoints de API
 * Respuestas y contratos HTTP
+
+Regla operativa:
+
+* Sí pueden usar base de datos `test`.
+* Son la capa correcta para simular escenarios reales de producción por HTTP.
+* Deben crear solo los datos mínimos necesarios para el caso.
+* Solo deben hacer reset completo del esquema cuando el escenario lo exija; para el resto conviene preparar y limpiar datos de forma acotada.
 
 ## Test on Test Database
 
@@ -137,6 +156,9 @@ En ciclos de desarrollo y en CI/CD, la secuencia recomendada es:
 * Usar fixtures mínimas y explícitas.
 * Separar datos de plataforma y datos de tenant.
 * Evitar fixtures enormes o difíciles de mantener.
+* Para tests unitarios, preferir mocks y no persistencia.
+* Para tests funcionales e integración, usar `playertech_test` y no `playertech`.
+* Si un test requiere `SchemaResetter`, limitarlo a la suite que realmente necesita recrear todo el esquema.
 
 ---
 
@@ -180,4 +202,3 @@ docker exec docker-app-1 bash -lc 'cd /var/www/html && php bin/console doctrine:
 ## Entornos
 
 La separación de `local`, `test` y `prod` está documentada en `specs/17-environment-guide.md`.
-
