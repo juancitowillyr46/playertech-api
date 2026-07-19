@@ -26,11 +26,12 @@ final class AcademyMeControllerTest extends KernelTestCase
         $container = self::$kernel->getContainer();
         $entityManager = $container->get('doctrine')->getManager();
         $jwtManager = $container->get('lexik_jwt_authentication.jwt_manager');
+        $suffix = bin2hex(random_bytes(4));
 
         $academy = Academy::create(
             AcademyId::generate(),
             new Name('Academia Test'),
-            new Email('academy@test.local'),
+            new Email(sprintf('academy-%s@test.local', $suffix)),
             new PhoneNumber('+51 999 999 999'),
             'Colombia',
             'Cundinamarca',
@@ -47,7 +48,7 @@ final class AcademyMeControllerTest extends KernelTestCase
         );
 
         $user = new AccountUser();
-        $user->setEmail('admin-'.uniqid('', true).'@test.local');
+        $user->setEmail(sprintf('admin-%s@test.local', $suffix));
         $user->setPasswordHash('hashed-password');
         $user->setAcademyId($academy->id()->value());
         $user->setRole(AccountUser::ROLE_ACADEMY_ADMIN);
@@ -87,7 +88,7 @@ final class AcademyMeControllerTest extends KernelTestCase
         $academyPayload = json_decode($academyResponse->getContent(), true, 512, JSON_THROW_ON_ERROR);
         self::assertSame($academy->id()->value(), $academyPayload['data']['id']);
         self::assertSame('Academia Test', $academyPayload['data']['name']);
-        self::assertSame('academy@test.local', $academyPayload['data']['contactEmail']);
+        self::assertSame(sprintf('academy-%s@test.local', $suffix), $academyPayload['data']['contactEmail']);
         self::assertSame('RESPONSABLE_IVA', $academyPayload['data']['taxRegime']);
     }
 }

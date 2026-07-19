@@ -6,6 +6,7 @@ namespace App\Modules\Academy\Application\Response;
 
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Shared\Application\Response\MediaResponse;
+use App\Shared\Domain\ValueObject\Media;
 
 final readonly class AcademyResponse
 {
@@ -49,15 +50,33 @@ final readonly class AcademyResponse
             $academy->registrationSource(),
             $academy->address()?->value(),
             $academy->city()?->value(),
-            null === $shield ? null : MediaResponse::fromDetails(
+            self::buildShieldResponse($shield),
+            $academy->status()->value(),
+            AcademyAuditResponse::fromAuditTrail($academy->auditTrail()),
+        );
+    }
+
+    private static function buildShieldResponse(?Media $shield): ?MediaResponse
+    {
+        if (null === $shield) {
+            return null;
+        }
+
+        $reflection = new \ReflectionObject($shield);
+        foreach (['path', 'url', 'mimeType', 'size', 'checksum'] as $propertyName) {
+            $property = $reflection->getProperty($propertyName);
+
+            if (!$property->isInitialized($shield)) {
+                return null;
+            }
+        }
+
+        return MediaResponse::fromDetails(
                 $shield->path(),
                 $shield->url(),
                 $shield->mimeType(),
                 $shield->size(),
                 $shield->checksum(),
-            ),
-            $academy->status()->value(),
-            AcademyAuditResponse::fromAuditTrail($academy->auditTrail()),
         );
     }
 
