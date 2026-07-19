@@ -20,10 +20,10 @@ use App\Shared\Domain\ValueObject\MaximumAge;
 use App\Shared\Domain\ValueObject\MinimumAge;
 use App\Shared\Domain\ValueObject\Name;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class TenantFilterTest extends KernelTestCase
 {
@@ -39,12 +39,7 @@ final class TenantFilterTest extends KernelTestCase
         $this->entityManager = $doctrine->getManager();
         $this->academyRepository = new AcademyRepository($doctrine);
         $this->categoryRepository = new CategoryRepository($doctrine);
-
-        $schemaTool = new SchemaTool($this->entityManager);
-        $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
-
-        $this->dropAllTables();
-        $schemaTool->createSchema($metadata);
+        SchemaResetter::reset($this->entityManager, $this->entityManager->getMetadataFactory()->getAllMetadata());
     }
 
     public function testTenantFilterAllowsOwnAcademyAndBlocksForeignRecords(): void

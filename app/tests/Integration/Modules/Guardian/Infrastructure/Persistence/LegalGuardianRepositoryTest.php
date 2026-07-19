@@ -11,8 +11,8 @@ use App\Modules\Guardian\Infrastructure\Persistence\LegalGuardianRepository;
 use App\Shared\Application\Pagination\PaginationQuery;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class LegalGuardianRepositoryTest extends KernelTestCase
 {
@@ -26,17 +26,7 @@ final class LegalGuardianRepositoryTest extends KernelTestCase
         $doctrine = self::$kernel->getContainer()->get('doctrine');
         $this->entityManager = $doctrine->getManager();
         $this->repository = new LegalGuardianRepository($doctrine);
-
-        $connection = $this->entityManager->getConnection();
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $connection->executeStatement('DROP TABLE IF EXISTS legal_guardians');
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
-
-        $schemaTool = new SchemaTool($this->entityManager);
-        $schemaTool->dropSchema([
-            $this->entityManager->getClassMetadata(LegalGuardian::class),
-        ]);
-        $schemaTool->createSchema([
+        SchemaResetter::reset($this->entityManager, [
             $this->entityManager->getClassMetadata(LegalGuardian::class),
         ]);
     }

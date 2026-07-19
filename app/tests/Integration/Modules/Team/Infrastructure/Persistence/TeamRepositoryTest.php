@@ -12,8 +12,8 @@ use App\Modules\Team\Infrastructure\Persistence\TeamRepository;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Name;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class TeamRepositoryTest extends KernelTestCase
 {
@@ -27,14 +27,7 @@ final class TeamRepositoryTest extends KernelTestCase
         $doctrine = self::$kernel->getContainer()->get('doctrine');
         $this->entityManager = $doctrine->getManager();
         $this->teamRepository = new TeamRepository($doctrine);
-
-        $connection = $this->entityManager->getConnection();
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $connection->executeStatement('DROP TABLE IF EXISTS teams');
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
-
-        $schemaTool = new SchemaTool($this->entityManager);
-        $schemaTool->createSchema([
+        SchemaResetter::create($this->entityManager, [
             $this->entityManager->getClassMetadata(Team::class),
         ]);
     }

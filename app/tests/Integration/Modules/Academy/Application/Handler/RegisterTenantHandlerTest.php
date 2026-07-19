@@ -22,7 +22,6 @@ use App\Shared\Application\Pagination\PaginationQuery;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Description;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -31,6 +30,7 @@ use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\MaximumAge;
 use App\Shared\Domain\ValueObject\MinimumAge;
 use App\Shared\Domain\ValueObject\Name;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class RegisterTenantHandlerTest extends KernelTestCase
 {
@@ -81,12 +81,7 @@ final class RegisterTenantHandlerTest extends KernelTestCase
             'http://localhost:8081',
             'http://localhost:4200/tenant/activate',
         );
-
-        $schemaTool = new SchemaTool($this->entityManager);
-        $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
-
-        $schemaTool->dropSchema($metadata);
-        $schemaTool->createSchema($metadata);
+        SchemaResetter::reset($this->entityManager, $this->entityManager->getMetadataFactory()->getAllMetadata());
     }
 
     public function testItRegistersTenantAcademyAndOwnerUser(): void
@@ -139,6 +134,7 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         ]);
 
         self::assertInstanceOf(AccountUser::class, $user);
+        self::assertSame('Juan Perez', $user?->getFullName());
         self::assertSame($academy?->id()->value(), $user?->getAcademyId());
         self::assertSame(AccountUser::ROLE_ACADEMY_ADMIN, $user?->getRole());
         self::assertSame(AccountUser::STATUS_PENDING_ACTIVATION, $user?->getStatus());

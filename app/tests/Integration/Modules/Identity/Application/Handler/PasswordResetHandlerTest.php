@@ -11,11 +11,11 @@ use App\Modules\Identity\Application\Dto\RequestPasswordResetInput;
 use App\Modules\Identity\Application\Handler\ConfirmPasswordResetHandler;
 use App\Modules\Identity\Application\Handler\RequestPasswordResetHandler;
 use App\Modules\Identity\Domain\User\AccountUser;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class PasswordResetHandlerTest extends KernelTestCase
 {
@@ -25,10 +25,7 @@ final class PasswordResetHandlerTest extends KernelTestCase
         self::bootKernel();
 
         $entityManager = self::$kernel->getContainer()->get('doctrine')->getManager();
-
-        $schemaTool = new SchemaTool($entityManager);
-        $schemaTool->dropSchema([$entityManager->getClassMetadata(AccountUser::class)]);
-        $schemaTool->createSchema([$entityManager->getClassMetadata(AccountUser::class)]);
+        SchemaResetter::reset($entityManager, [$entityManager->getClassMetadata(AccountUser::class)]);
 
         $user = new AccountUser();
         $user->setEmail('reset@test.local');

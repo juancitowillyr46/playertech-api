@@ -34,11 +34,6 @@ if ('test' === ($_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? null) && is_string($d
         ]);
 
         $pdo->exec(sprintf(
-            'DROP DATABASE IF EXISTS `%s`',
-            $databaseName
-        ));
-
-        $pdo->exec(sprintf(
             'CREATE DATABASE IF NOT EXISTS `%s` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci',
             $databaseName
         ));

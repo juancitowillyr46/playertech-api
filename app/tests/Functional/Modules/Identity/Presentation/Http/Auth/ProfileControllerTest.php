@@ -19,10 +19,8 @@ final class ProfileControllerTest extends KernelTestCase
         $entityManager = $container->get('doctrine')->getManager();
         $jwtManager = $container->get('lexik_jwt_authentication.jwt_manager');
 
-        $this->resetUsersTable($entityManager);
-
         $user = new AccountUser();
-        $user->setEmail('coach@test.local');
+        $user->setEmail('coach-'.uniqid('', true).'@test.local');
         $user->setPasswordHash('hashed-password');
         $user->setRole(AccountUser::ROLE_ROOT);
         $user->setFullName('Coach Old');
@@ -47,15 +45,41 @@ final class ProfileControllerTest extends KernelTestCase
         $payload = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
         self::assertSame('Coach New', $payload['data']['fullName']);
 
-        $fresh = $entityManager->getRepository(AccountUser::class)->findOneBy(['email' => 'coach@test.local']);
+        $fresh = $entityManager->getRepository(AccountUser::class)->findOneBy(['email' => $user->getEmail()]);
         self::assertSame('Coach New', $fresh?->getFullName());
     }
 
-    private function resetUsersTable(\Doctrine\ORM\EntityManagerInterface $entityManager): void
+    public function testItRequestsPasswordResetForAuthenticatedUser(): void
     {
-        $connection = $entityManager->getConnection();
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $connection->executeStatement('DELETE FROM users');
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
+        self::ensureKernelShutdown();
+        self::bootKernel();
+
+        $container = self::$kernel->getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+        $jwtManager = $container->get('lexik_jwt_authentication.jwt_manager');
+
+        $user = new AccountUser();
+        $user->setEmail('recover-'.uniqid('', true).'@test.local');
+        $user->setPasswordHash('hashed-password');
+        $user->setRole(AccountUser::ROLE_ROOT);
+        $user->setFullName('Recover User');
+        $user->setStatus(AccountUser::STATUS_ACTIVE);
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        $response = self::$kernel->handle(Request::create(
+            '/api/v1/auth/me/password-reset/request',
+            'POST',
+            server: [
+                'HTTP_AUTHORIZATION' => 'Bearer '.$jwtManager->create($user),
+            ]
+        ));
+
+        self::assertSame(200, $response->getStatusCode());
+
+        $fresh = $entityManager->getRepository(AccountUser::class)->findOneBy(['email' => $user->getEmail()]);
+        self::assertNotNull($fresh?->getPasswordResetToken());
+        self::assertNotNull($fresh?->getPasswordResetExpiresAt());
     }
 }

@@ -15,6 +15,7 @@ final readonly class RequestPasswordResetHandler extends AbstractUserHandler
     public function __construct(
         \Doctrine\ORM\EntityManagerInterface $entityManager,
         private MessageBusInterface $messageBus,
+        private string $authFrontendUrl,
     ) {
         parent::__construct($entityManager);
     }
@@ -42,7 +43,7 @@ final readonly class RequestPasswordResetHandler extends AbstractUserHandler
 
         $this->entityManager->flush();
 
-        $resetUrl = sprintf('%s/api/v1/public/users/password-reset/confirm/%s', rtrim($command->publicUrl, '/'), $token);
+        $resetUrl = sprintf('%s/auth/reset-password?token=%s', rtrim($this->authFrontendUrl, '/'), $token);
 
         $this->messageBus->dispatch(new SendPasswordResetEmailMessage(
             $user->getUserIdentifier(),

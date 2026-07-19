@@ -13,9 +13,9 @@ use App\Shared\Domain\ValueObject\City;
 use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class UsersControllerTest extends KernelTestCase
 {
@@ -27,18 +27,7 @@ final class UsersControllerTest extends KernelTestCase
         $container = self::$kernel->getContainer();
         $entityManager = $container->get('doctrine')->getManager();
         $jwtManager = $container->get('lexik_jwt_authentication.jwt_manager');
-
-        $connection = $entityManager->getConnection();
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $connection->executeStatement('DROP TABLE IF EXISTS users, academies');
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
-
-        $schemaTool = new SchemaTool($entityManager);
-        $schemaTool->dropSchema([
-            $entityManager->getClassMetadata(Academy::class),
-            $entityManager->getClassMetadata(AccountUser::class),
-        ]);
-        $schemaTool->createSchema([
+        SchemaResetter::reset($entityManager, [
             $entityManager->getClassMetadata(Academy::class),
             $entityManager->getClassMetadata(AccountUser::class),
         ]);

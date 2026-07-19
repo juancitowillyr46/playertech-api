@@ -24,7 +24,6 @@ use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Description;
 use App\Shared\Application\Pagination\PaginationQuery;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -33,6 +32,7 @@ use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\MaximumAge;
 use App\Shared\Domain\ValueObject\MinimumAge;
 use App\Shared\Domain\ValueObject\Name;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class ProvisionTenantHandlerTest extends KernelTestCase
 {
@@ -84,12 +84,7 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
             'http://localhost:8081',
             'http://localhost:4200/tenant/activate',
         );
-
-        $schemaTool = new SchemaTool($this->entityManager);
-        $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
-
-        $schemaTool->dropSchema($metadata);
-        $schemaTool->createSchema($metadata);
+        SchemaResetter::reset($this->entityManager, $this->entityManager->getMetadataFactory()->getAllMetadata());
     }
 
     public function testItProvisionTenantCreatesAcademyUserAndTeam(): void

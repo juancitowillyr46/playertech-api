@@ -18,9 +18,9 @@ use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class PlayerGuardianControllerTest extends KernelTestCase
 {
@@ -37,21 +37,7 @@ final class PlayerGuardianControllerTest extends KernelTestCase
         $doctrine = $container->get('doctrine');
         $this->entityManager = $doctrine->getManager();
         $jwtManager = $container->get('lexik_jwt_authentication.jwt_manager');
-
-        $connection = $this->entityManager->getConnection();
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $connection->executeStatement('DROP TABLE IF EXISTS player_guardians, legal_guardians, players, academies, users');
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
-
-        $schemaTool = new SchemaTool($this->entityManager);
-        $schemaTool->dropSchema([
-            $this->entityManager->getClassMetadata(Academy::class),
-            $this->entityManager->getClassMetadata(AccountUser::class),
-            $this->entityManager->getClassMetadata(Player::class),
-            $this->entityManager->getClassMetadata(LegalGuardian::class),
-            $this->entityManager->getClassMetadata(PlayerGuardian::class),
-        ]);
-        $schemaTool->createSchema([
+        SchemaResetter::reset($this->entityManager, [
             $this->entityManager->getClassMetadata(Academy::class),
             $this->entityManager->getClassMetadata(AccountUser::class),
             $this->entityManager->getClassMetadata(Player::class),

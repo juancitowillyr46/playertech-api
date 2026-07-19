@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Modules\Identity\Presentation\Http\Open;
 
 use App\Modules\Identity\Domain\User\AccountUser;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class UserActivationControllerTest extends KernelTestCase
 {
@@ -19,12 +18,7 @@ final class UserActivationControllerTest extends KernelTestCase
 
         $container = self::$kernel->getContainer();
         $entityManager = $container->get('doctrine')->getManager();
-
-        $schemaTool = new SchemaTool($entityManager);
-        $schemaTool->dropSchema([
-            $entityManager->getClassMetadata(AccountUser::class),
-        ]);
-        $schemaTool->createSchema([
+        SchemaResetter::reset($entityManager, [
             $entityManager->getClassMetadata(AccountUser::class),
         ]);
 

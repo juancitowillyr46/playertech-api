@@ -20,8 +20,8 @@ use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class PlayerGuardianRepositoryTest extends KernelTestCase
 {
@@ -38,20 +38,7 @@ final class PlayerGuardianRepositoryTest extends KernelTestCase
         $doctrine = self::$kernel->getContainer()->get('doctrine');
         $this->entityManager = $doctrine->getManager();
         $this->repository = new PlayerGuardianRepository($doctrine);
-
-        $connection = $this->entityManager->getConnection();
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $connection->executeStatement('DROP TABLE IF EXISTS player_guardians, legal_guardians, players, academies');
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
-
-        $schemaTool = new SchemaTool($this->entityManager);
-        $schemaTool->dropSchema([
-            $this->entityManager->getClassMetadata(Academy::class),
-            $this->entityManager->getClassMetadata(Player::class),
-            $this->entityManager->getClassMetadata(LegalGuardian::class),
-            $this->entityManager->getClassMetadata(PlayerGuardian::class),
-        ]);
-        $schemaTool->createSchema([
+        SchemaResetter::reset($this->entityManager, [
             $this->entityManager->getClassMetadata(Academy::class),
             $this->entityManager->getClassMetadata(Player::class),
             $this->entityManager->getClassMetadata(LegalGuardian::class),

@@ -178,6 +178,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `ROLE_ROOT` opera sin tenant; usuarios tenant requieren `academy_id` y `TenantContext`.
 * `Academy` ya expone `GET /api/v1/academy/me` como contexto tenant, `PUT /api/v1/academy/me` para autogestión del tenant y `GET /api/v1/platform/academies` como API de plataforma.
 * La API de usuario autenticado quedó separada de la API de academia: `auth/me` expone identidad, `auth/me/name` actualiza sólo el nombre y el reset de contraseña usa endpoints públicos dedicados.
+* `ProfileController` ahora reutiliza el flujo público de restablecimiento de contraseña desde `POST /api/v1/auth/me/password-reset/request`, usando el correo del usuario autenticado.
 * La nomenclatura funcional de roles quedó alineada a `ROLE_ACADEMY_ADMIN` en docs y Postman; `ROLE_ROOT` sigue siendo el rol de plataforma sin tenant.
 * Los endpoints de `Academy` quedaron validados como parte del flujo base tenant/root y siguen protegidos por `TenantContext` y el filtro de persistencia.
 * `Academy` ahora usa `AcademyId` como Doctrine custom type y VOs compartidos como embeddables XML, sirviendo como referencia del patrón para los demas modulos.
@@ -211,7 +212,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Se documentó una épica nueva para onboarding de tenant (`EP-014`) sin alterar el flujo de creación de tenants por `ROLE_ROOT`.
 * El onboarding tenant ya tiene implementación base: signup público, correo de activación y endpoint de activación.
 * El endpoint público de activación ahora es idempotente cuando el token sigue disponible: si el usuario vuelve a entrar al enlace, el backend puede marcar `alreadyActivated`; si el token no existe o expiró, responde `404` en Problem Details en lugar de `500`.
-* La base de desarrollo `playertech` y la base de pruebas `playertech_test` están separadas por configuración; además, el bootstrap de PHPUnit ahora bloquea el uso accidental de una base que no termine en `_test`.
+* La base de desarrollo `playertech` y la base de pruebas `playertech_test` están separadas por configuración; además, el bootstrap de PHPUnit ahora bloquea el uso accidental de una base que no termine en `_test` y ya no borra datos por defecto.
 * Existe deuda en migraciones antiguas: `Version20260704000000` falla al reejecutarse por un `DROP COLUMN logo` sobre una columna ya ausente, así que el `migrate` completo de `dev` queda bloqueado hasta corregir esa versión histórica.
 * Para reparar el catálogo público de onboarding en `playertech` existe el comando `app:category:seed-onboarding`, útil cuando la tabla se vacía pero la migración ya figura como ejecutada.
 * El contrato público de onboarding pasa a usar un catálogo global de categorías y el signup clonará la categoría elegida dentro de la academia; la implementación sigue pendiente.

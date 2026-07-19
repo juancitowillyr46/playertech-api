@@ -268,6 +268,12 @@ Activar arquitectura orientada a eventos.
 * security.log
 * application.log
 
+### Local Observability
+
+* Estrategia local-first para logs estructurados, correlation id y metricas basicas.
+* Base conceptual documentada en `specs/19-observability-local.md`.
+* Visor local y stack de metricas se decidiran mas adelante sin comprometer el MVP.
+
 ---
 
 ## Deliverable

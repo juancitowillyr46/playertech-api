@@ -20,9 +20,9 @@ use App\Shared\Domain\ValueObject\MinimumAge;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class TeamControllerTest extends KernelTestCase
 {
@@ -39,14 +39,7 @@ final class TeamControllerTest extends KernelTestCase
         $doctrine = $container->get('doctrine');
         $this->entityManager = $doctrine->getManager();
         $jwtManager = $container->get('lexik_jwt_authentication.jwt_manager');
-
-        $connection = $this->entityManager->getConnection();
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $connection->executeStatement('DROP TABLE IF EXISTS teams, categories, academies, users');
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
-
-        $schemaTool = new SchemaTool($this->entityManager);
-        $schemaTool->createSchema([
+        SchemaResetter::create($this->entityManager, [
             $this->entityManager->getClassMetadata(Academy::class),
             $this->entityManager->getClassMetadata(Category::class),
             $this->entityManager->getClassMetadata(AccountUser::class),

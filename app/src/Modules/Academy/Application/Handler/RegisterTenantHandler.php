@@ -112,6 +112,7 @@ final readonly class RegisterTenantHandler
             $this->entityManager->persist($category);
 
             $user = new AccountUser();
+            $user->setFullName($data->contactName);
             $user->setEmail($data->contactEmail);
             $user->setAcademyId($academyId->value());
             $user->setRole(AccountUser::ROLE_ACADEMY_ADMIN);

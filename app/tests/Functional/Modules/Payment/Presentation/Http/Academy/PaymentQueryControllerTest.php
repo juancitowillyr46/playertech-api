@@ -21,9 +21,9 @@ use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class PaymentQueryControllerTest extends KernelTestCase
 {
@@ -40,22 +40,7 @@ final class PaymentQueryControllerTest extends KernelTestCase
         $container = self::$kernel->getContainer();
         $doctrine = $container->get('doctrine');
         $this->entityManager = $doctrine->getManager();
-        $connection = $this->entityManager->getConnection();
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $connection->executeStatement('DROP TABLE IF EXISTS payment_allocations, payments, charges, memberships, payment_concepts, legal_guardians, players, academies, users');
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
-
-        $schemaTool = new SchemaTool($this->entityManager);
-        $schemaTool->dropSchema([
-            $this->entityManager->getClassMetadata(Academy::class),
-            $this->entityManager->getClassMetadata(AccountUser::class),
-            $this->entityManager->getClassMetadata(Player::class),
-            $this->entityManager->getClassMetadata(LegalGuardian::class),
-            $this->entityManager->getClassMetadata(Membership::class),
-            $this->entityManager->getClassMetadata(PaymentConcept::class),
-            $this->entityManager->getClassMetadata(Payment::class),
-        ]);
-        $schemaTool->createSchema([
+        SchemaResetter::reset($this->entityManager, [
             $this->entityManager->getClassMetadata(Academy::class),
             $this->entityManager->getClassMetadata(AccountUser::class),
             $this->entityManager->getClassMetadata(Player::class),

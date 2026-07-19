@@ -15,8 +15,8 @@ use App\Modules\TeamAssignment\Infrastructure\Persistence\TeamAssignmentReposito
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Name;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Tests\Support\Database\SchemaResetter;
 
 final class TeamAssignmentRepositoryTest extends KernelTestCase
 {
@@ -30,16 +30,7 @@ final class TeamAssignmentRepositoryTest extends KernelTestCase
         $doctrine = self::$kernel->getContainer()->get('doctrine');
         $this->entityManager = $doctrine->getManager();
         $this->repository = new TeamAssignmentRepository($doctrine);
-
-        $connection = $this->entityManager->getConnection();
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $connection->executeStatement('DROP TABLE IF EXISTS team_assignments');
-        $connection->executeStatement('DROP TABLE IF EXISTS players');
-        $connection->executeStatement('DROP TABLE IF EXISTS teams');
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
-
-        $schemaTool = new SchemaTool($this->entityManager);
-        $schemaTool->createSchema([
+        SchemaResetter::create($this->entityManager, [
             $this->entityManager->getClassMetadata(Player::class),
             $this->entityManager->getClassMetadata(Team::class),
             $this->entityManager->getClassMetadata(TeamAssignment::class),

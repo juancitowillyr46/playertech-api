@@ -19,10 +19,8 @@ final class MeControllerTest extends KernelTestCase
         $entityManager = $container->get('doctrine')->getManager();
         $jwtManager = $container->get('lexik_jwt_authentication.jwt_manager');
 
-        $this->resetUsersTable($entityManager);
-
         $user = new AccountUser();
-        $user->setEmail('root@test.local');
+        $user->setEmail('root-'.uniqid('', true).'@test.local');
         $user->setPasswordHash('hashed-password');
         $user->setRole(AccountUser::ROLE_ROOT);
         $user->setFullName('Root Admin');
@@ -42,16 +40,8 @@ final class MeControllerTest extends KernelTestCase
 
         $payload = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
-        self::assertSame('root@test.local', $payload['data']['email']);
+        self::assertSame($user->getEmail(), $payload['data']['email']);
         self::assertSame(AccountUser::ROLE_ROOT, $payload['data']['role']);
         self::assertContains(AccountUser::ROLE_ROOT, $payload['data']['roles']);
-    }
-
-    private function resetUsersTable(\Doctrine\ORM\EntityManagerInterface $entityManager): void
-    {
-        $connection = $entityManager->getConnection();
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $connection->executeStatement('DELETE FROM users');
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
