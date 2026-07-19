@@ -61,7 +61,41 @@ Body:
 
 ---
 
-## 3. Actor autorizado
+## 3. Perfil fiscal y comprobante de pagos
+
+### Contrato fiscal vigente
+
+El perfil fiscal actual de la academia vive dentro de `academies` y se consulta o actualiza con:
+
+- `GET /api/v1/academy/me/tax-profile`
+- `PUT /api/v1/academy/me/tax-profile`
+
+Campos fiscales operativos vigentes:
+
+- `taxIdType`
+- `taxIdNumber`
+- `taxCheckDigit`
+- `taxRegime`
+- `billingEmail`
+
+### Uso actual
+
+Estos datos se usan como base para el comprobante de pagos, no para facturación electrónica DIAN.
+
+### Alcance del MVP
+
+- No modelar todavía CUFE, firma digital DIAN ni resolución de facturación electrónica.
+- No crear una tabla separada de facturación electrónica para este flujo.
+- Mantener el perfil fiscal como fuente operativa para comprobantes internos.
+
+### Datos legales
+
+Si en el futuro se requiere `legalName` o razón social editable, ese dato debe tratarse como un bloque separado del `tax-profile`.
+Por ahora no forma parte del contrato editable de este endpoint.
+
+---
+
+## 4. Actor autorizado
 
 La gestión de la academia en el tenant debe quedar asociada al `owner/admin` principal.
 
@@ -73,7 +107,7 @@ No usar estos endpoints para usuarios operativos secundarios si no son owner/adm
 
 ---
 
-## 4. Fuentes de referencia
+## 5. Fuentes de referencia
 
 - Colección Postman: `postman/PlayerTech.postman_collection.json`
 - Historia: [HU-011 Actualizar Academia](/C:/Data/Source/Repos/playertech/docs/backlog/stories/EP-001/HU-011-update-academy.md)

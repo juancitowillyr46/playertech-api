@@ -244,6 +244,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-013` de `EP-001` quedó implementada con `POST /api/v1/academy/me/shield` para subir y reemplazar el escudo institucional de la academia.
 * Se amplió `EP-001` con el perfil básico de academia: `country`, `department`, `city`, `address`, teléfono normalizado y consentimientos legales obligatorios en el signup de tenant.
 * La colección Postman quedó actualizada para reflejar el nuevo contrato de `Academy` y `TenantSignup`, incluyendo `country`, `department` y los consentimientos obligatorios.
+* El perfil fiscal de academia vive actualmente dentro de `academies` y actúa como fuente operativa para comprobantes de pago; no se modeló todavía una tabla separada ni la integración de facturación electrónica DIAN.
 * `HU-015` de `EP-001` quedó implementada con `POST /api/v1/platform/academies` para provisionar tenants completos desde la plataforma con academia, owner/admin inicial, correo de bienvenida y primer equipo.
 * La colección Postman quedó actualizada con contratos de ejemplo para `POST /api/v1/public/tenants/signup` y `POST /api/v1/platform/academies`.
 * La colección Postman se usa como referencia operativa de contrato HTTP para el front mientras no exista Swagger/OpenAPI interactivo.
