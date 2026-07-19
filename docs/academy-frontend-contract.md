@@ -4,7 +4,29 @@ Este documento resume el contrato vigente para el front sobre la academia y la i
 
 ---
 
-## 1. Datos de academia
+## 1. Contexto del tenant
+
+### Consulta
+
+`GET /api/v1/academy/context`
+
+Usar para obtener el contexto operativo del usuario autenticado dentro del tenant.
+
+### Propósito
+
+- Resolver `mode`
+- Resolver `userId`
+- Resolver `academyId`
+- Resolver `role`
+- Resolver `roles`
+
+### Regla
+
+Este endpoint no representa el perfil de la academia.
+
+---
+
+## 2. Perfil de academia
 
 ### Consulta
 
@@ -38,7 +60,7 @@ Body permitido:
 
 ---
 
-## 2. Imagen institucional
+## 3. Imagen institucional
 
 ### Subida / reemplazo
 
@@ -61,7 +83,7 @@ Body:
 
 ---
 
-## 3. Perfil fiscal y comprobante de pagos
+## 4. Perfil fiscal y comprobante de pagos
 
 ### Contrato fiscal vigente
 
@@ -95,10 +117,11 @@ Por ahora no forma parte del contrato editable de este endpoint.
 
 ---
 
-## 4. Actor autorizado
+## 5. Actor autorizado
 
 La gestión de la academia en el tenant debe quedar asociada al `owner/admin` principal.
 
+- `GET /api/v1/academy/context`
 - `GET /api/v1/academy/me`
 - `PUT /api/v1/academy/me`
 - `POST /api/v1/academy/me/shield`
@@ -107,8 +130,9 @@ No usar estos endpoints para usuarios operativos secundarios si no son owner/adm
 
 ---
 
-## 5. Fuentes de referencia
+## 6. Fuentes de referencia
 
 - Colección Postman: `postman/PlayerTech.postman_collection.json`
+- Contrato HTTP: `specs/16-api-reference.md`
 - Historia: [HU-011 Actualizar Academia](/C:/Data/Source/Repos/playertech/docs/backlog/stories/EP-001/HU-011-update-academy.md)
 - Historia: [HU-013 Subir Escudo Institucional de Academia](/C:/Data/Source/Repos/playertech/docs/backlog/stories/EP-001/HU-013-upload-academy-shield.md)

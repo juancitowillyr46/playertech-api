@@ -47,6 +47,8 @@ Si el proyecto lo trabaja una sola persona, aplicar estas reglas antes que un fl
 - Si una regla solo existe en código y aún no está madura, documentarla como inferencia o vacío, no como verdad definitiva.
 - Si un cambio no altera comportamiento, no requiere documentación extensa.
 - Si un cambio altera contrato, estado o trazabilidad, sí debe quedar registrado.
+- SSD es una guia escalonada, no un requisito completo para cada ajuste.
+- La regla minima es: registrar trazabilidad breve cuando el cambio sea relevante y escalar solo si cambia contrato, seguridad, comportamiento o pruebas.
 
 ---
 

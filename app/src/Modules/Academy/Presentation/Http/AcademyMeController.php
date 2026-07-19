@@ -7,10 +7,12 @@ namespace App\Modules\Academy\Presentation\Http;
 use App\Modules\Academy\Application\Command\UpdateAcademyCommand;
 use App\Modules\Academy\Application\Command\UpdateAcademyTaxProfileCommand;
 use App\Modules\Academy\Application\Handler\GetAcademyContextHandler;
+use App\Modules\Academy\Application\Handler\ShowAcademyHandler;
 use App\Modules\Academy\Application\Handler\ShowAcademyTaxProfileHandler;
 use App\Modules\Academy\Application\Handler\UpdateAcademyHandler;
 use App\Modules\Academy\Application\Handler\UpdateAcademyTaxProfileHandler;
 use App\Modules\Academy\Application\Query\GetAcademyContextQuery;
+use App\Modules\Academy\Application\Query\ShowAcademyQuery;
 use App\Modules\Academy\Application\Query\ShowAcademyTaxProfileQuery;
 use App\Modules\Academy\Application\Shield\Upload\UploadAcademyShieldCommand;
 use App\Modules\Academy\Application\Shield\Upload\UploadAcademyShieldHandler;
@@ -30,6 +32,7 @@ final class AcademyMeController extends AbstractApiController
     public function __construct(
         private readonly ValidatorInterface $validator,
         private readonly GetAcademyContextHandler $getAcademyContextHandler,
+        private readonly ShowAcademyHandler $showAcademyHandler,
         private readonly ShowAcademyTaxProfileHandler $showAcademyTaxProfileHandler,
         private readonly UpdateAcademyHandler $updateAcademyHandler,
         private readonly UpdateAcademyTaxProfileHandler $updateAcademyTaxProfileHandler,
@@ -37,10 +40,23 @@ final class AcademyMeController extends AbstractApiController
     ) {
     }
 
-    #[Route('/academy/me', name: 'api_v1_academy_me', methods: ['GET'])]
+    #[Route('/academy/context', name: 'api_v1_academy_context', methods: ['GET'])]
     public function getAcademyContext(): JsonResponse
     {
         $view = ($this->getAcademyContextHandler)(new GetAcademyContextQuery());
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/academy/me', name: 'api_v1_academy_me', methods: ['GET'])]
+    public function showAcademy(TenantContext $tenantContext): JsonResponse
+    {
+        $view = ($this->showAcademyHandler)(new ShowAcademyQuery(
+            $tenantContext->requireAcademyId()
+        ));
 
         return new JsonResponse([
             'data' => $view->toArray(),

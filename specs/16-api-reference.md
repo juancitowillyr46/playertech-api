@@ -133,6 +133,44 @@ Los listados más visibles para frontend usan `data` como arreglo de DTOs resumi
 }
 ```
 
+### Academy Profile
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "name": "Academia PlayerTech",
+    "contactEmail": "contacto@academiaplayertech.com",
+    "phone": "+573125953354",
+    "country": "Colombia",
+    "department": "Cundinamarca",
+    "taxIdType": "NIT",
+    "taxIdNumber": "901234567-8",
+    "taxCheckDigit": "8",
+    "taxRegime": "RESPONSABLE_IVA",
+    "billingEmail": "facturacion@academiaplayertech.com",
+    "registrationSource": "platform",
+    "address": "Av. Principal 123",
+    "city": "Bogota",
+    "shield": {
+      "path": "var/storage/media/local/academies/01J.../shield/original/01K....png",
+      "url": "https://api.playertech.test/media/academies/01J.../shield/01K....png",
+      "mimeType": "image/png",
+      "size": 184233,
+      "checksum": "sha256:..."
+    },
+    "status": "ACTIVE",
+    "audit": {
+      "createdAt": "2026-07-11T00:00:00+00:00",
+      "createdBy": "019f0000-0000-7000-8000-000000000000",
+      "updatedAt": null,
+      "updatedBy": null
+    }
+  },
+  "meta": {}
+}
+```
+
 ### Users
 
 ```json
@@ -612,6 +650,121 @@ Provisionar un tenant completo desde plataforma, creando academia, usuario owner
 > El backend mantiene el contrato técnico actual con `taxIdType`, `taxIdNumber`, `taxRegime` y `billingEmail`.
 > A nivel de negocio, la academia maneja un único perfil fiscal principal o default.
 > Para el MVP se agrega `taxCheckDigit` como dígito de verificación opcional.
+
+## Tenant Context
+
+```http
+GET /api/v1/academy/context
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Obtener el contexto operativo de la sesión.
+
+### Success
+
+`200 OK`
+
+```json
+{
+  "data": {
+    "mode": "tenant",
+    "userId": "uuid",
+    "academyId": "uuid",
+    "role": "ROLE_ACADEMY_ADMIN",
+    "roles": ["ROLE_ACADEMY_ADMIN", "ROLE_USER"]
+  },
+  "meta": {}
+}
+```
+
+### Rules
+
+* Este endpoint no devuelve el perfil de la academia.
+* Se usa para resolver permisos, contexto y navegación.
+
+## Show Academy Profile
+
+```http
+GET /api/v1/academy/me
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Consultar el perfil general de la academia actual.
+
+### Success
+
+`200 OK`
+
+Usa el contrato `Academy Profile` definido en la sección de ejemplos.
+
+### Rules
+
+* Este endpoint devuelve el perfil de la academia, no el contexto tenant.
+* Debe ser el contrato que use el front para renderizar la pantalla de academia.
+
+## Update Academy Profile
+
+```http
+PUT /api/v1/academy/me
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Actualizar el perfil general de la academia actual.
+
+### Success
+
+`200 OK`
+
+Usa el contrato `Academy Profile` definido en la sección de ejemplos.
+
+### Rules
+
+* Este endpoint actualiza el perfil de la academia.
+* No debe usarse para leer `mode`, `userId` o `roles`.
+
+## Update Academy Shield
+
+```http
+POST /api/v1/academy/me/shield
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Subir o reemplazar el escudo institucional de la academia actual.
+
+### Request
+
+Enviar `multipart/form-data` con el campo `shield`.
+
+### Success
+
+`201 Created`
+
+Usa el contrato `Academy Profile` definido en la sección de ejemplos.
+
+### Rules
+
+* El archivo `shield` se maneja como contenido binario, no como parte del JSON.
+* Este endpoint actualiza sólo la imagen institucional de la academia.
 
 ## Show Academy Tax Profile
 

@@ -1200,6 +1200,48 @@
           ]
         },
         {
+          "name": "Academy - Context",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/context",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "context"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Academy - Context Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"mode\": \"tenant\",\n    \"userId\": \"4d4fe57b-ad13-4e94-94e4-f3cbd097b6d7\",\n    \"academyId\": \"019f7830-46a3-7151-bf04-f44a8d95227f\",\n    \"role\": \"ROLE_ACADEMY_ADMIN\",\n    \"roles\": [\n      \"ROLE_ACADEMY_ADMIN\",\n      \"ROLE_USER\"\n    ]\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
           "name": "Academy - Tax Profile - Show",
           "request": {
             "method": "GET",
@@ -1239,6 +1281,151 @@
                 }
               ],
               "body": "{\n  \"data\": {\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxCheckDigit\": \"8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Academy - Me - Show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "me"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Academy - Me - Show Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000001\",\n    \"name\": \"Academia PlayerTech\",\n    \"contactEmail\": \"contacto@academiaplayertech.com\",\n    \"phone\": \"+573125953354\",\n    \"country\": \"Colombia\",\n    \"department\": \"Cundinamarca\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxCheckDigit\": \"8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\",\n    \"registrationSource\": \"platform\",\n    \"address\": \"Av. Principal 123\",\n    \"city\": \"Bogota\",\n    \"shield\": {\n      \"path\": \"var/storage/media/local/academies/01J.../shield/original/01K....png\",\n      \"url\": \"https://api.playertech.test/media/academies/01J.../shield/01K....png\",\n      \"mimeType\": \"image/png\",\n      \"size\": 184233,\n      \"checksum\": \"sha256:...\"\n    },\n    \"status\": \"ACTIVE\",\n    \"audit\": {\n      \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n      \"createdBy\": \"019f0000-0000-7000-8000-000000000000\",\n      \"updatedAt\": null,\n      \"updatedBy\": null\n    }\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Academy - Me - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Academia PlayerTech\",\n  \"contactEmail\": \"contacto@academiaplayertech.com\",\n  \"phone\": \"+573125953354\",\n  \"country\": \"Colombia\",\n  \"department\": \"Cundinamarca\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Bogota\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "me"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Academy - Me - Update Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000001\",\n    \"name\": \"Academia PlayerTech\",\n    \"contactEmail\": \"contacto@academiaplayertech.com\",\n    \"phone\": \"+573125953354\",\n    \"country\": \"Colombia\",\n    \"department\": \"Cundinamarca\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxCheckDigit\": \"8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\",\n    \"registrationSource\": \"platform\",\n    \"address\": \"Av. Principal 123\",\n    \"city\": \"Bogota\",\n    \"shield\": {\n      \"path\": \"var/storage/media/local/academies/01J.../shield/original/01K....png\",\n      \"url\": \"https://api.playertech.test/media/academies/01J.../shield/01K....png\",\n      \"mimeType\": \"image/png\",\n      \"size\": 184233,\n      \"checksum\": \"sha256:...\"\n    },\n    \"status\": \"ACTIVE\",\n    \"audit\": {\n      \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n      \"createdBy\": \"019f0000-0000-7000-8000-000000000000\",\n      \"updatedAt\": null,\n      \"updatedBy\": null\n    }\n  },\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "Academy - Me - Shield Upload",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "shield",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/me/shield",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "me",
+                "shield"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Academy - Me - Shield Upload Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000001\",\n    \"name\": \"Academia PlayerTech\",\n    \"contactEmail\": \"contacto@academiaplayertech.com\",\n    \"phone\": \"+573125953354\",\n    \"country\": \"Colombia\",\n    \"department\": \"Cundinamarca\",\n    \"taxIdType\": \"NIT\",\n    \"taxIdNumber\": \"901234567-8\",\n    \"taxCheckDigit\": \"8\",\n    \"taxRegime\": \"RESPONSABLE_IVA\",\n    \"billingEmail\": \"facturacion@academiaplayertech.com\",\n    \"registrationSource\": \"platform\",\n    \"address\": \"Av. Principal 123\",\n    \"city\": \"Bogota\",\n    \"shield\": {\n      \"path\": \"var/storage/media/local/academies/01J.../shield/original/01K....png\",\n      \"url\": \"https://api.playertech.test/media/academies/01J.../shield/01K....png\",\n      \"mimeType\": \"image/png\",\n      \"size\": 184233,\n      \"checksum\": \"sha256:...\"\n    },\n    \"status\": \"ACTIVE\",\n    \"audit\": {\n      \"createdAt\": \"2026-07-11T00:00:00+00:00\",\n      \"createdBy\": \"019f0000-0000-7000-8000-000000000000\",\n      \"updatedAt\": null,\n      \"updatedBy\": null\n    }\n  },\n  \"meta\": {}\n}"
             }
           ]
         },

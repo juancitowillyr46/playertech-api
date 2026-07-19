@@ -12,6 +12,7 @@ La meta es combinar trazabilidad real con velocidad de iteracion.
 - Evitar duplicacion documental innecesaria.
 - Escalar formalidad solo cuando el cambio lo amerite.
 - Hacer que futuras features nazcan con trazabilidad y contrato desde el inicio.
+- Usar SDD como guia de decision, no como burocracia obligatoria para todo cambio.
 
 ---
 
@@ -31,6 +32,17 @@ Requiere:
 - nota breve en `specs/14-current-state.md` si el cambio es relevante;
 - revisión de `specs/16-api-reference.md` si afecta HTTP;
 - actualizacion del backlog si cambia el alcance funcional.
+
+### Criterio minimo
+
+Todo cambio debe quedar al menos en uno de estos niveles:
+
+- trazabilidad breve en `specs/14-current-state.md`;
+- ajuste de contrato en `specs/16-api-reference.md` si toca HTTP;
+- ajuste de backlog si cambia alcance o prioridad.
+
+No todo cambio necesita un documento SSD completo.
+Solo los cambios que alteran comportamiento, contrato, seguridad, tenant isolation, auditoria o pruebas relevantes deben escalar.
 
 ### 2. SDD Completo
 
