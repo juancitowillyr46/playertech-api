@@ -13,20 +13,17 @@ use App\Shared\Domain\ValueObject\City;
 use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use App\Tests\Support\Database\SchemaResetter;
+use App\Tests\Support\Database\TestDatabaseKernel;
 
-final class UsersControllerTest extends KernelTestCase
+final class UsersControllerTest extends TestDatabaseKernel
 {
     public function testItInvitesUsersAndListsThemForTenant(): void
     {
-        self::ensureKernelShutdown();
-        self::bootKernel();
-
-        $container = self::$kernel->getContainer();
-        $entityManager = $container->get('doctrine')->getManager();
-        $jwtManager = $container->get('lexik_jwt_authentication.jwt_manager');
+        $container = $this->bootTestKernel();
+        $entityManager = $this->entityManager($container);
+        $jwtManager = $this->jwtManager($container);
         SchemaResetter::reset($entityManager, [
             $entityManager->getClassMetadata(Academy::class),
             $entityManager->getClassMetadata(AccountUser::class),
@@ -39,6 +36,10 @@ final class UsersControllerTest extends KernelTestCase
             new PhoneNumber('+51 999 999 999'),
             'Colombia',
             'Lima',
+            null,
+            null,
+            null,
+            null,
             'signup',
             new Address('Av. Principal 123'),
             new City('Lima'),

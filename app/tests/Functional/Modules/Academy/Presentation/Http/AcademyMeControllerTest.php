@@ -13,19 +13,16 @@ use App\Shared\Domain\ValueObject\City;
 use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use App\Tests\Support\Database\TestDatabaseKernel;
 
-final class AcademyMeControllerTest extends KernelTestCase
+final class AcademyMeControllerTest extends TestDatabaseKernel
 {
     public function testItReturnsTenantContextAndAcademyProfile(): void
     {
-        self::ensureKernelShutdown();
-        self::bootKernel();
-
-        $container = self::$kernel->getContainer();
-        $entityManager = $container->get('doctrine')->getManager();
-        $jwtManager = $container->get('lexik_jwt_authentication.jwt_manager');
+        $container = $this->bootTestKernel();
+        $entityManager = $this->entityManager($container);
+        $jwtManager = $this->jwtManager($container);
         $suffix = bin2hex(random_bytes(4));
 
         $academy = Academy::create(

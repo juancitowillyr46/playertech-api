@@ -18,11 +18,11 @@ use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use App\Tests\Support\Database\SchemaResetter;
+use App\Tests\Support\Database\TestDatabaseKernel;
 
-final class PlayerGuardianControllerTest extends KernelTestCase
+final class PlayerGuardianControllerTest extends TestDatabaseKernel
 {
     private EntityManagerInterface $entityManager;
     private string $jwtToken;
@@ -30,13 +30,9 @@ final class PlayerGuardianControllerTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        self::ensureKernelShutdown();
-        self::bootKernel();
-
-        $container = self::$kernel->getContainer();
-        $doctrine = $container->get('doctrine');
-        $this->entityManager = $doctrine->getManager();
-        $jwtManager = $container->get('lexik_jwt_authentication.jwt_manager');
+        $container = $this->bootTestKernel();
+        $this->entityManager = $this->entityManager($container);
+        $jwtManager = $this->jwtManager($container);
         SchemaResetter::reset($this->entityManager, [
             $this->entityManager->getClassMetadata(Academy::class),
             $this->entityManager->getClassMetadata(AccountUser::class),
@@ -52,6 +48,10 @@ final class PlayerGuardianControllerTest extends KernelTestCase
             new PhoneNumber('+51 999 999 999'),
             'Colombia',
             'Cundinamarca',
+            null,
+            null,
+            null,
+            null,
             'signup',
             new Address('Av. Principal 123'),
             new City('Lima'),
@@ -67,6 +67,8 @@ final class PlayerGuardianControllerTest extends KernelTestCase
             'Perez',
             new \DateTimeImmutable('2014-05-18'),
             '12345678',
+            null,
+            null,
             null,
             null,
             null,

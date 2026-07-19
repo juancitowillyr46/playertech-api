@@ -5,19 +5,16 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Modules\Identity\Presentation\Http\Open;
 
 use App\Modules\Identity\Domain\User\AccountUser;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use App\Tests\Support\Database\SchemaResetter;
+use App\Tests\Support\Database\TestDatabaseKernel;
 
-final class UserActivationControllerTest extends KernelTestCase
+final class UserActivationControllerTest extends TestDatabaseKernel
 {
     public function testItActivatesAPendingUser(): void
     {
-        self::ensureKernelShutdown();
-        self::bootKernel();
-
-        $container = self::$kernel->getContainer();
-        $entityManager = $container->get('doctrine')->getManager();
+        $container = $this->bootTestKernel();
+        $entityManager = $this->entityManager($container);
         SchemaResetter::reset($entityManager, [
             $entityManager->getClassMetadata(AccountUser::class),
         ]);

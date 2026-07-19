@@ -21,11 +21,11 @@ use App\Shared\Domain\ValueObject\Email;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\PhoneNumber;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use App\Tests\Support\Database\SchemaResetter;
+use App\Tests\Support\Database\TestDatabaseKernel;
 
-final class PaymentQueryControllerTest extends KernelTestCase
+final class PaymentQueryControllerTest extends TestDatabaseKernel
 {
     private EntityManagerInterface $entityManager;
     private string $guardianId;
@@ -34,12 +34,8 @@ final class PaymentQueryControllerTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        self::ensureKernelShutdown();
-        self::bootKernel();
-
-        $container = self::$kernel->getContainer();
-        $doctrine = $container->get('doctrine');
-        $this->entityManager = $doctrine->getManager();
+        $container = $this->bootTestKernel();
+        $this->entityManager = $this->entityManager($container);
         SchemaResetter::reset($this->entityManager, [
             $this->entityManager->getClassMetadata(Academy::class),
             $this->entityManager->getClassMetadata(AccountUser::class),
@@ -57,6 +53,10 @@ final class PaymentQueryControllerTest extends KernelTestCase
             new PhoneNumber('+51 999 999 999'),
             'Colombia',
             'Cundinamarca',
+            null,
+            null,
+            null,
+            null,
             'signup',
             new Address('Av. Principal 123'),
             new City('Lima'),
@@ -78,6 +78,8 @@ final class PaymentQueryControllerTest extends KernelTestCase
             null,
             null,
             null,
+            null,
+            null,
             AuditTrail::create('system'),
         );
 
@@ -88,6 +90,9 @@ final class PaymentQueryControllerTest extends KernelTestCase
             'Lopez',
             '+51 999 111 222',
             'maria@example.com',
+            null,
+            null,
+            null,
             'Madre',
             AuditTrail::create('system'),
         );
