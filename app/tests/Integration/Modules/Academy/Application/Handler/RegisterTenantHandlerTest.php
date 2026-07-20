@@ -7,6 +7,8 @@ namespace App\Tests\Integration\Modules\Academy\Application\Handler;
 use App\Modules\Academy\Application\Command\RegisterTenantCommand;
 use App\Modules\Academy\Application\Dto\TenantSignupInput;
 use App\Modules\Academy\Application\Handler\RegisterTenantHandler;
+use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
+use App\Modules\Academy\Domain\Exception\AcademyPhoneAlreadyExistsException;
 use App\Modules\Academy\Infrastructure\Persistence\AcademyRepository;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Domain\Category\Category;
@@ -171,6 +173,47 @@ final class RegisterTenantHandlerTest extends KernelTestCase
             $teams['items']
         ));
         self::assertSame($categories['items'][0]->id()->value(), $teams['items'][0]->categoryId()->value());
+    }
+
+    public function testItRejectsDuplicatedPhoneNumber(): void
+    {
+        $existing = new TenantSignupInput(
+            'Academia Existente',
+            'existing@test.local',
+            'Juan Perez',
+            'secret123',
+            '+51 999 999 999',
+            'Colombia',
+            'Cundinamarca',
+            'Lima',
+            'Av. Principal 123',
+            $this->onboardingCategoryId,
+            'Sub 12 A',
+            true,
+            true,
+        );
+
+        ($this->handler)(new RegisterTenantCommand($existing));
+
+        $this->expectException(AcademyPhoneAlreadyExistsException::class);
+
+        $duplicatePhone = new TenantSignupInput(
+            'Academia Nueva',
+            'new@test.local',
+            'Juan Perez',
+            'secret123',
+            '+51 999 999 999',
+            'Colombia',
+            'Cundinamarca',
+            'Lima',
+            'Av. Principal 456',
+            $this->onboardingCategoryId,
+            'Sub 12 B',
+            true,
+            true,
+        );
+
+        ($this->handler)(new RegisterTenantCommand($duplicatePhone));
     }
 
     private function onboardingCategoryRepositoryStub(): OnboardingCategoryRepository

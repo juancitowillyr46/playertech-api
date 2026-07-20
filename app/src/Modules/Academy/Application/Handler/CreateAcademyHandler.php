@@ -11,8 +11,10 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRegistrationSource;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
+use App\Modules\Academy\Domain\Exception\AcademyPhoneAlreadyExistsException;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Email;
+use App\Shared\Domain\ValueObject\PhoneNumber;
 
 final readonly class CreateAcademyHandler
 {
@@ -23,15 +25,21 @@ final readonly class CreateAcademyHandler
 
     public function __invoke(CreateAcademyCommand $command): AcademyResponse
     {
+        $phone = null === $command->input->phone ? null : new PhoneNumber($command->input->phone);
+
         if (null !== $this->academyRepository->findOneByContactEmail(new Email($command->input->contactEmail))) {
             throw new AcademyAlreadyExistsException();
+        }
+
+        if (null !== $phone && null !== $this->academyRepository->findOneByPhone($phone)) {
+            throw new AcademyPhoneAlreadyExistsException();
         }
 
         $academy = Academy::create(
             AcademyId::generate(),
             new \App\Shared\Domain\ValueObject\Name($command->input->name),
             new \App\Shared\Domain\ValueObject\Email($command->input->contactEmail),
-            null === $command->input->phone ? null : new \App\Shared\Domain\ValueObject\PhoneNumber($command->input->phone),
+            $phone,
             $this->normalizeCountry($command->input->country),
             $command->input->department,
             null,

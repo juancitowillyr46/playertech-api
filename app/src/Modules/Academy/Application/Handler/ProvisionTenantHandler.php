@@ -14,6 +14,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRegistrationSource;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
+use App\Modules\Academy\Domain\Exception\AcademyPhoneAlreadyExistsException;
 use App\Modules\Category\Domain\Exception\CategoryNotFoundException;
 use App\Modules\Category\Domain\Category\OnboardingCategoryRepository;
 use App\Modules\Category\Domain\Category\CategoryId;
@@ -59,6 +60,7 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
     public function __invoke(ProvisionTenantCommand $command): TenantSignupResponse
     {
         $data = $command->input;
+        $phone = null === $data->phone ? null : new PhoneNumber($data->phone);
 
         $academyContactEmail = new Email($data->contactEmail);
         $adminEmail = new Email($data->adminEmail);
@@ -68,6 +70,10 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
 
         if (null !== $this->academyRepository->findOneByContactEmail($academyContactEmail)) {
             throw new AcademyAlreadyExistsException();
+        }
+
+        if (null !== $phone && null !== $this->academyRepository->findOneByPhone($phone)) {
+            throw new AcademyPhoneAlreadyExistsException();
         }
 
         if (null !== $this->findUserByEmail($adminEmail->value())) {
@@ -88,7 +94,7 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
             $academyId,
             new Name($data->name),
             $academyContactEmail,
-            null === $data->phone ? null : new PhoneNumber($data->phone),
+            $phone,
             $this->normalizeCountry($data->country),
             $data->department,
             null,
@@ -132,7 +138,7 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
                 null === $data->city ? null : new City($data->city),
                 $data->country,
                 $data->department,
-                null === $data->phone ? null : new PhoneNumber($data->phone),
+                $phone,
                 null,
                 true,
                 AuditTrail::create($command->actorId),

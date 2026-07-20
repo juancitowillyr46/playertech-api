@@ -9,6 +9,7 @@ use App\Modules\Academy\Application\Response\AcademyResponse;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
+use App\Modules\Academy\Domain\Exception\AcademyPhoneAlreadyExistsException;
 use App\Shared\Domain\ValueObject\Address;
 use App\Shared\Domain\ValueObject\City;
 use App\Shared\Domain\ValueObject\Email;
@@ -28,16 +29,24 @@ final readonly class UpdateAcademyHandler
     public function __invoke(UpdateAcademyCommand $command): AcademyResponse
     {
         $academy = $this->requireAcademy($command->academyId);
+        $phone = null === $command->input->phone ? null : new PhoneNumber($command->input->phone);
 
         $duplicate = $this->academyRepository->findOneByContactEmail(new Email($command->input->contactEmail));
         if (null !== $duplicate && $duplicate->id()->value() !== $academy->id()->value()) {
             throw new AcademyAlreadyExistsException();
         }
 
+        if (null !== $phone) {
+            $duplicatePhone = $this->academyRepository->findOneByPhone($phone);
+            if (null !== $duplicatePhone && $duplicatePhone->id()->value() !== $academy->id()->value()) {
+                throw new AcademyPhoneAlreadyExistsException();
+            }
+        }
+
         $academy->updateProfile(
             new Name($command->input->name),
             new Email($command->input->contactEmail),
-            null === $command->input->phone ? null : new PhoneNumber($command->input->phone),
+            $phone,
             $this->normalizeCountry($command->input->country),
             $command->input->department,
             $command->input->taxIdType,

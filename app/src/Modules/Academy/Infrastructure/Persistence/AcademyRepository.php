@@ -8,6 +8,7 @@ use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository as AcademyRepositoryContract;
 use App\Shared\Domain\ValueObject\Email;
+use App\Shared\Domain\ValueObject\PhoneNumber;
 use App\Shared\Application\Pagination\PaginationQuery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -46,6 +47,15 @@ final class AcademyRepository extends ServiceEntityRepository implements Academy
         return $this->createQueryBuilder('academy')
             ->andWhere('academy.contactEmail.value = :contactEmail')
             ->setParameter('contactEmail', $contactEmail->value())
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneByPhone(PhoneNumber $phone): ?Academy
+    {
+        return $this->createQueryBuilder('academy')
+            ->andWhere('academy.phone.value = :phone')
+            ->setParameter('phone', $phone->value())
             ->getQuery()
             ->getOneOrNullResult();
     }

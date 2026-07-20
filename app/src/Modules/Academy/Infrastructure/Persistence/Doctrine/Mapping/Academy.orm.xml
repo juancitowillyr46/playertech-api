@@ -14,6 +14,9 @@
             <unique-constraint
                 name="UNIQ_ACADEMIES_CONTACT_EMAIL"
                 columns="contact_email"/>
+            <unique-constraint
+                name="UNIQ_ACADEMIES_PHONE"
+                columns="phone"/>
         </unique-constraints>
 
         <indexes>

@@ -14,6 +14,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRegistrationSource;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Modules\Academy\Domain\Exception\AcademyAlreadyExistsException;
+use App\Modules\Academy\Domain\Exception\AcademyPhoneAlreadyExistsException;
 use App\Modules\Category\Domain\Exception\CategoryNotFoundException;
 use App\Modules\Category\Domain\Category\OnboardingCategoryRepository;
 use App\Modules\Category\Domain\Category\CategoryId;
@@ -55,6 +56,7 @@ final readonly class RegisterTenantHandler
     public function __invoke(RegisterTenantCommand $command): TenantSignupResponse
     {
         $data = $command->input;
+        $phone = new PhoneNumber($data->phone);
 
         if (!$data->acceptedTerms || !$data->acceptedDataProcessing) {
             throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('Debe aceptar términos y tratamiento de datos.');
@@ -62,6 +64,10 @@ final readonly class RegisterTenantHandler
 
         if (null !== $this->academyRepository->findOneByContactEmail(new \App\Shared\Domain\ValueObject\Email($data->contactEmail))) {
             throw new AcademyAlreadyExistsException();
+        }
+
+        if (null !== $this->academyRepository->findOneByPhone($phone)) {
+            throw new AcademyPhoneAlreadyExistsException();
         }
 
         $academyId = AcademyId::generate();
@@ -82,7 +88,7 @@ final readonly class RegisterTenantHandler
             $academyId,
             new \App\Shared\Domain\ValueObject\Name($data->name),
             new \App\Shared\Domain\ValueObject\Email($data->contactEmail),
-            new PhoneNumber($data->phone),
+            $phone,
             $this->normalizeCountry($data->country),
             $data->department,
             null,
@@ -126,7 +132,7 @@ final readonly class RegisterTenantHandler
                 new City($data->city),
                 $data->country,
                 $data->department,
-                new PhoneNumber($data->phone),
+                $phone,
                 null,
                 true,
                 AuditTrail::create($data->contactEmail),

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Academy\Domain\Academy;
 
 use App\Shared\Domain\ValueObject\Email;
+use App\Shared\Domain\ValueObject\PhoneNumber;
 use App\Shared\Application\Pagination\PaginationQuery;
 
 interface AcademyRepository
@@ -19,4 +20,6 @@ interface AcademyRepository
     public function findAllOrdered(PaginationQuery $pagination): array;
 
     public function findOneByContactEmail(Email $contactEmail): ?Academy;
+
+    public function findOneByPhone(PhoneNumber $phone): ?Academy;
 }

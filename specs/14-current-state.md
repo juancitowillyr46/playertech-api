@@ -218,6 +218,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Existe deuda en migraciones antiguas: `Version20260704000000` falla al reejecutarse por un `DROP COLUMN logo` sobre una columna ya ausente, así que el `migrate` completo de `dev` queda bloqueado hasta corregir esa versión histórica.
 * Para reparar el catálogo público de onboarding en `playertech` existe el comando `app:category:seed-onboarding`, útil cuando la tabla se vacía pero la migración ya figura como ejecutada.
 * El contrato público de onboarding pasa a usar un catálogo global de categorías y el signup clonará la categoría elegida dentro de la academia; la implementación sigue pendiente.
+* El signup público valida ahora duplicados de `contactEmail` y `phone` en backend; además, existe `GET /api/v1/public/tenants/availability` para que el front consulte disponibilidad reactiva de email y celular con un solo contrato.
 * Se pobló el catálogo `onboarding_categories` con el rango `Sub 4` a `Sub 20` como base pública de onboarding para frontend y signup.
 * `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-009`, `EP-010` y `EP-012`.
 * Se inició el módulo `Membership` como primer slice técnico de `EP-009`, con base de dominio, mapping XML, repositorio, controller y casos de uso de crear/consultar matrícula activa.
