@@ -7,29 +7,31 @@ namespace App\Modules\Academy\Application\Dto;
 final readonly class TenantSignupInput
 {
     public function __construct(
-        public ?string $name,
+        public string $name,
 
-        public ?string $contactEmail,
+        public string $contactEmail,
 
-        public ?string $contactName,
+        public string $contactName,
 
-        public ?string $password,
+        public string $password,
 
-        public ?string $phone = null,
+        public string $phone,
 
-        public ?string $country = null,
+        public string $country,
 
-        public ?string $department = null,
+        public string $department,
 
-        public ?string $city = null,
+        public string $city,
 
-        public ?string $onboardingCategoryId = null,
+        public string $address,
 
-        public ?string $teamName = null,
+        public string $onboardingCategoryId,
 
-        public bool $acceptedTerms = false,
+        public string $teamName,
 
-        public bool $acceptedDataProcessing = false,
+        public bool $acceptedTerms,
+
+        public bool $acceptedDataProcessing,
     ) {
     }
 }

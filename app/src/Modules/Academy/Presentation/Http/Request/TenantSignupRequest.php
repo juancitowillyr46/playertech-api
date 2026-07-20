@@ -27,31 +27,39 @@ final readonly class TenantSignupRequest
         #[Assert\Length(min: 8, max: 255, minMessage: 'El campo "password" debe tener al menos 8 caracteres.', maxMessage: 'El campo "password" excede la longitud máxima permitida.')]
         public ?string $password,
 
+        #[Assert\NotBlank(message: 'El campo "phone" es obligatorio.')]
         #[Assert\Length(max: 30, maxMessage: 'El campo "phone" excede la longitud máxima permitida.')]
-        public ?string $phone = null,
+        public ?string $phone,
 
+        #[Assert\NotBlank(message: 'El campo "country" es obligatorio.')]
         #[Assert\Length(max: 80, maxMessage: 'El campo "country" excede la longitud máxima permitida.')]
-        public ?string $country = null,
+        public ?string $country,
 
+        #[Assert\NotBlank(message: 'El campo "department" es obligatorio.')]
         #[Assert\Length(max: 80, maxMessage: 'El campo "department" excede la longitud máxima permitida.')]
-        public ?string $department = null,
+        public ?string $department,
 
+        #[Assert\NotBlank(message: 'El campo "city" es obligatorio.')]
         #[Assert\Length(max: 120, maxMessage: 'El campo "city" excede la longitud máxima permitida.')]
-        public ?string $city = null,
+        public ?string $city,
+
+        #[Assert\NotBlank(message: 'El campo "address" es obligatorio.')]
+        #[Assert\Length(max: 255, maxMessage: 'El campo "address" excede la longitud máxima permitida.')]
+        public ?string $address,
 
         #[Assert\NotBlank(message: 'El campo "onboardingCategoryId" es obligatorio.')]
         #[Assert\Uuid(message: 'El campo "onboardingCategoryId" debe ser un UUID válido.')]
-        public ?string $onboardingCategoryId = null,
+        public ?string $onboardingCategoryId,
 
         #[Assert\NotBlank(message: 'El campo "teamName" es obligatorio.')]
         #[Assert\Length(max: 80, maxMessage: 'El campo "teamName" excede la longitud máxima permitida.')]
-        public ?string $teamName = null,
+        public ?string $teamName,
 
         #[Assert\IsTrue(message: 'Debe aceptar los términos y condiciones.')]
-        public bool $acceptedTerms = false,
+        public bool $acceptedTerms,
 
         #[Assert\IsTrue(message: 'Debe aceptar el tratamiento de datos personales.')]
-        public bool $acceptedDataProcessing = false,
+        public bool $acceptedDataProcessing,
     ) {
     }
 
@@ -66,6 +74,7 @@ final readonly class TenantSignupRequest
             self::stringOrNull($payload['country'] ?? null),
             self::stringOrNull($payload['department'] ?? null),
             self::stringOrNull($payload['city'] ?? null),
+            self::stringOrNull($payload['address'] ?? null),
             self::stringOrNull($payload['onboardingCategoryId'] ?? null),
             self::stringOrNull($payload['teamName'] ?? null),
             (bool) ($payload['acceptedTerms'] ?? false),
@@ -84,6 +93,7 @@ final readonly class TenantSignupRequest
             $this->country,
             $this->department,
             $this->city,
+            $this->address,
             $this->onboardingCategoryId,
             $this->teamName,
             $this->acceptedTerms,

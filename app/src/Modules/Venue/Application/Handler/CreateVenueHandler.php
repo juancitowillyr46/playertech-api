@@ -32,8 +32,11 @@ final readonly class CreateVenueHandler
             new Name($command->input->name),
             $command->input->address ? new Address($command->input->address) : null,
             $command->input->city ? new City($command->input->city) : null,
+            $command->input->country,
+            $command->input->department,
             $command->input->phone ? new PhoneNumber($command->input->phone) : null,
             $command->input->notes ? new Notes($command->input->notes) : null,
+            $command->input->isPrimary,
             AuditTrail::create($command->actorId)
         );
 

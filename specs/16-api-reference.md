@@ -534,6 +534,7 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
   "country": "Colombia",
   "department": "Cundinamarca",
   "city": "Arequipa",
+  "address": "Jr. Principal 123",
   "onboardingCategoryId": "uuid",
   "teamName": "Sub 12 A",
   "acceptedTerms": true,
@@ -548,7 +549,8 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
 * Durante el signup se crea una categoría nueva dentro de la academia usando la definición seleccionada.
 * `teamName` es obligatorio y su longitud máxima es 80 caracteres.
 * No puede existir otro equipo con el mismo nombre dentro de la misma categoría clonada de la academia.
-* `address` ya no forma parte del contrato de signup público.
+* `phone`, `country`, `department`, `city` y `address` son obligatorios en el signup público.
+* El signup crea también la sede principal en `venues`, marcándola como `isPrimary = true` y persistiendo `country`, `department`, `city` y `address`.
 * El tenant queda en onboarding con correo de activación pendiente para el usuario owner/admin inicial.
 
 ### Success

@@ -20,6 +20,8 @@ use App\Modules\Category\Infrastructure\Persistence\CategoryRepository as Doctri
 use App\Modules\Identity\Domain\User\AccountUser;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Infrastructure\Persistence\TeamRepository;
+use App\Modules\Venue\Domain\Venue\VenueRepository;
+use App\Modules\Venue\Infrastructure\Persistence\VenueRepository as DoctrineVenueRepository;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Description;
 use App\Shared\Application\Pagination\PaginationQuery;
@@ -41,6 +43,7 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
     private AcademyRepository $academyRepository;
     private DoctrineCategoryRepository $categoryRepository;
     private TeamRepository $teamRepository;
+    private VenueRepository $venueRepository;
     private string $onboardingCategoryId;
 
     protected function setUp(): void
@@ -52,12 +55,14 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
         $this->academyRepository = new AcademyRepository($doctrine);
         $this->categoryRepository = new DoctrineCategoryRepository($doctrine);
         $this->teamRepository = new TeamRepository($doctrine);
+        $this->venueRepository = new DoctrineVenueRepository($doctrine);
         $this->onboardingCategoryId = '019f7000-0000-7000-8000-000000000004';
 
         $this->handler = new ProvisionTenantHandler(
             $this->academyRepository,
             $this->onboardingCategoryRepositoryStub(),
             $this->teamRepository,
+            $this->venueRepository,
             $this->entityManager,
             new class implements UserPasswordHasherInterface {
                 public function hashPassword(object $user, string $plainPassword): string
@@ -96,6 +101,7 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
             'Colombia',
             'Cundinamarca',
             'Bogota',
+            'Av. Principal 123',
             'Juan Perez',
             'admin.test@example.com',
             $this->onboardingCategoryId,
@@ -126,6 +132,15 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
         self::assertCount(1, $categories['items']);
         self::assertSame('SUB-14', $categories['items'][0]->categoryKey());
         self::assertNotSame($this->onboardingCategoryId, $categories['items'][0]->id()->value());
+
+        $venues = $this->venueRepository->findAllByAcademy(
+            $academy->id(),
+            new PaginationQuery(sort: 'auditTrail.createdAt.value')
+        );
+
+        self::assertCount(1, $venues['items']);
+        self::assertTrue($venues['items'][0]->isPrimary());
+        self::assertSame('Sede principal', $venues['items'][0]->name()->value());
 
         /** @var AccountUser|null $user */
         $user = $this->entityManager->getRepository(AccountUser::class)->findOneBy([

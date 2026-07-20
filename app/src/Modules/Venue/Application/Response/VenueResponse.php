@@ -14,8 +14,11 @@ final readonly class VenueResponse
         private string $name,
         private ?string $address,
         private ?string $city,
+        private ?string $country,
+        private ?string $department,
         private ?string $phone,
         private ?string $notes,
+        private bool $isPrimary,
         private string $status
     ) {
     }
@@ -28,8 +31,11 @@ final readonly class VenueResponse
             $venue->name()->value(),
             $venue->address()?->value(),
             $venue->city()?->value(),
+            $venue->country(),
+            $venue->department(),
             $venue->phone()?->value(),
             $venue->notes()?->value(),
+            $venue->isPrimary(),
             $venue->status()->value()
         );
     }
@@ -42,8 +48,11 @@ final readonly class VenueResponse
             'name' => $this->name,
             'address' => $this->address,
             'city' => $this->city,
+            'country' => $this->country,
+            'department' => $this->department,
             'phone' => $this->phone,
             'notes' => $this->notes,
+            'isPrimary' => $this->isPrimary,
             'status' => $this->status,
         ];
     }

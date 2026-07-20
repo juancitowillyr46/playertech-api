@@ -24,8 +24,14 @@ use App\Modules\Team\Domain\Exception\TeamAlreadyExistsException;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\Team\Domain\Team\TeamRepository;
+use App\Modules\Venue\Domain\Venue\Venue;
+use App\Modules\Venue\Domain\Venue\VenueId;
+use App\Modules\Venue\Domain\Venue\VenueRepository;
 use App\Shared\Domain\ValueObject\AuditTrail;
+use App\Shared\Domain\ValueObject\Address;
+use App\Shared\Domain\ValueObject\City;
 use App\Shared\Domain\ValueObject\Name;
+use App\Shared\Domain\ValueObject\PhoneNumber;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -37,6 +43,7 @@ final readonly class RegisterTenantHandler
         private AcademyRepository $academyRepository,
         private OnboardingCategoryRepository $onboardingCategoryRepository,
         private TeamRepository $teamRepository,
+        private VenueRepository $venueRepository,
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
         private MessageBusInterface $messageBus,
@@ -75,7 +82,7 @@ final readonly class RegisterTenantHandler
             $academyId,
             new \App\Shared\Domain\ValueObject\Name($data->name),
             new \App\Shared\Domain\ValueObject\Email($data->contactEmail),
-            null === $data->phone ? null : new \App\Shared\Domain\ValueObject\PhoneNumber($data->phone),
+            new PhoneNumber($data->phone),
             $this->normalizeCountry($data->country),
             $data->department,
             null,
@@ -83,8 +90,8 @@ final readonly class RegisterTenantHandler
             null,
             null,
             AcademyRegistrationSource::signup()->value(),
-            null,
-            null === $data->city ? null : new \App\Shared\Domain\ValueObject\City($data->city),
+            new Address($data->address),
+            new City($data->city),
             null,
             AuditTrail::create(null),
         );
@@ -110,6 +117,22 @@ final readonly class RegisterTenantHandler
         try {
             $this->academyRepository->save($academy);
             $this->entityManager->persist($category);
+
+            $venue = Venue::create(
+                VenueId::generate(),
+                $academyId,
+                new Name('Sede principal'),
+                new Address($data->address),
+                new City($data->city),
+                $data->country,
+                $data->department,
+                new PhoneNumber($data->phone),
+                null,
+                true,
+                AuditTrail::create($data->contactEmail),
+            );
+
+            $this->venueRepository->save($venue);
 
             $user = new AccountUser();
             $user->setFullName($data->contactName);

@@ -57,6 +57,7 @@ Body permitido:
 - No enviar `logo` ni `shield` en este endpoint.
 - No enviar archivo binario aquí.
 - Este endpoint es para datos textuales.
+- `address` sigue siendo parte del perfil principal de la academia y se usa también como base para crear la sede principal en `venues`.
 
 ---
 

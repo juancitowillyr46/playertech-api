@@ -26,6 +26,9 @@ use App\Modules\Team\Domain\Exception\TeamAlreadyExistsException;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\Team\Domain\Team\TeamRepository;
+use App\Modules\Venue\Domain\Venue\Venue;
+use App\Modules\Venue\Domain\Venue\VenueId;
+use App\Modules\Venue\Domain\Venue\VenueRepository;
 use App\Shared\Domain\ValueObject\Address;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\City;
@@ -43,6 +46,7 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
         private AcademyRepository $academyRepository,
         private OnboardingCategoryRepository $onboardingCategoryRepository,
         private TeamRepository $teamRepository,
+        private VenueRepository $venueRepository,
         EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
         private MessageBusInterface $messageBus,
@@ -119,6 +123,22 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
         try {
             $this->academyRepository->save($academy);
             $this->entityManager->persist($category);
+
+            $venue = Venue::create(
+                VenueId::generate(),
+                $academyId,
+                new Name('Sede principal'),
+                null === $data->address ? null : new Address($data->address),
+                null === $data->city ? null : new City($data->city),
+                $data->country,
+                $data->department,
+                null === $data->phone ? null : new PhoneNumber($data->phone),
+                null,
+                true,
+                AuditTrail::create($command->actorId),
+            );
+
+            $this->venueRepository->save($venue);
 
             $user = new AccountUser();
             $user->setFullName((string) $data->adminName);

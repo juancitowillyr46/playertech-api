@@ -20,6 +20,12 @@ final readonly class CreateVenueRequest
         #[Assert\Length(max: 100)]
         public ?string $city = null,
 
+        #[Assert\Length(max: 80)]
+        public ?string $country = null,
+
+        #[Assert\Length(max: 80)]
+        public ?string $department = null,
+
         #[Assert\Length(max: 50)]
         public ?string $phone = null,
 
@@ -33,6 +39,8 @@ final readonly class CreateVenueRequest
             self::stringOrNull($payload['name'] ?? null),
             self::stringOrNull($payload['address'] ?? null),
             self::stringOrNull($payload['city'] ?? null),
+            self::stringOrNull($payload['country'] ?? null),
+            self::stringOrNull($payload['department'] ?? null),
             self::stringOrNull($payload['phone'] ?? null),
             self::stringOrNull($payload['notes'] ?? null),
         );
@@ -44,6 +52,8 @@ final readonly class CreateVenueRequest
             $this->name,
             $this->address,
             $this->city,
+            $this->country,
+            $this->department,
             $this->phone,
             $this->notes,
         );

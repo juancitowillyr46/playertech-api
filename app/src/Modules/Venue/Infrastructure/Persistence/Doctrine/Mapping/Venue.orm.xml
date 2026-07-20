@@ -28,6 +28,10 @@
                 columns="status"/>
 
             <index
+                name="IDX_VENUE_IS_PRIMARY"
+                columns="is_primary"/>
+
+            <index
                 name="IDX_VENUE_CREATED_BY"
                 columns="created_by"/>
 
@@ -51,8 +55,11 @@
         <embedded name="name" class="App\Shared\Domain\ValueObject\Name" use-column-prefix="false"/>
         <embedded name="address" class="App\Shared\Domain\ValueObject\Address" use-column-prefix="false"/>
         <embedded name="city" class="App\Shared\Domain\ValueObject\City" use-column-prefix="false"/>
+        <field name="country" column="country" type="string" length="80" nullable="true"/>
+        <field name="department" column="department" type="string" length="80" nullable="true"/>
         <embedded name="phone" class="App\Shared\Domain\ValueObject\PhoneNumber" use-column-prefix="false"/>
         <embedded name="notes" class="App\Shared\Domain\ValueObject\Notes" use-column-prefix="false"/>
+        <field name="isPrimary" column="is_primary" type="boolean"/>
         <embedded name="status" class="App\Modules\Venue\Domain\Venue\VenueStatus" use-column-prefix="false"/>
         <embedded name="auditTrail" class="App\Shared\Domain\ValueObject\AuditTrail" use-column-prefix="false"/>
 

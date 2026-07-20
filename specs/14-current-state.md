@@ -299,6 +299,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La validación de `Player` para create, update y asociación de acudiente ya vive en `Presentation`; `Application` conserva DTOs sin dependencias del framework para esos flujos.
 * La validación de `Guardian` para create ya vive en `Presentation`; `Application` conserva DTOs sin dependencias del framework para ese flujo.
 * La validación de `PaymentConcept` para create y update ya vive en `Presentation`; `Application` conserva DTOs sin dependencias del framework para esos flujos.
+* El signup público de tenant volvió a requerir `phone`, `country`, `department`, `city` y `address`; al registrarse se crea también la sede principal en `venues` con esos datos y se marca como `is_primary`.
 
 ## Checklist de Base Técnica Sólida (Critical Path)
 

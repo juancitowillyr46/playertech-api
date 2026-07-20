@@ -18,6 +18,8 @@ use App\Modules\Category\Infrastructure\Persistence\CategoryRepository as Doctri
 use App\Modules\Identity\Domain\User\AccountUser;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Infrastructure\Persistence\TeamRepository;
+use App\Modules\Venue\Infrastructure\Persistence\VenueRepository as DoctrineVenueRepository;
+use App\Modules\Venue\Domain\Venue\VenueRepository;
 use App\Shared\Application\Pagination\PaginationQuery;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Description;
@@ -39,6 +41,7 @@ final class RegisterTenantHandlerTest extends KernelTestCase
     private AcademyRepository $academyRepository;
     private DoctrineCategoryRepository $categoryRepository;
     private TeamRepository $teamRepository;
+    private VenueRepository $venueRepository;
     private string $onboardingCategoryId;
 
     protected function setUp(): void
@@ -50,11 +53,13 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         $this->academyRepository = new AcademyRepository($doctrine);
         $this->categoryRepository = new DoctrineCategoryRepository($doctrine);
         $this->teamRepository = new TeamRepository($doctrine);
+        $this->venueRepository = new DoctrineVenueRepository($doctrine);
         $this->onboardingCategoryId = '019f7000-0000-7000-8000-000000000004';
         $this->handler = new RegisterTenantHandler(
             $this->academyRepository,
             $this->onboardingCategoryRepositoryStub(),
             $this->teamRepository,
+            $this->venueRepository,
             $this->entityManager,
             new class implements UserPasswordHasherInterface {
                 public function hashPassword(object $user, string $plainPassword): string
@@ -95,6 +100,7 @@ final class RegisterTenantHandlerTest extends KernelTestCase
             'Colombia',
             'Cundinamarca',
             'Lima',
+            'Av. Principal 123',
             $this->onboardingCategoryId,
             'Sub 12 A',
             true,
@@ -140,6 +146,19 @@ final class RegisterTenantHandlerTest extends KernelTestCase
         self::assertSame(AccountUser::STATUS_PENDING_ACTIVATION, $user?->getStatus());
         self::assertNotNull($user?->getActivationToken());
         self::assertNotNull($user?->getActivationExpiresAt());
+
+        $venues = $this->venueRepository->findAllByAcademy(
+            $academy->id(),
+            new PaginationQuery(sort: 'auditTrail.createdAt.value')
+        );
+
+        self::assertCount(1, $venues['items']);
+        self::assertSame('Sede principal', $venues['items'][0]->name()->value());
+        self::assertSame('Av. Principal 123', $venues['items'][0]->address()?->value());
+        self::assertSame('Lima', $venues['items'][0]->city()?->value());
+        self::assertSame('Colombia', $venues['items'][0]->country());
+        self::assertSame('Cundinamarca', $venues['items'][0]->department());
+        self::assertTrue($venues['items'][0]->isPrimary());
 
         $teams = $this->teamRepository->findAllByAcademy(
             $academy->id(),

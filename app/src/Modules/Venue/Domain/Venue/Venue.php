@@ -20,8 +20,11 @@ final class Venue implements Auditable
     private Name $name;
     private ?Address $address;
     private ?City $city;
+    private ?string $country;
+    private ?string $department;
     private ?PhoneNumber $phone;
     private ?Notes $notes;
+    private bool $isPrimary;
     private VenueStatus $status;
     private ?AuditTrail $auditTrail = null;
     private ?\DateTimeImmutable $deletedAt = null;
@@ -33,8 +36,11 @@ final class Venue implements Auditable
         Name $name,
         ?Address $address,
         ?City $city,
+        ?string $country,
+        ?string $department,
         ?PhoneNumber $phone,
         ?Notes $notes,
+        bool $isPrimary,
         AuditTrail $auditTrail
     ) {
         $this->id = $id;
@@ -42,8 +48,11 @@ final class Venue implements Auditable
         $this->name = $name;
         $this->address = $address;
         $this->city = $city;
+        $this->country = $country;
+        $this->department = $department;
         $this->phone = $phone;
         $this->notes = $notes;
+        $this->isPrimary = $isPrimary;
         $this->status = VenueStatus::active();
         $this->auditTrail = $auditTrail;
     }
@@ -54,8 +63,11 @@ final class Venue implements Auditable
         Name $name,
         ?Address $address,
         ?City $city,
+        ?string $country,
+        ?string $department,
         ?PhoneNumber $phone,
         ?Notes $notes,
+        bool $isPrimary,
         AuditTrail $auditTrail
     ): self {
         return new self(
@@ -64,8 +76,11 @@ final class Venue implements Auditable
             $name,
             $address,
             $city,
+            $country,
+            $department,
             $phone,
             $notes,
+            $isPrimary,
             $auditTrail
         );
     }
@@ -75,8 +90,11 @@ final class Venue implements Auditable
     public function name(): Name { return $this->name; }
     public function address(): ?Address { return $this->address; }
     public function city(): ?City { return $this->city; }
+    public function country(): ?string { return $this->country; }
+    public function department(): ?string { return $this->department; }
     public function phone(): ?PhoneNumber { return $this->phone; }
     public function notes(): ?Notes { return $this->notes; }
+    public function isPrimary(): bool { return $this->isPrimary; }
     public function status(): VenueStatus { return $this->status; }
     public function auditTrail(): ?AuditTrail { return $this->auditTrail; }
     public function setAuditTrail(AuditTrail $auditTrail): void { $this->auditTrail = $auditTrail; }
@@ -87,14 +105,24 @@ final class Venue implements Auditable
         Name $name,
         ?Address $address,
         ?City $city,
+        ?string $country,
+        ?string $department,
         ?PhoneNumber $phone,
-        ?Notes $notes
+        ?Notes $notes,
+        string $updatedBy
     ): void {
         $this->name = $name;
         $this->address = $address;
         $this->phone = $phone;
         $this->city = $city;
+        $this->country = $country;
+        $this->department = $department;
         $this->notes = $notes;
+    }
+
+    public function markPrimary(bool $isPrimary = true): void
+    {
+        $this->isPrimary = $isPrimary;
     }
 
     public function inactivate(): void
