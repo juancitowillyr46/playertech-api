@@ -159,6 +159,7 @@ En ciclos de desarrollo y en CI/CD, la secuencia recomendada es:
 * Para tests unitarios, preferir mocks y no persistencia.
 * Para tests funcionales e integración, usar `playertech_test` y no `playertech`.
 * Si un test requiere `SchemaResetter`, limitarlo a la suite que realmente necesita recrear todo el esquema.
+* `SchemaResetter` debe fallar si la conexión no apunta a una base `*_test`; nunca debe usarse sobre `playertech`.
 
 ---
 

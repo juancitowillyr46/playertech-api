@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Symfony\Component\Dotenv\Dotenv;
+use App\Tests\Support\Database\TestDatabaseGuard;
 
 require dirname(__DIR__).'/vendor/autoload.php';
 
@@ -17,18 +18,15 @@ if ('test' === ($_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? null) && is_file($pro
 
 $databaseUrl = $_SERVER['DATABASE_URL'] ?? $_ENV['DATABASE_URL'] ?? null;
 
+if (is_string($databaseUrl)) {
+    TestDatabaseGuard::assertTestDatabase($databaseUrl);
+}
+
 if ('test' === ($_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? null) && is_string($databaseUrl) && str_starts_with($databaseUrl, 'mysql://')) {
     $parts = parse_url($databaseUrl);
     $databaseName = isset($parts['path']) ? ltrim((string) $parts['path'], '/') : null;
 
     if (is_string($databaseName) && '' !== $databaseName) {
-        if (!str_ends_with($databaseName, '_test')) {
-            throw new RuntimeException(sprintf(
-                'PHPUnit must use a test database. Current DATABASE_URL points to "%s".',
-                $databaseName
-            ));
-        }
-
         $pdo = new PDO('mysql:host=mysql;port=3306;charset=utf8mb4', 'root', 'root', [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         ]);
