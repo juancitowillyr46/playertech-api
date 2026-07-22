@@ -35,7 +35,9 @@ final readonly class UpdateVenueHandler
             new Name($command->input->name),
             null === $command->input->address ? null : new Address($command->input->address),
             null === $command->input->city ? null : new City($command->input->city),
-            null === $command->input->phone ? null : new PhoneNumber($command->input->phone),   
+            null === $command->input->country ? null : $command->input->country,
+            null === $command->input->department ? null : $command->input->department,
+            null === $command->input->phone ? null : new PhoneNumber($command->input->phone),
             null === $command->input->notes ? null : new Notes($command->input->notes),
             $command->actorId,
         );

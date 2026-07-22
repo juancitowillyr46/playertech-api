@@ -9,14 +9,34 @@ use App\Modules\Category\Domain\Category\Category;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Category\Domain\Category\CategoryRepository as CategoryRepositoryContract;
 use App\Shared\Application\Pagination\PaginationQuery;
+use App\Shared\Application\Pagination\SortFieldResolver;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 final class CategoryRepository extends ServiceEntityRepository implements CategoryRepositoryContract
 {
+    private readonly SortFieldResolver $sortFieldResolver;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
+        $this->sortFieldResolver = new SortFieldResolver(
+            [
+                'created_at' => 'auditTrail.createdAt.value',
+                'audit_trail.created_at.value' => 'auditTrail.createdAt.value',
+                'audittrail.createdat.value' => 'auditTrail.createdAt.value',
+                'category_key' => 'categoryKey',
+                'categorykey' => 'categoryKey',
+                'name' => 'name',
+                'min_age' => 'minAge',
+                'minage' => 'minAge',
+                'max_age' => 'maxAge',
+                'maxage' => 'maxAge',
+                'description' => 'description',
+                'status' => 'status',
+            ],
+            'auditTrail.createdAt.value',
+        );
     }
 
     public function save(Category $category): void
@@ -30,6 +50,7 @@ final class CategoryRepository extends ServiceEntityRepository implements Catego
         return $this->createQueryBuilder('category')
             ->where('category.id = :categoryId')
             ->andWhere('category.academyId = :academyId')
+            ->andWhere('category.deletedAt IS NULL')
             ->setParameter('categoryId', $categoryId->value())
             ->setParameter('academyId', $academyId->value())
             ->getQuery()
@@ -53,16 +74,17 @@ final class CategoryRepository extends ServiceEntityRepository implements Catego
      */
     public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
+        $sortField = $this->sortFieldResolver->resolve($pagination->sort);
+
         $qb = $this->createQueryBuilder('category')
             ->andWhere('category.academyId = :academyId')
             ->andWhere('category.deletedAt IS NULL')
             ->setParameter('academyId', $academyId->value())
-            ->orderBy(sprintf('category.%s', $pagination->sort), $pagination->direction);
+            ->orderBy(sprintf('category.%s', $sortField), $pagination->direction);
 
         $total = (int) (clone $qb)->select('COUNT(category.id)')->getQuery()->getSingleScalarResult();
         $items = $qb->setFirstResult(($pagination->page - 1) * $pagination->perPage)->setMaxResults($pagination->perPage)->getQuery()->getResult();
 
         return ['items' => $items, 'total' => $total];
     }
-
 }

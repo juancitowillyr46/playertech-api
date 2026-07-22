@@ -48,7 +48,11 @@ final class ListVenuesHandlerTest extends TestCase
         self::assertSame('Sede Principal', $venues->items[0]->toArray()['name']);
         self::assertSame('Av. Principal 123', $venues->items[0]->toArray()['address']);
         self::assertSame('Lima', $venues->items[0]->toArray()['city']);
+        self::assertSame('Colombia', $venues->items[0]->toArray()['country']);
+        self::assertSame('Cundinamarca', $venues->items[0]->toArray()['department']);
         self::assertSame('+51999999999', $venues->items[0]->toArray()['phone']);
+        self::assertSame('Sede operativa', $venues->items[0]->toArray()['notes']);
+        self::assertTrue($venues->items[0]->toArray()['isPrimary']);
         self::assertSame(VenueStatus::active()->value(), $venues->items[0]->toArray()['status']);
     }
 }

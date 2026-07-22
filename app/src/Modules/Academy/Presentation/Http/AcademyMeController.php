@@ -14,6 +14,8 @@ use App\Modules\Academy\Application\Handler\UpdateAcademyTaxProfileHandler;
 use App\Modules\Academy\Application\Query\GetAcademyContextQuery;
 use App\Modules\Academy\Application\Query\ShowAcademyQuery;
 use App\Modules\Academy\Application\Query\ShowAcademyTaxProfileQuery;
+use App\Modules\Academy\Application\Shield\Delete\DeleteAcademyShieldCommand;
+use App\Modules\Academy\Application\Shield\Delete\DeleteAcademyShieldHandler;
 use App\Modules\Academy\Application\Shield\Upload\UploadAcademyShieldCommand;
 use App\Modules\Academy\Application\Shield\Upload\UploadAcademyShieldHandler;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
@@ -23,6 +25,7 @@ use App\Shared\Presentation\Http\AbstractApiController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -36,6 +39,7 @@ final class AcademyMeController extends AbstractApiController
         private readonly ShowAcademyTaxProfileHandler $showAcademyTaxProfileHandler,
         private readonly UpdateAcademyHandler $updateAcademyHandler,
         private readonly UpdateAcademyTaxProfileHandler $updateAcademyTaxProfileHandler,
+        private readonly DeleteAcademyShieldHandler $deleteAcademyShieldHandler,
         private readonly UploadAcademyShieldHandler $uploadAcademyShieldHandler,
     ) {
     }
@@ -139,6 +143,19 @@ final class AcademyMeController extends AbstractApiController
             'data' => $view->toArray(),
             'meta' => new \stdClass(),
         ]);
+    }
+
+    #[Route('/academy/me/shield', name: 'api_v1_academy_me_shield_delete', methods: ['DELETE'])]
+    public function deleteShield(TenantContext $tenantContext): Response
+    {
+        ($this->deleteAcademyShieldHandler)(
+            new DeleteAcademyShieldCommand(
+                $this->requireActorId($tenantContext),
+                $tenantContext->requireAcademyId(),
+            )
+        );
+
+        return new Response(status: 204);
     }
 
     private function requireActorId(TenantContext $tenantContext): string

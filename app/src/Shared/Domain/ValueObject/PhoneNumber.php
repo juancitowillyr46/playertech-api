@@ -6,20 +6,34 @@ namespace App\Shared\Domain\ValueObject;
 
 final readonly class PhoneNumber
 {
-    public function __construct(
-        private ?string $value
-    ) {
-        if ($value === null) {
+    private ?string $value;
+
+    public function __construct(?string $value)
+    {
+        if (null === $value) {
+            $this->value = null;
+
             return;
         }
 
-        if (mb_strlen($value) > 30) {
+        $normalized = self::normalize($value);
+
+        if (mb_strlen($normalized) > 30) {
             throw new \InvalidArgumentException('Phone number too long.');
         }
+
+        $this->value = $normalized;
     }
 
     public function value(): ?string
     {
         return $this->value;
+    }
+
+    private static function normalize(string $value): string
+    {
+        $normalized = preg_replace('/[\s\-\(\)]/', '', trim($value));
+
+        return null === $normalized ? trim($value) : $normalized;
     }
 }

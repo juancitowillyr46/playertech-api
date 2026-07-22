@@ -10,11 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 final readonly class UpdateCategoryRequest
 {
     public function __construct(
-        #[Assert\NotBlank(message: 'El campo "category_key" es obligatorio.')]
-        #[Assert\Length(max: 50)]
-        #[Assert\Regex(pattern: '/^[A-Za-z0-9][A-Za-z0-9_-]*$/', message: 'El campo "category_key" tiene un formato inválido.')]
-        public ?string $categoryKey,
-
         #[Assert\NotBlank(message: 'El campo "name" es obligatorio.')]
         #[Assert\Length(max: 100)]
         public ?string $name,
@@ -35,7 +30,6 @@ final readonly class UpdateCategoryRequest
     public static function fromArray(array $payload): self
     {
         return new self(
-            self::stringOrNull($payload['category_key'] ?? null),
             self::stringOrNull($payload['name'] ?? null),
             self::intOrNull($payload['min_age'] ?? null),
             self::intOrNull($payload['max_age'] ?? null),
@@ -46,7 +40,6 @@ final readonly class UpdateCategoryRequest
     public function toInput(): UpdateCategoryInput
     {
         return new UpdateCategoryInput(
-            $this->categoryKey,
             $this->name,
             $this->minAge,
             $this->maxAge,

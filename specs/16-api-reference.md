@@ -210,6 +210,8 @@ Listado soporta paginación estándar y `sort` seguro.
 - `sort=phone`
 - `sort=status`
 
+El backend normaliza estos valores antes de armar el `ORDER BY`, por lo que el frontend puede seguir enviando `created_at` como sort por defecto.
+
 ```json
 {
   "data": [
@@ -218,7 +220,11 @@ Listado soporta paginación estándar y `sort` seguro.
       "name": "Cancha Principal",
       "address": "Av. Principal 123",
       "city": "Bogota",
+      "country": "Colombia",
+      "department": "Cundinamarca",
       "phone": "+573125953354",
+      "notes": "Canchas de futbol 11",
+      "isPrimary": true,
       "status": "ACTIVE"
     }
   ],
@@ -235,11 +241,24 @@ Listado soporta paginación estándar y `sort` seguro.
 
 ### Categories
 
+Listado soporta paginación estándar y `sort` seguro.
+
+- `sort=created_at`
+- `sort=categoryKey`
+- `sort=name`
+- `sort=minAge`
+- `sort=maxAge`
+- `sort=description`
+- `sort=status`
+
+El backend genera `categoryKey` a partir del `name` y devuelve ese valor en create, list y show. El frontend no debe enviarlo en el payload.
+
 ```json
 {
   "data": [
     {
       "id": "uuid",
+      "academyId": "uuid",
       "categoryKey": "sub-12",
       "name": "Sub 12",
       "minAge": 11,
@@ -778,6 +797,29 @@ Usa el contrato `Academy Profile` definido en la sección de ejemplos.
 
 * El archivo `shield` se maneja como contenido binario, no como parte del JSON.
 * Este endpoint actualiza sólo la imagen institucional de la academia.
+
+## Delete Academy Shield
+
+```http
+DELETE /api/v1/academy/me/shield
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Eliminar el escudo institucional actual de la academia.
+
+### Success
+
+`204 No Content`
+
+### Rules
+
+* Si la academia no tiene escudo, el backend debe responder igualmente `204 No Content`.
+* Este endpoint no devuelve body.
 
 ## Show Academy Tax Profile
 

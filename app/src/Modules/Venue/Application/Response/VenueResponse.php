@@ -25,6 +25,8 @@ final readonly class VenueResponse
 
     public static function fromVenue(Venue $venue): self
     {
+        $notes = $venue->notes();
+
         return new self(
             $venue->id()->value(),
             $venue->academyId()->value(),
@@ -34,7 +36,7 @@ final readonly class VenueResponse
             $venue->country(),
             $venue->department(),
             $venue->phone()?->value(),
-            $venue->notes()?->value(),
+            null !== $notes && $notes->hasValue() ? $notes->value() : null,
             $venue->isPrimary(),
             $venue->status()->value()
         );

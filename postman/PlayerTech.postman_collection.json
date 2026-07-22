@@ -2425,7 +2425,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"categoryKey\": \"sub-12\",\n  \"name\": \"Sub 12\",\n  \"minAge\": 11,\n  \"maxAge\": 12,\n  \"description\": \"Categoria formativa\"\n}"
+              "raw": "{\n  \"name\": \"Sub 12\",\n  \"minAge\": 11,\n  \"maxAge\": 12,\n  \"description\": \"Categoria formativa\"\n}"
             }
           },
           "response": [
@@ -2458,7 +2458,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/categories?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
+              "raw": "{{baseUrl}}/api/v1/academy/categories?page=1&per_page=20&sort=created_at&direction=DESC",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2466,7 +2466,7 @@
                 "api",
                 "v1",
                 "academy",
-                "categories?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC"
+                "categories?page=1&per_page=20&sort=created_at&direction=DESC"
               ]
             }
           },
@@ -2561,7 +2561,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"categoryKey\": \"sub-12\",\n  \"name\": \"Sub 12\",\n  \"minAge\": 11,\n  \"maxAge\": 12,\n  \"description\": \"Categoria formativa\"\n}"
+              "raw": "{\n  \"name\": \"Sub 12\",\n  \"minAge\": 11,\n  \"maxAge\": 12,\n  \"description\": \"Categoria formativa\"\n}"
             }
           },
           "response": [
@@ -2768,7 +2768,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000020\",\n      \"name\": \"Cancha Principal\",\n      \"address\": \"Av. Principal 123\",\n      \"city\": \"Bogota\",\n      \"phone\": \"+573125953354\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000020\",\n      \"name\": \"Cancha Principal\",\n      \"address\": \"Av. Principal 123\",\n      \"city\": \"Bogota\",\n      \"country\": \"Colombia\",\n      \"department\": \"Cundinamarca\",\n      \"phone\": \"+573125953354\",\n      \"notes\": \"Canchas de futbol 11\",\n      \"isPrimary\": true,\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },

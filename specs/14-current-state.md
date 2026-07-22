@@ -201,6 +201,9 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La creación de tenant por `signup` y por `platform` quedó unificada con trazabilidad explícita de origen en `Academy`.
 * `Category` y `Venue` ya quedaron implementados como módulos funcionales completos y el backlog debe seguir su mismo lifecycle con historias faltantes o inconsistentes.
 * `Category` y `Venue` comparten ahora el patrón de recuperación por `Finder`, reduciendo duplicación en handlers y homogeneizando Application.
+* `Category` y `Venue` ahora normalizan `sort` mediante un mapa seguro antes de construir el `ORDER BY`, evitando enviar el campo crudo a Doctrine.
+* `Category` unifico el contrato de update en `categoryKey` camelCase y el listado ahora expone `academyId` para alinearse con el detalle.
+* `Category` ahora genera `categoryKey` desde el backend a partir del `name`, eliminando ese campo del payload de create/update y manteniéndolo como contrato de salida.
 * El backlog de `Category` ya tiene historias explícitas para listar, actualizar y cambiar estado, alineadas con el código existente.
 * `Venue` quedó homologado con `Category` mediante `Finder Services` y `ShowVenueQuery` ahora requiere contexto tenant completo.
 * `CategoryController` y `VenueController` quedaron homogeneizados para usar el `TenantContext` del controlador y no mezclar inyección por parámetro.
@@ -247,6 +250,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-013` de `EP-001` quedó implementada con `POST /api/v1/academy/me/shield` para subir y reemplazar el escudo institucional de la academia.
 * El flujo `POST /api/v1/academy/me/shield` ahora valida MIME permitido antes de ir a `FileStorage`, alineándose con el patrón de `Player` para evitar errores genéricos por subidas inválidas.
 * Se añadió cobertura funcional específica para `POST /api/v1/academy/me/shield` en `AcademyMeControllerTest`, validando la subida multipart de un PNG y la forma básica del contrato `shield`.
+* `DELETE /api/v1/academy/me/shield` quedó disponible para eliminar el escudo institucional con respuesta `204 No Content`, y la referencia HTTP/frontend ya lo documenta como contrato oficial.
 * Se amplió `EP-001` con el perfil básico de academia: `country`, `department`, `city`, `address`, teléfono normalizado y consentimientos legales obligatorios en el signup de tenant.
 * La colección Postman quedó actualizada para reflejar el nuevo contrato de `Academy` y `TenantSignup`, incluyendo `country`, `department` y los consentimientos obligatorios.
 * El perfil fiscal de academia vive actualmente dentro de `academies` y actúa como fuente operativa para comprobantes de pago; no se modeló todavía una tabla separada ni la integración de facturación electrónica DIAN.

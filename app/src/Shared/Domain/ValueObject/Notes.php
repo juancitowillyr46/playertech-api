@@ -27,6 +27,11 @@ final readonly class Notes
         return $this->value;
     }
 
+    public function hasValue(): bool
+    {
+        return isset($this->value);
+    }
+
     public function equals(self $other): bool
     {
         return $this->value === $other->value;

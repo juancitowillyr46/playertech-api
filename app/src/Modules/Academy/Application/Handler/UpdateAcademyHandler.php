@@ -54,6 +54,7 @@ final readonly class UpdateAcademyHandler
             $command->input->taxCheckDigit,
             $command->input->taxRegime,
             $command->input->billingEmail,
+            $academy->registrationSource(),
             null === $command->input->address ? null : new Address($command->input->address),
             null === $command->input->city ? null : new City($command->input->city),
             $command->actorId,

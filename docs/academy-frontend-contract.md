@@ -4,6 +4,19 @@ Este documento resume el contrato vigente para el front sobre la academia y la i
 
 ---
 
+## 0. Trazabilidad y referencias
+
+Cambios de contrato vigentes para este documento:
+
+- `specs/14-current-state.md`
+- `specs/16-api-reference.md`
+- `postman/PlayerTech.postman_collection.json`
+
+Regla:
+
+- Cuando el backend cambie un payload, sort o campo visible por frontend, este documento debe reflejar el contrato esperado para UI.
+- `specs/16-api-reference.md` sigue siendo la referencia HTTP operativa canónica.
+
 ## 1. Contexto del tenant
 
 ### Consulta
@@ -82,6 +95,16 @@ Body:
 - El backend devuelve la referencia almacenada.
 - Esta es la vía correcta para actualizar la imagen institucional.
 
+### Eliminación
+
+`DELETE /api/v1/academy/me/shield`
+
+### Reglas
+
+- El frontend no debe enviar body.
+- La respuesta esperada es `204 No Content`.
+- Tras eliminar, refrescar el perfil con `GET /api/v1/academy/me` para reflejar `shield = null`.
+
 ---
 
 ## 4. Perfil fiscal y comprobante de pagos
@@ -126,6 +149,7 @@ La gestión de la academia en el tenant debe quedar asociada al `owner/admin` pr
 - `GET /api/v1/academy/me`
 - `PUT /api/v1/academy/me`
 - `POST /api/v1/academy/me/shield`
+- `DELETE /api/v1/academy/me/shield`
 
 No usar estos endpoints para usuarios operativos secundarios si no son owner/admin.
 
@@ -137,3 +161,106 @@ No usar estos endpoints para usuarios operativos secundarios si no son owner/adm
 - Contrato HTTP: `specs/16-api-reference.md`
 - Historia: [HU-011 Actualizar Academia](/C:/Data/Source/Repos/playertech/docs/backlog/stories/EP-001/HU-011-update-academy.md)
 - Historia: [HU-013 Subir Escudo Institucional de Academia](/C:/Data/Source/Repos/playertech/docs/backlog/stories/EP-001/HU-013-upload-academy-shield.md)
+
+---
+
+## 7. Contratos de módulos de negocio visibles en frontend
+
+### Venues
+
+Endpoints visibles:
+
+- `POST /api/v1/academy/venues`
+- `GET /api/v1/academy/venues`
+- `GET /api/v1/academy/venues/{venueId}`
+- `PUT /api/v1/academy/venues/{venueId}`
+- `PATCH /api/v1/academy/venues/{venueId}/inactivate`
+- `PATCH /api/v1/academy/venues/{venueId}/activate`
+- `DELETE /api/v1/academy/venues/{venueId}`
+
+Create / Update:
+
+```json
+{
+  "name": "Cancha Principal",
+  "address": "Av. Principal 123",
+  "city": "Bogota",
+  "country": "Colombia",
+  "department": "Cundinamarca",
+  "phone": "+573125953354",
+  "notes": "Canchas de fútbol 11"
+}
+```
+
+Listado / detalle:
+
+- `id`
+- `academyId` solo en detalle
+- `name`
+- `address`
+- `city`
+- `country`
+- `department`
+- `phone`
+- `notes`
+- `isPrimary`
+- `status`
+
+Sort permitido:
+
+- `created_at`
+- `name`
+- `address`
+- `city`
+- `country`
+- `department`
+- `phone`
+- `status`
+
+### Categories
+
+Endpoints visibles:
+
+- `POST /api/v1/academy/categories`
+- `GET /api/v1/academy/categories`
+- `GET /api/v1/academy/categories/{categoryId}`
+- `PUT /api/v1/academy/categories/{categoryId}`
+- `PATCH /api/v1/academy/categories/{categoryId}/inactivate`
+- `PATCH /api/v1/academy/categories/{categoryId}/activate`
+
+Contrato importante:
+
+- El frontend no debe enviar `categoryKey`.
+- El backend lo genera desde `name` y lo devuelve como dato de salida.
+
+Create / Update:
+
+```json
+{
+  "name": "Sub 12",
+  "minAge": 11,
+  "maxAge": 12,
+  "description": "Categoria formativa"
+}
+```
+
+Listado / detalle:
+
+- `id`
+- `academyId`
+- `categoryKey`
+- `name`
+- `minAge`
+- `maxAge`
+- `description`
+- `status`
+
+Sort permitido:
+
+- `created_at`
+- `categoryKey`
+- `name`
+- `minAge`
+- `maxAge`
+- `description`
+- `status`

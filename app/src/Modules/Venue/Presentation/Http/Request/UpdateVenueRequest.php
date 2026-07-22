@@ -20,6 +20,12 @@ final readonly class UpdateVenueRequest
         #[Assert\Length(max: 120, maxMessage: 'El campo "city" excede la longitud máxima permitida.')]
         public ?string $city = null,
 
+        #[Assert\Length(max: 80, maxMessage: 'El campo "country" excede la longitud máxima permitida.')]
+        public ?string $country = null,
+
+        #[Assert\Length(max: 80, maxMessage: 'El campo "department" excede la longitud máxima permitida.')]
+        public ?string $department = null,
+
         #[Assert\Length(max: 30, maxMessage: 'El campo "phone" excede la longitud máxima permitida.')]
         public ?string $phone = null,
 
@@ -34,6 +40,8 @@ final readonly class UpdateVenueRequest
             self::stringOrNull($payload['name'] ?? null),
             self::stringOrNull($payload['address'] ?? null),
             self::stringOrNull($payload['city'] ?? null),
+            self::stringOrNull($payload['country'] ?? null),
+            self::stringOrNull($payload['department'] ?? null),
             self::stringOrNull($payload['phone'] ?? null),
             self::stringOrNull($payload['notes'] ?? null),
         );
@@ -45,6 +53,8 @@ final readonly class UpdateVenueRequest
             $this->name,
             $this->address,
             $this->city,
+            $this->country,
+            $this->department,
             $this->phone,
             $this->notes,
         );

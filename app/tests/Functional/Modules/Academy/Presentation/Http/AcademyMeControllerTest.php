@@ -227,6 +227,84 @@ final class AcademyMeControllerTest extends TestDatabaseKernel
         self::assertArrayHasKey('checksum', $payload['data']['shield']);
     }
 
+    public function testItDeletesTenantAcademyShield(): void
+    {
+        $container = $this->bootTestKernel();
+        $entityManager = $this->entityManager($container);
+        $jwtManager = $this->jwtManager($container);
+        $suffix = bin2hex(random_bytes(4));
+        $phone = sprintf('+51 999 %03d %03d', random_int(100, 999), random_int(100, 999));
+
+        $academy = Academy::create(
+            AcademyId::generate(),
+            new Name('Academia Test'),
+            new Email(sprintf('academy-%s@test.local', $suffix)),
+            new PhoneNumber($phone),
+            'Colombia',
+            'Cundinamarca',
+            'NIT',
+            '901234567-8',
+            'RESPONSABLE_IVA',
+            'facturacion@test.local',
+            'signup',
+            new Address('Av. Principal 123'),
+            new City('Bogota'),
+            null,
+            AuditTrail::create('system'),
+            '8',
+        );
+
+        $user = new AccountUser();
+        $user->setEmail(sprintf('admin-%s@test.local', $suffix));
+        $user->setPasswordHash('hashed-password');
+        $user->setAcademyId($academy->id()->value());
+        $user->setRole(AccountUser::ROLE_ACADEMY_ADMIN);
+        $user->setStatus(AccountUser::STATUS_ACTIVE);
+        $user->setFullName('Admin Test');
+
+        $entityManager->persist($academy);
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        $token = $jwtManager->create($user);
+        $shieldFile = $this->createPngUpload('academy-shield.png');
+
+        self::$kernel->handle(Request::create(
+            '/api/v1/academy/me/shield',
+            'POST',
+            [],
+            [
+                'shield' => $shieldFile,
+            ],
+            [],
+            [
+                'HTTP_AUTHORIZATION' => 'Bearer '.$token,
+            ]
+        ));
+
+        $response = self::$kernel->handle(Request::create(
+            '/api/v1/academy/me/shield',
+            'DELETE',
+            server: [
+                'HTTP_AUTHORIZATION' => 'Bearer '.$token,
+            ]
+        ));
+
+        self::assertSame(204, $response->getStatusCode());
+
+        $academyResponse = self::$kernel->handle(Request::create(
+            '/api/v1/academy/me',
+            'GET',
+            server: [
+                'HTTP_AUTHORIZATION' => 'Bearer '.$token,
+            ]
+        ));
+
+        self::assertSame(200, $academyResponse->getStatusCode());
+        $academyPayload = json_decode($academyResponse->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        self::assertNull($academyPayload['data']['shield']);
+    }
+
     private function createPngUpload(string $filename): UploadedFile
     {
         $path = tempnam(sys_get_temp_dir(), 'academy-shield-');
