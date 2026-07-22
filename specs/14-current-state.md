@@ -382,5 +382,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * `EP-006` funciona como módulo maestro de acudientes con listado, detalle y creación; `EP-008` queda como módulo operativo para relaciones jugador-acudiente y vista de acudientes por jugador.
 * `EP-003` ya incorporó el flujo inicial de usuarios administrativos por invitación y activación con correo, como primer slice de la evolución de staff.
 * `EP-002` amplió el contrato de sedes para exponer `address` y `phone` opcionales también en el listado, no solo en el detalle.
+* El listado de `Venue` ahora normaliza `sort` permitidos en backend; `created_at` y aliases históricos se traducen a `auditTrail.createdAt.value` para evitar errores 500 por paths internos de Doctrine.
+* El listado de `Venue` quedó validado con una prueba unitaria de código puro (`ListVenuesHandlerTest`) ejecutada dentro del contenedor, sin BD, para confirmar el contrato de respuesta del handler.
 
 

@@ -75,7 +75,7 @@ final class VenueController extends AbstractPaginatedApiController
                 new AcademyId(
                     $this->tenantContext->requireAcademyId()
                 ),
-                $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value')
+                $this->paginationQueryFromRequest($request, 'created_at')
             )
         );
 

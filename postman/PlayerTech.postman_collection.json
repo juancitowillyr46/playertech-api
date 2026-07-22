@@ -2745,7 +2745,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/venues?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
+              "raw": "{{baseUrl}}/api/v1/academy/venues?page=1&per_page=20&sort=created_at&direction=DESC",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2753,7 +2753,7 @@
                 "api",
                 "v1",
                 "academy",
-                "venues?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC"
+                "venues?page=1&per_page=20&sort=created_at&direction=DESC"
               ]
             }
           },

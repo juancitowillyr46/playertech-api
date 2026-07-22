@@ -199,6 +199,17 @@ Los listados más visibles para frontend usan `data` como arreglo de DTOs resumi
 
 ### Venues
 
+Listado soporta paginación estándar y `sort` seguro.
+
+- `sort=created_at`
+- `sort=name`
+- `sort=address`
+- `sort=city`
+- `sort=country`
+- `sort=department`
+- `sort=phone`
+- `sort=status`
+
 ```json
 {
   "data": [

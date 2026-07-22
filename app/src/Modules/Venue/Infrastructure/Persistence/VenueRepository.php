@@ -38,10 +38,12 @@ final class VenueRepository extends ServiceEntityRepository implements VenueRepo
 
     public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
+        $sortField = $this->resolveSortField($pagination->sort);
+
         $qb = $this->createQueryBuilder('venue')
             ->andWhere('venue.academyId = :academyId')
             ->setParameter('academyId', $academyId->value())
-            ->orderBy(sprintf('venue.%s', $pagination->sort), $pagination->direction);
+            ->orderBy(sprintf('venue.%s', $sortField), $pagination->direction);
 
         $total = (int) (clone $qb)->select('COUNT(venue.id)')->getQuery()->getSingleScalarResult();
         $items = $qb->setFirstResult(($pagination->page - 1) * $pagination->perPage)->setMaxResults($pagination->perPage)->getQuery()->getResult();
@@ -58,5 +60,22 @@ final class VenueRepository extends ServiceEntityRepository implements VenueRepo
             ->setParameter('venueId', $venueId->value())
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    private function resolveSortField(string $sort): string
+    {
+        return match ($sort) {
+            'created_at',
+            'audit_trail.created_at.value',
+            'auditTrail.createdAt.value' => 'auditTrail.createdAt.value',
+            'name' => 'name',
+            'address' => 'address',
+            'city' => 'city',
+            'country' => 'country',
+            'department' => 'department',
+            'phone' => 'phone',
+            'status' => 'status',
+            default => 'auditTrail.createdAt.value',
+        };
     }
 }
