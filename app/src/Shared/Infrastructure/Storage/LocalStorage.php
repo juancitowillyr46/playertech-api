@@ -53,6 +53,10 @@ final readonly class LocalStorage implements FileStorage
             throw new \RuntimeException('Could not create upload directory.');
         }
 
+        if (!is_dir($fullPath) || !is_writable($fullPath)) {
+            throw new \RuntimeException(sprintf('Upload directory is not writable: %s', $fullPath));
+        }
+
         try {
             $file->move($fullPath, $fileName);
         } catch (FileException $e) {

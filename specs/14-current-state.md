@@ -245,6 +245,8 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-007` de `EP-007` quedó implementada con carga masiva de jugadores desde Excel, validación de categorías y rechazo total ante errores.
 * El módulo `Player` ahora incluye `category_id` como referencia opcional y el endpoint de importación masiva `POST /api/v1/academy/players/import` consume `category_key` como referencia de negocio.
 * `HU-013` de `EP-001` quedó implementada con `POST /api/v1/academy/me/shield` para subir y reemplazar el escudo institucional de la academia.
+* El flujo `POST /api/v1/academy/me/shield` ahora valida MIME permitido antes de ir a `FileStorage`, alineándose con el patrón de `Player` para evitar errores genéricos por subidas inválidas.
+* Se añadió cobertura funcional específica para `POST /api/v1/academy/me/shield` en `AcademyMeControllerTest`, validando la subida multipart de un PNG y la forma básica del contrato `shield`.
 * Se amplió `EP-001` con el perfil básico de academia: `country`, `department`, `city`, `address`, teléfono normalizado y consentimientos legales obligatorios en el signup de tenant.
 * La colección Postman quedó actualizada para reflejar el nuevo contrato de `Academy` y `TenantSignup`, incluyendo `country`, `department` y los consentimientos obligatorios.
 * El perfil fiscal de academia vive actualmente dentro de `academies` y actúa como fuente operativa para comprobantes de pago; no se modeló todavía una tabla separada ni la integración de facturación electrónica DIAN.

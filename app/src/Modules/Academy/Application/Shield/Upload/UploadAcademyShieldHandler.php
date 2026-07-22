@@ -8,11 +8,19 @@ use App\Modules\Academy\Application\Response\AcademyResponse;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRepository;
 use App\Shared\Domain\Contracts\FileStorage;
+use App\Shared\Domain\Exception\InvalidMimeTypeException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Uid\Uuid;
 
 final readonly class UploadAcademyShieldHandler
 {
+    private const ALLOWED_MIME_TYPES = [
+        'image/jpeg',
+        'image/png',
+        'image/svg+xml',
+    ];
+
     public function __construct(
         private AcademyRepository $academyRepository,
         private FileStorage $fileStorage,
@@ -22,8 +30,12 @@ final readonly class UploadAcademyShieldHandler
     public function __invoke(UploadAcademyShieldCommand $command): AcademyResponse
     {
         $academy = $this->requireAcademy($command->academyId);
+        $this->assertAllowedMimeType($command->file);
 
-        $this->fileStorage->delete($academy->shield());
+        $shield = $academy->shield();
+        if (null !== $shield && $this->isInitializedMedia($shield)) {
+            $this->fileStorage->delete($shield);
+        }
 
         $media = $this->fileStorage->upload(
             $command->file,
@@ -35,6 +47,15 @@ final readonly class UploadAcademyShieldHandler
         $this->academyRepository->save($academy);
 
         return AcademyResponse::fromAcademy($academy);
+    }
+
+    private function assertAllowedMimeType(UploadedFile $file): void
+    {
+        $mimeType = $file->getMimeType() ?? $file->getClientMimeType() ?? '';
+
+        if (!in_array($mimeType, self::ALLOWED_MIME_TYPES, true)) {
+            throw new InvalidMimeTypeException($mimeType, self::ALLOWED_MIME_TYPES);
+        }
     }
 
     private function requireAcademy(string $academyId): \App\Modules\Academy\Domain\Academy\Academy
@@ -50,5 +71,20 @@ final readonly class UploadAcademyShieldHandler
         }
 
         return $academy;
+    }
+
+    private function isInitializedMedia(\App\Shared\Domain\ValueObject\Media $media): bool
+    {
+        $reflection = new \ReflectionObject($media);
+
+        foreach (['path', 'url', 'mimeType', 'size', 'checksum'] as $propertyName) {
+            $property = $reflection->getProperty($propertyName);
+
+            if (!$property->isInitialized($media)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
