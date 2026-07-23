@@ -278,7 +278,52 @@ El backend genera `categoryKey` a partir del `name` y devuelve ese valor en crea
 }
 ```
 
+### Category Options
+
+```http
+GET /api/v1/academy/categories/options
+```
+
+### Access
+
+* Tenant authenticated.
+
+### Purpose
+
+Exponer un listado liviano de categorías activas para selects y combos sin paginación.
+
+### Response
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "categoryKey": "sub-12",
+      "name": "Sub 12",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {}
+}
+```
+
+### Rules
+
+* Devuelve solo categorías activas y no borradas lógicamente.
+* El orden es alfabético por `name`.
+* El frontend no debe enviar paginación para este endpoint.
+
 ### Teams
+
+Listado soporta paginación estándar y `sort` seguro.
+
+- `sort=created_at`
+- `sort=name`
+- `sort=category_id`
+- `sort=status`
+
+El backend normaliza estos valores antes de armar el `ORDER BY`, por lo que el frontend no necesita enviar paths internos de Doctrine.
 
 ```json
 {
@@ -286,6 +331,7 @@ El backend genera `categoryKey` a partir del `name` y devuelve ese valor en crea
     {
       "id": "uuid",
       "categoryId": "uuid",
+      "categoryName": "Category 1",
       "name": "Sub 12 A",
       "status": "ACTIVE"
     }
@@ -300,6 +346,87 @@ El backend genera `categoryKey` a partir del `name` y devuelve ese valor en crea
   }
 }
 ```
+
+### Team Create
+
+```http
+POST /api/v1/academy/teams
+```
+
+### Request DTO
+
+`CreateTeamRequest`
+
+```json
+{
+  "categoryId": "uuid",
+  "name": "Sub 12 A"
+}
+```
+
+### Success
+
+`201 Created`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "academyId": "uuid",
+    "categoryId": "uuid",
+    "categoryName": "Category 1",
+    "name": "Sub 12 A",
+    "status": "ACTIVE"
+  },
+  "meta": {}
+}
+```
+
+### Team Update
+
+```http
+PUT /api/v1/academy/teams/{teamId}
+```
+
+### Request DTO
+
+`UpdateTeamRequest`
+
+```json
+{
+  "categoryId": "uuid",
+  "name": "Sub 12 A"
+}
+```
+
+### Success
+
+`200 OK`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "academyId": "uuid",
+    "categoryId": "uuid",
+    "categoryName": "Category 1",
+    "name": "Sub 12 A",
+    "status": "ACTIVE"
+  },
+  "meta": {}
+}
+```
+
+### Team Activate / Inactivate
+
+```http
+PATCH /api/v1/academy/teams/{teamId}/inactivate
+PATCH /api/v1/academy/teams/{teamId}/activate
+```
+
+### Success
+
+`204 No Content`
 
 ### Players
 

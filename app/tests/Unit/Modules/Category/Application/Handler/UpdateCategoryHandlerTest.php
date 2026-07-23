@@ -56,7 +56,7 @@ final class UpdateCategoryHandlerTest extends TestCase
         ));
 
         self::assertNull($response);
-        self::assertSame('SUB-14-RENOVADA', $repository->findById($academyId, $category->id())->categoryKey());
+        self::assertSame('SUB-14-RENOMBRADA', $repository->findById($academyId, $category->id())->categoryKey());
         self::assertSame('Sub 14 Renombrada', $repository->findById($academyId, $category->id())->name()->value());
         self::assertSame(12, $repository->findById($academyId, $category->id())->minAge()->value());
         self::assertSame(15, $repository->findById($academyId, $category->id())->maxAge()->value());
@@ -149,6 +149,15 @@ final class UpdateCategoryInMemoryRepository implements CategoryRepository
         }
 
         return null;
+    }
+
+    public function findActiveByAcademy(AcademyId $academyId): array
+    {
+        return array_values(array_filter(
+            $this->items,
+            static fn (Category $category): bool => $category->academyId()->value() === $academyId->value()
+                && $category->status()->value() === \App\Modules\Category\Domain\Category\CategoryStatus::active()->value()
+        ));
     }
 
     public function findAllByAcademy(AcademyId $academyId, \App\Shared\Application\Pagination\PaginationQuery $pagination): array

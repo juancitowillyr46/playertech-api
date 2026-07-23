@@ -51,6 +51,6 @@ final readonly class CreateTeamHandler
 
         $this->teamRepository->save($team);
 
-        return TeamResponse::fromTeam($team);
+        return TeamResponse::fromTeam($team, $category->name()->value());
     }
 }

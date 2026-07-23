@@ -227,6 +227,7 @@ Endpoints visibles:
 - `PUT /api/v1/academy/categories/{categoryId}`
 - `PATCH /api/v1/academy/categories/{categoryId}/inactivate`
 - `PATCH /api/v1/academy/categories/{categoryId}/activate`
+- `GET /api/v1/academy/categories/options`
 
 Contrato importante:
 
@@ -264,3 +265,10 @@ Sort permitido:
 - `maxAge`
 - `description`
 - `status`
+
+### Uso recomendado en el selector de equipo
+
+- Usar `GET /api/v1/academy/categories/options` para combos sin paginación.
+- Renderizar `name` como label visible.
+- Mantener `categoryKey` sólo como dato informativo o de apoyo interno.
+- No construir lógica de orden o filtrado en el cliente para este caso.

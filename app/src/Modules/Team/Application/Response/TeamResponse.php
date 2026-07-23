@@ -12,17 +12,19 @@ final readonly class TeamResponse
         private string $id,
         private string $academyId,
         private string $categoryId,
+        private string $categoryName,
         private string $name,
         private string $status,
     ) {
     }
 
-    public static function fromTeam(Team $team): self
+    public static function fromTeam(Team $team, string $categoryName): self
     {
         return new self(
             $team->id()->value(),
             $team->academyId()->value(),
             $team->categoryId()->value(),
+            $categoryName,
             $team->name()->value(),
             $team->status()->value(),
         );
@@ -34,6 +36,7 @@ final readonly class TeamResponse
             'id' => $this->id,
             'academyId' => $this->academyId,
             'categoryId' => $this->categoryId,
+            'categoryName' => $this->categoryName,
             'name' => $this->name,
             'status' => $this->status,
         ];

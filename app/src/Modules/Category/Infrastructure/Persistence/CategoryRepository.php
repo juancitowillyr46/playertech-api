@@ -69,6 +69,19 @@ final class CategoryRepository extends ServiceEntityRepository implements Catego
             ->getOneOrNullResult();
     }
 
+    public function findActiveByAcademy(AcademyId $academyId): array
+    {
+        return $this->createQueryBuilder('category')
+            ->andWhere('category.academyId = :academyId')
+            ->andWhere('category.deletedAt IS NULL')
+            ->andWhere('category.status = :status')
+            ->setParameter('academyId', $academyId->value())
+            ->setParameter('status', 'ACTIVE')
+            ->orderBy('category.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @return Category[]
      */

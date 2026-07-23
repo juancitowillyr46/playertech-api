@@ -39,6 +39,6 @@ final readonly class UpdateTeamHandler
 
         $this->teamRepository->save($team);
 
-        return TeamResponse::fromTeam($team);
+        return TeamResponse::fromTeam($team, $this->categoryFinder->findOrFail($academyId, $categoryId)->name()->value());
     }
 }

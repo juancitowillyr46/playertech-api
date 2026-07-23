@@ -72,7 +72,7 @@ final class TeamController extends AbstractPaginatedApiController
         $teams = ($this->listTeamsHandler)(
             new ListTeamsQuery(
                 new AcademyId($this->tenantContext->requireAcademyId()),
-                $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value'),
+                $this->paginationQueryFromRequest($request, 'created_at'),
             )
         );
 

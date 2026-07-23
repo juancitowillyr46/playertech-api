@@ -9,6 +9,7 @@ use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\Team\Infrastructure\Persistence\TeamRepository;
+use App\Shared\Application\Pagination\PaginationQuery;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Name;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,7 +52,7 @@ final class TeamRepositoryTest extends KernelTestCase
 
         self::assertNotNull($found);
         self::assertSame($team->id()->value(), $found?->id()->value());
-        self::assertCount(1, $this->teamRepository->findAllByAcademy($academyId));
+        self::assertCount(1, $this->teamRepository->findAllByAcademy($academyId, new PaginationQuery())['items']);
         self::assertSame(
             $team->id()->value(),
             $this->teamRepository

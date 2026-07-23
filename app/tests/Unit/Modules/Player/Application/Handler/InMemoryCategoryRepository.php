@@ -43,6 +43,15 @@ final class InMemoryCategoryRepository implements CategoryRepository
         return null;
     }
 
+    public function findActiveByAcademy(AcademyId $academyId): array
+    {
+        return array_values(array_filter(
+            $this->categories,
+            static fn (Category $category): bool => $category->academyId()->equals($academyId)
+                && $category->status()->value() === \App\Modules\Category\Domain\Category\CategoryStatus::active()->value()
+        ));
+    }
+
     public function findAllByAcademy(AcademyId $academyId): array
     {
         return array_values(array_filter(

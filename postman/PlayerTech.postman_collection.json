@@ -664,7 +664,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000050\",\n    \"membershipId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000040\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ],\n    \"status\": \"REGISTERED\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000011\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"categoryName\": \"Sub 12\",\n    \"name\": \"Sub 12 A\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -2152,7 +2152,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000050\",\n    \"membershipId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000040\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ],\n    \"status\": \"REGISTERED\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000011\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"name\": \"Sub 12 A\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -2171,7 +2171,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/teams?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC",
+            "raw": "{{baseUrl}}/api/v1/academy/teams?page=1&per_page=20&sort=created_at&direction=DESC",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2179,7 +2179,25 @@
                 "api",
                 "v1",
                 "academy",
-                "teams?page=1&per_page=20&sort=audit_trail.created_at.value&direction=DESC"
+                "teams"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20"
+                },
+                {
+                  "key": "sort",
+                  "value": "created_at"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
               ]
             }
           },
@@ -2194,7 +2212,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000011\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n      \"name\": \"Sub 12 A\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000011\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n      \"categoryName\": \"Sub 12\",\n      \"name\": \"Sub 12 A\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },
@@ -2237,7 +2255,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000011\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"name\": \"Sub 12 A\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000011\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"categoryName\": \"Sub 12\",\n    \"name\": \"Sub 12 A\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -2288,7 +2306,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000050\",\n    \"membershipId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000040\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ],\n    \"status\": \"REGISTERED\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000011\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"categoryId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"categoryName\": \"Sub 12\",\n    \"name\": \"Sub 12 A\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -2328,15 +2346,15 @@
           "response": [
             {
               "name": "Team - Inactivate Example",
-              "status": "OK",
-              "code": 200,
+              "status": "No Content",
+              "code": 204,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000050\",\n    \"membershipId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000040\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ],\n    \"status\": \"REGISTERED\"\n  },\n  \"meta\": {}\n}"
+              "body": ""
             }
           ]
         },
@@ -2376,15 +2394,15 @@
           "response": [
             {
               "name": "Team - Activate Example",
-              "status": "OK",
-              "code": 200,
+              "status": "No Content",
+              "code": 204,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000050\",\n    \"membershipId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000040\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ],\n    \"status\": \"REGISTERED\"\n  },\n  \"meta\": {}\n}"
+              "body": ""
             }
           ]
         }
@@ -2439,7 +2457,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000050\",\n    \"membershipId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000040\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ],\n    \"status\": \"REGISTERED\"\n  },\n  \"meta\": {}\n}"
+              "body": ""
             }
           ]
         },

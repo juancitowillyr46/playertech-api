@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Modules\Category\Application\Handler;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
-use App\Modules\Category\Application\Handler\ListCategoriesHandler;
-use App\Modules\Category\Application\Query\ListCategoriesQuery;
+use App\Modules\Category\Application\Handler\ListCategoryOptionsHandler;
 use App\Modules\Category\Domain\Category\Category;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Category\Domain\Category\CategoryRepository;
-use App\Shared\Application\Pagination\PaginationQuery;
+use App\Modules\Category\Domain\Category\CategoryStatus;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Description;
 use App\Shared\Domain\ValueObject\MaximumAge;
@@ -18,12 +17,12 @@ use App\Shared\Domain\ValueObject\MinimumAge;
 use App\Shared\Domain\ValueObject\Name;
 use PHPUnit\Framework\TestCase;
 
-final class ListCategoriesHandlerTest extends TestCase
+final class ListCategoryOptionsHandlerTest extends TestCase
 {
-    public function testItIncludesAcademyIdInTheListContract(): void
+    public function testItReturnsOnlyActiveCategoriesAsOptions(): void
     {
         $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
-        $category = Category::create(
+        $active = Category::create(
             new CategoryId('019eec93-9a11-7432-bd04-52306b2b3d90'),
             $academyId,
             'SUB-14',
@@ -33,16 +32,28 @@ final class ListCategoriesHandlerTest extends TestCase
             new Description('Categoria formativa'),
             AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
         );
+        $inactive = Category::create(
+            new CategoryId('019eec93-9a11-7432-bd04-52306b2b3d91'),
+            $academyId,
+            'SUB-16',
+            new Name('Sub 16'),
+            new MinimumAge(15),
+            new MaximumAge(16),
+            null,
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
+        );
+        $inactive->inactivate('actor-id');
 
-        $handler = new ListCategoriesHandler(new ListCategoriesInMemoryRepository($category));
-        $result = $handler(new ListCategoriesQuery($academyId, new PaginationQuery()));
+        $handler = new ListCategoryOptionsHandler(new ListCategoryOptionsInMemoryRepository($active, $inactive));
+        $result = $handler($academyId);
 
-        self::assertSame($academyId->value(), $result->items[0]->toArray()['academyId']);
-        self::assertSame('SUB-14', $result->items[0]->toArray()['categoryKey']);
+        self::assertCount(1, $result);
+        self::assertSame('SUB-14', $result[0]->toArray()['categoryKey']);
+        self::assertSame(CategoryStatus::active()->value(), $result[0]->toArray()['status']);
     }
 }
 
-final class ListCategoriesInMemoryRepository implements CategoryRepository
+final class ListCategoryOptionsInMemoryRepository implements CategoryRepository
 {
     /** @var Category[] */
     private array $items = [];
@@ -62,7 +73,7 @@ final class ListCategoriesInMemoryRepository implements CategoryRepository
     public function findById(AcademyId $academyId, CategoryId $categoryId): ?Category
     {
         foreach ($this->items as $category) {
-            if ($category->academyId()->equals($academyId) && $category->id()->equals($categoryId)) {
+            if ($category->academyId()->value() === $academyId->value() && $category->id()->value() === $categoryId->value()) {
                 return $category;
             }
         }
@@ -75,7 +86,7 @@ final class ListCategoriesInMemoryRepository implements CategoryRepository
         $normalizedKey = strtoupper(trim($categoryKey));
 
         foreach ($this->items as $category) {
-            if ($category->academyId()->equals($academyId) && $category->categoryKey() === $normalizedKey) {
+            if ($category->academyId()->value() === $academyId->value() && $category->categoryKey() === $normalizedKey) {
                 return $category;
             }
         }
@@ -88,15 +99,15 @@ final class ListCategoriesInMemoryRepository implements CategoryRepository
         return array_values(array_filter(
             $this->items,
             static fn (Category $category): bool => $category->academyId()->value() === $academyId->value()
-                && $category->status()->value() === \App\Modules\Category\Domain\Category\CategoryStatus::active()->value()
+                && $category->status()->value() === CategoryStatus::active()->value()
         ));
     }
 
-    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
+    public function findAllByAcademy(AcademyId $academyId, \App\Shared\Application\Pagination\PaginationQuery $pagination): array
     {
         $items = array_values(array_filter(
             $this->items,
-            static fn (Category $category): bool => $category->academyId()->equals($academyId)
+            static fn (Category $category): bool => $category->academyId()->value() === $academyId->value()
         ));
 
         return [

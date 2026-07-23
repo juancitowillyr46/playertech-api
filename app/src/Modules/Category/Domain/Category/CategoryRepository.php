@@ -17,6 +17,11 @@ interface CategoryRepository
     public function findByCategoryKey(AcademyId $academyId, string $categoryKey): ?Category;
 
     /**
+     * @return Category[]
+     */
+    public function findActiveByAcademy(AcademyId $academyId): array;
+
+    /**
      * @return array{items: Category[], total: int}
      */
     public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array;

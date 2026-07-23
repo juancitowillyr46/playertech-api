@@ -12,6 +12,7 @@ use App\Modules\Category\Application\Command\UpdateCategoryCommand;
 use App\Modules\Category\Application\Handler\ActivateCategoryHandler;
 use App\Modules\Category\Application\Handler\CreateCategoryHandler;
 use App\Modules\Category\Application\Handler\InactivateCategoryHandler;
+use App\Modules\Category\Application\Handler\ListCategoryOptionsHandler;
 use App\Modules\Category\Application\Handler\ListCategoriesHandler;
 use App\Modules\Category\Application\Handler\ShowCategoryHandler;
 use App\Modules\Category\Application\Handler\UpdateCategoryHandler;
@@ -36,6 +37,7 @@ final class CategoryController extends AbstractPaginatedApiController
         private readonly CreateCategoryHandler $createCategoryHandler,
         private readonly UpdateCategoryHandler $updateCategoryHandler,
         private readonly ListCategoriesHandler $listCategoriesHandler,
+        private readonly ListCategoryOptionsHandler $listCategoryOptionsHandler,
         private readonly ShowCategoryHandler $showCategoryHandler,
         private readonly InactivateCategoryHandler $inactivateCategoryHandler,
         private readonly ActivateCategoryHandler $activateCategoryHandler,
@@ -79,6 +81,21 @@ final class CategoryController extends AbstractPaginatedApiController
         return new JsonResponse([
             'data' => array_map(static fn ($item) => $item->toArray(), $categories->items),
             'meta' => $categories->meta->toArray(),
+        ]);
+    }
+
+    #[Route('/options', name: 'api_v1_categories_options', methods: ['GET'])]
+    public function options(): JsonResponse
+    {
+        $categories = ($this->listCategoryOptionsHandler)(
+            new AcademyId(
+                $this->tenantContext->requireAcademyId()
+            )
+        );
+
+        return new JsonResponse([
+            'data' => array_map(static fn ($item) => $item->toArray(), $categories),
+            'meta' => new \stdClass(),
         ]);
     }
 
