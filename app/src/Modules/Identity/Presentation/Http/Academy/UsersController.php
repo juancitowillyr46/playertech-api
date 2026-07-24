@@ -167,13 +167,17 @@ final class UsersController extends AbstractPaginatedApiController
     }
 
     #[Route('/{userId}/invitation/resend', name: 'api_v1_academy_users_resend_invitation', methods: ['POST'])]
-    public function resendInvitation(string $userId, TenantContext $tenantContext): JsonResponse
+    public function resendInvitation(Request $request, string $userId, TenantContext $tenantContext): JsonResponse
     {
+        $payload = $request->toArray();
+        $mode = strtoupper((string) ($payload['mode'] ?? 'INVITATION'));
+
         $view = ($this->resendUserInvitationHandler)(
             new ResendUserInvitationCommand(
                 $this->requireActorId($tenantContext),
                 $userId,
-                $tenantContext->requireAcademyId()
+                $tenantContext->requireAcademyId(),
+                in_array($mode, ['INVITATION', 'PASSWORD'], true) ? $mode : 'INVITATION'
             )
         );
 

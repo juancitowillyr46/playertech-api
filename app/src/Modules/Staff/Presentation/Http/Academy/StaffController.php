@@ -201,13 +201,15 @@ final class StaffController extends AbstractPaginatedApiController
     }
 
     #[Route('/{userId}/activation/resend', methods: ['POST'])]
-    public function resendActivation(string $userId): JsonResponse
+    public function resendActivation(Request $request, string $userId): JsonResponse
     {
+        $payload = $this->normalizeResendPayload($request->toArray());
         $view = ($this->resendUserInvitationHandler)(
             new ResendUserInvitationCommand(
                 $this->requireAuthenticatedUserId($this->security),
                 $userId,
-                $this->tenantContext->requireAcademyId()
+                $this->tenantContext->requireAcademyId(),
+                $payload['mode']
             )
         );
 
@@ -215,5 +217,20 @@ final class StaffController extends AbstractPaginatedApiController
             'data' => $view->toArray(),
             'meta' => new \stdClass(),
         ]);
+    }
+
+    /**
+     * @param array<string, mixed> $payload
+     * @return array{mode:string}
+     */
+    private function normalizeResendPayload(array $payload): array
+    {
+        $mode = strtoupper((string) ($payload['mode'] ?? 'INVITATION'));
+
+        if (!in_array($mode, ['INVITATION', 'PASSWORD'], true)) {
+            $mode = 'INVITATION';
+        }
+
+        return ['mode' => $mode];
     }
 }

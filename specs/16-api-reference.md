@@ -1732,11 +1732,22 @@ POST /api/v1/academy/staff/{userId}/activation/resend
 
 ### Purpose
 
-Reenviar el correo de activación de un staff pendiente, generando un nuevo token y dejando inválido el anterior.
+Reenviar el correo asociado al acceso inicial de un staff, generando un nuevo token y dejando inválido el anterior.
+
+### Request DTO
+
+```json
+{
+  "mode": "INVITATION"
+}
+```
 
 ### Rules
 
 * El usuario debe existir dentro del tenant actual.
+* `mode` admite `INVITATION` o `PASSWORD`.
+* Si `mode = INVITATION`, el backend reenvía solo el enlace de activación.
+* Si `mode = PASSWORD`, el backend regenera la contraseña, crea un nuevo token y reenvía usuario + clave + enlace de activación.
 * El usuario debe estar en `PENDING_ACTIVATION`.
 * Si el usuario ya está activo, el backend responde `400 Bad Request`.
 * El correo reenviado debe apuntar a `APP_AUTH_FRONTEND_URL/activate-account/{token}`.

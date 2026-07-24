@@ -10,6 +10,7 @@ final readonly class ResendUserInvitationCommand
         public string $actorId,
         public string $userId,
         public string $academyId,
+        public string $mode = 'INVITATION',
     ) {
     }
 }

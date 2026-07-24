@@ -209,7 +209,7 @@ La ficha de staff debe usar el detalle oficial del backend y no inferir `accessM
 
 * `GET /api/v1/academy/staff/{userId}` devuelve `accessMode`.
 * `GET /api/v1/academy/staff` devuelve `status` y `userStatus`.
-* `POST /api/v1/academy/staff/{userId}/activation/resend` genera un nuevo token y vuelve a notificar el enlace público.
+* `POST /api/v1/academy/staff/{userId}/activation/resend` acepta `mode = INVITATION|PASSWORD`; en invitación reenvía el enlace público y en contraseña vuelve a generar la clave oficial + token.
 * `GET /api/v1/public/users/activate/{token}` redirige al frontend.
 * `POST /api/v1/public/users/activate/{token}` activa la cuenta con contraseña.
 
