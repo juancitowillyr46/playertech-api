@@ -36,6 +36,18 @@ Configuración esperada:
 * Sin sesiones en servidor
 * JWT como fuente de identidad
 
+## Account Access Gate
+
+El acceso a la aplicación depende del estado de la cuenta, no solo de que exista una contraseña.
+
+Regla base:
+
+* `ACTIVE` permite autenticación.
+* `PENDING_ACTIVATION` bloquea autenticación aunque exista contraseña generada.
+* `INACTIVE` bloquea autenticación.
+
+Esto aplica tanto para usuarios de plataforma como para usuarios de academia, incluyendo staff.
+
 ---
 
 # JWT Model
@@ -142,6 +154,21 @@ Las contraseñas se almacenarán con un hash seguro, preferentemente `argon2id`.
 * Nunca almacenar contraseñas en texto plano.
 * Nunca exponer `password_hash` en la API.
 
+## Activation and Password Ownership
+
+El owner no debe administrar contraseñas como flujo base de staff.
+
+Para staff existen dos patrones válidos:
+
+* Invitación por correo, donde el usuario define su contraseña al activar.
+* Contraseña generada por backend, donde la cuenta sigue en `PENDING_ACTIVATION` hasta activar por enlace público.
+
+En ambos patrones:
+
+* El enlace público apunta al frontend.
+* El backend conserva el `POST` de activación.
+* Una contraseña anterior no debe permitir ingreso si la cuenta sigue pendiente.
+
 ---
 
 # Audit Identity
@@ -175,6 +202,16 @@ Cada endpoint deberá validar:
 * Token válido
 * Rol autorizado
 * Tenant correcto
+
+## Staff Security Contract
+
+La ficha de staff debe usar el detalle oficial del backend y no inferir `accessMode` desde el listado.
+
+* `GET /api/v1/academy/staff/{userId}` devuelve `accessMode`.
+* `GET /api/v1/academy/staff` devuelve `status` y `userStatus`.
+* `POST /api/v1/academy/staff/{userId}/activation/resend` genera un nuevo token y vuelve a notificar el enlace público.
+* `GET /api/v1/public/users/activate/{token}` redirige al frontend.
+* `POST /api/v1/public/users/activate/{token}` activa la cuenta con contraseña.
 
 ---
 

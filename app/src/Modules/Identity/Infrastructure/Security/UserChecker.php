@@ -12,7 +12,15 @@ final class UserChecker implements UserCheckerInterface
 {
     public function checkPreAuth(UserInterface $user): void
     {
-        if ($user instanceof AccountUser && !$user->isActive()) {
+        if (!$user instanceof AccountUser) {
+            return;
+        }
+
+        if (AccountUser::STATUS_PENDING_ACTIVATION === $user->getStatus()) {
+            throw new CustomUserMessageAccountStatusException('Cuenta pendiente de activación.');
+        }
+
+        if (!$user->isActive()) {
             throw new CustomUserMessageAccountStatusException('Usuario inactivo.');
         }
     }
