@@ -37,7 +37,7 @@ final class ResendUserInvitationHandlerTest extends TestCase
             }
         };
 
-        $handler = new ResendUserInvitationHandler($entityManager, $messageBus, 'http://localhost:8081');
+        $handler = new ResendUserInvitationHandler($entityManager, $messageBus, 'http://localhost:4200');
         $response = $handler(new ResendUserInvitationCommand('actor-id', '019eec93-9a11-7432-bd04-52306b2b3d8e', '019eec93-9a11-7432-bd04-52306b2b3d8f'));
 
         self::assertSame(AccountUser::STATUS_PENDING_ACTIVATION, $response->toArray()['status']);

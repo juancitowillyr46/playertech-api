@@ -18,7 +18,7 @@ final readonly class ResendUserInvitationHandler extends AbstractUserHandler
     public function __construct(
         EntityManagerInterface $entityManager,
         private MessageBusInterface $messageBus,
-        private string $publicUrl,
+        private string $authFrontendUrl,
     ) {
         parent::__construct($entityManager);
     }
@@ -37,7 +37,7 @@ final readonly class ResendUserInvitationHandler extends AbstractUserHandler
 
         $this->entityManager->flush();
 
-        $activationUrl = sprintf('%s/api/v1/public/users/activate/%s', rtrim($this->publicUrl, '/'), $user->getActivationToken());
+        $activationUrl = sprintf('%s/activate-account/%s', rtrim($this->authFrontendUrl, '/'), $user->getActivationToken());
 
         $this->messageBus->dispatch(new SendUserInvitationEmailMessage(
             $user->getUserIdentifier(),

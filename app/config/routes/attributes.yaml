@@ -57,3 +57,10 @@ team_controllers:
         namespace: App\Modules\Team\Presentation\Http
     type: attribute
     prefix: /api/v1
+
+staff_controllers:
+    resource:
+        path: ../../src/Modules/Staff/Presentation/Http/
+        namespace: App\Modules\Staff\Presentation\Http
+    type: attribute
+    prefix: /api/v1

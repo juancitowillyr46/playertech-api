@@ -18,6 +18,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class InviteUserHandlerTest extends TestCase
 {
+    public ?object $lastMessage = null;
+
     public function testItCreatesPendingInvitationAndDispatchesEmail(): void
     {
         $entityManager = $this->createMock(EntityManagerInterface::class);
@@ -30,9 +32,14 @@ final class InviteUserHandlerTest extends TestCase
         $passwordHasher = $this->createMock(UserPasswordHasherInterface::class);
         $passwordHasher->method('hashPassword')->willReturn('hashed');
 
-        $messageBus = new class implements MessageBusInterface {
+        $messageBus = new class($this) implements MessageBusInterface {
+            public function __construct(private InviteUserHandlerTest $test)
+            {
+            }
+
             public function dispatch(object $message, array $stamps = []): Envelope
             {
+                $this->test->lastMessage = $message;
                 return new Envelope($message);
             }
         };
@@ -42,7 +49,7 @@ final class InviteUserHandlerTest extends TestCase
             $passwordHasher,
             new UserAdministrationPolicy(),
             $messageBus,
-            'http://localhost:8081'
+            'http://localhost:4200'
         );
 
         $response = $handler(new InviteUserCommand(
@@ -53,5 +60,7 @@ final class InviteUserHandlerTest extends TestCase
 
         self::assertSame('juan@test.local', $response->toArray()['email']);
         self::assertSame(AccountUser::STATUS_PENDING_ACTIVATION, $response->toArray()['status']);
+        self::assertNotNull($this->lastMessage);
+        self::assertStringStartsWith('http://localhost:4200/activate-account/', $this->lastMessage->activationUrl);
     }
 }

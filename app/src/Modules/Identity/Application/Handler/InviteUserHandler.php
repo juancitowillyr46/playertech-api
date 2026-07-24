@@ -23,7 +23,7 @@ final readonly class InviteUserHandler extends AbstractUserHandler
         private UserPasswordHasherInterface $passwordHasher,
         private UserAdministrationPolicy $userAdministrationPolicy,
         private MessageBusInterface $messageBus,
-        private string $publicUrl,
+        private string $authFrontendUrl,
     ) {
         parent::__construct($entityManager);
     }
@@ -59,7 +59,7 @@ final readonly class InviteUserHandler extends AbstractUserHandler
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $activationUrl = sprintf('%s/api/v1/public/users/activate/%s', rtrim($this->publicUrl, '/'), $user->getActivationToken());
+        $activationUrl = sprintf('%s/activate-account/%s', rtrim($this->authFrontendUrl, '/'), $user->getActivationToken());
 
         $this->messageBus->dispatch(new SendUserInvitationEmailMessage(
             $email,

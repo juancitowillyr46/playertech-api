@@ -160,6 +160,19 @@ final class UpdateCategoryInMemoryRepository implements CategoryRepository
         ));
     }
 
+    public function findActiveOptionsByAcademy(AcademyId $academyId): array
+    {
+        return array_map(
+            static fn (Category $category): array => [
+                'id' => $category->id()->value(),
+                'categoryKey' => $category->categoryKey(),
+                'name' => $category->name()->value(),
+                'status' => $category->status()->value(),
+            ],
+            $this->findActiveByAcademy($academyId)
+        );
+    }
+
     public function findAllByAcademy(AcademyId $academyId, \App\Shared\Application\Pagination\PaginationQuery $pagination): array
     {
         $items = array_values(array_filter(

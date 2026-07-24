@@ -3945,6 +3945,116 @@
           ]
         },
         {
+          "name": "Staff - List Coaches",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/staff/coaches?page=1&per_page=20&sort=created_at&direction=DESC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "staff",
+                "coaches"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20"
+                },
+                {
+                  "key": "sort",
+                  "value": "created_at"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Staff - List Coaches Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000101\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"userId\": \"019f0000-0000-7000-8000-000000000100\",\n      \"fullName\": \"Juan Perez\",\n      \"email\": \"juan@academiaplayertech.com\",\n      \"role\": \"ROLE_COACH\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Staff - Options",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/staff/options?role=ROLE_COACH",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "staff",
+                "options"
+              ],
+              "query": [
+                {
+                  "key": "role",
+                  "value": "ROLE_COACH"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Staff - Options Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000101\",\n      \"label\": \"Juan Perez\"\n    }\n  ],\n  \"meta\": {}\n}"
+            }
+          ]
+        },
+        {
           "name": "Staff - Onboard Member",
           "request": {
             "method": "POST",

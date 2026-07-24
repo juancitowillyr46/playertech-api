@@ -8,6 +8,7 @@ use App\Modules\Identity\Application\Command\ActivateUserCommand;
 use App\Modules\Identity\Application\Handler\ActivateUserHandler;
 use App\Modules\Identity\Presentation\Http\Request\ActivateUserRequest;
 use App\Shared\Domain\Exception\ValidationException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,7 +20,14 @@ final readonly class UserActivationController
     public function __construct(
         private ValidatorInterface $validator,
         private ActivateUserHandler $activateUserHandler,
+        private string $authFrontendUrl,
     ) {
+    }
+
+    #[Route('/activate/{token}', name: 'api_v1_public_user_activate_redirect', methods: ['GET'])]
+    public function redirectToActivationPage(string $token): RedirectResponse
+    {
+        return new RedirectResponse(sprintf('%s/activate-account/%s', rtrim($this->authFrontendUrl, '/'), $token));
     }
 
     #[Route('/activate/{token}', name: 'api_v1_public_user_activate', methods: ['POST'])]

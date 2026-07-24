@@ -731,7 +731,38 @@ Registrar una nueva academia, crear el usuario administrador inicial y crear el 
 * `409 Conflict` si el catálogo está inactivo o el equipo ya existe.
 * `422 Unprocessable Entity` si el payload no pasa validación.
 
----
+## Public User Activation
+
+```http
+GET /api/v1/public/users/activate/{token}
+POST /api/v1/public/users/activate/{token}
+```
+
+### Access
+
+* Público.
+
+### Purpose
+
+Separar la experiencia pública de activación en dos pasos:
+
+* `GET` redirige al frontend público `APP_AUTH_FRONTEND_URL/activate-account/{token}`.
+* `POST` confirma la contraseña y activa la cuenta.
+
+### Rules
+
+* El correo de invitación debe apuntar al frontend público, no al API.
+* `POST` requiere `password` y `password_confirmation`.
+* `POST` conserva la transición real del usuario de `PENDING_ACTIVATION` a `ACTIVE`.
+* Si el token es inválido o expiró, el backend responde `404 Not Found` con Problem Details.
+
+### Success
+
+`302 Found` para `GET` con `Location` hacia el frontend.
+
+`200 OK` para `POST` con el usuario activado.
+
+--- 
 
 # Platform Tenant Provisioning
 
@@ -1593,7 +1624,8 @@ Listar el staff activo o histórico de la academia actual con paginación unifor
       "fullName": "Juan Perez",
       "email": "juan@academiaplayertech.com",
       "role": "ROLE_COACH",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "userStatus": "PENDING_ACTIVATION"
     }
   ],
   "meta": {
@@ -1604,6 +1636,84 @@ Listar el staff activo o histórico de la academia actual con paginación unifor
     "has_next": false,
     "has_prev": false
   }
+}
+```
+
+## Staff Options
+
+```http
+GET /api/v1/academy/staff/options?role=ROLE_COACH
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Exponer un listado liviano para selects y combos del frontend, reutilizable como patrón para otros módulos.
+
+### Success
+
+`200 OK`
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "label": "Juan Perez"
+    }
+  ],
+  "meta": {}
+}
+```
+
+### Rules
+
+* Sólo devuelve `id` y `label`.
+* Filtra por `academy_id` del tenant actual.
+* Excluye registros borrados lógicamente y usuarios inactivos.
+* Si se envía `role`, el backend filtra por ese rol.
+* Es el patrón base para futuros endpoints `/{entity}/options`.
+
+## Resend Staff Activation
+
+```http
+POST /api/v1/academy/staff/{userId}/activation/resend
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Reenviar el correo de activación de un staff pendiente, generando un nuevo token y dejando inválido el anterior.
+
+### Rules
+
+* El usuario debe existir dentro del tenant actual.
+* El usuario debe estar en `PENDING_ACTIVATION`.
+* Si el usuario ya está activo, el backend responde `400 Bad Request`.
+* El correo reenviado debe apuntar a `APP_AUTH_FRONTEND_URL/activate-account/{token}`.
+
+### Success
+
+`200 OK`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "fullName": "Juan Perez",
+    "email": "juan@academiaplayertech.com",
+    "academyId": "uuid",
+    "roles": ["ROLE_COACH", "ROLE_USER"],
+    "role": "ROLE_COACH",
+    "status": "PENDING_ACTIVATION"
+  },
+  "meta": {}
 }
 ```
 

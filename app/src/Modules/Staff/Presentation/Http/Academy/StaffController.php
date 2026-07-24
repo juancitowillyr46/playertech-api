@@ -6,15 +6,19 @@ use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Modules\Staff\Application\Command\AssignStaffToTeamCommand;
 use App\Modules\Staff\Application\Command\CreateStaffMemberCommand;
 use App\Modules\Staff\Application\Command\ChangeStaffRoleCommand;
+use App\Modules\Identity\Application\Command\ResendUserInvitationCommand;
 use App\Modules\Staff\Application\Command\RegisterStaffMemberCommand;
 use App\Modules\Staff\Application\Command\RemoveStaffFromTeamCommand;
 use App\Modules\Staff\Application\Handler\AssignStaffToTeamHandler;
 use App\Modules\Staff\Application\Handler\CreateStaffMemberHandler;
 use App\Modules\Staff\Application\Handler\ChangeStaffRoleHandler;
+use App\Modules\Staff\Application\Handler\ListStaffOptionsHandler;
 use App\Modules\Staff\Application\Handler\ListStaffHandler;
 use App\Modules\Staff\Application\Handler\RegisterStaffMemberHandler;
 use App\Modules\Staff\Application\Handler\RemoveStaffFromTeamHandler;
 use App\Modules\Staff\Application\Handler\ShowTeamStaffHandler;
+use App\Modules\Identity\Application\Handler\ResendUserInvitationHandler;
+use App\Modules\Staff\Application\Query\ListStaffOptionsQuery;
 use App\Modules\Staff\Application\Query\ListStaffQuery;
 use App\Modules\Staff\Application\Query\ShowTeamStaffQuery;
 use App\Modules\Staff\Domain\Staff\StaffId;
@@ -41,10 +45,12 @@ final class StaffController extends AbstractPaginatedApiController
         private readonly Security $security,
         private readonly ValidatorInterface $validator,
         private readonly CreateStaffMemberHandler $createStaffMemberHandler,
+        private readonly ListStaffOptionsHandler $listStaffOptionsHandler,
         private readonly ListStaffHandler $listStaffHandler,
         private readonly RegisterStaffMemberHandler $registerStaffMemberHandler,
         private readonly AssignStaffToTeamHandler $assignStaffToTeamHandler,
         private readonly ChangeStaffRoleHandler $changeStaffRoleHandler,
+        private readonly ResendUserInvitationHandler $resendUserInvitationHandler,
         private readonly RemoveStaffFromTeamHandler $removeStaffFromTeamHandler,
         private readonly ShowTeamStaffHandler $showTeamStaffHandler,
         private readonly TenantContext $tenantContext,
@@ -64,6 +70,22 @@ final class StaffController extends AbstractPaginatedApiController
         return new JsonResponse([
             'data' => array_map(static fn ($item) => $item->toArray(), $items->items),
             'meta' => $items->meta->toArray(),
+        ]);
+    }
+
+    #[Route('/options', methods: ['GET'])]
+    public function options(Request $request): JsonResponse
+    {
+        $items = ($this->listStaffOptionsHandler)(
+            new ListStaffOptionsQuery(
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                $request->query->get('role') ? (string) $request->query->get('role') : null,
+            )
+        );
+
+        return new JsonResponse([
+            'data' => array_map(static fn ($item) => $item->toArray(), $items),
+            'meta' => new \stdClass(),
         ]);
     }
 
@@ -157,5 +179,22 @@ final class StaffController extends AbstractPaginatedApiController
             new ShowTeamStaffQuery(new AcademyId($this->tenantContext->requireAcademyId()), new TeamId($teamId))
         );
         return new JsonResponse(['data' => array_map(static fn ($item) => $item->toArray(), $items), 'meta' => new \stdClass()]);
+    }
+
+    #[Route('/{userId}/activation/resend', methods: ['POST'])]
+    public function resendActivation(string $userId): JsonResponse
+    {
+        $view = ($this->resendUserInvitationHandler)(
+            new ResendUserInvitationCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                $userId,
+                $this->tenantContext->requireAcademyId()
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
     }
 }

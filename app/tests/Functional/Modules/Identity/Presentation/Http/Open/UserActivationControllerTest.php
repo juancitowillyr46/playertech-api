@@ -42,4 +42,14 @@ final class UserActivationControllerTest extends TestDatabaseKernel
         $payload = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
         self::assertSame(AccountUser::STATUS_ACTIVE, $payload['data']['status']);
     }
+
+    public function testItRedirectsGetActivationLinkToFrontend(): void
+    {
+        $this->bootTestKernel();
+
+        $response = self::$kernel->handle(Request::create('/api/v1/public/users/activate/activation-token-123', 'GET'));
+
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('http://localhost:4200/activate-account/activation-token-123', $response->headers->get('Location'));
+    }
 }

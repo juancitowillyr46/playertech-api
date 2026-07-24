@@ -36,6 +36,8 @@ La base tecnica actual incluye:
 | Team validation migration | Technical Enabler | Done | `untracked` | La validación de create y update de `Team` se mueve a `Presentation`; `Application` queda con DTOs puros para esos flujos |
 | Team Venue parity update | Technical Enabler / Documentation | Done | `untracked` | `Team` normaliza `sort`, corrige la longitud de `name` según el VO compartido y alinea su referencia HTTP/Postman con el contrato real del módulo |
 | Team category name contract | Functional / Documentation | Done | `untracked` | `Team` expone `categoryName` plano en list/show/create/update para simplificar el consumo del frontend sin anidar un objeto `category` |
+| Staff options selector endpoint | Functional / Technical Enabler | Done | `untracked` | `Staff` expone `/api/v1/academy/staff/options` como selector liviano para usuarios staff del tenant actual, con filtro opcional por rol |
+| Staff options selector pattern | Functional / Technical Enabler | Done | `untracked` | `Staff` expone `/api/v1/academy/staff/options` como contrato liviano para selects, filtrando por academia y rol sin hidratar entidades completas |
 | Player validation migration | Technical Enabler | Done | `untracked` | La validación de create, update y asociación de acudiente de `Player` se mueve a `Presentation`; `Application` queda con DTOs puros para esos flujos |
 | Guardian validation migration | Technical Enabler | Done | `untracked` | La validación de create de `Guardian` se mueve a `Presentation`; `Application` queda con DTOs puros para ese flujo |
 | PaymentConcept validation migration | Technical Enabler | Done | `untracked` | La validación de create y update de `PaymentConcept` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
@@ -387,7 +389,10 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * La consulta de `EP-010` para asignaciones de jugador ahora se orienta a una respuesta compuesta con `team` anidado para evitar lookups adicionales en frontend.
 * `Team` quedó homologado con `Venue` en el patrón HTTP clave: `sort` seguro, validación de `name` alineada al VO compartido y ejemplos de Postman corregidos para reflejar el contrato real.
 * `Team` ahora expone `categoryName` plano en list/show/create/update para simplificar el consumo del frontend sin introducir un objeto `category` anidado.
+* `Staff` expone `/api/v1/academy/staff/options` como contrato único de selector liviano, filtrando por academia, rol y estado sin hidratar entidades completas.
 * `EP-021` añadió el flujo unificado de alta de staff con acceso en `POST /api/v1/academy/staff/onboarding`, creando usuario y staff en una sola operación y resolviendo invitación o contraseña inicial.
+* El flujo público de activación de usuarios separa enlace y confirmación: el correo apunta a `APP_AUTH_FRONTEND_URL/activate-account/{token}` y `GET /api/v1/public/users/activate/{token}` redirige al frontend, mientras `POST /api/v1/public/users/activate/{token}` conserva la activación real con contraseña.
+* `Staff` expone ahora `POST /api/v1/academy/staff/{userId}/activation/resend` como alias explícito para reenvío de invitación/activación, reutilizando el mismo handler que regenera el token anterior y vuelve a notificar el enlace público.
 * `EP-006` funciona como módulo maestro de acudientes con listado, detalle y creación; `EP-008` queda como módulo operativo para relaciones jugador-acudiente y vista de acudientes por jugador.
 * `EP-003` ya incorporó el flujo inicial de usuarios administrativos por invitación y activación con correo, como primer slice de la evolución de staff.
 * `EP-002` amplió el contrato de sedes para exponer `address` y `phone` opcionales también en el listado, no solo en el detalle.

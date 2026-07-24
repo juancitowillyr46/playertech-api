@@ -33,7 +33,7 @@ final class CategoryRepository extends ServiceEntityRepository implements Catego
                 'max_age' => 'maxAge',
                 'maxage' => 'maxAge',
                 'description' => 'description',
-                'status' => 'status',
+                'status' => 'status.value',
             ],
             'auditTrail.createdAt.value',
         );
@@ -74,10 +74,10 @@ final class CategoryRepository extends ServiceEntityRepository implements Catego
         return $this->createQueryBuilder('category')
             ->andWhere('category.academyId = :academyId')
             ->andWhere('category.deletedAt IS NULL')
-            ->andWhere('category.status = :status')
+            ->andWhere('category.status.value = :status')
             ->setParameter('academyId', $academyId->value())
             ->setParameter('status', 'ACTIVE')
-            ->orderBy('category.name', 'ASC')
+            ->orderBy('category.name.value', 'ASC')
             ->getQuery()
             ->getResult();
     }
