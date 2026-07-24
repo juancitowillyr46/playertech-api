@@ -1791,8 +1791,8 @@ Crear el usuario, registrar el staff y resolver el acceso por invitación o cont
 
 * `fullName`, `email` y `role` son obligatorios.
 * `role` puede ser `ROLE_ACADEMY_ADMIN` o `ROLE_COACH`.
-* Si `sendInvitation = true`, el sistema envía correo y deja la cuenta pendiente de activación.
-* Si `sendInvitation = false`, `password` y `passwordConfirmation` son obligatorios.
+* Si `sendInvitation = true`, el sistema envía correo de invitación y deja la cuenta pendiente de activación.
+* Si `sendInvitation = false`, el backend genera la contraseña oficial, envía usuario + clave + enlace de activación y deja la cuenta pendiente de activación.
 * La respuesta devuelve el usuario creado, el staff y el modo de acceso aplicado.
 
 ### Success

@@ -394,6 +394,7 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * El flujo público de activación de usuarios separa enlace y confirmación: el correo apunta a `APP_AUTH_FRONTEND_URL/activate-account/{token}` y `GET /api/v1/public/users/activate/{token}` redirige al frontend, mientras `POST /api/v1/public/users/activate/{token}` conserva la activación real con contraseña.
 * `Staff` expone ahora `POST /api/v1/academy/staff/{userId}/activation/resend` como alias explícito para reenvío de invitación/activación, reutilizando el mismo handler que regenera el token anterior y vuelve a notificar el enlace público.
 * `Staff` expone también `GET /api/v1/academy/staff/{userId}` como detalle de ficha con `accessMode` calculado en backend, para que el frontend no infiera el modo de acceso desde `status`.
+* El onboarding de staff ahora separa invitación y envío de clave: `sendInvitation=true` mantiene el flujo de invitación y `sendInvitation=false` genera una contraseña oficial, deja la cuenta en `PENDING_ACTIVATION` y envía usuario, clave temporal y enlace público de activación.
 * `EP-006` funciona como módulo maestro de acudientes con listado, detalle y creación; `EP-008` queda como módulo operativo para relaciones jugador-acudiente y vista de acudientes por jugador.
 * `EP-003` ya incorporó el flujo inicial de usuarios administrativos por invitación y activación con correo, como primer slice de la evolución de staff.
 * `EP-002` amplió el contrato de sedes para exponer `address` y `phone` opcionales también en el listado, no solo en el detalle.

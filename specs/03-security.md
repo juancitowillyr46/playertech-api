@@ -161,7 +161,7 @@ El owner no debe administrar contraseñas como flujo base de staff.
 Para staff existen dos patrones válidos:
 
 * Invitación por correo, donde el usuario define su contraseña al activar.
-* Contraseña generada por backend, donde la cuenta sigue en `PENDING_ACTIVATION` hasta activar por enlace público.
+* Contraseña generada por backend, donde la cuenta sigue en `PENDING_ACTIVATION` hasta activar por enlace público y el correo incluye usuario, clave temporal y enlace de activación.
 
 En ambos patrones:
 
