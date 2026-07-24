@@ -16,10 +16,12 @@ use App\Modules\Staff\Application\Handler\ListStaffOptionsHandler;
 use App\Modules\Staff\Application\Handler\ListStaffHandler;
 use App\Modules\Staff\Application\Handler\RegisterStaffMemberHandler;
 use App\Modules\Staff\Application\Handler\RemoveStaffFromTeamHandler;
+use App\Modules\Staff\Application\Handler\ShowStaffHandler;
 use App\Modules\Staff\Application\Handler\ShowTeamStaffHandler;
 use App\Modules\Identity\Application\Handler\ResendUserInvitationHandler;
 use App\Modules\Staff\Application\Query\ListStaffOptionsQuery;
 use App\Modules\Staff\Application\Query\ListStaffQuery;
+use App\Modules\Staff\Application\Query\ShowStaffQuery;
 use App\Modules\Staff\Application\Query\ShowTeamStaffQuery;
 use App\Modules\Staff\Domain\Staff\StaffId;
 use App\Modules\Staff\Domain\TeamStaffAssignment\StaffRole;
@@ -52,6 +54,7 @@ final class StaffController extends AbstractPaginatedApiController
         private readonly ChangeStaffRoleHandler $changeStaffRoleHandler,
         private readonly ResendUserInvitationHandler $resendUserInvitationHandler,
         private readonly RemoveStaffFromTeamHandler $removeStaffFromTeamHandler,
+        private readonly ShowStaffHandler $showStaffHandler,
         private readonly ShowTeamStaffHandler $showTeamStaffHandler,
         private readonly TenantContext $tenantContext,
     ) {
@@ -124,6 +127,22 @@ final class StaffController extends AbstractPaginatedApiController
         );
 
         return new JsonResponse(['data' => $view->toArray(), 'meta' => new \stdClass()], 201);
+    }
+
+    #[Route('/{userId}', methods: ['GET'])]
+    public function show(string $userId): JsonResponse
+    {
+        $view = ($this->showStaffHandler)(
+            new ShowStaffQuery(
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                $userId
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
     }
 
     #[Route('/assignments', methods: ['POST'])]

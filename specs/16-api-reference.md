@@ -1677,6 +1677,49 @@ Exponer un listado liviano para selects y combos del frontend, reutilizable como
 * Si se envía `role`, el backend filtra por ese rol.
 * Es el patrón base para futuros endpoints `/{entity}/options`.
 
+## Show Staff
+
+```http
+GET /api/v1/academy/staff/{userId}
+```
+
+### Access
+
+* Usuario autenticado con contexto tenant.
+
+### Purpose
+
+Obtener el detalle de un staff dentro de la academia actual para renderizar la ficha del usuario.
+
+### Success
+
+`200 OK`
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "academyId": "uuid",
+    "userId": "uuid",
+    "fullName": "Juan Perez",
+    "email": "juan@academiaplayertech.com",
+    "role": "ROLE_COACH",
+    "status": "ACTIVE",
+    "userStatus": "PENDING_ACTIVATION",
+    "accessMode": "INVITATION"
+  },
+  "meta": {}
+}
+```
+
+### Rules
+
+* `userId` es el identificador del usuario asociado al staff.
+* `accessMode` se resuelve en backend.
+* Si el usuario está pendiente de activación y tiene token activo, el modo es `INVITATION`.
+* En cualquier otro caso, el modo se considera `PASSWORD`.
+* El frontend no debe inferir `accessMode` a partir de `status`.
+
 ## Resend Staff Activation
 
 ```http
