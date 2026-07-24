@@ -25,7 +25,7 @@ final readonly class SendUserPasswordAndActivationEmailMessageHandler
             ->to($message->email)
             ->subject('Activa tu cuenta PlayerTech')
             ->text(sprintf(
-                "Hola %s,\n\nTu cuenta fue creada para PlayerTech.\nUsuario: %s\nClave temporal: %s\nActiva tu cuenta aquí:\n%s\n",
+                "Hola %s,\n\nTu cuenta fue creada para PlayerTech.\nUsuario: %s\nClave: %s\nActiva tu cuenta aquí:\n%s\n",
                 $message->fullName,
                 $message->username,
                 $message->password,
