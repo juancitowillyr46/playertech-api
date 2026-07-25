@@ -13,13 +13,13 @@ final readonly class StaffOptionResponse
     }
 
     /**
-     * @param array{id:string,label:string} $row
+     * @param array{id:mixed,label:mixed} $row
      */
     public static function fromRow(array $row): self
     {
         return new self(
-            $row['id'],
-            $row['label'],
+            (string) $row['id'],
+            (string) $row['label'],
         );
     }
 
