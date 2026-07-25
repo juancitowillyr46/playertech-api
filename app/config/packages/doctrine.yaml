@@ -121,6 +121,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Modules/Staff/Infrastructure/Persistence/Doctrine/Mapping/Staff'
                 prefix: App\Modules\Staff\Domain\Staff
                 alias: Staff
+            StaffTeamAssignment:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Modules/Staff/Infrastructure/Persistence/Doctrine/Mapping/TeamStaffAssignment'
+                prefix: App\Modules\Staff\Domain\TeamStaffAssignment
+                alias: StaffTeamAssignment
             TeamAssignment:
                 is_bundle: false
                 type: xml
