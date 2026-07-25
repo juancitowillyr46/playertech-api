@@ -55,6 +55,18 @@ final class VenueRepository extends ServiceEntityRepository implements VenueRepo
             ->getOneOrNullResult();
     }
 
+    public function findByAcademyAndName(AcademyId $academyId, string $name): ?Venue
+    {
+        return $this->createQueryBuilder('venue')
+            ->where('venue.academyId = :academyId')
+            ->andWhere('venue.name = :name')
+            ->andWhere('venue.deletedAt IS NULL')
+            ->setParameter('academyId', $academyId->value())
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
         $sortField = $this->sortFieldResolver->resolve($pagination->sort);

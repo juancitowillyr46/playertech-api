@@ -78,6 +78,17 @@ final class InMemoryVenueRepository implements VenueRepository
         return null;
     }
 
+    public function findByAcademyAndName(AcademyId $academyId, string $name): ?Venue
+    {
+        foreach ($this->venues as $venue) {
+            if ($venue->academyId()->value() === $academyId->value() && $venue->name()->value() === $name) {
+                return $venue;
+            }
+        }
+
+        return null;
+    }
+
     public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
         $items = array_values(array_filter(

@@ -10,6 +10,7 @@ use App\Modules\Venue\Domain\Venue\Venue;
 use App\Modules\Venue\Domain\Venue\VenueId;
 use App\Modules\Venue\Domain\Venue\VenueRepository;
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Venue\Domain\Exception\VenueAlreadyExistsException;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Domain\ValueObject\Address;
@@ -26,10 +27,17 @@ final readonly class CreateVenueHandler
 
     public function __invoke(CreateVenueCommand $command): VenueResponse
     {
+        $academyId = new AcademyId($command->academyId);
+        $name = new Name($command->input->name);
+
+        if (null !== $this->venueRepository->findByAcademyAndName($academyId, $name->value())) {
+            throw new VenueAlreadyExistsException();
+        }
+
         $venue = Venue::create(
             VenueId::generate(),
-            new AcademyId($command->academyId),
-            new Name($command->input->name),
+            $academyId,
+            $name,
             $command->input->address ? new Address($command->input->address) : null,
             $command->input->city ? new City($command->input->city) : null,
             $command->input->country,

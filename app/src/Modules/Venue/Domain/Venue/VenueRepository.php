@@ -13,6 +13,8 @@ interface VenueRepository
 
     public function findById(AcademyId $academyId, VenueId $venueId): ?Venue;
 
+    public function findByAcademyAndName(AcademyId $academyId, string $name): ?Venue;
+
     /**
      * @return array{items: Venue[], total: int}
      */

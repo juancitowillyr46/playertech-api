@@ -93,6 +93,18 @@ final class UpdateVenueInMemoryVenueRepository implements VenueRepository
         return null;
     }
 
+    public function findByAcademyAndName(AcademyId $academyId, string $name): ?Venue
+    {
+        if (
+            $this->venue->academyId()->value() === $academyId->value()
+            && $this->venue->name()->value() === $name
+        ) {
+            return $this->venue;
+        }
+
+        return null;
+    }
+
     public function findAllByAcademy(AcademyId $academyId, \App\Shared\Application\Pagination\PaginationQuery $pagination): array
     {
         return [

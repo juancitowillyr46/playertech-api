@@ -170,6 +170,16 @@ GET /api/v1/players?category_id=uuid&status=ACTIVE
 * Las respuestas JSON usan `camelCase`.
 * La compatibilidad con respuestas históricas en `snake_case` ya no es el comportamiento esperado para contratos nuevos.
 
+## Optional Fields Semantics
+
+Los campos opcionales deben seguir una semántica uniforme en todo el contrato HTTP:
+
+* `null` representa ausencia de valor.
+* `""` no debe usarse como valor semántico final desde frontend; si aparece, el backend puede normalizarlo a `null` cuando el request lo permita.
+* Omitir una propiedad y enviar `null` son equivalentes para campos opcionales en requests de creación, salvo que un recurso documente una excepción.
+* En `update`, `null` significa limpiar el valor cuando el contrato del recurso lo permita.
+* El frontend debe normalizar inputs vacíos a `null` antes de enviar el payload.
+
 ---
 
 # Resource Conventions

@@ -398,6 +398,16 @@ Debe delegar en handlers de Application Layer.
 
 La validación deberá realizarse antes de ejecutar el caso de uso.
 
+## Optional Field Semantics
+
+La semántica de campos opcionales debe ser uniforme entre frontend y backend:
+
+* Los campos opcionales vacíos deben normalizarse a `null`.
+* `""` no debe tratarse como valor final de negocio salvo que un contrato lo declare expresamente.
+* En `create`, omitir la propiedad o enviar `null` debe representar ausencia de valor.
+* En `update`, `null` debe usarse para limpiar el valor cuando el recurso lo permita.
+* Los requests deben preferir la normalización explícita antes que depender de vacíos implícitos.
+
 ---
 
 ## Response Mapping
