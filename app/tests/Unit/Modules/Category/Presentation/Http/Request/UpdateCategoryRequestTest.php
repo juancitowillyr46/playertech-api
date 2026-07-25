@@ -13,8 +13,8 @@ final class UpdateCategoryRequestTest extends TestCase
     {
         $request = UpdateCategoryRequest::fromArray([
             'name' => 'Sub 14',
-            'min_age' => 13,
-            'max_age' => 14,
+            'minAge' => 13,
+            'maxAge' => 14,
             'description' => 'Categoria formativa',
         ]);
 

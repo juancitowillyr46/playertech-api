@@ -29,7 +29,7 @@ final readonly class CategoryResponse
             $category->name()->value(),
             $category->minAge()->value(),
             $category->maxAge()->value(),
-            $category->description()?->value(),
+            $category->description()?->isInitialized() ? $category->description()->value() : null,
             $category->status()->value()
         );
     }

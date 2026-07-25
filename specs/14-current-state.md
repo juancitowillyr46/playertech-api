@@ -38,6 +38,7 @@ La base tecnica actual incluye:
 | Team category name contract | Functional / Documentation | Done | `untracked` | `Team` expone `categoryName` plano en list/show/create/update para simplificar el consumo del frontend sin anidar un objeto `category` |
 | Staff options selector endpoint | Functional / Technical Enabler | Done | `untracked` | `Staff` expone `/api/v1/academy/staff/options` como selector liviano para usuarios staff del tenant actual, con filtro opcional por rol |
 | Staff options selector pattern | Functional / Technical Enabler | Done | `untracked` | `Staff` expone `/api/v1/academy/staff/options` como contrato liviano para selects, filtrando por academia y rol sin hidratar entidades completas |
+| Staff options availability filter | Functional / Technical Enabler | Done | `untracked` | `Staff` ahora permite filtrar `/api/v1/academy/staff/options` por `teamId` para excluir miembros ya asignados al equipo desde `team_staff_assignments` |
 | Player validation migration | Technical Enabler | Done | `untracked` | La validación de create, update y asociación de acudiente de `Player` se mueve a `Presentation`; `Application` queda con DTOs puros para esos flujos |
 | Guardian validation migration | Technical Enabler | Done | `untracked` | La validación de create de `Guardian` se mueve a `Presentation`; `Application` queda con DTOs puros para ese flujo |
 | PaymentConcept validation migration | Technical Enabler | Done | `untracked` | La validación de create y update de `PaymentConcept` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
@@ -390,11 +391,13 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * `Team` quedó homologado con `Venue` en el patrón HTTP clave: `sort` seguro, validación de `name` alineada al VO compartido y ejemplos de Postman corregidos para reflejar el contrato real.
 * `Team` ahora expone `categoryName` plano en list/show/create/update para simplificar el consumo del frontend sin introducir un objeto `category` anidado.
 * `Staff` expone `/api/v1/academy/staff/options` como contrato único de selector liviano, filtrando por academia, rol y estado sin hidratar entidades completas.
+* `Staff` extiende `/api/v1/academy/staff/options` con `teamId` para devolver solo staff disponibles para asignación, excluyendo los ya vinculados al equipo en `team_staff_assignments`.
 * `EP-021` añadió el flujo unificado de alta de staff con acceso en `POST /api/v1/academy/staff/onboarding`, creando usuario y staff en una sola operación y resolviendo invitación o contraseña inicial.
 * El flujo público de activación de usuarios separa enlace y confirmación: el correo apunta a `APP_AUTH_FRONTEND_URL/activate-account/{token}` y `GET /api/v1/public/users/activate/{token}` redirige al frontend, mientras `POST /api/v1/public/users/activate/{token}` conserva la activación real con contraseña.
 * `Staff` expone ahora `POST /api/v1/academy/staff/{userId}/activation/resend` con `mode = INVITATION|PASSWORD`; en invitación reenvía el enlace público y en password regenera la clave oficial, renueva el token y vuelve a notificar credenciales + activación.
 * `Staff` expone también `GET /api/v1/academy/staff/{userId}` como detalle de ficha con `accessMode` calculado en backend, para que el frontend no infiera el modo de acceso desde `status`.
 * El onboarding de staff ahora separa invitación y envío de clave: `sendInvitation=true` mantiene el flujo de invitación y `sendInvitation=false` genera una contraseña oficial, deja la cuenta en `PENDING_ACTIVATION` y envía usuario, clave temporal y enlace público de activación.
+* `Category` ahora trata `description` como opcional de extremo a extremo: el request lo acepta nulo, el embeddable Doctrine lo persiste como nullable y la migración `Version20260725000100` alinea la base de datos con el contrato actual de creación.
 * `EP-006` funciona como módulo maestro de acudientes con listado, detalle y creación; `EP-008` queda como módulo operativo para relaciones jugador-acudiente y vista de acudientes por jugador.
 * `EP-003` ya incorporó el flujo inicial de usuarios administrativos por invitación y activación con correo, como primer slice de la evolución de staff.
 * `EP-002` amplió el contrato de sedes para exponer `address` y `phone` opcionales también en el listado, no solo en el detalle.

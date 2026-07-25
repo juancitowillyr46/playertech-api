@@ -7,7 +7,9 @@ namespace App\Shared\Domain\ValueObject;
 final readonly class Description
 {
     private string $value;
-    public function __construct(string $value) {
+
+    public function __construct(string $value)
+    {
 
         $value = trim($value);
 
@@ -29,6 +31,11 @@ final readonly class Description
     public function value(): string
     {
         return $this->value;
+    }
+
+    public function isInitialized(): bool
+    {
+        return isset($this->value);
     }
 
     public function equals(self $other): bool

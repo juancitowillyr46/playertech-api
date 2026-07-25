@@ -252,6 +252,7 @@ Listado soporta paginación estándar y `sort` seguro.
 - `sort=status`
 
 El backend genera `categoryKey` a partir del `name` y devuelve ese valor en create, list y show. El frontend no debe enviarlo en el payload.
+Los payloads de create y update usan `camelCase` en el contrato HTTP, por ejemplo `minAge` y `maxAge`.
 
 ```json
 {
@@ -1642,7 +1643,7 @@ Listar el staff activo o histórico de la academia actual con paginación unifor
 ## Staff Options
 
 ```http
-GET /api/v1/academy/staff/options?role=ROLE_COACH
+GET /api/v1/academy/staff/options?role=ROLE_COACH&teamId=uuid
 ```
 
 ### Access
@@ -1675,6 +1676,7 @@ Exponer un listado liviano para selects y combos del frontend, reutilizable como
 * Filtra por `academy_id` del tenant actual.
 * Excluye registros borrados lógicamente y usuarios inactivos.
 * Si se envía `role`, el backend filtra por ese rol.
+* Si se envía `teamId`, el backend excluye staff ya asignados a ese equipo en `team_staff_assignments`.
 * Es el patrón base para futuros endpoints `/{entity}/options`.
 
 ## Show Staff

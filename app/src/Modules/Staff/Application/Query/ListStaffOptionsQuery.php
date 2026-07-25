@@ -11,6 +11,8 @@ final readonly class ListStaffOptionsQuery
     public function __construct(
         public AcademyId $academyId,
         public ?string $role = null,
+        public ?string $type = null,
+        public ?string $teamId = null,
     ) {
     }
 }

@@ -10,6 +10,7 @@ use App\Modules\Staff\Application\Handler\ListStaffOptionsHandler;
 use App\Modules\Staff\Application\Query\ListStaffOptionsQuery;
 use App\Modules\Staff\Domain\Staff\Staff;
 use App\Modules\Staff\Domain\Staff\StaffId;
+use App\Modules\Staff\Domain\TeamStaffAssignment\StaffRole;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
@@ -59,5 +60,49 @@ final class ListStaffOptionsHandlerTest extends TestCase
         self::assertContains('user.role = :role', $andWhereCalls);
         self::assertSame(AccountUser::ROLE_COACH, $setParameterCalls['role']);
         self::assertSame(AccountUser::STATUS_ACTIVE, $setParameterCalls['status']);
+    }
+
+    public function testItReturnsTechnicalRolesAsOptions(): void
+    {
+        $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
+
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager->expects(self::never())->method('createQueryBuilder');
+
+        $handler = new ListStaffOptionsHandler($entityManager);
+        $result = $handler(new ListStaffOptionsQuery($academyId, null, 'roles'));
+
+        self::assertCount(6, $result);
+        self::assertSame(StaffRole::HEAD_COACH, $result[0]->toArray()['id']);
+        self::assertSame('Entrenador principal', $result[0]->toArray()['label']);
+        self::assertSame(StaffRole::PHYSIOTHERAPY, $result[5]->toArray()['id']);
+        self::assertSame('Fisioterapia', $result[5]->toArray()['label']);
+    }
+
+    public function testItCanFilterOutStaffAlreadyAssignedToATeam(): void
+    {
+        $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
+        $teamId = '8b7eecc0-f228-42fd-8f63-5728080b8282';
+
+        $query = $this->createMock(Query::class);
+        $query->method('getArrayResult')->willReturn([]);
+
+        $staffQb = $this->createMock(QueryBuilder::class);
+        $staffQb->method('select')->willReturnSelf();
+        $staffQb->method('from')->willReturnSelf();
+        $staffQb->method('innerJoin')->willReturnSelf();
+        $staffQb->method('where')->willReturnSelf();
+        $staffQb->method('andWhere')->willReturnSelf();
+        $staffQb->method('setParameter')->willReturnSelf();
+        $staffQb->method('orderBy')->willReturnSelf();
+        $staffQb->method('getQuery')->willReturn($query);
+
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager->method('createQueryBuilder')->willReturn($staffQb);
+
+        $handler = new ListStaffOptionsHandler($entityManager);
+        $result = $handler(new ListStaffOptionsQuery($academyId, AccountUser::ROLE_COACH, null, $teamId));
+
+        self::assertCount(0, $result);
     }
 }

@@ -4020,7 +4020,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/academy/staff/options?role=ROLE_COACH",
+              "raw": "{{baseUrl}}/api/v1/academy/staff/options?role=ROLE_COACH&teamId={{teamId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -4035,6 +4035,10 @@
                 {
                   "key": "role",
                   "value": "ROLE_COACH"
+                },
+                {
+                  "key": "teamId",
+                  "value": "{{teamId}}"
                 }
               ]
             }

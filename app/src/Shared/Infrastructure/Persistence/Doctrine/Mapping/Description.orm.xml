@@ -14,7 +14,8 @@
                 name="value"
                 column="description"
                 type="string"
-                length="150"/>
+                length="150"
+                nullable="true"/>
 
     </embeddable>
 

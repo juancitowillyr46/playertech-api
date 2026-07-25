@@ -31,8 +31,8 @@ final readonly class CreateCategoryRequest
     {
         return new self(
             self::stringOrNull($payload['name'] ?? null),
-            self::intOrNull($payload['min_age'] ?? null),
-            self::intOrNull($payload['max_age'] ?? null),
+            self::intOrNull($payload['minAge'] ?? $payload['min_age'] ?? null),
+            self::intOrNull($payload['maxAge'] ?? $payload['max_age'] ?? null),
             self::stringOrNull($payload['description'] ?? null),
         );
     }

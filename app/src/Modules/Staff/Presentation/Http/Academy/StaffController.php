@@ -83,6 +83,8 @@ final class StaffController extends AbstractPaginatedApiController
             new ListStaffOptionsQuery(
                 new AcademyId($this->tenantContext->requireAcademyId()),
                 $request->query->get('role') ? (string) $request->query->get('role') : null,
+                $request->query->get('type') ? (string) $request->query->get('type') : null,
+                $request->query->get('teamId') ? (string) $request->query->get('teamId') : null,
             )
         );
 
