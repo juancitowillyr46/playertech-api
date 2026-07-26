@@ -12,6 +12,7 @@ final readonly class UpdatePlayerInput
         public ?string $lastName,
         public ?string $birthDate,
         public ?string $documentNumber,
+        public ?string $categoryId = null,
         public ?string $email = null,
         public ?string $phone = null,
         public ?string $nationality = null,

@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Modules\Player\Application\Handler;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Category\Application\Services\CategoryFinder;
+use App\Modules\Category\Domain\Category\CategoryId;
+use App\Modules\Category\Domain\Category\CategoryStatus;
 use App\Modules\Player\Application\Command\UpdatePlayerCommand;
 use App\Modules\Player\Application\Response\PlayerResponse;
 use App\Modules\Player\Application\Services\PlayerFinder;
@@ -16,6 +19,7 @@ final readonly class UpdatePlayerHandler
 {
     public function __construct(
         private PlayerFinder $playerFinder,
+        private CategoryFinder $categoryFinder,
         private PlayerRepository $playerRepository,
     ) {
     }
@@ -26,9 +30,19 @@ final readonly class UpdatePlayerHandler
         $playerId = new PlayerId($command->playerId);
         $player = $this->playerFinder->findOrFail($academyId, $playerId);
 
-        $duplicate = $this->playerRepository->findOneByDocumentNumber($academyId, $command->input->documentNumber());
+        $duplicate = $this->playerRepository->findOneByDocumentNumber($academyId, $command->input->documentNumber);
         if (null !== $duplicate && $duplicate->id()->value() !== $player->id()->value()) {
             throw new PlayerAlreadyExistsException();
+        }
+
+        $categoryId = null;
+        if (null !== $command->input->categoryId) {
+            $categoryId = new CategoryId($command->input->categoryId);
+            $category = $this->categoryFinder->findOrFail($academyId, $categoryId);
+
+            if (!$category->status()->isActive()) {
+                throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('La categoría debe estar activa.');
+            }
         }
 
         $player->updateProfile(
@@ -45,6 +59,8 @@ final readonly class UpdatePlayerHandler
             $command->input->dominantFoot,
             $command->actorId,
         );
+
+        $player->updateCategory($categoryId, $command->actorId);
 
         $this->playerRepository->save($player);
 
