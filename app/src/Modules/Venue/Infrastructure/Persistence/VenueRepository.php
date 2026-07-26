@@ -59,7 +59,7 @@ final class VenueRepository extends ServiceEntityRepository implements VenueRepo
     {
         return $this->createQueryBuilder('venue')
             ->where('venue.academyId = :academyId')
-            ->andWhere('venue.name = :name')
+            ->andWhere('venue.name.value = :name')
             ->andWhere('venue.deletedAt IS NULL')
             ->setParameter('academyId', $academyId->value())
             ->setParameter('name', $name)
