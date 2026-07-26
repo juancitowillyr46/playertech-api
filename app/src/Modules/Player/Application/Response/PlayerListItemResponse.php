@@ -11,6 +11,7 @@ final readonly class PlayerListItemResponse
     private function __construct(
         private string $id,
         private ?string $categoryId,
+        private ?string $categoryName,
         private string $documentType,
         private string $firstName,
         private string $lastName,
@@ -27,6 +28,24 @@ final readonly class PlayerListItemResponse
         return new self(
             $player->id()->value(),
             $player->categoryId()?->value(),
+            null,
+            $player->documentType(),
+            $player->firstName(),
+            $player->lastName(),
+            $player->birthDate()->format('Y-m-d'),
+            $player->documentNumber(),
+            $player->email(),
+            $player->phone(),
+            $player->status()->value(),
+        );
+    }
+
+    public static function fromPlayerWithCategoryName(Player $player, ?string $categoryName): self
+    {
+        return new self(
+            $player->id()->value(),
+            $player->categoryId()?->value(),
+            $categoryName,
             $player->documentType(),
             $player->firstName(),
             $player->lastName(),
@@ -43,6 +62,7 @@ final readonly class PlayerListItemResponse
         return [
             'id' => $this->id,
             'categoryId' => $this->categoryId,
+            'categoryName' => $this->categoryName,
             'documentType' => $this->documentType,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
