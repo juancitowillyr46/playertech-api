@@ -4,6 +4,14 @@ Este documento registra el estado actual de la base tecnica, su trazabilidad y e
 
 ---
 
+# Persistent Memory
+
+La memoria persistente consolidada del proyecto vive en [`docs/architecture/project-memory.md`](../docs/architecture/project-memory.md).
+
+Ese documento resume la arquitectura real, los modulos presentes, los contratos vigentes, las decisiones tecnicas y los riesgos conocidos para que nuevas sesiones no dependan del historial del chat.
+
+---
+
 # Implemented Foundation
 
 La base tecnica actual incluye:
@@ -35,7 +43,7 @@ La base tecnica actual incluye:
 | Venue validation migration | Technical Enabler | Done | `untracked` | La validación de create y update de `Venue` se mueve a `Presentation`; `Application` queda con DTOs puros para esos flujos |
 | Team validation migration | Technical Enabler | Done | `untracked` | La validación de create y update de `Team` se mueve a `Presentation`; `Application` queda con DTOs puros para esos flujos |
 | Team Venue parity update | Technical Enabler / Documentation | Done | `untracked` | `Team` normaliza `sort`, corrige la longitud de `name` según el VO compartido y alinea su referencia HTTP/Postman con el contrato real del módulo |
-| Team category name contract | Functional / Documentation | Done | `untracked` | `Team` expone `categoryName` plano en list/show/create/update para simplificar el consumo del frontend sin anidar un objeto `category` |
+| Team category name contract | Functional / Documentation | Done | `untracked` | `Team` expone `categoryName` plano en list/show/create/update para simplificar el consumo del frontend sin anidar un objeto `category`; el signup usa un response propio para el primer equipo con el mismo enriquecimiento |
 | Staff options selector endpoint | Functional / Technical Enabler | Done | `untracked` | `Staff` expone `/api/v1/academy/staff/options` como selector liviano para usuarios staff del tenant actual, con filtro opcional por rol |
 | Staff options selector pattern | Functional / Technical Enabler | Done | `untracked` | `Staff` expone `/api/v1/academy/staff/options` como contrato liviano para selects, filtrando por academia y rol sin hidratar entidades completas |
 | Staff options availability filter | Functional / Technical Enabler | Done | `untracked` | `Staff` ahora permite filtrar `/api/v1/academy/staff/options` por `teamId` para excluir miembros ya asignados al equipo desde `team_staff_assignments` |
@@ -275,7 +283,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La documentación operativa de `EP-006` ya refleja el alta de acudientes con `documentType`, `documentNumber`, `address` y `relationship` para que el front consuma el contrato actualizado.
 * Los comprobantes de pago del MVP deben tomar siempre la academia marcada como principal/default para los datos fiscales del emisor.
 * `HU-009` de `EP-007` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la foto del jugador.
-* `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría.
+* `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría; la respuesta del alta usa un contract específico para onboarding y no el response operativo de `Team`.
 * El MVP checklist debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y foto de `Player`.
 * `EP-006` ya expone lectura y creación de acudientes por academia en HTTP, incluyendo el campo `relationship`, y `EP-008` ya cubre la relación jugador-acudiente con alta de acudiente, asociación, cambio de principal, eliminación lógica y vista por jugador.
 * El bloque de módulos aún pendiente para el MVP ya no incluye `EP-012`; `EP-008`, `EP-009`, `EP-010`, `EP-011`, `EP-012` y `EP-013` ya se consideran resueltos.
@@ -403,5 +411,3 @@ Para considerar la base lista antes de implementar cualquier lógica de negocio,
 * `EP-002` amplió el contrato de sedes para exponer `address` y `phone` opcionales también en el listado, no solo en el detalle.
 * El listado de `Venue` ahora normaliza `sort` permitidos en backend; `created_at` y aliases históricos se traducen a `auditTrail.createdAt.value` para evitar errores 500 por paths internos de Doctrine.
 * El listado de `Venue` quedó validado con una prueba unitaria de código puro (`ListVenuesHandlerTest`) ejecutada dentro del contenedor, sin BD, para confirmar el contrato de respuesta del handler.
-
-

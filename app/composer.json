@@ -44,7 +44,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "symfony/runtime": false
+            "symfony/runtime": true
         }
     },
     "minimum-stability": "stable",

@@ -383,6 +383,8 @@ POST /api/v1/academy/teams
 }
 ```
 
+> Nota: este contrato corresponde al alta de onboarding y usa un response específico para el primer equipo creado durante el signup. El CRUD normal de `Team` mantiene el mismo enriquecimiento de `categoryName` en listados y detalle.
+
 ### Team Update
 
 ```http
@@ -2169,5 +2171,4 @@ Retirar definitivamente la matrícula de un jugador.
 ### Errors
 
 * `404 Not Found` si no existe matrícula activa.
-
 

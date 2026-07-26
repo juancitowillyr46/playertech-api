@@ -179,6 +179,10 @@ Actualizar:
 - Pruebas unitarias.
 - Pruebas funcionales.
 
+## Trazabilidad de Refactor
+
+El alta de tenant usa un response específico para el primer equipo creado durante el onboarding. Ese response preserva `categoryName` como dato de presentación, mientras que los endpoints de gestión de `Team` continúan usando `TeamResponse` como contrato operativo.
+
 ---
 
 # Endpoint Afectado
@@ -231,4 +235,3 @@ POST /api/v1/public/tenants/signup
 - Tests aprobados.
 - Colección Postman actualizada.
 - Documentación actualizada.
-
