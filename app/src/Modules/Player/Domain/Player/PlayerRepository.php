@@ -18,5 +18,14 @@ interface PlayerRepository
     /**
      * @return array{items: Player[], total: int}
      */
-    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array;
+    public function findAllByAcademy(
+        AcademyId $academyId,
+        PaginationQuery $pagination,
+        ?string $gender = null,
+        ?string $categoryId = null,
+        ?string $createdAtFrom = null,
+        ?string $createdAtTo = null,
+        ?string $birthDateFrom = null,
+        ?string $birthDateTo = null,
+    ): array;
 }

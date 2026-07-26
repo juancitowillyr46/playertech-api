@@ -433,21 +433,49 @@ PATCH /api/v1/academy/teams/{teamId}/activate
 
 ### Players
 
+El listado de jugadores expone contrato paginado uniforme y permite filtros por query params simples:
+
+- `gender`
+- `categoryId`
+- `createdAtFrom`
+- `createdAtTo`
+- `birthDateFrom`
+- `birthDateTo`
+
+Regla de contrato:
+
+- `createdAt` pertenece al perfil de auditoría y se usa como filtro/orden de negocio.
+- `birthDateFrom` y `birthDateTo` son el filtro canónico para criterios de edad.
+- `age` es un campo derivado de salida y no debe usarse como filtro persistente.
+
 ```json
 {
   "data": [
     {
       "id": "uuid",
       "categoryId": "uuid",
+      "categoryName": "Sub 14",
+      "genderName": "Masculino",
+      "age": 12,
       "documentType": "DNI",
       "firstName": "Juan",
       "lastName": "Perez",
       "birthDate": "2013-05-12",
       "documentNumber": "12345678",
+      "email": "juan@example.com",
+      "phone": "+573001112233",
+      "photo": {
+        "path": "images/players/...",
+        "url": "http://localhost:8081/media/images/players/...",
+        "mimeType": "image/png",
+        "size": 123456,
+        "checksum": "sha256:..."
+      },
       "nationality": "Colombiana",
       "gender": "Masculino",
       "federationId": "F001",
       "dominantFoot": "Derecho",
+      "createdAt": "2026-07-11T00:00:00+00:00",
       "status": "ACTIVE"
     }
   ],
@@ -2171,4 +2199,3 @@ Retirar definitivamente la matrícula de un jugador.
 ### Errors
 
 * `404 Not Found` si no existe matrícula activa.
-

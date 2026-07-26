@@ -23,6 +23,12 @@ final readonly class ListPlayersHandler
         $players = $this->playerRepository->findAllByAcademy(
             $query->academyId,
             $query->pagination,
+            $query->gender,
+            $query->categoryId,
+            $query->createdAtFrom,
+            $query->createdAtTo,
+            $query->birthDateFrom,
+            $query->birthDateTo,
         );
 
         $items = array_map(

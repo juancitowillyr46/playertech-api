@@ -49,6 +49,7 @@ Este documento consolida el contexto tecnico persistente de PlayerTech para que 
 - Los IDs de agregado usan UUID con custom types.
 - Los listados deben converger hacia un contrato paginado uniforme con `data` + `meta`.
 - Los endpoints de listado deben exponer `page`, `per_page`, `sort` y `direction` como contrato estable de API.
+- En `Player`, el contrato de listado debe exponer `photo`, `categoryName`, `genderName`, `age` y `createdAt`; para filtros operativos se usan `gender`, `categoryId`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`, donde el rango de nacimiento es el filtro canónico para criterios de edad y `age` solo es derivado de salida.
 
 ## Estado Real Del Codigo
 

@@ -76,7 +76,7 @@ La base tecnica actual incluye:
 | Team module baseline | Functional / Technical Enabler | Done | `untracked` | `Team` arranca con CRUD tenant-scoped, custom type UUID, XML mapping y controladores delgados sobre `/api/v1/academy/teams` |
 | Team test baseline | Technical Enabler | Done | `untracked` | Cobertura inicial de `Team` con unit, integration y functional tests; las suites con MySQL compartido se ejecutan en serie |
 | TeamAssignment module baseline | Functional / Technical Enabler | Done | `untracked` | `TeamAssignment` materializa la gestión de asignaciones deportivas con principal activo, finalización e historial sobre jugadores y equipos |
-| Player list baseline | Functional / Technical Enabler | Done | `untracked` | `GET /api/v1/academy/players` lista jugadores del tenant actual con DTO resumido y prueba unitaria |
+| Player list baseline | Functional / Technical Enabler | Done | `untracked` | `GET /api/v1/academy/players` lista jugadores del tenant actual con DTO resumido, foto, `createdAt` y prueba unitaria |
 | Player detail baseline | Functional / Technical Enabler | Done | `untracked` | `GET /api/v1/academy/players/{playerId}` devuelve detalle del jugador dentro del tenant con `PlayerResponse` y prueba unitaria |
 | Player update baseline | Functional / Technical Enabler | Done | `untracked` | `PUT /api/v1/academy/players/{playerId}` actualiza datos del jugador dentro del tenant con validación de unicidad y prueba unitaria |
 | Player status management | Functional / Technical Enabler | Done | `untracked` | `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate` cambian el estado del jugador con cobertura unitaria |
@@ -225,6 +225,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `EP-007` quedó reescrita como inicio formal del dominio `Player` y ya tiene HUs mínimas para registrar, listar, consultar, actualizar y desactivar.
 * `HU-001` de `EP-007` quedó implementada y validada en runtime con `POST /api/v1/academy/players`.
 * `HU-002` de `EP-007` quedó implementada y validada en runtime con `GET /api/v1/academy/players`.
+* El listado de `Player` ya expone `photo`, `categoryName`, `genderName`, `age` y `createdAt` como campos de salida, con filtros planeados por `gender`, `categoryId`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`.
 * La suspension de una academia bloquea a todos sus usuarios, pero no elimina ni desactiva usuarios en cascada.
 * Las validaciones de negocio de `Academy` devuelven Problem Details JSON; el caso de duplicado de correo se resuelve con excepcion de dominio y respuesta `409`.
 * `Academy` incorpora soft delete con `deleted_at` y `deleted_by`, y Doctrine ya tiene un filtro global para excluir entidades borradas lógicamente.

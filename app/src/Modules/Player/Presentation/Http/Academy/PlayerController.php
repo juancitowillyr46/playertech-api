@@ -7,6 +7,8 @@ namespace App\Modules\Player\Presentation\Http\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Modules\Player\Application\Command\CreatePlayerCommand;
+use App\Modules\Player\Application\Photo\Delete\DeletePlayerPhotoCommand;
+use App\Modules\Player\Application\Photo\Delete\DeletePlayerPhotoHandler;
 use App\Modules\Player\Application\Command\ImportPlayersCommand;
 use App\Modules\Player\Application\Command\ActivatePlayerCommand;
 use App\Modules\Player\Application\Command\InactivatePlayerCommand;
@@ -47,6 +49,7 @@ final class PlayerController extends AbstractPaginatedApiController
         private readonly ShowPlayerHandler $showPlayerHandler,
         private readonly UpdatePlayerHandler $updatePlayerHandler,
         private readonly UploadPlayerPhotoHandler $uploadPlayerPhotoHandler,
+        private readonly DeletePlayerPhotoHandler $deletePlayerPhotoHandler,
         private readonly InactivatePlayerHandler $inactivatePlayerHandler,
         private readonly ActivatePlayerHandler $activatePlayerHandler,
         private readonly TenantContext $tenantContext,
@@ -111,7 +114,13 @@ final class PlayerController extends AbstractPaginatedApiController
         $players = ($this->listPlayersHandler)(
             new ListPlayersQuery(
                 new AcademyId($this->tenantContext->requireAcademyId()),
-                $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value')
+                $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value'),
+                $this->nullableQueryString($request, 'gender'),
+                $this->nullableQueryString($request, 'categoryId'),
+                $this->nullableQueryString($request, 'createdAtFrom'),
+                $this->nullableQueryString($request, 'createdAtTo'),
+                $this->nullableQueryString($request, 'birthDateFrom'),
+                $this->nullableQueryString($request, 'birthDateTo'),
             )
         );
 
@@ -183,6 +192,20 @@ final class PlayerController extends AbstractPaginatedApiController
         ]);
     }
 
+    #[Route('/{playerId}/photo', name: 'api_v1_academy_players_photo_delete', methods: ['DELETE'])]
+    public function deletePhoto(string $playerId): Response
+    {
+        ($this->deletePlayerPhotoHandler)(
+            new DeletePlayerPhotoCommand(
+                $this->requireActorId(),
+                $this->tenantContext->requireAcademyId(),
+                $playerId
+            )
+        );
+
+        return new Response(status: Response::HTTP_NO_CONTENT);
+    }
+
     #[Route('/{playerId}/inactivate', name: 'api_v1_academy_players_inactivate', methods: ['PATCH'])]
     public function inactivate(string $playerId): Response
     {
@@ -214,5 +237,12 @@ final class PlayerController extends AbstractPaginatedApiController
     private function requireActorId(): string
     {
         return $this->requireAuthenticatedUserId($this->security);
+    }
+
+    private function nullableQueryString(Request $request, string $key): ?string
+    {
+        $value = trim((string) $request->query->get($key, ''));
+
+        return '' === $value ? null : $value;
     }
 }

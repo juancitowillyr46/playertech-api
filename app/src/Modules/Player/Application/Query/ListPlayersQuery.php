@@ -12,6 +12,12 @@ final readonly class ListPlayersQuery
     public function __construct(
         public AcademyId $academyId,
         public PaginationQuery $pagination,
+        public ?string $gender = null,
+        public ?string $categoryId = null,
+        public ?string $createdAtFrom = null,
+        public ?string $createdAtTo = null,
+        public ?string $birthDateFrom = null,
+        public ?string $birthDateTo = null,
     ) {
     }
 }

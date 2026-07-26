@@ -14,6 +14,7 @@ use App\Modules\Player\Domain\Player\Player;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Description;
+use App\Shared\Domain\ValueObject\Media;
 use App\Shared\Domain\ValueObject\MaximumAge;
 use App\Shared\Domain\ValueObject\MinimumAge;
 use App\Shared\Domain\ValueObject\Name;
@@ -26,6 +27,7 @@ final class ListPlayersHandlerTest extends TestCase
     {
         $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
         $categoryId = new CategoryId('019eec93-9a11-7432-bd04-52306b2b3d70');
+        $playerId = new PlayerId('019eec93-9a11-7432-bd04-52306b2b3d90');
         $playerRepository = new InMemoryPlayerRepository();
         $categoryRepository = new InMemoryCategoryRepository(
             Category::create(
@@ -39,8 +41,8 @@ final class ListPlayersHandlerTest extends TestCase
                 AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
             )
         );
-        $playerRepository->save(Player::create(
-            new PlayerId('019eec93-9a11-7432-bd04-52306b2b3d90'),
+        $player = Player::create(
+            $playerId,
             $academyId,
             'DNI',
             'Juan',
@@ -50,22 +52,57 @@ final class ListPlayersHandlerTest extends TestCase
             null,
             null,
             null,
-            null,
+            'Masculino',
             null,
             null,
             $categoryId,
-            null,
+            new Media(
+                'images/players/'.$academyId->value().'/'.$playerId->value().'/photo.png',
+                'https://cdn.example.test/photo.png',
+                'image/png',
+                123,
+                'sha256:'.str_repeat('a', 64),
+            ),
             AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
-        ));
+        );
+
+        $this->setAuditTrailCreatedAt($player, new \DateTimeImmutable('2026-07-11T00:00:00+00:00'));
+        $playerRepository->save($player);
 
         $handler = new ListPlayersHandler($playerRepository, $categoryRepository);
 
-        $players = $handler(new ListPlayersQuery($academyId, new PaginationQuery()));
+        $players = $handler(new ListPlayersQuery(
+            $academyId,
+            new PaginationQuery(),
+            'Masculino',
+            $categoryId->value(),
+            '2026-07-01',
+            '2026-07-31',
+            '2014-05-01',
+            '2014-05-31',
+        ));
 
         self::assertCount(1, $players->items);
         self::assertSame('Juan', $players->items[0]->toArray()['firstName']);
         self::assertSame('12345678', $players->items[0]->toArray()['documentNumber']);
         self::assertSame('Sub 14', $players->items[0]->toArray()['categoryName']);
+        self::assertSame('Masculino', $players->items[0]->toArray()['genderName']);
+        self::assertSame(12, $players->items[0]->toArray()['age']);
+        self::assertNotNull($players->items[0]->toArray()['photo']);
+        self::assertSame('image/png', $players->items[0]->toArray()['photo']['mimeType']);
+        self::assertSame('2026-07-11T00:00:00+00:00', $players->items[0]->toArray()['createdAt']);
+    }
+
+    private function setAuditTrailCreatedAt(Player $player, \DateTimeImmutable $createdAt): void
+    {
+        $reflection = new \ReflectionObject($player);
+        $property = $reflection->getProperty('auditTrail');
+        $property->setValue($player, new AuditTrail(
+            new \App\Shared\Domain\ValueObject\CreatedAt($createdAt),
+            '019eec93-9a11-7432-bd04-52306b2b3d8e',
+            null,
+            null,
+        ));
     }
 }
 
