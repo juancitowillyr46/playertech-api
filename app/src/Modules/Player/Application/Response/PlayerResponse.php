@@ -6,6 +6,7 @@ namespace App\Modules\Player\Application\Response;
 
 use App\Modules\Player\Domain\Player\Player;
 use App\Shared\Application\Response\MediaResponse;
+use App\Shared\Domain\ValueObject\Media;
 
 final readonly class PlayerResponse
 {
@@ -46,14 +47,32 @@ final readonly class PlayerResponse
             $player->gender(),
             $player->federationId(),
             $player->dominantFoot(),
-            null === $player->photo() ? null : MediaResponse::fromDetails(
-                $player->photo()->path(),
-                $player->photo()->url(),
-                $player->photo()->mimeType(),
-                $player->photo()->size(),
-                $player->photo()->checksum(),
-            ),
+            self::buildPhotoResponse($player->photo()),
             $player->status()->value(),
+        );
+    }
+
+    private static function buildPhotoResponse(?Media $photo): ?MediaResponse
+    {
+        if (null === $photo) {
+            return null;
+        }
+
+        $reflection = new \ReflectionObject($photo);
+        foreach (['path', 'url', 'mimeType', 'size', 'checksum'] as $propertyName) {
+            $property = $reflection->getProperty($propertyName);
+
+            if (!$property->isInitialized($photo)) {
+                return null;
+            }
+        }
+
+        return MediaResponse::fromDetails(
+            $photo->path(),
+            $photo->url(),
+            $photo->mimeType(),
+            $photo->size(),
+            $photo->checksum(),
         );
     }
 

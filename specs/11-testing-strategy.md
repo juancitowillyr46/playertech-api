@@ -118,6 +118,37 @@ Y como primera integración real de infraestructura:
 
 * `RegisterTenantHandler` contra base de datos MySQL de test y bus de mensajes desacoplado.
 
+## Current Coverage Snapshot
+
+La base técnica ya tiene cobertura inicial para:
+
+* `Academy`
+* `Category`
+* `Venue`
+* `Team`
+* `Player`
+* `PlayerGuardian`
+* `Membership`
+* `PaymentConcept`
+* `Charge`
+* `Payment`
+* `Staff`
+* `TeamAssignment`
+* flujo de tenant signup
+* importación de jugadores
+
+## Coverage Still Missing or Weak
+
+Prioridades de siguiente pasada:
+
+* `PlayerImportJob`
+* `PaymentAllocation`
+* `PaymentEvidence`
+* `FiscalAttachment`
+* selector liviano de `Staff`
+* filtros y sort de listados
+* contrato HTTP de importación asíncrona
+
 Esta capa sirve como red de seguridad antes de incorporar pruebas funcionales de API.
 
 En ciclos de desarrollo y en CI/CD, la secuencia recomendada es:

@@ -8,6 +8,35 @@ Este documento define la guia operativa para crear nuevos modulos en PlayerTech 
 
 Estandarizar la creacion de modulos para que cualquier nuevo contexto funcional pueda implementarse sin acceso a modelos previos ni decisiones improvisadas.
 
+## Current Reference Modules
+
+Los módulos que hoy sirven como referencia real son:
+
+* Academy
+* Identity
+* Category
+* Venue
+* Player
+* PlayerGuardian
+* Team
+* TeamAssignment
+* Membership
+* PaymentConcept
+* Charge
+* Payment
+* Staff
+
+## Current Persistence Pattern
+
+El backend ya materializa el estándar de:
+
+* XML mapping para módulos funcionales;
+* `AbstractUuidType` para IDs;
+* VOs compartidos en `Shared`;
+* controladores delgados;
+* handler por caso de uso;
+* respuesta serializable con DTOs.
+
 ---
 
 # Core Rules

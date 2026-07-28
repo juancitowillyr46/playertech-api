@@ -1,5 +1,9 @@
 # API Contracts Index
 
+> Canonical source: [`specs/16-api-reference.md`](/home/juan-rodas/projects/playertech/playertech-api/specs/16-api-reference.md)
+>
+> Este archivo funciona como índice operativo y no como segunda fuente del contrato.
+
 Este indice agrupa los contratos HTTP vigentes de PlayerTech para facilitar la sincronizacion entre backend, frontend y QA.
 
 ## Canonical Sources

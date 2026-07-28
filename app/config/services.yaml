@@ -8,6 +8,7 @@ services:
         autoconfigure: true
         public: false
         bind:
+            string $projectDir: '%kernel.project_dir%'
             string $publicUrl: '%env(APP_PUBLIC_URL)%'
             string $authFrontendUrl: '%env(APP_AUTH_FRONTEND_URL)%'
             string $tenantActivationUrl: '%env(APP_TENANT_ACTIVATION_URL)%'

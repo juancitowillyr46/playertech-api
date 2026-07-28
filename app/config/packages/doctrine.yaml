@@ -61,6 +61,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Modules/Player/Infrastructure/Persistence/Doctrine/Mapping/Player'
                 prefix: App\Modules\Player\Domain\Player
                 alias: Player
+            PlayerImportJob:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Modules/Player/Domain/Import'
+                prefix: App\Modules\Player\Domain\Import
+                alias: PlayerImportJob
             PlayerGuardian:
                 is_bundle: false
                 type: xml

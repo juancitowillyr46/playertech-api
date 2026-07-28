@@ -20,6 +20,17 @@ La observabilidad local busca responder preguntas como:
 
 La estrategia no reemplaza la auditoria de negocio ni la seguridad.
 
+## Current Runtime Note
+
+La estrategia todavía es local-first y no depende de una plataforma externa.
+La implementación backend ya dispone de:
+
+* Monolog;
+* `ProblemDetails` para errores;
+* contexto de tenant;
+* trazabilidad por `request_id` como objetivo;
+* módulos operativos que ya pueden emitir logs por caso de uso.
+
 ---
 
 # Scope
@@ -284,4 +295,3 @@ Esta estrategia se considerara lista para implementar cuando:
 3. Contexto tenant y usuario.
 4. Metricas basicas.
 5. Visualizacion local.
-

@@ -104,3 +104,13 @@ docker exec docker-app-1 bash -lc 'cd /var/www/html && php bin/console doctrine:
 
 * `app/.env.test` crea una base MySQL de test y la deja lista antes de correr PHPUnit.
 * La estrategia de pruebas se documenta en `specs/11-testing-strategy.md`.
+
+## Current Runtime Note
+
+Toda la validación operativa del proyecto se hace dentro de contenedores Docker.
+El contenedor de aplicación es la unidad de trabajo principal para:
+
+* ejecutar `php bin/console`;
+* correr `doctrine:mapping:info`;
+* lanzar PHPUnit;
+* validar imports, pruebas y comandos de mantenimiento.

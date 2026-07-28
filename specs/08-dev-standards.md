@@ -14,6 +14,21 @@ Su objetivo es garantizar:
 
 Todos los módulos deberán seguir estas reglas.
 
+## Current Backend Standard
+
+La base técnica actual ya opera con estas convenciones:
+
+* Monolito modular Symfony 7.4 + PHP 8.4.
+* Doctrine ORM con XML mapping para módulos funcionales.
+* Value Objects tipados para negocio compartido.
+* Custom Types UUID para IDs de agregado.
+* Controllers delgados y handlers de Application.
+* Respuestas `data` + `meta` para listados.
+* ProblemDetails para errores HTTP.
+* Aislamiento por `academy_id` y `TenantContext`.
+* Soft delete obligatorio en entidades de negocio.
+* Auditoría con `createdAt`, `createdBy`, `updatedAt`, `updatedBy`, `deletedAt`, `deletedBy`.
+
 ---
 
 # Development Philosophy

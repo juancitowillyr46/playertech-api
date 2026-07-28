@@ -43,6 +43,8 @@ php bin/console
 - `specs/16-api-reference.md` es la referencia HTTP operativa principal.
 - `postman/` contiene la colección y el entorno para validación manual rápida.
 - `docs/contracts/api-reference.md` agrupa el índice de contratos vigentes.
+- `docs/flows/` concentra los flujos funcionales específicos.
+- `docs/domain/02-domains.md` queda como legado conceptual; la versión canónica es `specs/02-domains.md`.
 
 ## Enfoque de trabajo
 
@@ -64,8 +66,8 @@ php bin/console
 - `specs/13-user-story-rebuild-guide.md`
 - `specs/14-current-state.md`
 - `specs/16-api-reference.md`
-- `docs/architecture/sdd-policy.md`
-- `docs/architecture/change-template-light.md`
-- `docs/architecture/change-template-full.md`
-- `docs/architecture/SDD-backend-audit.md`
+- `docs/architecture/policies/sdd-policy.md`
+- `docs/architecture/templates/change-template-light.md`
+- `docs/architecture/templates/change-template-full.md`
+- `docs/architecture/audits/SDD-backend-audit.md`
 - `docs/contracts/api-reference.md`

@@ -6,7 +6,7 @@ Este documento registra el estado actual de la base tecnica, su trazabilidad y e
 
 # Persistent Memory
 
-La memoria persistente consolidada del proyecto vive en [`docs/architecture/project-memory.md`](../docs/architecture/project-memory.md).
+La memoria persistente consolidada del proyecto vive en [`docs/architecture/memory/project-memory.md`](../docs/architecture/memory/project-memory.md).
 
 Ese documento resume la arquitectura real, los modulos presentes, los contratos vigentes, las decisiones tecnicas y los riesgos conocidos para que nuevas sesiones no dependan del historial del chat.
 
@@ -81,7 +81,11 @@ La base tecnica actual incluye:
 | Player update baseline | Functional / Technical Enabler | Done | `untracked` | `PUT /api/v1/academy/players/{playerId}` actualiza datos del jugador dentro del tenant con validación de unicidad y prueba unitaria |
 | Player status management | Functional / Technical Enabler | Done | `untracked` | `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate` cambian el estado del jugador con cobertura unitaria |
 | Player status management story | Functional / Documentation | Done | `untracked` | HU-005 consolidada documenta desactivar y reactivar como una sola gestion de estado |
-| Player bulk import baseline | Functional / Technical Enabler | Done | `untracked` | `POST /api/v1/academy/players/import` permite carga masiva desde Excel con `category_key` y validación completa por fila |
+| Player bulk import async | Functional / Technical Enabler | Done | `untracked` | `POST /api/v1/academy/players/import` crea un job asíncrono con categoría seleccionada previamente, plantilla oficial desde backend y polling de progreso |
+| Backlog normalization pass 1 | Documentation | Done | `untracked` | Se movieron HUs duplicadas o mal ubicadas a `docs/backlog/stories/_archive/` y se renombró la HU de detalle de sede para alinear `EP-002` |
+| Payment evidence canonical owner | Documentation | Done | `untracked` | `HU-004-attach-payment-evidence.md` quedó canonizada en `EP-012`; la copia de `EP-009` fue archivada |
+| Backlog normalization pass 2 | Documentation | Done | `untracked` | `EP-007` quedó reducido a una HU canónica de estado; `EP-003` archivó la HU de invitación duplicada de alta administrativa |
+| Backlog normalization pass 3 | Documentation | Done | `untracked` | `EP-009` quedó con numeración continua y evidencia de pago canónica en `EP-012` |
 | Category business key foundation | Functional / Technical Enabler | Done | `untracked` | `Category` ahora expone `category_key` estable, unico por academia, para contratos API e importaciones |
 | Guardian module foundation | Functional / Technical Enabler | Done | `untracked` | `LegalGuardian` queda disponible como aggregate root con XML puro, custom type UUID y endpoint de alta dentro de Academy |
 | PlayerGuardian relation foundation | Functional / Technical Enabler | Done | `untracked` | `PlayerGuardian` cubre asociar, cambiar principal y eliminar relación con soft delete y aislamiento por academia |
@@ -214,6 +218,15 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La creación de tenant por `signup` y por `platform` quedó unificada con trazabilidad explícita de origen en `Academy`.
 * `Category` y `Venue` ya quedaron implementados como módulos funcionales completos y el backlog debe seguir su mismo lifecycle con historias faltantes o inconsistentes.
 * `Category` y `Venue` comparten ahora el patrón de recuperación por `Finder`, reduciendo duplicación en handlers y homogeneizando Application.
+* `Player` ya quedó documentado también en `docs/domains/player/player-domain-spec.md` como contrato central del dominio, para no depender solo del feature spec y del flujo de importación.
+* El listado de `Player` expone `photo`, `categoryName`, `genderName`, `age` y `createdAt`; además, el detalle, la foto y la importación masiva quedaron alineados con el contrato HTTP vigente.
+* La importación de `Player` queda documentada como flujo central en `docs/flows/player/player-import-flow-spec.md` y su UX satélite en `docs/flows/player/player-import-ux-spec.md`.
+* El backend ya valida la categoría seleccionada antes de crear un job de importación y la plantilla oficial de Excel se genera con referencias desde backend.
+* `Player` ahora expone eliminación de foto mediante `DELETE /api/v1/academy/players/{playerId}/photo`, no solo subida/reemplazo.
+* `Team`, `Venue` y `Category` también quedaron reforzados con contrato central de dominio en `docs/domains/` para reflejar `categoryName`, sort normalizado, `categoryKey` estable y reglas de primaria/estado.
+* `Academy`, `Identity`, `Guardian`, `Billing` y `Staff` también quedaron reforzados con documento central de dominio en `docs/domains/`, alineando contexto tenant, reset de contraseña, relación base de acudientes, bloque financiero y selectors de staff con el backend real.
+* Los módulos desarrollados ya usan XML Mapping Doctrine como estándar persistente; las entidades de `Academy`, `Category`, `Venue`, `Identity`, `Guardian`, `Player`, `Membership`, `PaymentConcept`, `Charge`, `Payment`, `Staff`, `Team` y `TeamAssignment` están respaldadas por mapping XML explícito.
+* `Player`, `Category`, `Venue`, `Team`, `Guardian`, `Academy`, `Membership`, `PaymentConcept`, `Charge`, `Payment`, `Staff` y `TeamAssignment` ya tienen superficie HTTP, DTOs y contratos de persistencia que deben reflejarse en la documentación antes de introducir nuevos cambios funcionales.
 * `Category` y `Venue` ahora normalizan `sort` mediante un mapa seguro antes de construir el `ORDER BY`, evitando enviar el campo crudo a Doctrine.
 * `Category` unifico el contrato de update en `categoryKey` camelCase y el listado ahora expone `academyId` para alinearse con el detalle.
 * `Category` ahora genera `categoryKey` desde el backend a partir del `name`, eliminando ese campo del payload de create/update y manteniéndolo como contrato de salida.
@@ -242,6 +255,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Se inició el módulo `Membership` como primer slice técnico de `EP-009`, con base de dominio, mapping XML, repositorio, controller y casos de uso de crear/consultar matrícula activa.
 * `EP-009` quedó consolidada como módulo funcional completo: matrícula activa, cargos iniciales, historial, suspensión y retiro con cobertura unitaria y documentación HTTP operativa en Postman.
 * El bloque financiero fue reordenado: `EP-009` genera cargos iniciales pendientes, `EP-011` administra conceptos de pago, `EP-012` gestiona cargos, pagos, evidencia y deuda, y `EP-013` resume cartera y estado operativo.
+* La frontera financiera quedó estabilizada: `Membership` administra la matrícula y puede disparar cargos automáticos; `Charge` modela la deuda concreta; `Payment` registra el recaudo y `PaymentAllocation` distribuye ese recaudo sobre cargos existentes; `PaymentConcept` sigue siendo el catálogo reusable de motivos de cobro.
 * `Membership` ya adopta el patrón de arquitectura esperado: validación en `Presentation`, `MembershipFinder` en `Application` y excepciones de dominio herederas de `Shared`.
 * `EP-012` quedó cerrado funcional y técnicamente con `Charge`, `Payment`, `PaymentAllocation`, deuda, historial, evidencia y cancelación; la validación final ya se cubrió sobre `test`.
 * `EP-013` quedó materializada como dashboard operativo con jugadores activos, matrículas vigentes, cargos pendientes y resumen de cartera.
@@ -259,9 +273,11 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-003` de `EP-007` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}`.
 * `HU-004` de `EP-007` quedó implementada y validada en runtime con `PUT /api/v1/academy/players/{playerId}`.
 * `HU-005` de `EP-007` quedó consolidada como gestión de estado del jugador: desactivar y reactivar con endpoints `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate`.
-* Se abrió la historia `HU-007` de `EP-007` para importación masiva de jugadores y categorías desde Excel como base de migración de datos.
-* `HU-007` de `EP-007` quedó implementada con carga masiva de jugadores desde Excel, validación de categorías y rechazo total ante errores.
-* El módulo `Player` ahora incluye `category_id` como referencia opcional y el endpoint de importación masiva `POST /api/v1/academy/players/import` consume `category_key` como referencia de negocio.
+* Se abrió la historia `HU-007` de `EP-007` para importación masiva de jugadores desde Excel como base de migración de datos.
+* `HU-007` de `EP-007` quedó orientada a un flujo asíncrono con selección previa de categoría, plantilla generada por backend y polling de progreso.
+* El módulo `Player` ahora incluye `category_id` como referencia opcional y el endpoint de importación masiva `POST /api/v1/academy/players/import` trabaja con `categoryId` por job, no por fila.
+* La plantilla oficial de importación de jugadores se genera desde backend con hojas `Datos` y `Referencias`.
+* El flujo documental central de importación de jugadores se reorganizó fuera de `docs/domains/player/` hacia `docs/flows/player/` para separar dominio puro de flujo y UX.
 * `HU-013` de `EP-001` quedó implementada con `POST /api/v1/academy/me/shield` para subir y reemplazar el escudo institucional de la academia.
 * El flujo `POST /api/v1/academy/me/shield` ahora valida MIME permitido antes de ir a `FileStorage`, alineándose con el patrón de `Player` para evitar errores genéricos por subidas inválidas.
 * Se añadió cobertura funcional específica para `POST /api/v1/academy/me/shield` en `AcademyMeControllerTest`, validando la subida multipart de un PNG y la forma básica del contrato `shield`.
@@ -289,13 +305,13 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `EP-006` ya expone lectura y creación de acudientes por academia en HTTP, incluyendo el campo `relationship`, y `EP-008` ya cubre la relación jugador-acudiente con alta de acudiente, asociación, cambio de principal, eliminación lógica y vista por jugador.
 * El bloque de módulos aún pendiente para el MVP ya no incluye `EP-012`; `EP-008`, `EP-009`, `EP-010`, `EP-011`, `EP-012` y `EP-013` ya se consideran resueltos.
 * La capa fiscal formal sigue fuera del MVP y quedó concentrada en `EP-023`.
-* Se documentó una auditoría SDD del backend en `docs/architecture/SDD-backend-audit.md`, con diagnóstico de madurez, vacíos de trazabilidad y propuesta incremental de adopción.
+* Se documentó una auditoría SDD del backend en `docs/architecture/audits/SDD-backend-audit.md`, con diagnóstico de madurez, vacíos de trazabilidad y propuesta incremental de adopción.
 * Se adoptó una versión liviana de SDD para trabajo individual: `specs/16-api-reference.md` queda como referencia HTTP operativa principal y `AGENTS.md` incorpora reglas simples de canonicidad y trazabilidad mínima.
 * Se consolidó un índice de contratos HTTP en `docs/contracts/api-reference.md` para centralizar la sincronización con frontend y QA sin duplicar la especificación operativa.
-* Se formalizó una política SDD escalonada en `docs/architecture/sdd-policy.md` y dos plantillas de cambio en `docs/architecture/change-template-light.md` y `docs/architecture/change-template-full.md` para futuras features.
-* Se documentó la evolución del modelo de cobro de `EP-009` en `docs/architecture/EP-009-billing-model-evolution.md`, incluyendo el estado actual, casos de uso reales y los diagramas de flujo actual y objetivo.
+* Se formalizó una política SDD escalonada en `docs/architecture/policies/sdd-policy.md` y dos plantillas de cambio en `docs/architecture/templates/change-template-light.md` y `docs/architecture/templates/change-template-full.md` para futuras features.
+* Se documentó la evolución del modelo de cobro de `EP-009` en `docs/domains/billing/billing-evolution-notes.md`, incluyendo el estado actual, casos de uso reales y los diagramas de flujo actual y objetivo.
 * Se redefinió el perfil base de `Player` en `specs/02-domains.md` para separar identidad, atributos deportivos y datos que deben vivir en asignaciones o compras.
-* Se documentó un criterio SDD para la evolución del perfil de `Player` en `docs/architecture/player-profile-evolution-sdd.md`, con reglas para decidir qué atributos viven en el aggregate y cuáles deben quedar fuera.
+* Se documentó un criterio SDD para la evolución del perfil de `Player` en `docs/domains/player/player-profile-evolution-notes.md`, con reglas para decidir qué atributos viven en el aggregate y cuáles deben quedar fuera.
 * El perfil base de `Player` incorporó `email` y `phone` como datos de contacto opcionales, sincronizados entre dominio, API, Postman y persistencia.
 * Se documentó una estrategia local-first de observabilidad en `specs/19-observability-local.md` para logs estructurados, correlation id y metricas basicas sin depender aun de una plataforma externa.
 ---

@@ -6,6 +6,17 @@ Este documento define la estrategia de construcción del MVP de PlayerTech bajo 
 
 El objetivo es entregar valor temprano sin comprometer escalabilidad futura.
 
+## Current Delivery Reality
+
+El roadmap ya no es solo aspiracional:
+
+* `Academy`, `Identity`, `Category`, `Venue`, `Player`, `Team`, `Guardian`, `Membership`, `PaymentConcept`, `Charge`, `Payment`, `Staff` y `TeamAssignment` están implementados al menos en un slice funcional.
+* `Player` ya tiene CRUD, estado, foto, importación masiva y listado enriquecido.
+* `Team` ya expone `categoryName` en respuestas operativas.
+* `Staff` ya expone selector liviano, detalle y gestión de acceso.
+* `Academy` y `Identity` ya soportan onboarding y acceso de plataforma/tenant.
+* La facturación ya cuenta con modelo persistido de cargos, pagos, allocations y soportes.
+
 ---
 
 # Phase 0 — Foundation Setup
@@ -218,6 +229,19 @@ Extender capacidades deportivas operativas.
 * Asignación de jugadores a equipos
 * Soporte multi-equipo simultáneo
 * Fechas de vigencia
+
+## Phase 5 — Operational Refinement
+
+Objetivo:
+
+Homologar los módulos ya implementados con specs, trazabilidad y contratos HTTP.
+
+### Areas
+
+* Homologación de `specs/` con el código real.
+* Ajuste fino de filtros, sort y enriquecimiento de listados.
+* Consolidación documental de importación de jugadores.
+* Cierre de auditoría documental y memoria persistente.
 
 ---
 

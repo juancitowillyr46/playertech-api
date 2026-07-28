@@ -59,6 +59,31 @@ Cada cambio relevante debe dejar una referencia clara en el estado actual.
 10. Payments.
 11. Payment evidences.
 
+## Current Execution Reality
+
+La base técnica ya tiene estos slices ejecutados o en ejecución estable:
+
+* Academy
+* Identity
+* Category
+* Venue
+* Player
+* PlayerGuardian
+* Team
+* TeamAssignment
+* Membership
+* PaymentConcept
+* Charge
+* Payment
+* Staff
+
+El siguiente orden lógico para completar consistencia es:
+
+1. consolidar `PlayerImportJob` y su trazabilidad;
+2. reforzar `PaymentAllocation`, `PaymentEvidence` y `FiscalAttachment`;
+3. cerrar filtros y sort documentados;
+4. homogenizar `specs` y `docs` residuales.
+
 ---
 
 # Phase 3 - Tenant Onboarding

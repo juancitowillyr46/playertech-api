@@ -1,264 +1,207 @@
-# 02-relationships.md
-
 # Relaciones del Dominio
 
-Este documento describe las relaciones existentes entre las entidades principales del dominio de PlayerTech.
+Este documento resume las relaciones persistidas que hoy existen en el backend de PlayerTech.
 
-Las relaciones están organizadas desde la perspectiva del modelo Player-Centric, donde el jugador es la entidad central del sistema.
-
----
-
-# Academy → Venue
-
-## Cardinalidad
-
-1:N
-
-## Descripción
-
-Una academia puede tener múltiples sedes.
-
-Cada sede pertenece a una única academia.
+El foco sigue siendo `Player` como entidad central, pero el modelo real incluye bloques de identidad, configuración del tenant, staff y finanzas.
 
 ---
 
-# Academy → User
+## Academy → Venue
 
-## Cardinalidad
+- Cardinalidad: `1:N`
+- Una academia puede tener múltiples sedes.
+- Cada sede pertenece a una sola academia.
 
-1:N
+## Academy → Category
 
-## Descripción
+- Cardinalidad: `1:N`
+- Una academia puede definir múltiples categorías.
+- Cada categoría pertenece a una única academia.
 
-Una academia puede tener múltiples usuarios administrativos.
+## Academy → Player
 
----
+- Cardinalidad: `1:N`
+- Una academia puede registrar múltiples jugadores.
 
-# Academy → Category
+## Academy → LegalGuardian
 
-## Cardinalidad
+- Cardinalidad: `1:N`
+- Una academia puede registrar múltiples acudientes.
 
-1:N
+## Academy → Team
 
-## Descripción
+- Cardinalidad: `1:N`
+- Una academia puede administrar múltiples equipos.
 
-Una academia puede definir múltiples categorías deportivas.
+## Academy → Membership
 
----
+- Cardinalidad: `1:N`
+- Una academia puede administrar múltiples matrículas.
 
-# Academy → Team
+## Academy → Charge
 
-## Cardinalidad
+- Cardinalidad: `1:N`
+- Una academia puede tener múltiples cargos por cobrar.
 
-1:N
+## Academy → PaymentConcept
 
-## Descripción
+- Cardinalidad: `1:N`
+- Una academia puede definir múltiples conceptos de pago.
 
-Una academia puede administrar múltiples equipos competitivos.
+## Academy → Payment
 
----
+- Cardinalidad: `1:N`
+- Una academia puede registrar múltiples pagos.
 
-# Academy → Player
+## Academy → Staff
 
-## Cardinalidad
+- Cardinalidad: `1:N`
+- Una academia puede registrar múltiples miembros de staff.
 
-1:N
+## Academy → AccountUser
 
-## Descripción
+- Cardinalidad: `1:N`
+- Una academia puede tener múltiples usuarios administrativos.
 
-Una academia puede registrar múltiples jugadores.
+## Academy → PlayerImportJob
 
----
+- Cardinalidad: `1:N`
+- Una academia puede generar múltiples jobs de importación.
 
-# Academy → LegalGuardian
+## Category → Player
 
-## Cardinalidad
+- Cardinalidad: `1:N`
+- Una categoría puede clasificar múltiples jugadores.
+- Cada jugador tiene como máximo una categoría administrativa activa.
 
-1:N
+## Category → Team
 
-## Descripción
+- Cardinalidad: `1:N`
+- Una categoría puede agrupar múltiples equipos.
 
-Una academia puede registrar múltiples acudientes.
+## Category → PlayerImportJob
 
----
+- Cardinalidad: `1:N`
+- El job de importación se ejecuta para una categoría seleccionada previamente.
 
-# Category → Player
+## Player → Membership
 
-## Cardinalidad
+- Cardinalidad: `1:N`
+- Un jugador puede tener varias matrículas históricas.
+- Solo una puede estar activa al mismo tiempo por tenant.
 
-1:N
+## Player → PlayerGuardian
 
-## Descripción
+- Cardinalidad: `1:N`
+- Un jugador puede estar relacionado con múltiples acudientes.
 
-Una categoría puede contener múltiples jugadores.
+## Player → TeamAssignment
 
-Todo jugador debe pertenecer a una única categoría administrativa activa.
+- Cardinalidad: `1:N`
+- Un jugador puede participar en múltiples equipos a lo largo del tiempo.
 
-La categoría determina la clasificación administrativa del jugador.
+## Player → Charge
 
----
+- Cardinalidad: `1:N`
+- Un jugador puede tener múltiples cargos asociados.
 
-# Category → Team
+## Player → Payment
 
-## Cardinalidad
+- Cardinalidad: `1:N`
+- Un jugador puede tener múltiples pagos asociados.
 
-1:N
+## LegalGuardian → PlayerGuardian
 
-## Descripción
+- Cardinalidad: `1:N`
+- Un acudiente puede relacionarse con múltiples jugadores.
 
-Una categoría puede contener múltiples equipos competitivos.
+## LegalGuardian → Membership
 
-Los equipos representan agrupaciones deportivas para competencias o torneos.
+- Cardinalidad: `1:N`
+- Un acudiente puede figurar como responsable principal de varias matrículas.
 
----
+## Team → TeamAssignment
 
-# Player → Membership
+- Cardinalidad: `1:N`
+- Un equipo puede tener múltiples asignaciones de jugadores.
 
-## Cardinalidad
+## Team → TeamStaffAssignment
 
-1:N
+- Cardinalidad: `1:N`
+- Un equipo puede tener múltiples asignaciones de staff.
 
-## Descripción
+## Staff → TeamStaffAssignment
 
-Un jugador puede tener múltiples matrículas históricas.
+- Cardinalidad: `1:N`
+- Un staff puede ser asignado a múltiples equipos.
 
-Solo una matrícula puede estar activa simultáneamente dentro de una academia.
+## Membership → Payment
 
----
+- Cardinalidad: `1:N`
+- Una matrícula puede registrar múltiples pagos.
 
-# Player → TeamAssignment
+## Membership → Charge
 
-## Cardinalidad
+- Cardinalidad: `1:N`
+- Una matrícula puede originar múltiples cargos.
 
-1:N
+## PaymentConcept → Charge
 
-## Descripción
+- Cardinalidad: `1:N`
+- Un concepto de pago puede estar asociado a múltiples cargos.
 
-Un jugador puede participar simultáneamente en múltiples equipos.
+## PaymentConcept → Payment
 
-La participación deportiva es independiente de la matrícula.
+- Cardinalidad: `1:N`
+- Un concepto de pago puede utilizarse en múltiples pagos.
 
----
+## Payment → PaymentAllocation
 
-# Team → TeamAssignment
+- Cardinalidad: `1:N`
+- Un pago puede distribuirse en múltiples asignaciones de cobro.
 
-## Cardinalidad
+## Charge → PaymentAllocation
 
-1:N
+- Cardinalidad: `1:N`
+- Un cargo puede recibir múltiples asignaciones parciales.
 
-## Descripción
+## Payment → PaymentEvidence
 
-Un equipo puede tener múltiples jugadores asignados.
+- Cardinalidad: `1:N`
+- Un pago puede tener múltiples evidencias documentales.
 
-Las asignaciones mantienen el historial deportivo mediante fechas de inicio y finalización.
+## Payment → FiscalAttachment
 
----
+- Cardinalidad: `1:N`
+- Un pago puede tener múltiples soportes fiscales.
 
-# Player → PlayerGuardian
+## Resumen Relacional
 
-## Cardinalidad
-
-1:N
-
-## Descripción
-
-Un jugador puede estar relacionado con múltiples acudientes.
-
-La relación se gestiona mediante PlayerGuardian.
-
----
-
-# LegalGuardian → PlayerGuardian
-
-## Cardinalidad
-
-1:N
-
-## Descripción
-
-Un acudiente puede estar asociado a múltiples jugadores.
-
----
-
-# Membership → Payment
-
-## Cardinalidad
-
-1:N
-
-## Descripción
-
-Una matrícula puede registrar múltiples pagos.
-
-Los pagos representan la permanencia administrativa del jugador.
-
----
-
-# PaymentConcept → Payment
-
-## Cardinalidad
-
-1:N
-
-## Descripción
-
-Un concepto de pago puede utilizarse en múltiples pagos.
-
----
-
-# Payment → PaymentEvidence
-
-## Cardinalidad
-
-1:N
-
-## Descripción
-
-Un pago puede tener múltiples evidencias o soportes documentales.
-
----
-
-# User → Role
-
-## Cardinalidad
-
-N:M
-
-## Descripción
-
-Un usuario puede tener múltiples roles.
-
-La relación se implementa mediante UserRole.
-
----
-
-# Role → Permission
-
-## Cardinalidad
-
-N:M
-
-## Descripción
-
-Un rol puede contener múltiples permisos.
-
-La relación se implementa mediante RolePermission.
-
----
-
-# Resumen del Modelo Relacional
-
+```text
 Academy
 ├── Venue
-├── User
 ├── Category
-│   ├── Player
-│   │   ├── Membership
-│   │   │   └── Payment
-│   │   │       └── PaymentEvidence
-│   │   ├── PlayerGuardian
-│   │   └── TeamAssignment
-│   └── Team
-│       └── TeamAssignment
-└── LegalGuardian
-    └── PlayerGuardian
+├── Player
+│   ├── Membership
+│   │   ├── Charge
+│   │   └── Payment
+│   │       ├── PaymentAllocation
+│   │       ├── PaymentEvidence
+│   │       └── FiscalAttachment
+│   ├── PlayerGuardian
+│   └── TeamAssignment
+├── LegalGuardian
+├── Team
+│   └── TeamStaffAssignment
+├── Staff
+├── PaymentConcept
+├── PlayerImportJob
+└── AccountUser
+```
+
+## Observaciones
+
+- `AccountUser` es la entidad de autenticación, no el agregado administrativo del dominio.
+- `PlayerImportJob` representa trazabilidad operacional y no debe confundirse con la entidad `Player`.
+- `categoryId` es el enlace funcional más importante del flujo de jugadores, equipos e importación.
+

@@ -1,307 +1,515 @@
-# 01-entities.md
-
 # Entidades del Dominio
 
-Este documento describe las principales entidades que conforman el dominio de PlayerTech.
+Este documento describe las entidades persistidas que hoy conforman el backend de PlayerTech.
 
-La plataforma sigue un modelo **Player-Centric**, donde el jugador es la entidad principal y alrededor de él se construyen los procesos administrativos, formativos y competitivos.
-
----
-
-# Academy
-
-Representa una academia registrada dentro de PlayerTech.
-
-### Tipo
-
-Aggregate Root
-
-### Responsabilidades
-
-- Configuración general de la academia.
-- Aislamiento Multi-Tenant.
-- Administración de sedes.
-- Administración de usuarios.
-- Propietaria de toda la información del negocio.
-
-### Estado
-
-- ACTIVE
-- SUSPENDED
-- INACTIVE
+La documentación está alineada con el código fuente actual y con los mappings XML de Doctrine.
+El modelo sigue una estructura multi-tenant basada en `academy_id` y usa `soft delete` e historial de auditoría en los agregados principales.
 
 ---
 
-# Venue
+## Academy
 
-Representa una sede física donde la academia desarrolla sus actividades.
+Tabla: `academies`
 
-### Tipo
+Representa la academia propietaria del tenant.
 
-Entidad
+Campos principales:
+- `id`
+- `name`
+- `contactEmail`
+- `phone`
+- `country`
+- `department`
+- `taxIdType`
+- `taxIdNumber`
+- `taxCheckDigit`
+- `taxRegime`
+- `billingEmail`
+- `registrationSource`
+- `address`
+- `city`
+- `shield`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
 
-### Responsabilidades
-
-- Identificar ubicaciones físicas.
-- Soportar entrenamientos y actividades deportivas.
-- Ser utilizada por futuras sesiones de entrenamiento.
-
-### Estado
-
-- ACTIVE
-- INACTIVE
-
----
-
-# User
-
-Representa una persona autorizada para acceder a la plataforma.
-
-### Tipo
-
-Aggregate Root
-
-### Responsabilidades
-
-- Autenticación.
-- Autorización.
-- Operación administrativa.
-
-### Estado
-
-- ACTIVE
-- INACTIVE
+Responsabilidad:
+- Aislamiento multi-tenant.
+- Configuración institucional y tributaria.
+- Origen de casi todos los agregados de negocio.
 
 ---
 
-# Role
+## AccountUser
 
-Representa un conjunto de permisos asignables a usuarios.
+Tabla: `users`
 
-### Tipo
+Representa el usuario autenticable del sistema.
 
-Aggregate Root
+Campos principales:
+- `id`
+- `academyId`
+- `fullName`
+- `email`
+- `passwordHash`
+- `role`
+- `status`
+- `createdAt`
+- `createdBy`
+- `updatedAt`
+- `updatedBy`
+- `deletedAt`
+- `deletedBy`
+- `activationToken`
+- `activationExpiresAt`
+- `passwordResetToken`
+- `passwordResetExpiresAt`
 
-### Responsabilidades
+Responsabilidad:
+- Autenticación y autorización.
+- Administración de usuarios root y de academia.
 
-- Agrupar permisos.
-- Simplificar la administración de accesos.
-
----
-
-# Permission
-
-Representa una capacidad específica dentro del sistema.
-
-### Tipo
-
-Entidad de Referencia
-
-### Responsabilidades
-
-- Control granular de acceso.
-
----
-
-# Category
-
-Representa la clasificación administrativa y deportiva de los jugadores según su rango de edad.
-
-### Tipo
-
-Aggregate Root
-
-### Responsabilidades
-
-- Clasificar jugadores.
-- Definir rangos de edad.
-- Servir como referencia para equipos competitivos.
-- Base para futuros procesos de formación.
-
-### Estado
-
-- ACTIVE
-- INACTIVE
+Notas:
+- Esta entidad aún usa atributos de Doctrine en código, aunque el resto del dominio usa XML mapping.
 
 ---
 
-# Player
+## Venue
 
-Representa un jugador registrado en la academia.
+Tabla: `venues`
 
-Es la entidad central del dominio.
+Representa una sede física de la academia.
 
-### Tipo
+Campos principales:
+- `id`
+- `academyId`
+- `name`
+- `address`
+- `city`
+- `country`
+- `department`
+- `phone`
+- `notes`
+- `isPrimary`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
 
-Aggregate Root
-
-### Responsabilidades
-
-- Información personal y deportiva.
-- Clasificación dentro de una categoría.
-- Participación en equipos competitivos.
-- Relación con acudientes.
-- Gestión de matrículas.
-- Historial administrativo y deportivo.
-
-### Estado
-
-- ACTIVE
-- INACTIVE
-
----
-
-# Team
-
-Representa un equipo deportivo con fines competitivos.
-
-No representa un grupo permanente de entrenamiento.
-
-### Tipo
-
-Aggregate Root
-
-### Responsabilidades
-
-- Organizar jugadores para competencias.
-- Participar en torneos.
-- Agrupar jugadores de una misma categoría.
-
-### Estado
-
-- ACTIVE
-- INACTIVE
+Responsabilidad:
+- Registrar sedes y ubicación operativa.
 
 ---
 
-# LegalGuardian
+## Category
 
-Representa un acudiente o tutor legal.
+Tabla: `categories`
 
-### Tipo
+Representa una categoría deportiva o administrativa del tenant.
 
-Aggregate Root
+Campos principales:
+- `id`
+- `academyId`
+- `categoryKey`
+- `name`
+- `minAge`
+- `maxAge`
+- `description`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
 
-### Responsabilidades
-
-- Contacto administrativo.
-- Responsable financiero.
-- Responsable de autorizaciones.
-- Contacto de emergencia.
-
-### Estado
-
-- ACTIVE
-- INACTIVE
-
----
-
-# PlayerGuardian
-
-Representa la relación entre jugadores y acudientes.
-
-### Tipo
-
-Entidad Relacional
-
-### Responsabilidades
-
-- Gestionar la relación N:M.
-- Identificar el acudiente principal.
-- Definir responsabilidades administrativas.
+Responsabilidad:
+- Clasificar jugadores por rango de edad.
+- Servir como referencia para equipos y filtros.
 
 ---
 
-# Membership
+## OnboardingCategory
 
-Representa la matrícula administrativa de un jugador.
+Tabla: `onboarding_categories`
 
-### Tipo
+Catálogo base de categorías usadas en onboarding y configuración inicial.
 
-Aggregate Root
+Campos principales:
+- `id`
+- `code`
+- `name`
+- `minAge`
+- `maxAge`
+- `description`
+- `status`
+- `createdAt`
+- `updatedAt`
 
-### Responsabilidades
-
-- Controlar la permanencia del jugador en la academia.
-- Base para la gestión financiera.
-- Asociar pagos.
-- Mantener el historial de matrículas.
-
-### Estado
-
-- ACTIVE
-- SUSPENDED
-- WITHDRAWN
-- GRADUATED
+Responsabilidad:
+- Suministrar categorías semilla para onboarding.
 
 ---
 
-# TeamAssignment
+## Player
 
-Representa la participación deportiva de un jugador dentro de un equipo.
+Tabla: `players`
 
-### Tipo
+Representa el jugador de la academia.
 
-Entidad Relacional
+Campos principales:
+- `id`
+- `academyId`
+- `documentType`
+- `firstName`
+- `lastName`
+- `birthDate`
+- `documentNumber`
+- `email`
+- `phone`
+- `nationality`
+- `gender`
+- `federationId`
+- `dominantFoot`
+- `categoryId`
+- `photo`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
 
-### Responsabilidades
-
-- Gestionar la relación N:M entre jugadores y equipos.
-- Mantener el historial de participación deportiva.
-- Permitir la participación simultánea en múltiples equipos.
-
----
-
-# PaymentConcept
-
-Representa el motivo o concepto de un pago.
-
-### Tipo
-
-Aggregate Root
-
-### Responsabilidades
-
-- Clasificar los pagos realizados por la academia.
-
-### Estado
-
-- ACTIVE
-- INACTIVE
+Responsabilidad:
+- Entidad central del dominio operativo.
+- Base para gestión deportiva, administrativa y financiera.
 
 ---
 
-# Payment
+## PlayerImportJob
 
-Representa una transacción financiera asociada a una matrícula.
+Tabla: `player_import_jobs`
 
-### Tipo
+Representa el job asíncrono de importación masiva de jugadores.
 
-Aggregate Root
+Campos principales:
+- `id`
+- `academyId`
+- `createdBy`
+- `categoryId`
+- `originalFileName`
+- `filePath`
+- `status`
+- `progress`
+- `totalRows`
+- `processedRows`
+- `successRows`
+- `errorRows`
+- `errors`
+- `startedAt`
+- `finishedAt`
+- `createdAt`
+- `updatedAt`
+- `deletedAt`
+- `deletedBy`
 
-### Responsabilidades
-
-- Registrar pagos.
-- Controlar la información financiera.
-- Asociar conceptos de pago.
-- Mantener el historial de transacciones.
-
-### Estado
-
-- REGISTERED
-- VOIDED
+Responsabilidad:
+- Persistir el estado del proceso de importación.
+- Exponer trazabilidad para polling desde frontend.
 
 ---
 
-# PaymentEvidence
+## PlayerGuardian
 
-Representa una evidencia asociada a un pago.
+Tabla: `player_guardians`
 
-### Tipo
+Relaciona jugadores con acudientes.
 
-Entidad
+Campos principales:
+- `id`
+- `academyId`
+- `playerId`
+- `guardianId`
+- `isPrimary`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
 
-### Responsabilidades
+Responsabilidad:
+- Soportar relaciones N:M entre jugadores y acudientes.
 
-- Almacenar soportes documentales.
-- Permitir múltiples evidencias por pago.
+---
+
+## LegalGuardian
+
+Tabla: `legal_guardians`
+
+Representa el acudiente o tutor legal.
+
+Campos principales:
+- `id`
+- `academyId`
+- `firstName`
+- `lastName`
+- `phone`
+- `email`
+- `documentType`
+- `documentNumber`
+- `address`
+- `relationship`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Contacto administrativo y responsable legal.
+
+---
+
+## Team
+
+Tabla: `teams`
+
+Representa un equipo competitivo de la academia.
+
+Campos principales:
+- `id`
+- `academyId`
+- `categoryId`
+- `name`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Agrupar jugadores por categoría o competencia.
+
+---
+
+## TeamAssignment
+
+Tabla: `team_assignments`
+
+Relaciona jugadores con equipos.
+
+Campos principales:
+- `id`
+- `academyId`
+- `playerId`
+- `teamId`
+- `startDate`
+- `endDate`
+- `isPrimary`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Mantener historial deportivo de pertenencia a equipos.
+
+---
+
+## Membership
+
+Tabla: `memberships`
+
+Representa la matrícula administrativa del jugador.
+
+Campos principales:
+- `id`
+- `academyId`
+- `playerId`
+- `primaryGuardianId`
+- `status`
+- `startedAt`
+- `endedAt`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Controlar vigencia administrativa del jugador.
+
+---
+
+## Charge
+
+Tabla: `charges`
+
+Representa un cargo por cobrar asociado a un jugador y una matrícula.
+
+Campos principales:
+- `id`
+- `academyId`
+- `playerId`
+- `membershipId`
+- `paymentConceptId`
+- `description`
+- `amount`
+- `allocatedAmount`
+- `dueDate`
+- `source`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Registrar obligaciones de cobro.
+
+---
+
+## PaymentConcept
+
+Tabla: `payment_concepts`
+
+Catálogo de conceptos de pago.
+
+Campos principales:
+- `id`
+- `academyId`
+- `code`
+- `name`
+- `description`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Estandarizar conceptos financieros.
+
+---
+
+## Payment
+
+Tabla: `payments`
+
+Representa un pago registrado en el sistema.
+
+Campos principales:
+- `id`
+- `academyId`
+- `membershipId`
+- `playerId`
+- `guardianId`
+- `paymentConceptId`
+- `paymentDate`
+- `amount`
+- `method`
+- `notes`
+- `allocations`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Registrar pagos aplicados a la matrícula o al jugador.
+
+---
+
+## PaymentAllocation
+
+Tabla: `payment_allocations`
+
+Relaciona pagos con cargos.
+
+Campos principales:
+- `id`
+- `academyId`
+- `paymentId`
+- `chargeId`
+- `amount`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Distribuir un pago entre cargos específicos.
+
+---
+
+## PaymentEvidence
+
+Tabla: `payment_evidences`
+
+Evidencias documentales asociadas a un pago.
+
+Campos principales:
+- `id`
+- `academyId`
+- `paymentId`
+- `fileName`
+- `filePath`
+- `mimeType`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Guardar soportes de pago.
+
+---
+
+## FiscalAttachment
+
+Tabla: `fiscal_attachments`
+
+Soporte fiscal o documental asociado al pago.
+
+Campos principales:
+- `id`
+- `academyId`
+- `paymentId`
+- `providerName`
+- `documentNumber`
+- `documentUrl`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Registrar trazabilidad fiscal.
+
+---
+
+## Staff
+
+Tabla: `staff`
+
+Representa una persona del staff operativo o técnico.
+
+Campos principales:
+- `id`
+- `academyId`
+- `userId`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Vincular un usuario con un perfil operativo de staff.
+
+---
+
+## TeamStaffAssignment
+
+Tabla: `team_staff_assignments`
+
+Relaciona staff con equipos.
+
+Campos principales:
+- `id`
+- `academyId`
+- `staffId`
+- `teamId`
+- `role`
+- `status`
+- `auditTrail`
+- `deletedAt`
+- `deletedBy`
+
+Responsabilidad:
+- Asignar técnicos, entrenadores o asistentes a equipos.
+

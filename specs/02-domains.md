@@ -8,10 +8,14 @@ La plataforma sigue una arquitectura Multi-Tenant donde todas las entidades de n
 
 - academy_id
 
-El dominio se divide intencionalmente en dos contextos de negocio complementarios:
+El dominio se divide intencionalmente en contextos de negocio complementarios:
 
 - Formación
 - Competición
+- Gestión de identidad
+- Gestión de staff
+- Gestión financiera
+- Configuración del tenant
 
 Aunque ambos están relacionados, representan procesos de negocio diferentes y evolucionan de forma independiente.
 
@@ -48,6 +52,7 @@ Conceptos principales:
 - Acudiente
 - Pagos
 - Categorías
+- Importación masiva de jugadores
 - Sesiones de entrenamiento (Futuro)
 
 ## Contexto de Competición
@@ -479,3 +484,35 @@ Los siguientes conceptos deberán validarse con academias reales antes de su imp
 - Ascenso automático de categoría.
 - Equipos específicos por torneo.
 - Participación de jugadores en categorías superiores.
+# Contexto de Identidad
+
+Representa autenticación, autorización y pertenencia a academia.
+
+Conceptos principales:
+
+- Usuario
+- Rol
+- Permiso
+- Contexto de tenant
+
+# Contexto de Staff
+
+Representa el cuerpo técnico y su relación con equipos.
+
+Conceptos principales:
+
+- Staff
+- Asignación técnica a equipo
+
+# Contexto Financiero
+
+Representa cobros, cargos, pagos, comprobantes y trazabilidad fiscal.
+
+Conceptos principales:
+
+- Concepto de pago
+- Cargo
+- Pago
+- Asignación de pago
+- Evidencia de pago
+- Soporte fiscal

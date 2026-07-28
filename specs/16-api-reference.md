@@ -60,7 +60,7 @@ Reglas del estándar:
 
 ## Naming Convention
 
-* Query params: `snake_case`.
+* Query params: `snake_case`, excepto parámetros estandarizados en contrato como `sort`.
 * Request bodies: `camelCase`.
 * Respuestas JSON: `camelCase`.
 
@@ -116,6 +116,130 @@ Los listados más visibles para frontend usan `data` como arreglo de DTOs resumi
   }
 }
 ```
+
+### Player Import Async
+
+El flujo de importación de jugadores es asíncrono y se apoya en una categoría seleccionada previamente.
+
+#### List Categories Options
+
+`GET /api/v1/academy/categories/options`
+
+Respuesta:
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "categoryKey": "SUB-12",
+      "name": "Sub 12",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {}
+}
+```
+
+#### Download Import Template
+
+`GET /api/v1/academy/players/import/template?categoryId=uuid`
+
+Devuelve un archivo `.xlsx` con hojas `Datos` y `Referencias`.
+
+#### Create Import Job
+
+`POST /api/v1/academy/players/import`
+
+`multipart/form-data`
+
+Campos:
+
+- `categoryId`
+- `file`
+
+Respuesta:
+
+```json
+{
+  "data": {
+    "jobId": "uuid",
+    "status": "QUEUED"
+  },
+  "meta": {}
+}
+```
+
+#### Get Import Job Status
+
+`GET /api/v1/academy/players/import/{jobId}`
+
+Respuesta:
+
+```json
+{
+  "data": {
+    "jobId": "uuid",
+    "status": "PROCESSING",
+    "progress": 45,
+    "summary": {
+      "totalRows": 120,
+      "processedRows": 54,
+      "successRows": 50,
+      "errorRows": 4
+    },
+    "errors": [
+      {
+        "row": 12,
+        "field": "documentNumber",
+        "message": "Documento duplicado"
+      }
+    ]
+  },
+  "meta": {}
+}
+```
+
+Estados terminales:
+
+- `COMPLETED`
+- `COMPLETED_WITH_ERRORS`
+- `FAILED`
+
+### Player Core Resource
+
+La API de `Player` ya expone un contrato operativo enriquecido que debe mantenerse alineado con el código:
+
+- `GET /api/v1/academy/players`
+  - incluye `photo`
+  - incluye `categoryId`
+  - incluye `categoryName`
+  - incluye `genderName`
+  - incluye `age`
+  - incluye `createdAt`
+- `GET /api/v1/academy/players/{playerId}`
+  - devuelve detalle completo del jugador
+- `POST /api/v1/academy/players`
+  - crea jugador en contexto tenant
+- `PUT /api/v1/academy/players/{playerId}`
+  - actualiza perfil del jugador
+- `PATCH /api/v1/academy/players/{playerId}/photo`
+  - sube o reemplaza foto
+- `DELETE /api/v1/academy/players/{playerId}/photo`
+  - elimina foto
+- `PATCH /api/v1/academy/players/{playerId}/activate`
+  - activa jugador
+- `PATCH /api/v1/academy/players/{playerId}/inactivate`
+  - inactiva jugador
+
+### Staff Core Resource
+
+La API de `Staff` ya expone:
+
+- `GET /api/v1/academy/staff/options`
+- `GET /api/v1/academy/staff/{userId}`
+
+El detalle de `Staff` debe incluir `accessMode`, mientras que el selector sigue siendo liviano.
 
 ### Academy Tax Profile
 
@@ -201,7 +325,7 @@ Los listados más visibles para frontend usan `data` como arreglo de DTOs resumi
 
 Listado soporta paginación estándar y `sort` seguro.
 
-- `sort=created_at`
+- `sort=createdAt`
 - `sort=name`
 - `sort=address`
 - `sort=city`
@@ -210,7 +334,7 @@ Listado soporta paginación estándar y `sort` seguro.
 - `sort=phone`
 - `sort=status`
 
-El backend normaliza estos valores antes de armar el `ORDER BY`, por lo que el frontend puede seguir enviando `created_at` como sort por defecto.
+El backend normaliza estos valores antes de armar el `ORDER BY`. Mientras exista compatibilidad transitoria, puede aceptar `created_at` como alias histórico, pero el contrato canónico es `createdAt`.
 
 ```json
 {
@@ -243,7 +367,7 @@ El backend normaliza estos valores antes de armar el `ORDER BY`, por lo que el f
 
 Listado soporta paginación estándar y `sort` seguro.
 
-- `sort=created_at`
+- `sort=createdAt`
 - `sort=categoryKey`
 - `sort=name`
 - `sort=minAge`
@@ -319,12 +443,12 @@ Exponer un listado liviano de categorías activas para selects y combos sin pagi
 
 Listado soporta paginación estándar y `sort` seguro.
 
-- `sort=created_at`
+- `sort=createdAt`
 - `sort=name`
-- `sort=category_id`
+- `sort=categoryId`
 - `sort=status`
 
-El backend normaliza estos valores antes de armar el `ORDER BY`, por lo que el frontend no necesita enviar paths internos de Doctrine.
+El backend normaliza estos valores antes de armar el `ORDER BY`, por lo que el frontend no necesita enviar paths internos de Doctrine. Los aliases históricos en `snake_case` pueden seguir admitiéndose temporalmente.
 
 ```json
 {
@@ -442,11 +566,24 @@ El listado de jugadores expone contrato paginado uniforme y permite filtros por 
 - `birthDateFrom`
 - `birthDateTo`
 
+Ordenamiento canónico:
+
+- `createdAt`
+- `categoryId`
+- `gender`
+- `birthDate`
+- `documentNumber`
+- `firstName`
+- `lastName`
+- `status`
+
 Regla de contrato:
 
 - `createdAt` pertenece al perfil de auditoría y se usa como filtro/orden de negocio.
 - `birthDateFrom` y `birthDateTo` son el filtro canónico para criterios de edad.
 - `age` es un campo derivado de salida y no debe usarse como filtro persistente.
+- `sort` debe enviarse en `camelCase`.
+- El backend puede aceptar aliases históricos en `snake_case` mientras exista compatibilidad transitoria, pero el contrato canónico es `camelCase`.
 
 ```json
 {
@@ -1365,7 +1502,7 @@ POST /api/v1/academy/users/{userId}/enable
 ## List Guardians
 
 ```http
-GET /api/v1/academy/guardians?page=1&per_page=20&sort=auditTrail.createdAt.value&direction=DESC
+GET /api/v1/academy/guardians?page=1&per_page=20&sort=createdAt&direction=DESC
 ```
 
 ### Purpose
@@ -1630,7 +1767,7 @@ PUT /api/v1/academy/payment-concepts/{paymentConceptId}
 ## List Staff
 
 ```http
-GET /api/v1/academy/staff?page=1&per_page=20&sort=created_at&direction=DESC
+GET /api/v1/academy/staff?page=1&per_page=20&sort=createdAt&direction=DESC
 ```
 
 ### Access

@@ -28,8 +28,8 @@ La referencia documental mínima para trabajar en el proyecto es:
 2. `specs/14-current-state.md`
 3. `specs/12-execution-order.md`
 4. `specs/16-api-reference.md`
-5. `docs/contracts/api-reference.md`
-6. `docs/architecture/*`
+5. `docs/architecture/memory/project-memory.md`
+6. `docs/architecture/documentation-map.md`
 
 ---
 
@@ -52,7 +52,7 @@ La aplicacion sera un **monolito modular**.
 
 Cada modulo representara un contexto funcional y tendra sus propias capas internas.
 
-Estructura recomendada:
+Estructura recomendada ya aplicada en el código:
 
 ```text
 app/
@@ -61,12 +61,23 @@ app/
     └── Modules/
         ├── Academy/
         ├── Identity/
-        ├── Sports/
+        ├── Category/
+        ├── Venue/
+        ├── Guardian/
+        ├── Player/
+        ├── Team/
+        ├── TeamAssignment/
         ├── Membership/
-        └── Payments/
+        ├── PaymentConcept/
+        ├── Charge/
+        ├── Payment/
+        ├── Staff/
+        └── Dashboard/
 ```
 
 El modulo Identity concentra autenticacion, usuarios, roles, JWT y adaptadores tecnicos de seguridad.
+
+Los módulos `Player`, `Team`, `Category`, `Venue`, `Guardian`, `Membership`, `PaymentConcept`, `Charge`, `Payment`, `Staff` y `TeamAssignment` ya existen como slices funcionales y deben servir como referencias al crear nuevos módulos.
 
 La entidad tecnica de autenticacion (AccountUser) puede estar acoplada al framework por decision pragmatica, usando atributos Doctrine y propiedades primitivas para acelerar la foundation sin convertirla en referencia obligatoria para otros dominios.
 

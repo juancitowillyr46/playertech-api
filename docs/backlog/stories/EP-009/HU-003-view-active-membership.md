@@ -1,11 +1,11 @@
-# HU-003 Consultar Matrícula Activa
+# HU-002 Consultar Matrícula Activa
 
 ## Información General
 
 | Campo | Valor |
 | --- | --- |
-| ID | HU-003 |
-| Épica | EP-009 Gestión de Matrículas y Cargos Iniciales |
+| ID | HU-002 |
+| Épica | EP-009 Gestión de Matrículas y Seguimiento de Pagos |
 | Prioridad | Alta |
 | MVP | Sí |
 | Estado | Done |
@@ -42,3 +42,9 @@ Para saber si está vinculado actualmente a la academia y quién es su acudiente
 * Dado un jugador con matrícula activa, cuando consulto, entonces el sistema devuelve su estado y su acudiente principal.
 * Dado un jugador sin matrícula activa, cuando consulto, entonces el sistema informa que no existe matrícula vigente.
 
+---
+
+# Referencia Técnica
+
+* Implementación futura sobre `Membership`.
+* Debe usar DTO de salida para no exponer entidades de dominio o persistencia.

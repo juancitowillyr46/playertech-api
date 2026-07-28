@@ -18,6 +18,21 @@ Convertir cada historia en una unidad clara de implementación que incluya:
 * persistencia
 * pruebas
 
+## Current Usage
+
+Este documento ya se usa para reconstruir historias reales del backlog que luego se homologa con:
+
+* `specs/16-api-reference.md`
+* `specs/14-current-state.md`
+* `docs/backlog/stories/`
+* `docs/flows/`
+
+Regla práctica:
+
+* si la historia describe contrato vigente, el contrato vive en `specs/`;
+* si describe intención o prioridad, vive en `docs/backlog/`;
+* si describe experiencia de flujo, vive en `docs/flows/`.
+
 ---
 
 # Rebuild Process
@@ -83,4 +98,3 @@ Dependencies
 * Si la historia requiere una nueva entidad o relación, se documenta antes de implementar.
 * Si la historia toca tenant, seguridad o auditoría, debe revisar estos documentos primero.
 * Si la historia es ambigua, se detiene y se aclara antes de codificar.
-

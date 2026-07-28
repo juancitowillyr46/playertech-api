@@ -38,9 +38,17 @@ Los contextos de dominio iniciales son:
 
 * Identity & Access
 * Academy Management
-* Sports Management
+* Category Management
+* Venue Management
+* Player Management
+* Guardian Management
+* Team Management
+* Team Assignment Management
 * Membership Management
 * Financial Management
+* Staff Management
+* Dashboard
+* Fiscal Profiles
 
 Cada contexto tendrá límites explícitos y no deberá depender de detalles internos de otros módulos.
 
@@ -114,11 +122,21 @@ Modules/<ModuleName>/
 Los módulos iniciales recomendados son:
 
 * Academy
-* Auth
-* Users
-* Sports
+* Category
+* Venue
+* Identity
+* Guardian
+* Player
+* PlayerGuardian
+* Team
+* TeamAssignment
 * Membership
-* Payments
+* PaymentConcept
+* Charge
+* Payment
+* Staff
+* Dashboard
+* Fiscal
 
 ---
 
@@ -219,6 +237,32 @@ La comunicación entre módulos queda justificada cuando:
 * una operación del flujo principal depende de la respuesta del módulo dueño;
 * un módulo debe ejecutar efectos secundarios sobre otro sin duplicar reglas;
 * el cruce entre contextos es estable y aporta más claridad que duplicación.
+
+## Current Runtime Modules
+
+La implementación real del backend ya cuenta con estos módulos funcionales:
+
+* Academy
+* Category
+* Charge
+* Dashboard
+* Guardian
+* Identity
+* Membership
+* Payment
+* PaymentConcept
+* Player
+* Staff
+* Team
+* TeamAssignment
+* Venue
+
+## Current Cross-Context Patterns
+
+* `Player` integra foto, listado enriquecido, CRUD, activación/inactivación e importación asíncrona.
+* `Team` expone `categoryName` en respuestas operativas y no anida el aggregate de categoría.
+* `Staff` expone selector liviano y detalle con `accessMode`.
+* `Identity` separa contexto plataforma y tenant.
 
 ## When It Is Not Justified
 

@@ -2,6 +2,25 @@
 
 Este documento consolida el entendimiento del dominio financiero de PlayerTech para que backend y frontend hablen el mismo idioma.
 
+## Current Runtime Mapping
+
+La implementación actual ya persiste y expone:
+
+* `PaymentConcept`
+* `Charge`
+* `Payment`
+* `PaymentAllocation`
+* `PaymentEvidence`
+* `FiscalAttachment`
+
+Además:
+
+* `Membership` funciona como ancla administrativa del ciclo financiero.
+* `Player` es el sujeto de la deuda.
+* `Guardian` es el pagador principal cuando aplica.
+* El historial financiero debe poder consultarse por jugador y por acudiente.
+* La API operativa ya usa `specs/16-api-reference.md` como contrato vivo.
+
 ---
 
 # 1. Objetos del dominio
@@ -53,6 +72,7 @@ Representar una obligación financiera operativa.
 * Un cargo nace desde un concepto.
 * Un cargo pertenece a un jugador.
 * Un cargo puede originarse desde matrícula o carga manual.
+* `Membership` puede generar cargos automáticos, pero no administra la conciliación de pagos.
 * Un cargo debe tener saldo calculable.
 
 ## Payment
@@ -81,6 +101,7 @@ Registrar el dinero recibido y su trazabilidad hacia cargos específicos.
 * El pago no debe existir sin trazabilidad.
 * El acudiente es el pagador principal.
 * El jugador es el sujeto de la deuda.
+* `Payment` no redefine reglas de matrícula; sólo aplica recaudo sobre cargos existentes.
 * El pago puede aplicarse a uno o varios cargos.
 * El historial financiero debe poder consultarse por `playerId` y por `guardianId`.
 
@@ -153,7 +174,47 @@ Uso:
 
 ---
 
-# 3. Flujo funcional recomendado
+# 3. Frontera de dominio
+
+## Membership
+
+`Membership` pertenece al dominio administrativo de matrícula.
+
+Responsabilidades:
+
+* crear la relación activa entre jugador y academia;
+* preservar historial de permanencia;
+* disparar cargos automáticos cuando la regla de negocio lo requiera.
+
+`Membership` no debe:
+
+* registrar pagos;
+* reconciliar deudas;
+* administrar allocations;
+* decidir el comportamiento contable de un recaudo.
+
+## Billing
+
+El bloque de billing está compuesto por:
+
+* `PaymentConcept`
+* `Charge`
+* `Payment`
+* `PaymentAllocation`
+* `PaymentEvidence`
+* `FiscalAttachment`
+
+Ese bloque se encarga de:
+
+* modelar el concepto cobrable;
+* generar y consultar deudas;
+* registrar recaudos;
+* aplicar pagos a cargos;
+* conservar evidencia y soporte fiscal.
+
+---
+
+# 4. Flujo funcional recomendado
 
 1. Crear concepto de cobro.
 2. Generar cargo para un jugador.
@@ -165,9 +226,9 @@ Uso:
 
 ---
 
-# 4. Contratos de API recomendados
+# 5. Contratos de API recomendados
 
-## 4.1 Crear concepto
+## 5.1 Crear concepto
 
 `POST /api/v1/academy/payment-concepts`
 
@@ -196,7 +257,7 @@ Uso:
 }
 ```
 
-## 4.2 Crear cargo manual
+## 5.2 Crear cargo manual
 
 Contrato recomendado:
 
@@ -240,7 +301,7 @@ Contrato recomendado:
 }
 ```
 
-## 4.3 Consultar deuda
+## 5.3 Consultar deuda
 
 `GET /api/v1/academy/payments/players/{playerId}/debt`
 
