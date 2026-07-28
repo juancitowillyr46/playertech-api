@@ -362,7 +362,7 @@ This spec should be implemented first using mock data.
 
 - Flujo central: `docs/flows/player/player-import-flow-spec.md`
 - Backlog origen: `docs/backlog/stories/EP-007/HU-007-import-players-bulk.md`
-- Contrato HTTP: `specs/16-api-reference.md`
+- Contrato HTTP: `docs/contracts/api-reference.md`
 
 ### Why Mock First
 
@@ -404,6 +404,6 @@ Once the mock UI is approved:
 - Epic: `EP-007 Gestión de Jugadores`
 - Story: `HU-007 Importar Jugadores en Lote`
 - Related Story: `HU-008 Clave de Negocio de Categoria`
-- Reference: `specs/16-api-reference.md`
+- Reference: `docs/contracts/api-reference.md`
 - Current state: `specs/14-current-state.md`
 - Persistent memory: `docs/architecture/memory/project-memory.md`

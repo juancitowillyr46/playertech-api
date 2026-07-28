@@ -26,8 +26,8 @@ La referencia documental mínima para trabajar en el proyecto es:
 
 1. `README.md`
 2. `specs/14-current-state.md`
-3. `specs/12-execution-order.md`
-4. `specs/16-api-reference.md`
+3. `docs/architecture/guides/execution-order-guide.md`
+4. `docs/contracts/api-reference.md`
 5. `docs/architecture/memory/project-memory.md`
 6. `docs/architecture/documentation-map.md`
 

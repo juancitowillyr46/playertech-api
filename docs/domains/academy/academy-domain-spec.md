@@ -9,13 +9,13 @@ Este documento resume el contrato vigente del dominio `Academy`, con foco en el 
 Cambios de contrato vigentes para este documento:
 
 - `specs/14-current-state.md`
-- `specs/16-api-reference.md`
+- `docs/contracts/api-reference.md`
 - `postman/PlayerTech.postman_collection.json`
 
 Regla:
 
 - Cuando el backend cambie un payload, sort o campo visible por frontend, este documento debe reflejar el contrato esperado para UI.
-- `specs/16-api-reference.md` sigue siendo la referencia HTTP operativa canónica.
+- `docs/contracts/api-reference.md` sigue siendo la referencia HTTP operativa canónica.
 
 ## 1. Contexto del tenant
 
@@ -214,7 +214,7 @@ No usar estos endpoints para usuarios operativos secundarios si no son owner/adm
 ## 6. Fuentes de referencia
 
 - Colección Postman: `postman/PlayerTech.postman_collection.json`
-- Contrato HTTP: `specs/16-api-reference.md`
+- Contrato HTTP: `docs/contracts/api-reference.md`
 - Historia: [HU-011 Actualizar Academia](/C:/Data/Source/Repos/playertech/docs/backlog/stories/EP-001/HU-011-update-academy.md)
 - Historia: [HU-013 Subir Escudo Institucional de Academia](/C:/Data/Source/Repos/playertech/docs/backlog/stories/EP-001/HU-013-upload-academy-shield.md)
 

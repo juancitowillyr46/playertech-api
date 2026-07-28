@@ -6,8 +6,8 @@ Documento central para entender el dominio `Identity` y encontrar sus contratos 
 
 ## Canonical Sources
 
-- Seguridad y autenticación: [`specs/03-security.md`](/home/juan-rodas/projects/playertech/playertech-api/specs/03-security.md)
-- API operativa: [`specs/16-api-reference.md`](/home/juan-rodas/projects/playertech/playertech-api/specs/16-api-reference.md)
+- Seguridad y autenticación: [`docs/security/security-overview.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/security/security-overview.md)
+- API operativa: [`docs/contracts/api-reference.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/contracts/api-reference.md)
 - Estado actual: [`specs/14-current-state.md`](/home/juan-rodas/projects/playertech/playertech-api/specs/14-current-state.md)
 - Memoria persistente: [`docs/architecture/memory/project-memory.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/architecture/memory/project-memory.md)
 
@@ -80,7 +80,7 @@ Documento central para entender el dominio `Identity` y encontrar sus contratos 
 
 ## Reading Order
 
-1. `specs/03-security.md`
-2. `specs/16-api-reference.md`
+1. `docs/security/security-overview.md`
+2. `docs/contracts/api-reference.md`
 3. `specs/14-current-state.md`
 4. backlog stories de `EP-003`

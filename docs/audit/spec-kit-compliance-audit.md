@@ -40,7 +40,7 @@ backend real de PlayerTech.
   centrales.
 - `docs/domains/` sigue existiendo como dominio conceptual y puede convivir con
   `specs/` siempre que no compita con el contrato canónico.
-- `specs/04-api.md` y `specs/16-api-reference.md` conviven, pero hay una
+- `docs/contracts/api-principles.md` y `docs/contracts/api-reference.md` conviven, pero hay una
   separación funcional aceptable entre marco general y referencia HTTP.
 - Algunos módulos como `Academy`, `Identity`, `Player`, `Membership`,
   `Charge/Payment`, `Dashboard`, `Tenant Onboarding` y `Fiscal` están
@@ -51,7 +51,7 @@ backend real de PlayerTech.
 
 - `Sport Mode` todavía no está consolidado como feature productiva equivalente
   a los demás módulos.
-- `docs/domain/02-domains.md` debe seguir tratándose como legado o referencia
+- `docs/domains/domain-overview.md` debe seguir tratándose como referencia canónica del dominio
   no canónica.
 
 ## Cumplimiento Por Requisito Spec Kit
@@ -92,4 +92,3 @@ PlayerTech ya cumple el estándar **operativo** de GitHub Spec Kit:
 
 Lo que tenemos no es una copia literal del kit, sino una **versión madura y
 adaptada** al backend real.
-

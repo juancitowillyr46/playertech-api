@@ -14,6 +14,7 @@
 - `docs/traceability/` matrices y soportes de trazabilidad SDD.
 - `docs/operations/` guías operativas de entorno.
 - `docs/_archive/` documentación histórica o reemplazada por la capa canónica.
+- `docs/architecture/guides/document-taxonomy-reference.md` clasificación de documentos entre canon, guía, contrato y feature spec.
 - `docs/architecture/documentation-map.md` mapa maestro para ubicar contratos y documentos centrales.
 
 ## Usage Rule
@@ -21,5 +22,5 @@
 - Si una decisión afecta al backlog o a la historia funcional, vive en `docs/backlog/`.
 - Si una decisión afecta al contrato técnico o a la arquitectura, vive en `specs/` o `docs/architecture/` según su naturaleza.
 - Si una decisión afecta un flujo funcional específico, debe existir un documento central en `docs/flows/<dominio>/` y el resto de documentos deben apuntar a él.
-- Si una decisión redefine el dominio conceptual, la fuente canónica es `specs/02-domains.md`.
+- Si una decisión redefine el dominio conceptual, la fuente canónica es `docs/domains/domain-overview.md`.
 - Si un documento ya fue reemplazado por `specs/`, debe moverse a `docs/_archive/`.

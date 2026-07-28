@@ -214,7 +214,7 @@ Debe permitir:
 ## Trazabilidad SDD
 
 - Fuente funcional: `docs/backlog/stories/EP-007/HU-007-import-players-bulk.md`
-- Contrato HTTP base: `specs/16-api-reference.md`
+- Contrato HTTP base: `docs/contracts/api-reference.md`
 - Memoria persistente: `docs/architecture/memory/project-memory.md`
 - Auditoría técnica: `docs/architecture/audits/SDD-backend-audit.md`
 - UX satélite: `docs/flows/player/player-import-ux-spec.md`
@@ -279,7 +279,7 @@ Filtros vigentes:
 ## Documentación Que Debe Permanecer Alineada
 
 - `docs/backlog/stories/EP-007/HU-007-import-players-bulk.md`
-- `specs/16-api-reference.md`
+- `docs/contracts/api-reference.md`
 - `specs/14-current-state.md`
 - `docs/architecture/memory/project-memory.md`
 - `docs/flows/player/player-import-ux-spec.md`

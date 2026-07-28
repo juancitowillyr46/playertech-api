@@ -210,8 +210,8 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Existe una guia operativa para construir nuevos modulos sin depender de modelos previos.
 * `Academy` queda definido como el modulo de referencia oficial para nuevos contextos: CQRS, XML puro, VOs tipados, soft delete, validacion formal, controllers delgados y separacion root/tenant.
 * Se formalizó la regla de comunicación entre módulos: primero contratos de aplicación síncronos, luego eventos internos si aportan claridad, y `Messenger` solo ante una necesidad real de asincronía.
-* Los comandos de validacion de pruebas y migraciones quedaron documentados en `specs/11-testing-strategy.md`.
-* La separacion de configuracion `local`/`test`/`prod` quedó documentada en `specs/17-environment-guide.md`.
+* Los comandos de validacion de pruebas y migraciones quedaron documentados en `docs/architecture/guides/testing-strategy.md`.
+* La separacion de configuracion `local`/`test`/`prod` quedó documentada en `docs/architecture/guides/environment-guide.md`.
 * La validacion principal de suites de integracion y funcionales debe correr sobre la base `test` para simular CI/CD; `local` queda para desarrollo interactivo.
 * `Mailpit` queda adoptado como la herramienta base de desarrollo local para validar envios de correo y flujos de activacion.
 * `EP-003` queda reorientada para distinguir usuarios de plataforma y usuarios tenant; la creacion del owner/admin inicial del tenant se documenta como historia explicita.
@@ -260,7 +260,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `EP-012` quedó cerrado funcional y técnicamente con `Charge`, `Payment`, `PaymentAllocation`, deuda, historial, evidencia y cancelación; la validación final ya se cubrió sobre `test`.
 * `EP-013` quedó materializada como dashboard operativo con jugadores activos, matrículas vigentes, cargos pendientes y resumen de cartera.
 * `EP-011` quedó consolidada como módulo funcional completo de conceptos de pago: crear, listar, consultar, actualizar, desactivar y generar automáticamente el `code` desde el `name`, con cobertura unitaria y documentación HTTP operativa en Postman.
-* Se documentó el modelo financiero explícito en `specs/18-financial-domain-model.md` para separar `PaymentConcept`, `Charge`, `Payment`, `PaymentAllocation` y sus identificadores de negocio.
+* Se documentó el modelo financiero explícito en `docs/domains/billing/financial-domain-model.md` para separar `PaymentConcept`, `Charge`, `Payment`, `PaymentAllocation` y sus identificadores de negocio.
 * El historial financiero ahora puede consultarse también por `guardianId` y el registro de pagos admite `allocations[]` para distribuir un pago entre varios cargos, manteniendo la conciliación parcial fuera del MVP.
 * Se inició la estandarización de listados con paginación uniforme (`page`, `per_page`, `sort`, `direction`) en endpoints visibles por frontend.
 * `EP-021` quedó materializada con el desarrollo del módulo `Staff` y `TeamStaffAssignment`, cobertura unitaria base, documentación API y colección Postman para el flujo de staff por equipo.
@@ -306,14 +306,14 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El bloque de módulos aún pendiente para el MVP ya no incluye `EP-012`; `EP-008`, `EP-009`, `EP-010`, `EP-011`, `EP-012` y `EP-013` ya se consideran resueltos.
 * La capa fiscal formal sigue fuera del MVP y quedó concentrada en `EP-023`.
 * Se documentó una auditoría SDD del backend en `docs/architecture/audits/SDD-backend-audit.md`, con diagnóstico de madurez, vacíos de trazabilidad y propuesta incremental de adopción.
-* Se adoptó una versión liviana de SDD para trabajo individual: `specs/16-api-reference.md` queda como referencia HTTP operativa principal y `AGENTS.md` incorpora reglas simples de canonicidad y trazabilidad mínima.
+* Se adoptó una versión liviana de SDD para trabajo individual: `docs/contracts/api-reference.md` queda como referencia HTTP operativa principal y `AGENTS.md` incorpora reglas simples de canonicidad y trazabilidad mínima.
 * Se consolidó un índice de contratos HTTP en `docs/contracts/api-reference.md` para centralizar la sincronización con frontend y QA sin duplicar la especificación operativa.
 * Se formalizó una política SDD escalonada en `docs/architecture/policies/sdd-policy.md` y dos plantillas de cambio en `docs/architecture/templates/change-template-light.md` y `docs/architecture/templates/change-template-full.md` para futuras features.
 * Se documentó la evolución del modelo de cobro de `EP-009` en `docs/domains/billing/billing-evolution-notes.md`, incluyendo el estado actual, casos de uso reales y los diagramas de flujo actual y objetivo.
-* Se redefinió el perfil base de `Player` en `specs/02-domains.md` para separar identidad, atributos deportivos y datos que deben vivir en asignaciones o compras.
+* Se redefinió el perfil base de `Player` en `docs/domains/domain-overview.md` para separar identidad, atributos deportivos y datos que deben vivir en asignaciones o compras.
 * Se documentó un criterio SDD para la evolución del perfil de `Player` en `docs/domains/player/player-profile-evolution-notes.md`, con reglas para decidir qué atributos viven en el aggregate y cuáles deben quedar fuera.
 * El perfil base de `Player` incorporó `email` y `phone` como datos de contacto opcionales, sincronizados entre dominio, API, Postman y persistencia.
-* Se documentó una estrategia local-first de observabilidad en `specs/19-observability-local.md` para logs estructurados, correlation id y metricas basicas sin depender aun de una plataforma externa.
+* Se documentó una estrategia local-first de observabilidad en `docs/architecture/guides/observability-local-guide.md` para logs estructurados, correlation id y metricas basicas sin depender aun de una plataforma externa.
 ---
 
 # Technical Foundation Checklist

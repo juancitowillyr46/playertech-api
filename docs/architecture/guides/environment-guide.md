@@ -103,7 +103,7 @@ docker exec docker-app-1 bash -lc 'cd /var/www/html && php bin/console doctrine:
 # Notes
 
 * `app/.env.test` crea una base MySQL de test y la deja lista antes de correr PHPUnit.
-* La estrategia de pruebas se documenta en `specs/11-testing-strategy.md`.
+* La estrategia de pruebas se documenta en `docs/architecture/guides/testing-strategy.md`.
 
 ## Current Runtime Note
 

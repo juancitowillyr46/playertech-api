@@ -1,6 +1,6 @@
 # Domain Model
 
-> Canonical source: [`specs/02-domains.md`](/home/juan-rodas/projects/playertech/playertech-api/specs/02-domains.md)
+> Canonical source: [`docs/domains/domain-overview.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/domains/domain-overview.md)
 >
 > Este archivo se mantiene como legado conceptual y no debe competir con la versión canónica.
 

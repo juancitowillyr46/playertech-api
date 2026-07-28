@@ -657,7 +657,7 @@ Formato:
 
 Toda API deberá documentarse en el repositorio con dos capas complementarias:
 
-* Referencia técnica en `specs/16-api-reference.md`.
+* Referencia técnica en `docs/contracts/api-reference.md`.
 * Colección importable en Postman bajo `postman/`.
 * Índice operativo de contratos en `docs/contracts/api-reference.md`.
 
@@ -685,7 +685,7 @@ Si se agrega o modifica un endpoint, se actualizarán en el mismo cambio:
 
 * El controller y su handler.
 * Los tests del caso de uso.
-* `specs/16-api-reference.md`.
+* `docs/contracts/api-reference.md`.
 * `postman/PlayerTech.postman_collection.json` o su carpeta equivalente.
 
 ### Convención para Postman
@@ -713,7 +713,7 @@ Para un endpoint nuevo, el flujo recomendado es:
 1. Definir el caso de uso en Application Layer.
 2. Exponer el controller en Presentation.
 3. Añadir pruebas unitarias e integración.
-4. Documentar el contrato en `specs/16-api-reference.md`.
+4. Documentar el contrato en `docs/contracts/api-reference.md`.
 5. Reflejar el request en Postman.
 6. Verificar que la colección abre correctamente en Postman.
 

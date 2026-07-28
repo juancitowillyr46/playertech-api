@@ -19,7 +19,7 @@ Además:
 * `Player` es el sujeto de la deuda.
 * `Guardian` es el pagador principal cuando aplica.
 * El historial financiero debe poder consultarse por jugador y por acudiente.
-* La API operativa ya usa `specs/16-api-reference.md` como contrato vivo.
+* La API operativa ya usa `docs/contracts/api-reference.md` como contrato vivo.
 
 ---
 

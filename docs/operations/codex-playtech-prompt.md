@@ -63,17 +63,17 @@ En este modo Codex debe:
 Orden de lectura recomendado:
 
 1. `docs/product`
-2. `docs/domain`
+2. `docs/domains`
 3. `docs/backlog`
-4. `docs/specs/01-arquitecture.md`
-5. `docs/specs/03-security.md`
-6. `docs/specs/04-api.md`
-7. `docs/specs/06-database.md`
-8. `docs/specs/10-project-setup.md`
-9. `docs/specs/11-testing-strategy.md`
-10. `docs/specs/12-execution-order.md`
-11. `docs/specs/13-user-story-rebuild-guide.md`
-12. `docs/specs/14-current-state.md`
+4. `docs/architecture/architecture-overview.md`
+5. `docs/security/security-overview.md`
+6. `docs/contracts/api-principles.md`
+7. `docs/database/database-standards.md`
+8. `docs/architecture/guides/project-setup-guide.md`
+9. `docs/architecture/guides/testing-strategy.md`
+10. `docs/architecture/guides/execution-order-guide.md`
+11. `docs/architecture/guides/user-story-rebuild-guide.md`
+12. `specs/14-current-state.md`
 
 ---
 
@@ -99,5 +99,4 @@ Orden de lectura recomendado:
 * Trabajar en pequenos pasos verificables.
 * No mezclar refactors grandes con cambios funcionales.
 * Mantener trazabilidad por commit en cada cambio importante.
-
 

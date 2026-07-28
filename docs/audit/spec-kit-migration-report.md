@@ -9,7 +9,7 @@ Fortalezas:
 - existe una capa canónica en `specs/`;
 - hay memoria persistente en `docs/architecture/memory/project-memory.md`;
 - hay backlog funcional por épicas e historias;
-- existe contrato HTTP operativo en `specs/16-api-reference.md`;
+- existe contrato HTTP operativo en `docs/contracts/api-reference.md`;
 - el backend tiene trazabilidad relevante en `specs/14-current-state.md`.
 
 Debilidades:
@@ -37,7 +37,7 @@ Inventario resumido por capa:
 | `docs/contracts/` | Vigente | Debe seguir como índice, no como segunda fuente del contrato. |
 | `docs/domains/` | Vigente | Adecuado para dominio puro. |
 | `docs/flows/` | Vigente | Adecuado para flujos funcionales específicos. |
-| `docs/domain/` | Histórico | Debe tratarse como legado conceptual. |
+| `docs/domain/` | Histórico | Debe tratarse como legado conceptual; la ruta activa es `docs/domains/`. |
 | `docs/database/` | Vigente | Soporta el modelo de datos y ERD. |
 | `docs/product/` | Vigente | Visión y roadmap. |
 | `docs/operations/` | Vigente | Procedimientos operativos del entorno. |
@@ -87,24 +87,24 @@ docs/domain/ (legado)
 
 Duplicados o semi-duplicados detectados:
 
-- `specs/02-domains.md` y `docs/domain/02-domains.md`
-- `specs/16-api-reference.md` y `docs/contracts/api-reference.md`
-- `specs/04-api.md` y `specs/16-api-reference.md` en parte del contrato HTTP
-- `specs/00-product.md` y `docs/product/00-product.md`
+- `docs/domains/domain-overview.md` y `docs/_archive/domain/02-domains.md`
+- `docs/contracts/api-reference.md` y `docs/contracts/api-reference.md`
+- `docs/contracts/api-principles.md` y `docs/contracts/api-reference.md` en parte del contrato HTTP
+- `docs/product/product-vision.md` y `docs/_archive/product/00-product.md`
 - `docs/backlog/stories/EP-012/HU-004-attach-payment-evidence.md` y `docs/backlog/stories/EP-009/HU-004-attach-payment-evidence.md`
 - múltiples `README.md` por carpeta, válidos como índices, no como duplicados de contenido
 
 Decisión de canonicidad:
 
-- `specs/00-product.md` es la fuente canónica de producto.
-- `specs/02-domains.md` es la fuente canónica del modelo de dominio.
-- `specs/16-api-reference.md` es la fuente canónica del contrato HTTP.
-- `docs/product/00-product.md`, `docs/domain/02-domains.md` y `docs/contracts/api-reference.md`
+- `docs/product/product-vision.md` es la fuente canónica de producto.
+- `docs/domains/domain-overview.md` es la fuente canónica del modelo de dominio.
+- `docs/contracts/api-reference.md` es la fuente canónica del contrato HTTP.
+- `docs/_archive/product/00-product.md`, `docs/_archive/domain/02-domains.md` y `docs/contracts/api-reference.md`
   quedan como espejos/índices históricos u operativos, no como canon paralelo.
 
 ## 6. Contradicciones
 
-- paginación: `limit` en `specs/04-api.md` frente a `per_page` en `specs/16-api-reference.md`;
+- paginación: `limit` en `docs/contracts/api-principles.md` frente a `per_page` en `docs/contracts/api-reference.md`;
 - fuente operativa HTTP: Postman, índice de contratos y referencia canónica conviven;
 - algunos documentos históricos mezclan `snake_case` y `camelCase` en ejemplos;
 - el modelo de dominio conceptual aún tiene legado que debe quedar explícitamente marcado como tal.
@@ -113,7 +113,7 @@ Decisión de canonicidad:
 
 Documentos que requieren revisión de ubicación o estatus:
 
-- `docs/domain/02-domains.md`
+- `docs/_archive/domain/02-domains.md`
 - cualquier referencia antigua a `docs/academy-frontend-contract.md`
 - cualquier referencia antigua a `docs/ubuntu-setup.md`
 - referencias antiguas a rutas de import de player movidas a `docs/flows/player/`
@@ -186,18 +186,18 @@ Quedan áreas donde la intención está bien documentada, pero no siempre hay ev
 
 ### MOVE
 
-- `docs/domain/02-domains.md` hacia legado explícito o referencia archivada
+- `docs/_archive/domain/02-domains.md` hacia legado explícito o referencia archivada
 - referencias antiguas a rutas previas de docs movidos
 
 ### MERGE
 
-- `specs/00-product.md` con `docs/product/00-product.md` o viceversa, dejando una sola fuente canónica
-- `specs/02-domains.md` con el legado conceptual para mantener una sola versión activa del modelo de dominio
-- `specs/16-api-reference.md` con `docs/contracts/api-reference.md` manteniendo el índice y la referencia sin duplicar contenido
+- `docs/product/product-vision.md` con `docs/_archive/product/00-product.md` o viceversa, dejando una sola fuente canónica
+- `docs/domains/domain-overview.md` con `docs/_archive/domain/02-domains.md` para mantener una sola versión activa del modelo de dominio
+- `docs/contracts/api-reference.md` con `docs/contracts/api-reference.md` manteniendo el índice y la referencia sin duplicar contenido
 
 ### ARCHIVE
 
-- `docs/domain/02-domains.md`
+- `docs/_archive/domain/02-domains.md`
 - duplicados históricos que ya no representen la verdad vigente
 
 ### RENAME
@@ -257,7 +257,7 @@ specs/
 | `docs/database/` | `docs/database/` | Mantener |
 | `docs/domains/` | `docs/domains/` | Mantener dominio puro |
 | `docs/flows/` | `docs/flows/` | Mantener flujos funcionales |
-| `docs/domain/` | `docs/architecture/` o legado | Marcar como legado |
+| `docs/domain/` | `docs/_archive/domain/` o legado | Marcar como legado |
 
 ## 15. Riesgos de la Migración
 
@@ -268,9 +268,9 @@ specs/
 
 ## 16. Archivos Que No Deben Modificarse Sin Revisión
 
-- `specs/16-api-reference.md`
+- `docs/contracts/api-reference.md`
 - `specs/14-current-state.md`
-- `specs/02-domains.md`
+- `docs/domains/domain-overview.md`
 - `docs/architecture/memory/project-memory.md`
 - `docs/backlog/epics/*`
 - `docs/backlog/stories/*`

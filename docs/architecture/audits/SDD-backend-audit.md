@@ -8,16 +8,16 @@ Fuentes revisadas:
 
 - [`AGENTS.md`](../../AGENTS.md)
 - [`README.md`](../../README.md)
-- [`specs/01-arquitecture.md`](../../specs/01-arquitecture.md)
-- [`specs/03-security.md`](../../specs/03-security.md)
-- [`specs/04-api.md`](../../specs/04-api.md)
-- [`specs/10-project-setup.md`](../../specs/10-project-setup.md)
-- [`specs/11-testing-strategy.md`](../../specs/11-testing-strategy.md)
-- [`specs/12-execution-order.md`](../../specs/12-execution-order.md)
+- [`docs/architecture/architecture-overview.md`](../../docs/architecture/architecture-overview.md)
+- [`docs/security/security-overview.md`](../../docs/security/security-overview.md)
+- [`docs/contracts/api-principles.md`](../../docs/contracts/api-principles.md)
+- [`docs/architecture/guides/project-setup-guide.md`](../../docs/architecture/guides/project-setup-guide.md)
+- [`docs/architecture/guides/testing-strategy.md`](../../docs/architecture/guides/testing-strategy.md)
+- [`docs/architecture/guides/execution-order-guide.md`](../../docs/architecture/guides/execution-order-guide.md)
 - [`specs/14-current-state.md`](../../specs/14-current-state.md)
-- [`specs/15-module-creation-guide.md`](../../specs/15-module-creation-guide.md)
-- [`specs/16-api-reference.md`](../../specs/16-api-reference.md)
-- [`specs/18-financial-domain-model.md`](../../specs/18-financial-domain-model.md)
+- [`docs/architecture/guides/module-creation-guide.md`](../../docs/architecture/guides/module-creation-guide.md)
+- [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md)
+- [`docs/domains/billing/financial-domain-model.md`](../../docs/domains/billing/financial-domain-model.md)
 - [`docs/product/03-roadmap.md`](../../docs/product/03-roadmap.md)
 - [`docs/backlog/future-epics.md`](../../docs/backlog/future-epics.md)
 - [`docs/backlog/epics/*`](../../docs/backlog/epics)
@@ -57,23 +57,23 @@ Lo más débil es:
 | --- | ---: | --- |
 | Documentación de producto | 8/10 | [`docs/product/03-roadmap.md`](../../docs/product/03-roadmap.md), [`docs/backlog/future-epics.md`](../../docs/backlog/future-epics.md) |
 | Especificaciones funcionales | 8/10 | [`docs/backlog/epics/*`](../../docs/backlog/epics), [`docs/backlog/stories/*`](../../docs/backlog/stories) |
-| Reglas de negocio | 7/10 | [`specs/16-api-reference.md`](../../specs/16-api-reference.md), [`specs/18-financial-domain-model.md`](../../specs/18-financial-domain-model.md), reglas visibles en handlers y requests |
-| Arquitectura documentada | 9/10 | [`specs/01-arquitecture.md`](../../specs/01-arquitecture.md), [`specs/12-execution-order.md`](../../specs/12-execution-order.md), [`specs/15-module-creation-guide.md`](../../specs/15-module-creation-guide.md) |
-| Contratos API | 8/10 | [`specs/04-api.md`](../../specs/04-api.md), [`specs/16-api-reference.md`](../../specs/16-api-reference.md), [`app/config/packages/nelmio_api_doc.yaml`](../../app/config/packages/nelmio_api_doc.yaml) |
+| Reglas de negocio | 7/10 | [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md), [`docs/domains/billing/financial-domain-model.md`](../../docs/domains/billing/financial-domain-model.md), reglas visibles en handlers y requests |
+| Arquitectura documentada | 9/10 | [`docs/architecture/architecture-overview.md`](../../docs/architecture/architecture-overview.md), [`docs/architecture/guides/execution-order-guide.md`](../../docs/architecture/guides/execution-order-guide.md), [`docs/architecture/guides/module-creation-guide.md`](../../docs/architecture/guides/module-creation-guide.md) |
+| Contratos API | 8/10 | [`docs/contracts/api-principles.md`](../../docs/contracts/api-principles.md), [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md), [`app/config/packages/nelmio_api_doc.yaml`](../../app/config/packages/nelmio_api_doc.yaml) |
 | Trazabilidad | 6/10 | [`specs/14-current-state.md`](../../specs/14-current-state.md), historial de commits en el propio documento, backlog con historias por epic |
 | Pruebas | 8/10 | `app/tests/Unit`, `app/tests/Integration`, `app/tests/Functional` |
 | Multi-tenancy | 9/10 | [`app/src/Shared/Infrastructure/Persistence/Doctrine/Filter/TenantFilter.php`](../../app/src/Shared/Infrastructure/Persistence/Doctrine/Filter/TenantFilter.php), [`app/src/Modules/Identity/Infrastructure/Tenant/TenantContextSubscriber.php`](../../app/src/Modules/Identity/Infrastructure/Tenant/TenantContextSubscriber.php) |
 | Autorización | 8/10 | [`app/config/packages/security.yaml`](../../app/config/packages/security.yaml), [`app/src/Modules/Identity/Domain/Policy/UserAdministrationPolicy.php`](../../app/src/Modules/Identity/Domain/Policy/UserAdministrationPolicy.php) |
-| Preparación para Codex | 8/10 | [`AGENTS.md`](../../AGENTS.md), [`specs/14-current-state.md`](../../specs/14-current-state.md), [`specs/12-execution-order.md`](../../specs/12-execution-order.md) |
+| Preparación para Codex | 8/10 | [`AGENTS.md`](../../AGENTS.md), [`specs/14-current-state.md`](../../specs/14-current-state.md), [`docs/architecture/guides/execution-order-guide.md`](../../docs/architecture/guides/execution-order-guide.md) |
 
 ## 3. Fuentes de verdad actuales
 
 | Dominio / módulo | Fuente principal | Fuente secundaria | Observación |
 | --- | --- | --- | --- |
-| Arquitectura base | `specs/01-arquitecture.md` | `specs/12-execution-order.md` | Bien alineada con el diseño modular |
-| API HTTP | `specs/16-api-reference.md` | `specs/04-api.md`, `app/config/packages/nelmio_api_doc.yaml` | La referencia operativa está más madura que la especificación base |
-| Seguridad | `specs/03-security.md` | `app/config/packages/security.yaml`, `app/src/Modules/Identity/Infrastructure/Tenant/TenantContextSubscriber.php` | La regla `ROLE_ROOT` vs tenant está bien implementada |
-| Tenant isolation | `specs/01-arquitecture.md` | `app/src/Shared/Infrastructure/Persistence/Doctrine/Filter/TenantFilter.php` | Regla explícita y testeada |
+| Arquitectura base | `docs/architecture/architecture-overview.md` | `docs/architecture/guides/execution-order-guide.md` | Bien alineada con el diseño modular |
+| API HTTP | `docs/contracts/api-reference.md` | `docs/contracts/api-principles.md`, `app/config/packages/nelmio_api_doc.yaml` | La referencia operativa está más madura que la especificación base |
+| Seguridad | `docs/security/security-overview.md` | `app/config/packages/security.yaml`, `app/src/Modules/Identity/Infrastructure/Tenant/TenantContextSubscriber.php` | La regla `ROLE_ROOT` vs tenant está bien implementada |
+| Tenant isolation | `docs/architecture/architecture-overview.md` | `app/src/Shared/Infrastructure/Persistence/Doctrine/Filter/TenantFilter.php` | Regla explícita y testeada |
 | Academy | `specs/14-current-state.md` | `docs/backlog/epics/EP-001.md` | Hay trazabilidad funcional y técnica |
 | Identity | `docs/backlog/epics/EP-003.md` | `app/tests/Functional/Modules/Identity/*` | Muy bien cubierto en backlog y tests |
 | Player / Team / Membership / Payment | `docs/backlog/stories/*` | `app/tests/*` | La especificación de historias ya existe, pero todavía está distribuida |
@@ -82,25 +82,25 @@ Lo más débil es:
 
 Utilizables:
 
-- [`specs/01-arquitecture.md`](../../specs/01-arquitecture.md)
-- [`specs/03-security.md`](../../specs/03-security.md)
-- [`specs/04-api.md`](../../specs/04-api.md)
-- [`specs/12-execution-order.md`](../../specs/12-execution-order.md)
+- [`docs/architecture/architecture-overview.md`](../../docs/architecture/architecture-overview.md)
+- [`docs/security/security-overview.md`](../../docs/security/security-overview.md)
+- [`docs/contracts/api-principles.md`](../../docs/contracts/api-principles.md)
+- [`docs/architecture/guides/execution-order-guide.md`](../../docs/architecture/guides/execution-order-guide.md)
 - [`specs/14-current-state.md`](../../specs/14-current-state.md)
-- [`specs/15-module-creation-guide.md`](../../specs/15-module-creation-guide.md)
-- [`specs/16-api-reference.md`](../../specs/16-api-reference.md)
+- [`docs/architecture/guides/module-creation-guide.md`](../../docs/architecture/guides/module-creation-guide.md)
+- [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md)
 
 Incompletas o mixtas:
 
-- [`specs/10-project-setup.md`](../../specs/10-project-setup.md): mezcla base técnica con decisiones ya estabilizadas.
-- [`specs/18-financial-domain-model.md`](../../specs/18-financial-domain-model.md): es útil, pero solo cubre un subdominio.
+- [`docs/architecture/guides/project-setup-guide.md`](../../docs/architecture/guides/project-setup-guide.md): mezcla base técnica con decisiones ya estabilizadas.
+- [`docs/domains/billing/financial-domain-model.md`](../../docs/domains/billing/financial-domain-model.md): es útil, pero solo cubre un subdominio.
 - [`docs/backlog/future-epics.md`](../../docs/backlog/future-epics.md): sirve como visión, no como contrato canónico.
 
 Contradictorias o con riesgo de desalineación:
 
-- [`specs/04-api.md`](../../specs/04-api.md) usa `limit` en paginación, mientras [`specs/16-api-reference.md`](../../specs/16-api-reference.md) estandariza `per_page`.
-- [`specs/16-api-reference.md`](../../specs/16-api-reference.md) actúa como contrato operativo, pero todavía convive con la idea de que OpenAPI interactivo no es la referencia principal.
-- `README.md` menciona `http/*.http` como ejemplos operativos, mientras [`specs/16-api-reference.md`](../../specs/16-api-reference.md) eleva Postman como referencia de contrato HTTP.
+- [`docs/contracts/api-principles.md`](../../docs/contracts/api-principles.md) usa `limit` en paginación, mientras [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md) estandariza `per_page`.
+- [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md) actúa como contrato operativo, pero todavía convive con la idea de que OpenAPI interactivo no es la referencia principal.
+- `README.md` menciona `http/*.http` como ejemplos operativos, mientras [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md) eleva Postman como referencia de contrato HTTP.
 
 ## 5. Reglas implícitas encontradas
 
@@ -122,10 +122,10 @@ Reglas que hoy ya están bastante claras por código y tests, aunque no todas ap
   - Evidencia: [`app/src/Shared/Infrastructure/Persistence/Doctrine/Filter/SoftDeleteFilter.php`](../../app/src/Shared/Infrastructure/Persistence/Doctrine/Filter/SoftDeleteFilter.php), [`app/tests/Unit/Modules/Team/Domain/Team/TeamTest.php`](../../app/tests/Unit/Modules/Team/Domain/Team/TeamTest.php).
   - Riesgo: bajo.
 - Una matrícula activa por jugador y academia.
-  - Evidencia: [`specs/16-api-reference.md`](../../specs/16-api-reference.md), tests de `Membership`.
+  - Evidencia: [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md), tests de `Membership`.
   - Riesgo: medio, porque es una regla de negocio sensible.
 - Un equipo o categoría activa debe ser única dentro del tenant según el flujo documentado.
-  - Evidencia: [`docs/backlog/stories/EP-001/HU-015-provision-tenant-from-platform.md`](../../docs/backlog/stories/EP-001/HU-015-provision-tenant-from-platform.md), [`specs/16-api-reference.md`](../../specs/16-api-reference.md).
+  - Evidencia: [`docs/backlog/stories/EP-001/HU-015-provision-tenant-from-platform.md`](../../docs/backlog/stories/EP-001/HU-015-provision-tenant-from-platform.md), [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md).
   - Riesgo: medio.
 
 ## 6. Vacíos críticos
@@ -137,7 +137,7 @@ Crítico:
 
 Alto:
 
-- La referencia de API se reparte entre `specs/04-api.md`, `specs/16-api-reference.md`, `http/` y `postman/`.
+- La referencia de API se reparte entre `docs/contracts/api-principles.md`, `docs/contracts/api-reference.md`, `http/` y `postman/`.
 - Falta una convención formal de identificadores de cambio y requisito para SDD.
 - No hay una política explícita de sincronización con frontend fuera de contratos y ejemplos.
 
@@ -154,22 +154,22 @@ Bajo:
 ## 7. Contradicciones
 
 1. **Paginación**
-   - [`specs/04-api.md`](../../specs/04-api.md) usa `limit`.
-   - [`specs/16-api-reference.md`](../../specs/16-api-reference.md) usa `per_page`.
+   - [`docs/contracts/api-principles.md`](../../docs/contracts/api-principles.md) usa `limit`.
+   - [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md) usa `per_page`.
    - Riesgo: contratos distintos para frontend y QA.
 
 2. **Fuente de contrato HTTP**
    - [`README.md`](../../README.md) y la carpeta `http/` sugieren ejemplos operativos.
-   - [`specs/16-api-reference.md`](../../specs/16-api-reference.md) eleva Postman como referencia de contrato.
+   - [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md) eleva Postman como referencia de contrato.
    - Riesgo: duplicación documental y drift.
 
 3. **OpenAPI**
    - [`app/config/packages/nelmio_api_doc.yaml`](../../app/config/packages/nelmio_api_doc.yaml) muestra que existe configuración de documentación OpenAPI.
-   - [`specs/16-api-reference.md`](../../specs/16-api-reference.md) indica que todavía no hay Swagger/OpenAPI interactivo como fuente principal.
+   - [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md) indica que todavía no hay Swagger/OpenAPI interactivo como fuente principal.
    - Riesgo: expectativa diferente entre implementación y documentación operativa.
 
 4. **Formato de respuesta**
-   - [`specs/04-api.md`](../../specs/04-api.md) deja ejemplos con `camelCase`.
+   - [`docs/contracts/api-principles.md`](../../docs/contracts/api-principles.md) deja ejemplos con `camelCase`.
    - Parte de los ejemplos históricos del API reference todavía mezclan `snake_case` y `camelCase` en algunos payloads.
    - Riesgo: inconsistencia para integraciones.
 
@@ -336,7 +336,7 @@ El archivo actual ya está bien orientado, pero para SDD conviene reforzarlo con
 2. Si los contratos históricos en `http/` se mantienen como ejemplos o se archivan.
 3. Si el repo frontend consumirá la misma spec canónica por dominio o una vista derivada.
 4. Si se formaliza `changes/` desde ya o solo para cambios de alto impacto.
-5. Si `specs/04-api.md` se convierte en documento histórico o se fusiona con `specs/16-api-reference.md`.
+5. Si `docs/contracts/api-principles.md` se convierte en documento histórico o se fusiona con `docs/contracts/api-reference.md`.
 
 ## Conclusión
 

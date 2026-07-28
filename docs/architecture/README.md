@@ -27,6 +27,7 @@ Este directorio concentra decisiones persistentes, auditorías, políticas y gu�
 - `documentation-map.md` mapa maestro de fuentes de verdad.
 - `guides/spec-kit-structure.md` estructura objetivo del proyecto bajo Spec Kit.
 - `guides/specs-organization-and-sdd-plan.md` plan de organización y adopción SDD.
+- `guides/document-taxonomy-reference.md` clasificación de documentos entre canon, guía, contrato y feature spec.
 
 ### Plantillas
 

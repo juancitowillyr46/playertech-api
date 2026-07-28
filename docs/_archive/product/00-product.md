@@ -1,9 +1,9 @@
 # 00-product.md
 
-> Canonical source: [`specs/00-product.md`](/home/juan-rodas/projects/playertech/playertech-api/specs/00-product.md)
+> Canonical source: [`docs/product/product-vision.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/product/product-vision.md)
 >
 > Este archivo conserva una versión histórica/operativa del contexto de producto.
-> Si hay conflicto, manda `specs/00-product.md`.
+> Si hay conflicto, manda `docs/product/product-vision.md`.
 
 # Product Name
 

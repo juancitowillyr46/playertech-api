@@ -206,7 +206,7 @@ App\Modules\Academy\Domain\Academy\AcademyRepository: '@App\Modules\Academy\Infr
 Actualizar:
 
 * `specs/14-current-state.md`
-* `specs/12-execution-order.md`
+* `docs/architecture/guides/execution-order-guide.md`
 * el epic del modulo
 * las historias afectadas
 

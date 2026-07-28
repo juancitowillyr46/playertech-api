@@ -60,7 +60,7 @@ Documentos operativos y contractuales de uso más directo:
 
 Hoy existe cierta superposición entre:
 
-- `specs/16-api-reference.md`
+- `docs/contracts/api-reference.md`
 - `docs/contracts/api-reference.md`
 - `docs/flows/player/player-import-flow-spec.md`
 - `docs/flows/player/player-import-ux-spec.md`

@@ -110,3 +110,29 @@ Este documento define las reglas verificables para operar el proyecto bajo Spec-
 - Excepciones permitidas: documentos canónicos de alto nivel.
 - Validación: revisión de cohesión y tamaño razonable.
 
+## Principio XIII. Taxonomía documental explícita
+
+- Regla: cada documento debe poder clasificarse como canon, guia, contrato, feature spec, memoria o trazabilidad.
+- Justificación: evita que documentos transversales compitan con features o backlog.
+- Evidencia requerida: el repositorio debe tener un mapa claro de donde vive cada tipo de documento.
+- Condición de aprobación: una nueva sesion puede ubicar cada archivo sin ambiguedad.
+- Excepciones permitidas: documentos historicos en `_archive`.
+- Validación: revisar que `specs/`, `docs/architecture/`, `docs/contracts/`, `docs/flows/`, `docs/domains/`, `docs/audit/` y `docs/traceability/` respeten su proposito.
+
+## Principio XIV. Stack tecnico base documentado
+
+- Regla: el stack actual de la API debe estar explicitado como referencia persistente.
+- Justificación: evita dudas sobre runtime, persistencia y convenciones de implementacion.
+- Evidencia requerida: PHP 8.4, Symfony 7.4, Doctrine ORM, MySQL 8+, JWT stateless, Docker, PHPUnit y XML mapping.
+- Condición de aprobación: cualquier sesion puede identificar el stack base sin leer el codigo primero.
+- Excepciones permitidas: actualizaciones menores de version cuando el proyecto las adopte formalmente.
+- Validación: revisar que `docs/architecture/architecture-overview.md`, `docs/architecture/guides/development-standards.md`, `docs/architecture/guides/module-creation-guide.md` y `docs/architecture/guides/environment-guide.md` coincidan con la realidad.
+
+## Principio XV. Clasificación por alcance
+
+- Regla: una necesidad debe clasificarse primero como HU, subfeature o épica nueva antes de documentarse en profundidad.
+- Justificación: evita inflar épicas pequeñas o fragmentar problemas de negocio grandes.
+- Evidencia requerida: matriz de decisión aplicada y registrada en la guía conceptual o en el plan de la feature.
+- Condición de aprobación: otra sesión puede explicar por qué se eligió HU, subfeature o épica sin leer el chat completo.
+- Excepciones permitidas: ajustes menores de redacción o correcciones de documentación ya establecida.
+- Validación: revisar si la capacidad nueva cambia o no el problema principal del dominio, si necesita mini flujo propio y si merece carpeta especÍfica.

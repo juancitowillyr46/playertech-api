@@ -1,16 +1,18 @@
 # Specs Index
 
-`specs/` contiene las especificaciones canónicas de arquitectura, seguridad, API, base técnica y criterios de ejecución.
+`specs/` contiene el estado vivo del proyecto y las carpetas canónicas por feature bajo Spec Kit.
 
 ## Structure
 
-- `specs/01-arquitecture.md` principios de arquitectura.
-- `specs/03-security.md` reglas de seguridad.
-- `specs/04-api.md` marco general de la API.
-- `specs/12-execution-order.md` orden de ejecución.
 - `specs/14-current-state.md` estado actual y trazabilidad.
-- `specs/16-api-reference.md` referencia HTTP operativa.
 - `specs/[###-feature]/` carpetas canónicas por feature bajo Spec Kit.
+- `docs/architecture/architecture-overview.md` principios de arquitectura.
+- `docs/security/security-overview.md` reglas de seguridad.
+- `docs/contracts/api-principles.md` marco general de la API.
+- `docs/contracts/api-reference.md` referencia HTTP operativa.
+- `docs/database/database-standards.md` normas de persistencia y modelo relacional.
+- `docs/architecture/guides/execution-order-guide.md` orden de ejecución.
+- `docs/architecture/guides/document-taxonomy-reference.md` clasificación de documentos entre canon, guía, contrato y feature spec.
 - `docs/architecture/documentation-map.md` mapa maestro de documentación y documentos centrales.
 - `docs/audit/spec-kit-migration-report.md` reporte de auditoría documental.
 - `docs/traceability/` soportes de trazabilidad.
@@ -42,6 +44,9 @@ specs/[###-feature]/
 
 ## Usage Rule
 
-- Si el documento define una regla vigente o un contrato canónico, vive en `specs/`.
+- Si el documento registra estado actual o trazabilidad viva, vive en `specs/14-current-state.md`.
+- Si el documento describe una feature concreta, vive en `specs/[###-feature]/`.
+- Si el documento define una decisión técnica persistente, vive en `docs/architecture/`.
+- Si el documento define un contrato HTTP o una referencia operativa, vive en `docs/contracts/`.
 - Si el documento describe intención funcional o priorización, vive en `docs/backlog/`.
 - Si el documento define un flujo funcional central, vive en `docs/flows/` como spec de flujo y debe ser referenciado desde el mapa maestro.

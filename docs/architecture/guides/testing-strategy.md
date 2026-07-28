@@ -234,4 +234,4 @@ docker exec docker-app-1 bash -lc 'cd /var/www/html && php bin/console doctrine:
 
 ## Entornos
 
-La separación de `local`, `test` y `prod` está documentada en `specs/17-environment-guide.md`.
+La separación de `local`, `test` y `prod` está documentada en `docs/architecture/guides/environment-guide.md`.

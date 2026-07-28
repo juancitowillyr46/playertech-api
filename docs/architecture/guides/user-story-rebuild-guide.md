@@ -22,7 +22,7 @@ Convertir cada historia en una unidad clara de implementación que incluya:
 
 Este documento ya se usa para reconstruir historias reales del backlog que luego se homologa con:
 
-* `specs/16-api-reference.md`
+* `docs/contracts/api-reference.md`
 * `specs/14-current-state.md`
 * `docs/backlog/stories/`
 * `docs/flows/`

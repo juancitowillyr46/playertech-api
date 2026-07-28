@@ -5,7 +5,7 @@
 La API de PlayerTech será una REST API versionada, consistente y segura, diseñada para operar sobre un modelo multi-tenant con JWT.
 
 > Contrato operativo actual:
-> `specs/16-api-reference.md` y `postman/` concentran la referencia HTTP vigente.
+> `docs/contracts/api-reference.md` y `postman/` concentran la referencia HTTP vigente.
 > Este documento conserva el marco general y las decisiones transversales.
 
 ---
@@ -232,7 +232,7 @@ Los recursos base que deben quedar claros desde el inicio son:
 * `GET /users`
 * `GET /users/{id}`
 
-Ver referencia detallada en `specs/16-api-reference.md`.
+Ver referencia detallada en `docs/contracts/api-reference.md`.
 
 ## Venues
 

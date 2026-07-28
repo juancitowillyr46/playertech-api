@@ -6,8 +6,8 @@ Documento central para el bloque financiero y de cobros.
 
 ## Canonical Sources
 
-- Modelo financiero: [`specs/18-financial-domain-model.md`](/home/juan-rodas/projects/playertech/playertech-api/specs/18-financial-domain-model.md)
-- API operativa: [`specs/16-api-reference.md`](/home/juan-rodas/projects/playertech/playertech-api/specs/16-api-reference.md)
+- Modelo financiero: [`docs/domains/billing/financial-domain-model.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/domains/billing/financial-domain-model.md)
+- API operativa: [`docs/contracts/api-reference.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/contracts/api-reference.md)
 - Memoria persistente: [`docs/architecture/memory/project-memory.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/architecture/memory/project-memory.md)
 - Evolución de dominio: [`docs/domains/billing/billing-evolution-notes.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/domains/billing/billing-evolution-notes.md)
 

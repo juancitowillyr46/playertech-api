@@ -40,11 +40,11 @@ php bin/console
 
 ## Consumo de la API
 
-- `specs/16-api-reference.md` es la referencia HTTP operativa principal.
+- `docs/contracts/api-reference.md` es la referencia HTTP operativa principal.
 - `postman/` contiene la colección y el entorno para validación manual rápida.
 - `docs/contracts/api-reference.md` agrupa el índice de contratos vigentes.
 - `docs/flows/` concentra los flujos funcionales específicos.
-- `docs/domain/02-domains.md` queda como legado conceptual; la versión canónica es `specs/02-domains.md`.
+- `docs/domain/02-domains.md` queda como legado conceptual; la versión canónica es `docs/domains/domain-overview.md`.
 
 ## Enfoque de trabajo
 
@@ -54,18 +54,18 @@ php bin/console
 
 ## Documentación
 
-- `specs/00-product.md`
-- `specs/01-arquitecture.md`
-- `specs/02-domains.md`
-- `specs/03-security.md`
-- `specs/04-api.md`
-- `specs/06-database.md`
-- `specs/10-project-setup.md`
-- `specs/11-testing-strategy.md`
-- `specs/12-execution-order.md`
-- `specs/13-user-story-rebuild-guide.md`
+- `docs/product/product-vision.md`
+- `docs/architecture/architecture-overview.md`
+- `docs/domains/domain-overview.md`
+- `docs/security/security-overview.md`
+- `docs/contracts/api-principles.md`
+- `docs/database/database-standards.md`
+- `docs/architecture/guides/project-setup-guide.md`
+- `docs/architecture/guides/testing-strategy.md`
+- `docs/architecture/guides/execution-order-guide.md`
+- `docs/architecture/guides/user-story-rebuild-guide.md`
 - `specs/14-current-state.md`
-- `specs/16-api-reference.md`
+- `docs/contracts/api-reference.md`
 - `docs/architecture/policies/sdd-policy.md`
 - `docs/architecture/templates/change-template-light.md`
 - `docs/architecture/templates/change-template-full.md`

@@ -16,17 +16,17 @@ Este documento consolida el contexto tecnico persistente de PlayerTech para que 
 - [`README.md`](../../README.md)
 - [`AGENTS.md`](../../AGENTS.md)
 - [`specs/14-current-state.md`](../../specs/14-current-state.md)
-- [`specs/12-execution-order.md`](../../specs/12-execution-order.md)
-- [`specs/01-arquitecture.md`](../../specs/01-arquitecture.md)
-- [`specs/03-security.md`](../../specs/03-security.md)
-- [`specs/04-api.md`](../../specs/04-api.md)
-- [`specs/06-database.md`](../../specs/06-database.md)
-- [`specs/11-testing-strategy.md`](../../specs/11-testing-strategy.md)
-- [`specs/15-module-creation-guide.md`](../../specs/15-module-creation-guide.md)
-- [`specs/16-api-reference.md`](../../specs/16-api-reference.md)
-- [`specs/17-environment-guide.md`](../../specs/17-environment-guide.md)
+- [`docs/architecture/guides/execution-order-guide.md`](../../docs/architecture/guides/execution-order-guide.md)
+- [`docs/architecture/architecture-overview.md`](../../docs/architecture/architecture-overview.md)
+- [`docs/security/security-overview.md`](../../docs/security/security-overview.md)
+- [`docs/contracts/api-principles.md`](../../docs/contracts/api-principles.md)
+- [`docs/database/database-standards.md`](../../docs/database/database-standards.md)
+- [`docs/architecture/guides/testing-strategy.md`](../../docs/architecture/guides/testing-strategy.md)
+- [`docs/architecture/guides/module-creation-guide.md`](../../docs/architecture/guides/module-creation-guide.md)
+- [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md)
+- [`docs/architecture/guides/environment-guide.md`](../../docs/architecture/guides/environment-guide.md)
 - [`docs/architecture/*`](./)
-- [`specs/02-domains.md`](../../specs/02-domains.md)
+- [`docs/domains/domain-overview.md`](../../docs/domains/domain-overview.md)
 - [`docs/database/*`](../database/)
 - [`docs/product/*`](../product/)
 - [`docs/backlog/*`](../backlog/)
@@ -126,7 +126,7 @@ Este documento consolida el contexto tecnico persistente de PlayerTech para que 
 - `Membership` controla permanencia administrativa.
 - `TeamAssignment` controla historial deportivo.
 - El bloque financiero separa `PaymentConcept`, `Charge`, `Payment` y `PaymentAllocation`.
-- La guía conceptual de dominio vive en `specs/02-domains.md`; `docs/domain/02-domains.md` quedó como legado y no debe usarse como fuente canónica.
+- La guía conceptual de dominio vive en `docs/domains/domain-overview.md`; `docs/domain/02-domains.md` quedó como legado y no debe usarse como fuente canónica.
 
 ## Testing
 
@@ -141,7 +141,7 @@ Este documento consolida el contexto tecnico persistente de PlayerTech para que 
 - No mezclar refactor grande con cambio funcional innecesario.
 - Mantener trazabilidad en `specs/14-current-state.md` para cambios relevantes.
 - Tomar `Academy` como referencia tecnica para nuevos modulos.
-- Priorizar `specs/16-api-reference.md` y `postman/` para contratos HTTP vigentes.
+- Priorizar `docs/contracts/api-reference.md` y `postman/` para contratos HTTP vigentes.
 
 ## Riesgos Y Deudas
 
@@ -168,8 +168,8 @@ Este documento consolida el contexto tecnico persistente de PlayerTech para que 
 
 1. Leer `README.md`.
 2. Leer `specs/14-current-state.md`.
-3. Leer `specs/12-execution-order.md`.
-4. Leer `specs/01-arquitecture.md`, `specs/03-security.md`, `specs/04-api.md` y `specs/06-database.md`.
+3. Leer `docs/architecture/guides/execution-order-guide.md`.
+4. Leer `docs/architecture/architecture-overview.md`, `docs/security/security-overview.md`, `docs/contracts/api-principles.md` y `docs/database/database-standards.md`.
 5. Usar `docs/architecture/memory/project-memory.md` como resumen persistente.
-6. Verificar `specs/16-api-reference.md` y `postman/` antes de tocar contratos HTTP.
+6. Verificar `docs/contracts/api-reference.md` y `postman/` antes de tocar contratos HTTP.
 7. Confirmar el estado operativo dentro de Docker antes de asumir que el host refleja el runtime real.
