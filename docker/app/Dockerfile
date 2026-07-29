@@ -3,9 +3,10 @@ FROM php:8.4-apache
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git unzip libicu-dev libzip-dev libxml2-dev \
+    && apt-get install -y --no-install-recommends git unzip libicu-dev libzip-dev libxml2-dev libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install intl pdo pdo_mysql zip xml opcache \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install intl pdo pdo_mysql zip xml opcache gd \
     && a2enmod rewrite headers \
     && rm -rf /var/lib/apt/lists/*
 
@@ -19,4 +20,3 @@ WORKDIR /var/www/html
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["apache2-foreground"]
-

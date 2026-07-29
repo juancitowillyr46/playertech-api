@@ -120,6 +120,7 @@ final class ProvisionTenantHandlerTest extends KernelTestCase
         self::assertSame(AccountUser::STATUS_PENDING_ACTIVATION, $payload['user']['status']);
         self::assertTrue($payload['user']['activationPending']);
         self::assertSame('Sub 12 A', $payload['team']['name']);
+        self::assertSame('Sub 14', $payload['team']['categoryName']);
 
         $academy = $this->academyRepository->findOneByContactEmail(new Email('academy.test@example.com'));
         self::assertNotNull($academy);

@@ -1,13 +1,36 @@
 # Architecture Documents
 
-Este directorio concentra ADR, auditorias, politicas y plantillas de cambio que gobiernan la evolucion tecnica del proyecto.
+Este directorio concentra decisiones persistentes, auditorías, políticas y guías técnicas del proyecto.
 
 ## Contenido
 
-- `ADR-*` decisiones arquitectonicas formales.
-- `SDD-backend-audit.md` auditoria de madurez SDD.
-- `sdd-policy.md` politica escalonada de adopcion SDD.
-- `EP-009-billing-model-evolution.md` analisis de evolucion del cobro de matricula.
-- `player-profile-evolution-sdd.md` criterio SDD para evolucion del perfil de jugador.
-- `change-template-light.md` plantilla minima para cambios livianos.
-- `change-template-full.md` plantilla completa para cambios de feature.
+### Decisiones arquitectónicas
+
+- `ADR-*` decisiones arquitectónicas formales.
+- `docs/domains/billing/billing-evolution-notes.md` evolución documentada del modelo de cobro.
+- `docs/domains/player/player-profile-evolution-notes.md` criterio SDD para evolución del perfil de jugador.
+
+### Auditorías
+
+- `audits/SDD-backend-audit.md` auditoría de madurez SDD.
+
+### Políticas
+
+- `policies/sdd-policy.md` política escalonada de adopción SDD.
+
+### Memoria persistente
+
+- `memory/project-memory.md` memoria persistente del proyecto.
+
+### Mapas y guías
+
+- `documentation-map.md` mapa maestro de fuentes de verdad.
+- `guides/spec-kit-structure.md` estructura objetivo del proyecto bajo Spec Kit.
+- `guides/specs-organization-and-sdd-plan.md` plan de organización y adopción SDD.
+- `guides/document-taxonomy-reference.md` clasificación de documentos entre canon, guía, contrato y feature spec.
+
+### Plantillas
+
+- `templates/change-template.md` plantilla base para cambios.
+- `templates/change-template-light.md` plantilla ligera.
+- `templates/change-template-full.md` plantilla completa.

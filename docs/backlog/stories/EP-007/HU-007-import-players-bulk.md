@@ -15,7 +15,7 @@
 
 # Objetivo
 
-Permitir que el administrador del tenant importe jugadores y su categoría desde un archivo Excel para acelerar altas masivas y migraciones de datos.
+Permitir que el administrador del tenant importe jugadores desde un archivo Excel para acelerar altas masivas y migraciones de datos.
 
 ---
 
@@ -43,15 +43,16 @@ Para registrar en lote información que hoy se carga manualmente uno por uno.
 * El archivo debe validar formato y estructura antes de persistir.
 * Cada jugador debe quedar asociado a la academia actual.
 * El documento del jugador debe seguir siendo único por academia.
-* La categoría debe existir dentro de la academia o resolverse por `category_key`.
-* Si el archivo contiene errores estructurales o de negocio, la importación debe rechazarse.
+* La categoría se selecciona antes de subir el archivo y aplica al job completo, no por fila.
+* La plantilla oficial debe descargarse desde backend.
+* Si el archivo contiene errores estructurales o de negocio, el job debe quedar en `COMPLETED_WITH_ERRORS` o `FAILED` según corresponda.
 
 ---
 
 # Criterios de Aceptación
 
-* Dado un archivo Excel válido, cuando lo importo, entonces el sistema registra los jugadores.
-* Dado un archivo con errores de validación, cuando lo importo, entonces el sistema rechaza la importación y reporta los errores por fila.
+* Dado un archivo Excel válido, cuando lo importo, entonces el sistema registra los jugadores de forma asíncrona.
+* Dado un archivo con errores de validación, cuando lo importo, entonces el sistema reporta los errores por fila y conserva los registros válidos.
 * Dado un jugador duplicado por documento dentro de la academia, cuando lo importo, entonces el sistema rechaza la fila.
 * Dado un usuario sin contexto tenant, cuando intenta importar, entonces el sistema rechaza la operación.
 
@@ -59,11 +60,12 @@ Para registrar en lote información que hoy se carga manualmente uno por uno.
 
 # Alcance MVP
 
+* Selección previa de categoría.
+* Descarga de plantilla `.xlsx` desde backend con hojas `Datos` y `Referencias`.
 * Subida de archivo `.xlsx`.
-* Validación de plantilla.
-* Procesamiento síncrono inicial.
-* Reporte de errores por fila.
-* Importación de jugadores y categorías referenciadas.
+* Creación de job asíncrono.
+* Polling de progreso desde frontend.
+* Reporte de errores por fila y resumen final.
 
 ---
 
@@ -71,8 +73,8 @@ Para registrar en lote información que hoy se carga manualmente uno por uno.
 
 * Endpoint sugerido: `POST /api/v1/academy/players/import`
 * Entrada: archivo Excel en `multipart/form-data`
-* Estrategia inicial: rechazar el archivo completo si existe al menos un error de validación
-* Evolución posterior: procesamiento asíncrono con cola y reporte de progreso
+* Estrategia actual: procesamiento asíncrono con persistencia del job y reporte de progreso
+* La categoría se pasa una sola vez por job y no por fila
 
 ---
 
@@ -90,6 +92,5 @@ Para registrar en lote información que hoy se carga manualmente uno por uno.
 * Endpoint: `POST /api/v1/academy/players/import`
 * Entrada: `multipart/form-data`
 * Formato: `.xlsx`
-* Clave de categoría: `category_key`
-* Estrategia MVP: falla toda la importación si existe al menos un error de validación
-
+* Clave de categoría: `categoryId`
+* Estrategia MVP: persistir filas válidas, reportar errores por fila y exponer progreso consultable

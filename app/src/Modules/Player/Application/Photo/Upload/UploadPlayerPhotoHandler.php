@@ -36,7 +36,9 @@ final readonly class UploadPlayerPhotoHandler
 
         $this->assertAllowedMimeType($command->file);
 
-        $this->fileStorage->delete($player->photo());
+        if ($this->isInitializedMedia($player->photo())) {
+            $this->fileStorage->delete($player->photo());
+        }
 
         $media = $this->fileStorage->upload(
             $command->file,
@@ -57,5 +59,24 @@ final readonly class UploadPlayerPhotoHandler
         if (!in_array($mimeType, self::ALLOWED_MIME_TYPES, true)) {
             throw new InvalidMimeTypeException($mimeType, self::ALLOWED_MIME_TYPES);
         }
+    }
+
+    private function isInitializedMedia(?\App\Shared\Domain\ValueObject\Media $media): bool
+    {
+        if (null === $media) {
+            return false;
+        }
+
+        $reflection = new \ReflectionObject($media);
+
+        foreach (['path', 'url', 'mimeType', 'size', 'checksum'] as $propertyName) {
+            $property = $reflection->getProperty($propertyName);
+
+            if (!$property->isInitialized($media)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

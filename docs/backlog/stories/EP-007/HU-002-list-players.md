@@ -34,6 +34,8 @@ Para revisar rápidamente quiénes forman parte de la operación.
 * El listado debe respetar el contexto tenant.
 * No se deben exponer jugadores de otra academia.
 * El listado debe ser paginado desde el contrato de API.
+* El listado puede filtrarse por `gender`, `categoryId`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`.
+* `age` es un campo derivado de salida; el filtro canónico por rango de edad debe resolverse sobre `birthDateFrom` y `birthDateTo`.
 
 ---
 
@@ -49,4 +51,4 @@ Para revisar rápidamente quiénes forman parte de la operación.
 * Implementado con `GET /api/v1/academy/players`.
 * Usa `PlayerListItemResponse` como DTO de salida.
 * El listado se resuelve por `academy_id` desde `TenantContext`.
-
+* El contrato de filtros debe mantenerse explícito en query params simples, no en un objeto anidado.

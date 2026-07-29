@@ -5,11 +5,19 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Modules\Player\Application\Handler;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Category\Domain\Category\Category;
+use App\Modules\Category\Domain\Category\CategoryId;
+use App\Modules\Category\Domain\Category\CategoryRepository;
 use App\Modules\Player\Application\Handler\ListPlayersHandler;
 use App\Modules\Player\Application\Query\ListPlayersQuery;
 use App\Modules\Player\Domain\Player\Player;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Shared\Domain\ValueObject\AuditTrail;
+use App\Shared\Domain\ValueObject\Description;
+use App\Shared\Domain\ValueObject\Media;
+use App\Shared\Domain\ValueObject\MaximumAge;
+use App\Shared\Domain\ValueObject\MinimumAge;
+use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Application\Pagination\PaginationQuery;
 use PHPUnit\Framework\TestCase;
 
@@ -18,9 +26,23 @@ final class ListPlayersHandlerTest extends TestCase
     public function testItListsPlayersForTheGivenAcademy(): void
     {
         $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
-        $repository = new InMemoryPlayerRepository();
-        $repository->save(Player::create(
-            new PlayerId('019eec93-9a11-7432-bd04-52306b2b3d90'),
+        $categoryId = new CategoryId('019eec93-9a11-7432-bd04-52306b2b3d70');
+        $playerId = new PlayerId('019eec93-9a11-7432-bd04-52306b2b3d90');
+        $playerRepository = new InMemoryPlayerRepository();
+        $categoryRepository = new InMemoryCategoryRepository(
+            Category::create(
+                $categoryId,
+                $academyId,
+                'SUB-14',
+                new Name('Sub 14'),
+                new MinimumAge(13),
+                new MaximumAge(14),
+                new Description('Categoria formativa'),
+                AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
+            )
+        );
+        $player = Player::create(
+            $playerId,
             $academyId,
             'DNI',
             'Juan',
@@ -30,18 +52,115 @@ final class ListPlayersHandlerTest extends TestCase
             null,
             null,
             null,
+            'Masculino',
             null,
             null,
-            null,
+            $categoryId,
+            new Media(
+                'images/players/'.$academyId->value().'/'.$playerId->value().'/photo.png',
+                'https://cdn.example.test/photo.png',
+                'image/png',
+                123,
+                'sha256:'.str_repeat('a', 64),
+            ),
             AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
+        );
+
+        $this->setAuditTrailCreatedAt($player, new \DateTimeImmutable('2026-07-11T00:00:00+00:00'));
+        $playerRepository->save($player);
+
+        $handler = new ListPlayersHandler($playerRepository, $categoryRepository);
+
+        $players = $handler(new ListPlayersQuery(
+            $academyId,
+            new PaginationQuery(),
+            'Masculino',
+            $categoryId->value(),
+            '2026-07-01',
+            '2026-07-31',
+            '2014-05-01',
+            '2014-05-31',
         ));
-
-        $handler = new ListPlayersHandler($repository);
-
-        $players = $handler(new ListPlayersQuery($academyId, new PaginationQuery()));
 
         self::assertCount(1, $players->items);
         self::assertSame('Juan', $players->items[0]->toArray()['firstName']);
         self::assertSame('12345678', $players->items[0]->toArray()['documentNumber']);
+        self::assertSame('Sub 14', $players->items[0]->toArray()['categoryName']);
+        self::assertSame('Masculino', $players->items[0]->toArray()['genderName']);
+        self::assertSame(12, $players->items[0]->toArray()['age']);
+        self::assertNotNull($players->items[0]->toArray()['photo']);
+        self::assertSame('image/png', $players->items[0]->toArray()['photo']['mimeType']);
+        self::assertSame('2026-07-11T00:00:00+00:00', $players->items[0]->toArray()['createdAt']);
+    }
+
+    private function setAuditTrailCreatedAt(Player $player, \DateTimeImmutable $createdAt): void
+    {
+        $reflection = new \ReflectionObject($player);
+        $property = $reflection->getProperty('auditTrail');
+        $property->setValue($player, new AuditTrail(
+            new \App\Shared\Domain\ValueObject\CreatedAt($createdAt),
+            '019eec93-9a11-7432-bd04-52306b2b3d8e',
+            null,
+            null,
+        ));
+    }
+}
+
+final class InMemoryCategoryRepository implements CategoryRepository
+{
+    /** @var array<string, Category> */
+    private array $items = [];
+
+    public function __construct(Category ...$categories)
+    {
+        foreach ($categories as $category) {
+            $this->items[$category->id()->value()] = $category;
+        }
+    }
+
+    public function save(Category $category): void
+    {
+        $this->items[$category->id()->value()] = $category;
+    }
+
+    public function findById(AcademyId $academyId, CategoryId $categoryId): ?Category
+    {
+        $category = $this->items[$categoryId->value()] ?? null;
+
+        if (null === $category || $category->academyId()->value() !== $academyId->value()) {
+            return null;
+        }
+
+        return $category;
+    }
+
+    public function findByCategoryKey(AcademyId $academyId, string $categoryKey): ?Category
+    {
+        foreach ($this->items as $category) {
+            if ($category->academyId()->value() === $academyId->value() && $category->categoryKey() === strtoupper(trim($categoryKey))) {
+                return $category;
+            }
+        }
+
+        return null;
+    }
+
+    public function findActiveByAcademy(AcademyId $academyId): array
+    {
+        return array_values(array_filter(
+            $this->items,
+            static fn (Category $category): bool => $category->academyId()->value() === $academyId->value()
+        ));
+    }
+
+    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
+    {
+        return [
+            'items' => array_values(array_filter(
+                $this->items,
+                static fn (Category $category): bool => $category->academyId()->value() === $academyId->value()
+            )),
+            'total' => count($this->items),
+        ];
     }
 }

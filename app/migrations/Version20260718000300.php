@@ -17,7 +17,7 @@ final class Version20260718000300 extends AbstractMigration
     public function up(Schema $schema): void
     {
         if (!$this->tableExists('onboarding_categories')) {
-            $this->addSql('CREATE TABLE onboarding_categories (
+            $this->connection->executeStatement('CREATE TABLE onboarding_categories (
                 id CHAR(36) NOT NULL,
                 code VARCHAR(50) NOT NULL,
                 name VARCHAR(100) NOT NULL,
@@ -51,7 +51,7 @@ final class Version20260718000300 extends AbstractMigration
                 continue;
             }
 
-            $this->addSql(
+            $this->connection->executeStatement(
                 'INSERT INTO onboarding_categories (id, code, name, min_age, max_age, description, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NULL)',
                 [$id, $code, $name, $minAge, $maxAge, $description, 'ACTIVE']
             );

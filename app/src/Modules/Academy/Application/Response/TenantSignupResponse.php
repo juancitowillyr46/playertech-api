@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Modules\Academy\Application\Response;
 
-use App\Modules\Team\Application\Response\TeamResponse;
-
 final readonly class TenantSignupResponse
 {
     public function __construct(
         private AcademyResponse $academy,
         private TenantSignupUserResponse $user,
-        private ?TeamResponse $team = null,
+        private ?TenantSignupTeamResponse $team = null,
     ) {
     }
 

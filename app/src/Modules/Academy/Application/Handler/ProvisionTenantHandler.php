@@ -9,6 +9,7 @@ use App\Modules\Academy\Application\Message\SendTenantActivationEmailMessage;
 use App\Modules\Academy\Application\Response\AcademyResponse;
 use App\Modules\Academy\Application\Response\TenantSignupResponse;
 use App\Modules\Academy\Application\Response\TenantSignupUserResponse;
+use App\Modules\Academy\Application\Response\TenantSignupTeamResponse;
 use App\Modules\Academy\Domain\Academy\Academy;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Academy\Domain\Academy\AcademyRegistrationSource;
@@ -22,7 +23,6 @@ use App\Modules\Category\Domain\Exception\CategoryInactiveException;
 use App\Modules\Identity\Application\Handler\AbstractUserHandler;
 use App\Modules\Identity\Domain\Exception\UserAlreadyExistsException;
 use App\Modules\Identity\Domain\User\AccountUser;
-use App\Modules\Team\Application\Response\TeamResponse;
 use App\Modules\Team\Domain\Exception\TeamAlreadyExistsException;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Domain\Team\TeamId;
@@ -188,7 +188,7 @@ final readonly class ProvisionTenantHandler extends AbstractUserHandler
                     $user->getStatus(),
                     true,
                 ),
-                TeamResponse::fromTeam($team),
+                TenantSignupTeamResponse::fromTeam($team, $onboardingCategory->name()->value()),
             );
         } catch (\Throwable $throwable) {
             if ($this->entityManager->getConnection()->isTransactionActive()) {

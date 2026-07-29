@@ -1,71 +1,75 @@
-# 04-erd.md
-
 # Entity Relationship Diagram
 
-El siguiente diagrama representa el modelo entidad-relación del MVP de PlayerTech.
+El diagrama refleja el modelo relacional actual del backend de PlayerTech.
 
-La estructura sigue un enfoque **Player-Centric**, donde el jugador es la entidad central del dominio y la formación, la administración y la competición se modelan como procesos independientes.
+La estructura mantiene `academy` como raíz multi-tenant y `player` como centro operativo del dominio deportivo.
 
 ```mermaid
 erDiagram
 
-ACADEMY ||--o{ VENUE : has
-ACADEMY ||--o{ USER : has
-ACADEMY ||--o{ CATEGORY : has
-ACADEMY ||--o{ TEAM : has
-ACADEMY ||--o{ PLAYER : has
-ACADEMY ||--o{ LEGAL_GUARDIAN : has
+ACADEMIES ||--o{ VENUES : has
+ACADEMIES ||--o{ CATEGORIES : has
+ACADEMIES ||--o{ PLAYERS : has
+ACADEMIES ||--o{ PLAYER_IMPORT_JOBS : has
+ACADEMIES ||--o{ LEGAL_GUARDIANS : has
+ACADEMIES ||--o{ TEAMS : has
+ACADEMIES ||--o{ MEMBERSHIPS : has
+ACADEMIES ||--o{ CHARGES : has
+ACADEMIES ||--o{ PAYMENT_CONCEPTS : has
+ACADEMIES ||--o{ PAYMENTS : has
+ACADEMIES ||--o{ PAYMENT_ALLOCATIONS : has
+ACADEMIES ||--o{ PAYMENT_EVIDENCES : has
+ACADEMIES ||--o{ FISCAL_ATTACHMENTS : has
+ACADEMIES ||--o{ STAFF : has
+ACADEMIES ||--o{ TEAM_STAFF_ASSIGNMENTS : has
+ACADEMIES ||--o{ USERS : has
 
-CATEGORY ||--o{ PLAYER : classifies
-CATEGORY ||--o{ TEAM : contains
+CATEGORIES ||--o{ PLAYERS : classifies
+CATEGORIES ||--o{ TEAMS : groups
+CATEGORIES ||--o{ PLAYER_IMPORT_JOBS : scopes
 
-PLAYER ||--o{ MEMBERSHIP : owns
+PLAYERS ||--o{ PLAYER_GUARDIANS : linked
+LEGAL_GUARDIANS ||--o{ PLAYER_GUARDIANS : linked
 
-PLAYER ||--o{ TEAM_ASSIGNMENT : participates
-TEAM ||--o{ TEAM_ASSIGNMENT : includes
+PLAYERS ||--o{ MEMBERSHIPS : owns
+PLAYERS ||--o{ TEAM_ASSIGNMENTS : participates
+PLAYERS ||--o{ CHARGES : generates
+PLAYERS ||--o{ PAYMENTS : receives
 
-PLAYER ||--o{ PLAYER_GUARDIAN : linked
-LEGAL_GUARDIAN ||--o{ PLAYER_GUARDIAN : linked
+MEMBERSHIPS ||--o{ CHARGES : generates
+MEMBERSHIPS ||--o{ PAYMENTS : receives
 
-MEMBERSHIP ||--o{ PAYMENT : generates
+PAYMENT_CONCEPTS ||--o{ CHARGES : categorizes
+PAYMENT_CONCEPTS ||--o{ PAYMENTS : categorizes
 
-PAYMENT_CONCEPT ||--o{ PAYMENT : categorizes
+PAYMENTS ||--o{ PAYMENT_ALLOCATIONS : splits
+CHARGES ||--o{ PAYMENT_ALLOCATIONS : receives
 
-PAYMENT ||--o{ PAYMENT_EVIDENCE : contains
+PAYMENTS ||--o{ PAYMENT_EVIDENCES : has
+PAYMENTS ||--o{ FISCAL_ATTACHMENTS : has
 
-USER ||--o{ USER_ROLE : assigned
-ROLE ||--o{ USER_ROLE : grants
+TEAMS ||--o{ TEAM_ASSIGNMENTS : includes
+STAFF ||--o{ TEAM_STAFF_ASSIGNMENTS : assigned
+TEAMS ||--o{ TEAM_STAFF_ASSIGNMENTS : includes
 
-ROLE ||--o{ ROLE_PERMISSION : grants
-PERMISSION ||--o{ ROLE_PERMISSION : contains
+USERS ||--o{ STAFF : profiles
 ```
 
 ---
 
 ## Principios del Modelo
 
-El modelo entidad-relación se basa en las siguientes reglas de negocio:
-
-- Una academia puede administrar múltiples sedes, categorías, equipos, jugadores y acudientes.
-- Todo jugador pertenece a una única categoría administrativa activa.
-- Una categoría puede contener múltiples equipos competitivos.
-- Un jugador puede participar simultáneamente en múltiples equipos mediante `TeamAssignment`.
-- La matrícula representa la permanencia administrativa del jugador y es independiente de su participación deportiva.
-- Los pagos siempre se asocian a una matrícula válida.
-- Los acudientes se relacionan con los jugadores mediante `PlayerGuardian`, permitiendo relaciones N:M.
+- Cada tabla de negocio pertenece a una sola academia.
+- El campo `category_id` es el vínculo funcional más importante para jugadores y equipos.
+- `PlayerImportJob` permite trazabilidad sin mezclar proceso temporal con el agregado `Player`.
+- Las relaciones N:M se materializan mediante tablas intermedias explícitas.
+- La facturación separa cargo, pago, evidencia y soporte fiscal.
 
 ---
 
-## Notas
+## Notas de Implementación
 
-Este diagrama representa únicamente las entidades incluidas en el **MVP**.
+- El modelo incluye `soft delete` en la mayoría de agregados.
+- La documentación sigue el estado actual del código, no un diseño futuro hipotético.
+- `AccountUser` representa autenticación y administración, mientras que `Staff` representa perfil operativo.
 
-Los siguientes módulos se incorporarán en futuras versiones sin modificar la estructura principal del modelo:
-
-- Entrenamientos (`TrainingSession`)
-- Asistencia (`Attendance`)
-- Entrenadores (`Coach`)
-- Torneos (`Tournament`)
-- Partidos (`Match`)
-- Convocatorias (`MatchSquad`)
-- Estadísticas (`PlayerStatistics`)

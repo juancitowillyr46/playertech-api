@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Player\Application\Photo\Delete;
+
+final readonly class DeletePlayerPhotoCommand
+{
+    public function __construct(
+        public string $actorId,
+        public string $academyId,
+        public string $playerId,
+    ) {
+    }
+}

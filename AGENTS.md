@@ -13,15 +13,15 @@ Su objetivo es mantener consistencia técnica, trazabilidad y alineación con la
 Antes de proponer o ejecutar cambios, revisar en este orden:
 
 1. `specs/14-current-state.md`
-2. `specs/12-execution-order.md`
-3. `specs/01-arquitecture.md`
-4. `specs/03-security.md`
-5. `specs/04-api.md`
-6. `specs/06-database.md`
-7. `specs/08-dev-standards.md`
-8. `specs/11-testing-strategy.md`
-9. `specs/15-module-creation-guide.md`
-10. `specs/17-environment-guide.md`
+2. `docs/architecture/guides/execution-order-guide.md`
+3. `docs/architecture/architecture-overview.md`
+4. `docs/security/security-overview.md`
+5. `docs/contracts/api-principles.md`
+6. `docs/database/database-standards.md`
+7. `docs/architecture/guides/development-standards.md`
+8. `docs/architecture/guides/testing-strategy.md`
+9. `docs/architecture/guides/module-creation-guide.md`
+10. `docs/architecture/guides/environment-guide.md`
 11. `docs/product/00-product.md`
 12. `docs/product/01-vision.md`
 13. `docs/product/02-target-customers.md`
@@ -75,11 +75,11 @@ Si el proyecto lo trabaja una sola persona, aplicar estas reglas antes que un fl
 - Trabajar de forma incremental y verificable.
 - No mezclar refactors grandes con cambios funcionales sin necesidad.
 - Mantener trazabilidad en `specs/14-current-state.md` cuando el cambio sea relevante.
-- Respetar el backlog y el orden de ejecución definido en `specs/12-execution-order.md`.
+- Respetar el backlog y el orden de ejecución definido en `docs/architecture/guides/execution-order-guide.md`.
 - Si hay conflicto entre documentos, priorizar:
   1. `specs/14-current-state.md`
-  2. `specs/12-execution-order.md`
-  3. `specs/01-arquitecture.md`
+  2. `docs/architecture/guides/execution-order-guide.md`
+  3. `docs/architecture/architecture-overview.md`
   4. el backlog funcional
 - No introducir tecnologías, capas o patrones nuevos sin justificación explícita.
 
@@ -151,7 +151,7 @@ Si el proyecto lo trabaja una sola persona, aplicar estas reglas antes que un fl
 ## Módulos y trazabilidad
 
 - El módulo `Academy` es la referencia para construir nuevos módulos.
-- Los nuevos módulos deben seguir la guía de `specs/15-module-creation-guide.md`.
+- Los nuevos módulos deben seguir la guía de `docs/architecture/guides/module-creation-guide.md`.
 - Antes de implementar un módulo nuevo, revisar las HUs relacionadas y el estado actual.
 - Todo cambio importante debe dejar trazabilidad en:
   - `specs/14-current-state.md`

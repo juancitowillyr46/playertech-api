@@ -231,6 +231,7 @@ El sistema debe registrar:
 * El flujo debe resolverse desde la API de plataforma, idealmente manteniendo una sola entrada de provisionamiento.
 * El envio de correo debe seguir desacoplado por mensajes asíncronos.
 * La logica de creacion de academia, usuario inicial y primer equipo debe quedar en Application, no en el controller.
+* El primer equipo creado durante el provisioning debe usar un response especifico de onboarding; `categoryName` se mantiene como dato de presentacion para ese flujo y no como dependencia del contrato operativo de `Team`.
 * El provisionamiento debe ejecutarse en cascada; si falla un paso esencial, el sistema no debe dejar el tenant a medias.
 
 ---

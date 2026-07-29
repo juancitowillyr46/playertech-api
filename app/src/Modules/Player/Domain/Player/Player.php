@@ -245,6 +245,15 @@ final class Player implements Auditable
         }
     }
 
+    public function updateCategory(?CategoryId $categoryId, string $updatedBy): void
+    {
+        $this->categoryId = $categoryId;
+
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
+    }
+
     public function updatePhoto(?Media $photo, string $updatedBy): void
     {
         $this->photo = $photo;
