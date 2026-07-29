@@ -3,3 +3,4 @@
 /.vscode/
 /var/
 /.phpunit.result.cache
+/public/media/
