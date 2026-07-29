@@ -1,6 +1,6 @@
 # Tasks: Tenant Onboarding
 
-**Input**: Design documents from `./`
+**Entrada**: Design documents from `./`
 
 **Prerequisites**: plan.md (required), spec.md (required), research.md, data-model.md, contracts/
 
@@ -16,13 +16,13 @@
 
 ## Phase 3: User Story 1 - Register tenant
 
-- [ ] T005 Document tenant registration contract alignment
+- [ ] T005 Documentar tenant registration contract alignment
 
 ## Phase 4: User Story 2 - Activate tenant and track source
 
-- [ ] T006 Document activation and source-tracking boundaries
+- [ ] T006 Documentar activation and source-tracking boundaries
 
 ## Phase 5: User Story 3 - Create initial team during signup
 
-- [ ] T007 Document initial team creation boundaries inside onboarding
+- [ ] T007 Documentar initial team creation boundaries inside onboarding
 

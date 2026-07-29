@@ -6,80 +6,78 @@
 
 **Status**: Draft
 
-**Input**: Base feature for team lifecycle, listing, detail, update and state
-management within the academy sports structure.
+**Entrada**: Base feature para team lifecycle, listing, detail, update y state management dentro de la estructura deportiva de la academia.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Team registration and profile management (Priority: P1)
+### Historia de Usuario 1 - Team registration and profile management (Priority: P1)
 
-The system lets academy administrators create, view and update teams.
+El sistema permite a los administradores de academia crear, ver y actualizar teams.
 
-**Why this priority**: Teams are the core competitive structure around players.
+**Por qué esta prioridad**: Los teams son la estructura competitiva central alrededor de los players.
 
-**Independent Test**: A team can be created, listed, viewed and updated within the academy scope.
+**Prueba independiente**: Un team puede crearse, listarse, verse y actualizarse dentro del scope de la academia.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** valid team data, **When** an admin creates a team, **Then** the team is stored.
-2. **Given** an existing team, **When** the admin updates the team, **Then** the new data is persisted.
+1. **Given** datos válidos de team, **When** un admin crea el team, **Then** el team se almacena.
+2. **Given** un team existente, **When** el admin actualiza el team, **Then** los nuevos datos quedan persistidos.
 
-### User Story 2 - Team status management (Priority: P2)
+### Historia de Usuario 2 - Team status management (Priority: P2)
 
-The system lets admins deactivate and reactivate teams safely.
+El sistema permite a los administradores desactivar y reactivar teams de forma segura.
 
-**Why this priority**: Teams need controlled lifecycle without losing history.
+**Por qué esta prioridad**: Los teams necesitan un lifecycle controlado sin perder historial.
 
-**Independent Test**: A team can be deactivated and reactivated independently.
+**Prueba independiente**: Un team puede desactivarse y reactivarse de forma independiente.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** an active team, **When** the admin deactivates it, **Then** the team becomes inactive.
-2. **Given** an inactive team, **When** the admin reactivates it, **Then** the team becomes active again.
+1. **Given** un team activo, **When** el admin lo desactiva, **Then** el team pasa a inactivo.
+2. **Given** un team inactivo, **When** el admin lo reactiva, **Then** el team vuelve a estar activo.
 
-### User Story 3 - Team listing and detail enrichment (Priority: P3)
+### Historia de Usuario 3 - Team listing and detail enrichment (Priority: P3)
 
-The system exposes team listing and detail data for frontend consumption.
+El sistema expone datos de listing y detalle de teams para consumo del frontend.
 
-**Why this priority**: The frontend needs stable data for tables and detail views.
+**Por qué esta prioridad**: El frontend necesita datos estables para tablas y vistas de detalle.
 
-**Independent Test**: Teams can be listed and queried with the expected response shape.
+**Prueba independiente**: Los teams pueden listarse y consultarse con la estructura de respuesta esperada.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** teams in the academy, **When** the admin lists them, **Then** the response returns paginated data.
-2. **Given** a team identifier, **When** the admin views the detail, **Then** the API returns the team profile.
+1. **Given** teams en la academia, **When** el admin los lista, **Then** la respuesta devuelve datos paginados.
+2. **Given** un identificador de team, **When** el admin consulta el detalle, **Then** la API devuelve el profile del team.
 
-### Edge Cases
+### Casos límite
 
-- What happens when a team is created with a missing category?
-- How does the system handle duplicate names within the same academy?
-- What happens when a deactivated team is updated?
+- ¿Qué ocurre cuando se crea un team sin category?
+- ¿Cómo maneja el sistema nombres duplicados dentro de la misma academia?
+- ¿Qué ocurre cuando se actualiza un team desactivado?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow team registration within academy scope.
-- **FR-002**: System MUST allow team profile updates.
-- **FR-003**: System MUST allow team listing and detail retrieval.
-- **FR-004**: System MUST allow team deactivation and reactivation.
-- **FR-005**: System MUST preserve team history through state transitions.
+- **FR-001**: El sistema MUST permitir el registro de teams dentro del scope de la academia.
+- **FR-002**: El sistema MUST permitir la actualización del profile de team.
+- **FR-003**: El sistema MUST permitir el listing y la consulta de detalle de teams.
+- **FR-004**: El sistema MUST permitir la desactivación y reactivación de teams.
+- **FR-005**: El sistema MUST preservar el historial del team mediante state transitions.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
-- **Team**: competitive group belonging to an academy and a category.
+- **Team**: grupo competitivo que pertenece a una academia y a una category.
 
-## Success Criteria *(mandatory)*
+## Criterios de éxito *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
-- **SC-001**: Team lifecycle operations are independently testable.
-- **SC-002**: Team listing and detail responses are stable for frontend use.
-- **SC-003**: State transitions do not destroy historical context.
+- **SC-001**: Las operaciones del lifecycle de Team son testeables de forma independiente.
+- **SC-002**: Las respuestas de listing y detalle de Team son estables para el uso del frontend.
+- **SC-003**: Los state transitions no destruyen el contexto histórico.
 
-## Assumptions
+## Suposiciones
 
-- The team must continue to belong to a category.
-- Tenant isolation remains enforced by the backend.
-
+- El team debe seguir perteneciendo a una category.
+- El aislamiento por tenant sigue siendo aplicado por el backend.

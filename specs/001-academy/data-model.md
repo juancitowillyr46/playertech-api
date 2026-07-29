@@ -7,7 +7,7 @@
 ### Academy
 
 - Root tenant entity.
-- Stores profile, contact, location, shield and lifecycle state.
+- Almacena profile, contact, location, shield and lifecycle state.
 - Tracks registration source when required by the contract.
 
 ### Shield

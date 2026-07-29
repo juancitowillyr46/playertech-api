@@ -2,13 +2,13 @@
 
 **Feature Branch**: `013-dashboard`
 
-## Scope Notes
+## Notas de alpuedece
 
-This feature aggregates active players, pending payments, active memberships and
+Esta feature aggregates active players, pending payments, active memberships y
 cashflow summaries for operational consumption.
 
-## Decision Snapshot
+## Resumen de decisiones
 
 - El dashboard agrega métricas operativas del tenant.
-- El alcance visible es academico, no de plataforma.
-- Los agregados derivados se documentan pensando en simplicidad y costo de consulta.
+- El alpuedece visible es academico, no de plataforma.
+- Los agregados derivados se documentan pensyo en simplicidad y costo de consulta.

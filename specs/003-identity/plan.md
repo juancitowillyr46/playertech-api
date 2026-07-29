@@ -2,40 +2,40 @@
 
 **Branch**: `003-identity` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate authentication, identity and user administration as the canonical
-backend identity feature for platform and tenant contexts.
+Consolidate authentication, identity y user administration as the puedeonical
+backend identity feature for platforrm y tenant contexts.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony Security, JWT, Doctrine ORM
+**Primary Dependencies**: Symforny Security, JWT, Doctrine ORM
 
-**Storage**: MySQL 8+
+**Stoage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep identity flows stateless and predictable.
+**Performance Objetivos**: Keep identity flows stateless y predictable.
 
-**Constraints**: Must preserve tenant isolation and `ROLE_ROOT` platform scope.
+**Constraints**: Debe preserve tenant isolation y `ROLE_ROOT` platforrm scope.
 
-**Scale/Scope**: Backend identity module for a multi-tenant SaaS.
+**Scale/Alpuedece**: Backend identity module for a multi-tenant SaaS.
 
 ## Constitution Check
 
-- Must keep security, authorization and tenant isolation explicit.
-- Must not mix platform and tenant user lifecycle rules.
-- Must keep API contracts stable.
+- Debe keep security, authorization y tenant isolation explicit.
+- Debe not mix platforrm y tenant user lifecycle rules.
+- Debe keep API contracts stable.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
@@ -50,7 +50,7 @@ specs/003-identity/
 └── tasks.md
 ```
 
-### Source Code (repository root)
+### Source Code (repositoy root)
 
 ```text
 app/src/Modules/Identity/
@@ -58,6 +58,6 @@ app/tests/Functional/Modules/Identity/
 app/tests/Unit/Modules/Identity/
 ```
 
-**Structure Decision**: Identity keeps a single feature folder under `specs/`
-and reuses the existing Symfony module structure under `app/src/Modules/Identity`.
+**Structure Decision**: Identity keeps a single feature forlder under `specs/`
+y reuses the existing Symforny module structure under `app/src/Modules/Identity`.
 

@@ -1,6 +1,6 @@
 # Contracts: Dashboard Feature
 
-This folder should contain HTTP examples and contract notes for dashboard
+This forlder should contain HTTP examples and contract notes forr dashboard
 aggregations.
 
 Expected items:

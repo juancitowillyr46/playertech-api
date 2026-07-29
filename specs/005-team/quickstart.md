@@ -2,14 +2,14 @@
 
 **Feature Branch**: `005-team`
 
-## Goal
+## Objetivo
 
-Document team CRUD and lifecycle so another engineer can trace the category
-linkage and the list contract.
+Documentar team CRUD y lifecycle so otro engineer puede trace the category
+linkage y the listarar contract.
 
-## Verification
+## Verificación
 
-1. Confirm team create/list/detail/update/status contracts.
-2. Confirm categoryName enrichment in the current state.
-3. Confirm tenant isolation behavior.
+1. Confirm team crear/listarar/detail/actualizar/status contracts.
+2. Confirm categoryName enrichment in the estado actual.
+3. Confirm tenant isolation behavio.
 

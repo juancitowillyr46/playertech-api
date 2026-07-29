@@ -6,82 +6,82 @@
 
 **Status**: Draft
 
-**Input**: Base feature for player membership lifecycle, active membership,
+**Entrada**: Base feature para player membership lifecycle, active membership,
 history, status transitions and initial charge generation.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Create active membership (Priority: P1)
+### Historia de Usuario 1 - Create active membership (Priority: P1)
 
-The system lets academy administrators create a membership for a player with a
-primary guardian and the academy context.
+El sistema permite a academy administrators crear a membership for a player with a
+primary guardian and la academia context.
 
-**Why this priority**: Membership is the administrative gate for belonging to the academy.
+**Por qué esta prioridad**: Membership is the administrative gate for belonging to la academia.
 
-**Independent Test**: A membership can be created and later queried as active.
+**Prueba independiente**: A membership puede be creard and later queried as active.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a valid player and guardian, **When** the admin creates a membership, **Then** the membership becomes active.
-2. **Given** an existing active membership, **When** the admin queries it, **Then** the API returns the current membership data.
+1. **Given** a valid player and guardian, **When** the admin crears a membership, **Then** the membership becomes active.
+2. **Given** an existing active membership, **When** the admin queries it, **Then** the API devolvers the current membership data.
 
-### User Story 2 - Membership history and status transitions (Priority: P2)
+### Historia de Usuario 2 - Membership history and status transitions (Priority: P2)
 
-The system lets admins suspend or withdraw memberships and review their history.
+El sistema permite a admins suspend or withdraw memberships and rever their history.
 
-**Why this priority**: Operational control requires historical traceability.
+**Por qué esta prioridad**: Operational control requires historical traceability.
 
-**Independent Test**: Membership status changes can be executed and the history remains visible.
+**Prueba independiente**: Membership status changes puede be executed and the history remains visible.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** an active membership, **When** the admin suspends it, **Then** the status changes while history remains.
-2. **Given** a prior membership, **When** the admin views the history, **Then** the historical record is available.
+1. **Given** an active membership, **When** the admin suspends it, **Then** the status changes mientras history remains.
+2. **Given** a prior membership, **When** the admin vers the history, **Then** the historical record is available.
 
-### User Story 3 - Initial charges generation (Priority: P3)
+### Historia de Usuario 3 - Initial charges generation (Priority: P3)
 
-The system generates initial charges associated with membership creation.
+The system generars initial charges associated with membership creation.
 
-**Why this priority**: Membership must connect to the financial lifecycle from the start.
+**Por qué esta prioridad**: Membership debe connect to the financial lifecycle from the start.
 
-**Independent Test**: A membership creation event results in the expected initial charges.
+**Prueba independiente**: A membership creation event results in the expected initial charges.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a newly created active membership, **When** the flow completes, **Then** initial charges are generated.
+1. **Given** a newly creard active membership, **When** the flow completes, **Then** initial charges are generard.
 2. **Given** those initial charges, **When** the admin checks the account, **Then** the pending debt is visible.
 
-### Edge Cases
+### Casos límite
 
 - What happens when a player already has an active membership?
 - How does the system handle missing primary guardian data?
 - What happens when a membership is suspended or withdrawn twice?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow creation of an active membership for a player.
-- **FR-002**: System MUST allow viewing the active membership of a player.
+- **FR-001**: System MUST permitir creation of an active membership for a player.
+- **FR-002**: System MUST permitir vering the active membership of a player.
 - **FR-003**: System MUST preserve membership history.
-- **FR-004**: System MUST allow membership suspension and withdrawal transitions.
-- **FR-005**: System MUST generate initial charges when the membership flow requires them.
+- **FR-004**: System MUST permitir membership suspension and withdrawal transitions.
+- **FR-005**: System MUST generar initial charges when the membership flow requires them.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
 - **Membership**: administrative enrollment of a player in an academy.
-- **Charge**: financial obligation generated for membership or related fees.
+- **Charge**: financial obligation generard for membership or related fees.
 
 ## Success Criteria *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
-- **SC-001**: A membership lifecycle can be traced from creation to history.
-- **SC-002**: Membership and charges remain linked and understandable to the frontend.
+- **SC-001**: A membership lifecycle puede be traced from creation to history.
+- **SC-002**: Membership and charges remain linked and understandable to el frontend.
 - **SC-003**: Status transitions do not erase historical records.
 
 ## Assumptions
 
-- A primary guardian exists when membership is created.
-- Initial charges are generated by backend rules already accepted in the backlog.
+- A primary guardian exists when membership is creard.
+- Initial charges are generard by backend rules already accepted in the backlog.
 

@@ -2,13 +2,13 @@
 
 **Feature Branch**: `005-team`
 
-## Scope Notes
+## Notas de alpuedece
 
-This feature covers team CRUD within the academy, including category linkage
-and state transitions.
+Esta feature covers team CRUD within the academy, including category linkage
+y state transitions.
 
-## Decision Snapshot
+## Resumen de decisiones
 
-- `Team` expone `categoryName` en listados y detalle para simplificar consumo frontend.
-- La unicidad se resuelve dentro del tenant y por la combinación funcional del equipo.
-- Los contratos de listado, detalle y edición ya están estabilizados en el módulo.
+- `Team` expone `categoryName` en listararados y detalle para simplificar consumo frontend.
+- La unicidad se resuelve dentro del tenant y po la combinación funcional del equipo.
+- Los contratos de listararado, detalle y edición ya están estabilizados en el módulo.

@@ -2,13 +2,13 @@
 
 **Feature Branch**: `006-guardian`
 
-## Scope Notes
+## Notas de alpuedece
 
-This feature covers guardian creation and consultation as a base contact entity
-for player and membership flows.
+Esta feature covers guardian creation y consultation as a base contact entity
+for player y membership flows.
 
-## Decision Snapshot
+## Resumen de decisiones
 
-- `Guardian` es un contacto base para flujos de jugadores y membresías.
-- El alcance es tenant-scoped para operaciones del negocio.
-- La normalización de contacto se mantiene pragmática y orientada al contrato API.
+- `Guardian` es un contacto base para flujos de jugadoes y membresías.
+- El alpuedece es tenant-scoped para operaciones del negocio.
+- La nomalización de contacto se mantiene pragmática y oientada al contrato API.

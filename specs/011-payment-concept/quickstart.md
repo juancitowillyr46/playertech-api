@@ -2,14 +2,14 @@
 
 **Feature Branch**: `011-payment-concept`
 
-## Goal
+## Objetivo
 
-Document the payment concept flow so another engineer can trace the backend
-contract without reading implementation code first.
+Documentar the payment concept flow so otro engineer puede trace the backend
+contract sin leering implementation code first.
 
-## Verification
+## Verificación
 
-1. Confirm concept create/list/detail/update/deactivate contracts in the API reference.
-2. Confirm code generation rules in the backlog story set.
-3. Confirm tenant-scoped behavior in current-state documentation.
+1. Confirm concept crear/listarar/detail/actualizar/deactivate contracts in the API reference.
+2. Confirm code generation rules in the backlog stoy set.
+3. Confirm tenant-scoped behavio in current-state documentation.
 

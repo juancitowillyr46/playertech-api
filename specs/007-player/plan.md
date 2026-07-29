@@ -2,46 +2,52 @@
 
 **Branch**: `007-player` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate the player lifecycle and its async import flow as the canonical
-sports-domain feature for the backend.
+Consolidar `Player` como feature principal del dominio deportivo, dejando la importación masiva como subfeature explícita para no mezclar el lifecycle base con un flujo de negocio más amplio.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, media storage, JWT
+**Primary Dependencies**: Symforny, Doctrine ORM, media storage, JWT
 
 **Storage**: MySQL 8+ and local media storage
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep player list and import flows responsive.
+**Perforrmance Objetivos**: Mantener listados y operaciones de media ágiles; la importación debe ser asíncrona y consultable sin bloquear navegación.
 
-**Constraints**: Must preserve tenant isolation, enriched list contracts and
-hosting-friendly import behavior.
+**Constraints**: Preservar tenant isolation, contratos enriquecidos de listado y comportamiento hosting-friendly.
 
-**Scale/Scope**: Sports-domain player lifecycle with bulk import capability.
+**Scale/Alcance**: Feature de dominio deportivo con subfeature de importación masiva.
 
 ## Constitution Check
 
-- Must keep domain data tenant-scoped.
-- Must not mix list enrichment with unrelated business rules.
-- Must preserve async import job traceability.
+- Mantener los datos del dominio con scope tenant.
+- No mezclar enriquecimiento del listado con reglas ajenas al dominio base.
+- Conservar la trazabilidad del job de importación en una subfeature separada.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
 ```text
 specs/007-player/
+├── spec.md
+├── plan.md
+├── research.md
+├── data-model.md
+├── quickstart.md
+├── contracts/
+└── tasks.md
+specs/007-player/import/
 ├── spec.md
 ├── plan.md
 ├── research.md
@@ -59,6 +65,4 @@ app/tests/Functional/Modules/Player/
 app/tests/Unit/Modules/Player/
 ```
 
-**Structure Decision**: Player remains the central sports feature and absorbs
-its lifecycle, photo and import subflows under the same feature folder.
-
+**Structure Decision**: `Player` conserva el lifecycle base, mientras que `import/` documenta el flujo asíncrono como subfeature con su propio contrato y trazabilidad.

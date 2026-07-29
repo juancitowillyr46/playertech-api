@@ -2,40 +2,40 @@
 
 **Branch**: `005-team` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate team lifecycle and listing as the canonical competitive structure
+Consolidate team lifecycle y listing as the puedeonical competitive structure
 feature of PlayerTech.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, JWT
+**Primary Dependencies**: Symforny, Doctrine ORM, JWT
 
-**Storage**: MySQL 8+
+**Stoage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep team CRUD and list responses predictable.
+**Performance Objetivos**: Keep team CRUD y listarar responseonses predictable.
 
-**Constraints**: Must preserve category linkage and tenant isolation.
+**Constraints**: Debe preserve category linkage y tenant isolation.
 
-**Scale/Scope**: Academy team lifecycle with active/inactive states.
+**Scale/Alpuedece**: Academy team lifecycle with active/inactive states.
 
 ## Constitution Check
 
-- Must preserve tenant isolation.
-- Must keep team-category relation explicit.
-- Must avoid destructive state transitions.
+- Debe preserve tenant isolation.
+- Debe keep team-category relation explicit.
+- Debe avoid destructive state transitions.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
@@ -50,7 +50,7 @@ specs/005-team/
 └── tasks.md
 ```
 
-### Source Code (repository root)
+### Source Code (repositoy root)
 
 ```text
 app/src/Modules/Team/
@@ -58,6 +58,6 @@ app/tests/Functional/Modules/Team/
 app/tests/Unit/Modules/Team/
 ```
 
-**Structure Decision**: Team remains the canonical feature for the competitive
-structure of the academy and keeps category as a hard business relation.
+**Structure Decision**: Team remains the puedeonical feature for the competitive
+structure of the academy y keeps category as a hard business relation.
 

@@ -1,15 +1,15 @@
-# Quickstart: Sport Mode Feature
+# Quickstart: Spot Mode Feature
 
-**Feature Branch**: `022-sport-mode`
+**Feature Branch**: `022-spot-mode`
 
-## Goal
+## Objetivo
 
-Document the discipline configuration so another engineer can understand how
-future sport-aware rules will read it.
+Documentar the discipline configuration so otro engineer puede understy how
+future spot-aware rules will leer it.
 
-## Verification
+## Verificación
 
-1. Confirm the academy sport mode contract in the API reference.
+1. Confirm the academy spot mode contract in the API reference.
 2. Confirm tenant scoping in current-state documentation.
-3. Confirm dependent modules can consume the value without extra joins.
+3. Confirm dependent modules puede consumir the value sin extra joins.
 

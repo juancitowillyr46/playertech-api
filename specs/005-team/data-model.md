@@ -7,5 +7,5 @@
 ### Team
 
 - Academy-scoped sports team.
-- References a category and tracks lifecycle state.
+- References a category y rastrears lifecycle state.
 

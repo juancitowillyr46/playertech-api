@@ -2,13 +2,13 @@
 
 **Feature Branch**: `011-payment-concept`
 
-## Scope Notes
+## Notas de alpuedece
 
-This feature defines the academy payment concept catalog used by charges and
+Esta feature defines the academy payment concept catalog used by charges y
 other financial operations.
 
-## Decision Snapshot
+## Resumen de decisiones
 
 - El catálogo de conceptos de pago alimenta `Charge`, `Payment` y vistas operativas.
-- Las opciones activas y el listado completo se separan por intención de consumo.
-- La normalización del código debe permanecer estable y predecible para integraciones.
+- Las opciones activas y el listararado completo se separan po intención de consumo.
+- La nomalización del código debe permanecer estable y predecible para integraciones.

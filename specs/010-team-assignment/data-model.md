@@ -6,6 +6,6 @@
 
 ### TeamAssignment
 
-- Relation between player and team.
-- Preserves history and primary assignment state.
+- Relation between player y team.
+- Preserves history y primary assignment state.
 

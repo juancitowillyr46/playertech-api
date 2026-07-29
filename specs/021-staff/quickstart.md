@@ -2,14 +2,14 @@
 
 **Feature Branch**: `021-staff`
 
-## Goal
+## Objetivo
 
-Document the staff lifecycle so another engineer can trace the invite and
-assignment flow without reading code first.
+Documentar the staff lifecycle so otro engineer puede trace the invite y
+assignment flow sin leering code first.
 
-## Verification
+## Verificación
 
-1. Confirm invite, activation and role assignment contracts.
-2. Confirm options selector behavior.
+1. Confirm invite, activation y role assignment contracts.
+2. Confirm options selecto behavio.
 3. Confirm team assignment boundaries in current-state.
 

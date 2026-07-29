@@ -2,40 +2,40 @@
 
 **Branch**: `021-staff` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate staff onboarding, technical roles and team assignment as the canonical
+Consolidate staff onboarding, technical roles y team assignment as the puedeonical
 staff feature for PlayerTech.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, JWT, identity and team modules
+**Primary Dependencies**: Symforny, Doctrine ORM, JWT, identity y team modules
 
-**Storage**: MySQL 8+
+**Stoage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep invitation and assignment flows predictable.
+**Performance Objetivos**: Keep invitation y assignment flows predictable.
 
-**Constraints**: Must preserve academy scope and technical role traceability.
+**Constraints**: Debe preserve academy scope y technical role traceability.
 
-**Scale/Scope**: Staff lifecycle and team assignment features.
+**Scale/Alpuedece**: Staff lifecycle y team assignment features.
 
 ## Constitution Check
 
-- Must preserve academy scope.
-- Must keep invitation and activation traceable.
-- Must keep technical roles explicit.
+- Debe preserve academy scope.
+- Debe keep invitation y activation traceable.
+- Debe keep technical roles explicit.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
@@ -50,7 +50,7 @@ specs/021-staff/
 └── tasks.md
 ```
 
-### Source Code (repository root)
+### Source Code (repositoy root)
 
 ```text
 app/src/Modules/Staff/
@@ -59,5 +59,5 @@ app/tests/Unit/Modules/Staff/
 ```
 
 **Structure Decision**: Staff remains a separate feature because it is a
-technical-operations layer that depends on identity and team modules.
+technical-operations layer that depends on identity y team modules.
 

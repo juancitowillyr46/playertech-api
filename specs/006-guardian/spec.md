@@ -6,79 +6,78 @@
 
 **Status**: Draft
 
-**Input**: Base feature for guardian lifecycle, listing, detail and creation.
+**Entrada**: Base feature para guardian lifecycle, listing, detail y creation.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Guardian creation and profile management (Priority: P1)
+### Historia de Usuario 1 - Guardian creation and profile management (Priority: P1)
 
-The system lets academy administrators create and manage guardian profiles.
+El sistema permite a los administradores de academia crear y gestionar guardian profiles.
 
-**Why this priority**: Guardians are required to keep player administrative flows complete.
+**Por qué esta prioridad**: Los guardians son necesarios para completar los flujos administrativos de player.
 
-**Independent Test**: A guardian can be created and later viewed or updated.
+**Prueba independiente**: Un guardian puede crearse y luego consultarse o actualizarse.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** valid guardian data, **When** the admin creates a guardian, **Then** the guardian is stored.
-2. **Given** an existing guardian, **When** the admin updates it, **Then** the new data is persisted.
+1. **Given** datos válidos de guardian, **When** el admin crea un guardian, **Then** el guardian se almacena.
+2. **Given** un guardian existente, **When** el admin lo actualiza, **Then** los nuevos datos quedan persistidos.
 
-### User Story 2 - Guardian listing and detail retrieval (Priority: P2)
+### Historia de Usuario 2 - Guardian listing and detail retrieval (Priority: P2)
 
-The system lets admins list and inspect guardians within the academy scope.
+El sistema permite a los administradores listar y consultar guardians dentro del scope de la academia.
 
-**Why this priority**: Operational work needs a reliable guardian directory.
+**Por qué esta prioridad**: El trabajo operativo necesita un directorio de guardians confiable.
 
-**Independent Test**: A guardian can be listed and queried by detail endpoint.
+**Prueba independiente**: Un guardian puede listarse y consultarse por endpoint de detalle.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** guardians in the academy, **When** the admin lists them, **Then** the response is returned with pagination.
-2. **Given** a guardian identifier, **When** the admin views it, **Then** the guardian detail is returned.
+1. **Given** guardians en la academia, **When** el admin los lista, **Then** la respuesta devuelve datos paginados.
+2. **Given** un identificador de guardian, **When** el admin lo consulta, **Then** el detalle del guardian se devuelve.
 
-### User Story 3 - Guardian operational data support (Priority: P3)
+### Historia de Usuario 3 - Guardian operational data support (Priority: P3)
 
-The system stores guardian data useful for contact and payment operations.
+El sistema almacena datos de guardian útiles para operaciones de contacto y payment.
 
-**Why this priority**: Guardian records support downstream membership and payment flows.
+**Por qué esta prioridad**: Los guardian records dan soporte a membership y payment flows downstream.
 
-**Independent Test**: Contact data used by other features is available in the guardian profile.
+**Prueba independiente**: Los datos de contacto usados por otras features están disponibles en el profile del guardian.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a guardian profile, **When** the admin records contact data, **Then** the values are retained.
-2. **Given** an active guardian, **When** membership or payment flows reference it, **Then** the guardian data is available.
+1. **Given** un profile de guardian, **When** el admin registra datos de contacto, **Then** los valores quedan retenidos.
+2. **Given** un guardian activo, **When** membership o payment flows lo referencian, **Then** los datos del guardian están disponibles.
 
-### Edge Cases
+### Casos límite
 
-- What happens when a guardian is created with incomplete contact information?
-- How does the system handle duplicate guardians within the same academy?
-- What happens when a guardian is deleted or inactivated?
+- ¿Qué ocurre cuando se crea un guardian con información de contacto incompleta?
+- ¿Cómo maneja el sistema guardians duplicados dentro de la misma academia?
+- ¿Qué ocurre cuando un guardian se elimina o se inactiva?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow guardian creation.
-- **FR-002**: System MUST allow guardian profile updates.
-- **FR-003**: System MUST allow guardian listing and detail retrieval.
-- **FR-004**: System MUST retain guardian contact data for downstream flows.
-- **FR-005**: System MUST preserve tenant isolation for guardian operations.
+- **FR-001**: El sistema MUST permitir la creación de guardians.
+- **FR-002**: El sistema MUST permitir la actualización del profile de guardian.
+- **FR-003**: El sistema MUST permitir el listing y la consulta de detalle de guardians.
+- **FR-004**: El sistema MUST retener los datos de contacto de guardian para flujos downstream.
+- **FR-005**: El sistema MUST preservar el aislamiento por tenant para las operaciones de guardian.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
-- **Guardian**: legal or responsible person linked to one or more players.
+- **Guardian**: persona legal o responsable vinculada a uno o más players.
 
-## Success Criteria *(mandatory)*
+## Criterios de éxito *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
-- **SC-001**: Guardian records are independently testable.
-- **SC-002**: Guardian data can support player, membership and payment flows.
-- **SC-003**: List and detail responses remain stable for frontend usage.
+- **SC-001**: Los records de guardian son testeables de forma independiente.
+- **SC-002**: Los datos de guardian pueden dar soporte a player, membership y payment flows.
+- **SC-003**: Las respuestas de listing y detalle permanecen estables para el uso del frontend.
 
-## Assumptions
+## Suposiciones
 
-- Guardian records are used by membership and payment flows.
-- The backend already supports tenant-scoped data isolation.
-
+- Los guardian records se usan en membership y payment flows.
+- El backend ya da soporte a aislamiento de datos con scope tenant.

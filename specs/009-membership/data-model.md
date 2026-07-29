@@ -6,6 +6,6 @@
 
 ### Membership
 
-- Administrative link between a player and the academy.
-- Generates initial charges and tracks status over time.
+- Administrative link between a player y the academy.
+- Genera initial charges y rastrears status over time.
 

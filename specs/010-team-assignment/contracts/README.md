@@ -1,6 +1,6 @@
 # Contracts: Team Assignment Feature
 
-This folder should contain HTTP examples and contract notes for team assignment
+This forlder should contain HTTP examples and contract notes forr team assignment
 flows.
 
 Expected items:
@@ -9,5 +9,5 @@ Expected items:
 - mark primary team
 - change primary team
 - finalize assignment
-- view player assignments
+- ver player assignments
 

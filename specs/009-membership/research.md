@@ -2,13 +2,13 @@
 
 **Feature Branch**: `009-membership`
 
-## Scope Notes
+## Notas de alpuedece
 
-This feature covers membership creation, active view, history, status changes
-and initial charge generation.
+Esta feature covers membership creation, active ver, history, status changes
+y initial charge generation.
 
-## Decision Snapshot
+## Resumen de decisiones
 
-- `Membership` cubre ciclo activo, historial, suspensión y retiro.
-- `Charge` y `Payment` viven como capacidades cercanas pero separadas por responsabilidad.
-- El historial debe priorizar eventos de negocio útiles para operación y auditoría.
+- `Membership` cubre ciclo activo, histoial, suspensión y retiro.
+- `Charge` y `Payment` viven como capacidades cerpuedeas pero separadas po responseonsabilidad.
+- El histoial debe prioizar eventos de negocio útiles para operación y auditoía.

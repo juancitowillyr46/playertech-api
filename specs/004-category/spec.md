@@ -6,81 +6,79 @@
 
 **Status**: Draft
 
-**Input**: Base feature for category lifecycle, listing, detail, update, state
-management and business key support.
+**Entrada**: Base feature para category lifecycle, listing, detail, update, state management y business key support.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Category registration and profile management (Priority: P1)
+### Historia de Usuario 1 - Category registration and profile management (Priority: P1)
 
-The system lets academy administrators create, view and update categories.
+El sistema permite a los administradores de academia crear, ver y actualizar categories.
 
-**Why this priority**: Categories organize the academy’s sports structure.
+**Por qué esta prioridad**: Categories organize la estructura deportiva de la academia.
 
-**Independent Test**: A category can be created, listed, viewed and updated in academy scope.
+**Prueba independiente**: Una category puede crearse, listarse, verse y actualizarse dentro del scope de la academia.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** valid category data, **When** an admin creates a category, **Then** the category is stored.
-2. **Given** an existing category, **When** the admin updates it, **Then** the new data is persisted.
+1. **Given** datos válidos de category, **When** un admin crea la category, **Then** la category se almacena.
+2. **Given** una category existente, **When** el admin la actualiza, **Then** los nuevos datos quedan persistidos.
 
-### User Story 2 - Category state management (Priority: P2)
+### Historia de Usuario 2 - Category state management (Priority: P2)
 
-The system lets admins activate and deactivate categories safely.
+El sistema permite a los administradores activar y desactivar categories de forma segura.
 
-**Why this priority**: Categories need controlled lifecycle without losing history.
+**Por qué esta prioridad**: Las categories necesitan un lifecycle controlado sin perder historial.
 
-**Independent Test**: A category can be activated and deactivated independently.
+**Prueba independiente**: Una category puede activarse y desactivarse de forma independiente.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** an active category, **When** the admin deactivates it, **Then** the category becomes inactive.
-2. **Given** an inactive category, **When** the admin activates it, **Then** the category becomes active again.
+1. **Given** una category activa, **When** el admin la desactiva, **Then** la category pasa a inactiva.
+2. **Given** una category inactiva, **When** el admin la activa, **Then** la category vuelve a estar activa.
 
-### User Story 3 - Category options and business key support (Priority: P3)
+### Historia de Usuario 3 - Category options and business key support (Priority: P3)
 
-The system exposes category options and a stable business key for frontend use.
+El sistema expone category options y una business key estable para uso del frontend.
 
-**Why this priority**: Player, team creation and import flows depend on a stable category reference.
+**Por qué esta prioridad**: `Player`, la creación de teams y los import flows dependen de una referencia estable de category.
 
-**Independent Test**: Categories can be listed as active options and the business key is stable.
+**Prueba independiente**: Las categories pueden listarse como opciones activas y la business key se mantiene estable.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** active categories, **When** the frontend requests options, **Then** the response returns only active entries.
-2. **Given** a category record, **When** the business key is required, **Then** the backend exposes a stable key for contract use.
+1. **Given** categories activas, **When** el frontend solicita las options, **Then** la respuesta devuelve solo entries activas.
+2. **Given** un registro de category, **When** se requiere la business key, **Then** el backend expone una key estable para uso contractual.
 
-### Edge Cases
+### Casos límite
 
-- What happens when two categories conflict by name?
-- How does the system handle category inactivation while players already belong to it?
-- What happens when a category is used in import or team creation flows?
+- ¿Qué ocurre cuando dos categories entran en conflicto por nombre?
+- ¿Cómo maneja el sistema la desactivación de una category mientras players ya pertenecen a ella?
+- ¿Qué ocurre cuando una category se usa en import o team creation flows?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow category creation.
-- **FR-002**: System MUST allow category profile updates.
-- **FR-003**: System MUST allow category listing and detail retrieval.
-- **FR-004**: System MUST allow category activation and deactivation.
-- **FR-005**: System MUST expose active category options for frontend selection.
-- **FR-006**: System MUST expose a stable business key for contract use.
+- **FR-001**: El sistema MUST permitir la creación de categories.
+- **FR-002**: El sistema MUST permitir la actualización del profile de category.
+- **FR-003**: El sistema MUST permitir el listing y la consulta de detalle de categories.
+- **FR-004**: El sistema MUST permitir la activación y desactivación de categories.
+- **FR-005**: El sistema MUST exponer category options activas para selección del frontend.
+- **FR-006**: El sistema MUST exponer una business key estable para uso contractual.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
-- **Category**: sports classification used to organize players and teams.
+- **Category**: clasificación deportiva usada para organizar players y teams.
 
-## Success Criteria *(mandatory)*
+## Criterios de éxito *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
-- **SC-001**: Category lifecycle flows are independently testable.
-- **SC-002**: Active options support frontend selectors and imports.
-- **SC-003**: Business key support remains stable across the backend.
+- **SC-001**: Los flujos de lifecycle de Category son testeables de forma independiente.
+- **SC-002**: Las options activas dan soporte a selectores e imports del frontend.
+- **SC-003**: La business key permanece estable a través del backend.
 
-## Assumptions
+## Suposiciones
 
-- Category continues to belong to a single academy.
-- The backend already enforces uniqueness and tenant scope.
-
+- Category sigue perteneciendo a una sola academia.
+- El backend ya aplica unicidad y scope tenant.

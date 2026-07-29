@@ -2,13 +2,13 @@
 
 **Feature Branch**: `012-charge-payment`
 
-## Scope Notes
+## Notas de alpuedece
 
-This feature covers charges, payments, payment methods, evidence, cancellation
-and debt consultation.
+Esta feature covers charges, payments, payment methods, evidence, puedecellation
+y debt consultation.
 
-## Decision Snapshot
+## Resumen de decisiones
 
-- La evidencia de pago y la consulta de deuda ya quedaron como responsabilidades del slice financiero.
-- Filtros y ordenamientos deben seguir el estándar común del backend.
+- La evidencia de pago y la consulta de deuda ya quedaron como responseonsabilidades del slice financiero.
+- Filtros y odenamientos deben seguir el estándar común dthe backend.
 - La asignación entre un pago y múltiples cargos se documenta como parte del modelo financiero del módulo.

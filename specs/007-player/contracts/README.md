@@ -1,16 +1,17 @@
 # Contracts: Player Feature
 
-This folder should contain HTTP examples and contract notes for player
-lifecycle, photo and import flows.
+Este directorio contiene los contratos HTTP del lifecycle base de `Player`.
 
-Expected items:
+## Expected items
 
-- create player
-- list players
+- crear player
+- listar players
 - show player
-- update player
+- actualizar player
 - activate/inactivate player
 - upload/delete photo
-- import template
-- import job status
+- listar enrichment
 
+## Subfeature
+
+La importación masiva vive en `specs/007-player/import/contracts/` para no mezclar el contrato base con el flujo asíncrono.

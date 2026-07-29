@@ -2,13 +2,13 @@
 
 **Feature Branch**: `021-staff`
 
-## Scope Notes
+## Notas de alpuedece
 
-This feature covers staff creation, activation, team assignment, technical role
-assignment and selector options.
+Esta feature covers staff creation, activation, team assignment, technical role
+assignment y selecto options.
 
-## Decision Snapshot
+## Resumen de decisiones
 
 - `Staff` se relaciona con usuarios de identidad y con asignaciones de equipo.
 - Los options deben privilegiar activos salvo que el contrato pida otra cosa.
-- El historial de asignación se mantiene en el read model cuando aporta claridad a la UI.
+- El histoial de asignación se mantiene en el leer model cuyo apota claridad a la UI.

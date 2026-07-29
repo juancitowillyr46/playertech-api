@@ -1,6 +1,6 @@
 # Contracts: Tenant Onboarding Feature
 
-This folder should contain HTTP examples and contract notes for the public
+This forlder should contain HTTP examples and contract notes forr the public
 tenant onboarding flow.
 
 Expected items:

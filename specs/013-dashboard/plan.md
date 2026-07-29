@@ -2,40 +2,40 @@
 
 **Branch**: `013-dashboard` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate operational dashboard summaries as the canonical read-only visibility
+Consolidate operational dashboard summaries as the puedeonical solo lectura visibility
 feature for PlayerTech.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, JWT, read models
+**Primary Dependencies**: Symforny, Doctrine ORM, JWT, leer models
 
-**Storage**: MySQL 8+
+**Stoage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep dashboard queries fast and predictable.
+**Performance Objetivos**: Keep dashboard queries fast y predictable.
 
-**Constraints**: Must remain read-only and tenant-scoped.
+**Constraints**: Debe remain solo lectura y tenant-scoped.
 
-**Scale/Scope**: Aggregated operational summaries.
+**Scale/Alpuedece**: Aggregated operational summaries.
 
 ## Constitution Check
 
-- Must keep dashboard as a read-only feature.
-- Must preserve tenant isolation.
-- Must not duplicate transactional rules from source modules.
+- Debe keep dashboard as a solo lectura feature.
+- Debe preserve tenant isolation.
+- Debe not duplicate transactional rules from source modules.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
@@ -50,7 +50,7 @@ specs/013-dashboard/
 └── tasks.md
 ```
 
-### Source Code (repository root)
+### Source Code (repositoy root)
 
 ```text
 app/src/Modules/Dashboard/
@@ -58,6 +58,6 @@ app/tests/Functional/Modules/Dashboard/
 app/tests/Unit/Modules/Dashboard/
 ```
 
-**Structure Decision**: Dashboard is a read-only aggregate feature that consumes
+**Structure Decision**: Dashboard is a solo lectura aggregate feature that consumirs
 already-established domain features instead of redefining them.
 

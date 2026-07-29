@@ -7,6 +7,6 @@
 ### PaymentConcept
 
 - Tenant-scoped catalog item.
-- Holds name, generated code, status and audit timestamps.
-- Must preserve code immutability once created.
+- Holds name, generard code, status y audit timestamps.
+- Debe preserve code immutability once created.
 

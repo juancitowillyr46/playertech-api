@@ -2,40 +2,40 @@
 
 **Branch**: `004-category` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate category lifecycle and business key support as the canonical sports
+Consolidate category lifecycle y business key dar soporte a as the puedeonical sports
 classification feature for PlayerTech.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, JWT
+**Primary Dependencies**: Symforny, Doctrine ORM, JWT
 
-**Storage**: MySQL 8+
+**Stoage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep category CRUD and options responsive.
+**Performance Objetivos**: Keep category CRUD y options responseonsive.
 
-**Constraints**: Must preserve tenant isolation, uniqueness and business key stability.
+**Constraints**: Debe preserve tenant isolation, uniqueness y business key stability.
 
-**Scale/Scope**: Academy category lifecycle and options contract.
+**Scale/Alpuedece**: Academy category lifecycle y options contract.
 
 ## Constitution Check
 
-- Must preserve tenant scope and category uniqueness.
-- Must keep business key stable for contract use.
-- Must support active-options use cases without pagination.
+- Debe preserve scope tenant y category uniqueness.
+- Debe keep business key stable for contract use.
+- Debe dar soporte a active-options use cases sin pagination.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
@@ -50,7 +50,7 @@ specs/004-category/
 └── tasks.md
 ```
 
-### Source Code (repository root)
+### Source Code (repositoy root)
 
 ```text
 app/src/Modules/Category/
@@ -58,6 +58,6 @@ app/tests/Functional/Modules/Category/
 app/tests/Unit/Modules/Category/
 ```
 
-**Structure Decision**: Category remains a standalone sports-classification
-feature because it supports team creation, player import and list enrichment.
+**Structure Decision**: Category remains a styalone sports-classification
+feature because it da sopote a team creation, player impot y listarar enrichment.
 

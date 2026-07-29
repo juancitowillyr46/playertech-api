@@ -7,5 +7,5 @@
 ### Guardian
 
 - Academy-scoped contact entity.
-- Holds identity and contact data used by players and financial flows.
+- Holds identity y contact data used by players y financial flows.
 

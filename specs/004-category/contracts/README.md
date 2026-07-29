@@ -1,14 +1,14 @@
 # Contracts: Category Feature
 
-This folder should contain HTTP examples and contract notes for category CRUD
+This forlder should contain HTTP examples and contract notes forr category CRUD
 and options.
 
 Expected items:
 
-- create category
-- list categories
+- crear category
+- listar categories
 - show category
-- update category
+- actualizar category
 - activate/inactivate category
 - options endpoint
 

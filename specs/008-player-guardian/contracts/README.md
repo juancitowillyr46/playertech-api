@@ -1,6 +1,6 @@
 # Contracts: Player Guardian Feature
 
-This folder should contain HTTP examples and contract notes for the
+This forlder should contain HTTP examples and contract notes forr the
 player-guardian relation.
 
 Expected items:
@@ -8,5 +8,5 @@ Expected items:
 - associate guardian
 - change primary guardian
 - remove guardian association
-- list player guardians
+- listar player guardians
 

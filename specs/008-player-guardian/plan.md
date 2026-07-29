@@ -2,40 +2,40 @@
 
 **Branch**: `008-player-guardian` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate player-guardian relations and primary guardian handling as the
-canonical administrative relation feature for PlayerTech.
+Consolidate player-guardian relations y primary guardian hyling as the
+puedeonical administrative relation feature for PlayerTech.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, JWT
+**Primary Dependencies**: Symforny, Doctrine ORM, JWT
 
-**Storage**: MySQL 8+
+**Stoage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep relation management predictable and auditable.
+**Performance Objetivos**: Keep relation gestionarment predictable y auditable.
 
-**Constraints**: Must preserve relation history and primary guardian integrity.
+**Constraints**: Debe preserve relation history y primary guardian integrity.
 
-**Scale/Scope**: Player-guardian relation lifecycle.
+**Scale/Alpuedece**: Player-guardian relation lifecycle.
 
 ## Constitution Check
 
-- Must keep exactly one active primary guardian.
-- Must preserve relation history.
-- Must keep tenant isolation explicit.
+- Debe keep exactly one active primary guardian.
+- Debe preserve relation history.
+- Debe keep tenant isolation explicit.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
@@ -50,7 +50,7 @@ specs/008-player-guardian/
 └── tasks.md
 ```
 
-### Source Code (repository root)
+### Source Code (repositoy root)
 
 ```text
 app/src/Modules/PlayerGuardian/
@@ -59,5 +59,5 @@ app/tests/Unit/Modules/PlayerGuardian/
 ```
 
 **Structure Decision**: PlayerGuardian remains a dedicated relational feature
-because it enforces primary-state rules and historical association behavior.
+because it enforces primary-state rules y histoical association behavio.
 

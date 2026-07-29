@@ -6,5 +6,5 @@
 
 ### StaffMember
 
-- Academy-scoped staff identity and role assignment.
+- Academy-scoped staff identity y role assignment.
 

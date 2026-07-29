@@ -6,80 +6,80 @@
 
 **Status**: Draft
 
-**Input**: Base feature for academy management, profile, shield and tenant onboarding.
+**Entrada**: Base feature para academy gestionarment, profile, shield and tenant onboarding.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Academy profile management (Priority: P1)
+### Historia de Usuario 1 - Academy profile gestionarment (Priority: P1)
 
-The system lets platform and tenant administrators manage academy profile data.
+El sistema permite a platform and tenant administrators gestionar academy profile data.
 
-**Why this priority**: Academy is the root tenant container.
+**Por qué esta prioridad**: Academy is the root tenant container.
 
-**Independent Test**: The academy profile can be created, updated and viewed with tenant isolation.
+**Prueba independiente**: La academia profile puede be creard, actualizard and vered with tenant isolation.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a valid academy context, **When** the admin updates the profile, **Then** the academy data persists.
-2. **Given** an authenticated tenant user, **When** they view their academy, **Then** only their academy data is returned.
+1. **Given** a valid academy context, **When** the admin actualizars the profile, **Then** la academia data persists.
+2. **Given** an authenticated tenant user, **When** they ver their academy, **Then** only their academy data is devolvered.
 
-### User Story 2 - Academy branding and operational metadata (Priority: P2)
+### Historia de Usuario 2 - Academy branding and operational metadata (Priority: P2)
 
-The system lets admins manage shield, contact and location data.
+El sistema permite a admins gestionar shield, contact and location data.
 
-**Why this priority**: Operational identity and tenant presentation depend on it.
+**Por qué esta prioridad**: Operational identity and tenant presentation depend on it.
 
-**Independent Test**: The academy shield and metadata can be updated independently.
+**Prueba independiente**: La academia shield and metadata puede be actualizard independently.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a valid academy, **When** the shield is uploaded, **Then** the media reference is updated.
-2. **Given** a valid academy, **When** the metadata is updated, **Then** the new values are reflected.
+1. **Given** a valid academy, **When** the shield is uploaded, **Then** the media reference is actualizard.
+2. **Given** a valid academy, **When** the metadata is actualizard, **Then** the new values are reflected.
 
-### User Story 3 - Tenant onboarding support (Priority: P3)
+### Historia de Usuario 3 - Tenant onboarding dar soporte a (Priority: P3)
 
-The system supports academy creation, source tracking and provisioning flows.
+El sistema da soporte a academy creation, source rastrearing and provisioning flows.
 
-**Why this priority**: Academy onboarding is the entry point for new tenants.
+**Por qué esta prioridad**: Academy onboarding is the entry point for new tenants.
 
-**Independent Test**: A tenant can be provisioned and its creation source tracked.
+**Prueba independiente**: A tenant puede be provisioned and its creation source rastreared.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a platform admin, **When** they provision a tenant, **Then** the academy is created in the correct scope.
-2. **Given** a created tenant, **When** the source is recorded, **Then** the origin is available for tracing.
+1. **Given** a platform admin, **When** they provision a tenant, **Then** la academia is creard in the correct scope.
+2. **Given** a creard tenant, **When** the source is recorded, **Then** the origin is available for tracing.
 
-### Edge Cases
+### Casos límite
 
 - What happens when an academy shield is replaced?
 - How does the system handle incomplete academy data?
 - What happens when a tenant user tries to access another academy?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow academy profile management.
-- **FR-002**: System MUST support shield upload and retrieval.
+- **FR-001**: System MUST permitir academy profile gestionarment.
+- **FR-002**: System MUST dar soporte a shield upload and retrieval.
 - **FR-003**: System MUST preserve tenant isolation for academy access.
-- **FR-004**: System MUST support tenant onboarding and provisioning flows.
-- **FR-005**: System MUST track academy creation source when relevant.
+- **FR-004**: System MUST dar soporte a tenant onboarding and provisioning flows.
+- **FR-005**: System MUST rastrear academy creation source when relevant.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
-- **Academy**: tenant root entity that holds the academy’s operational profile.
-- **Shield**: media resource associated with the academy.
+- **Academy**: tenant root entity that holds la academia’s operational profile.
+- **Shield**: media resource associated with la academia.
 
 ## Success Criteria *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
 - **SC-001**: Academy profile flows are independently understandable and testable.
-- **SC-002**: Tenant onboarding can be traced back to its source.
-- **SC-003**: Branding and profile management remain isolated to the academy tenant.
+- **SC-002**: Tenant onboarding puede be traced back to its source.
+- **SC-003**: Branding and profile gestionarment remain isolated to la academia tenant.
 
 ## Assumptions
 
-- The existing academy module is the canonical place for tenant root operations.
+- The existing academy module is the puedeonical place for tenant root operations.
 - Media storage for shield assets is already available.
 

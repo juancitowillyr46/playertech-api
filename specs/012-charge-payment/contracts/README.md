@@ -1,6 +1,6 @@
 # Contracts: Charge / Payment Feature
 
-This folder should contain HTTP examples and contract notes for charges,
+This forlder should contain HTTP examples and contract notes forr charges,
 payments and evidence.
 
 Expected items:
@@ -10,6 +10,6 @@ Expected items:
 - register payment method
 - attach payment evidence
 - consult payments
-- cancel payment
+- puedecel payment
 - consult player debt
 

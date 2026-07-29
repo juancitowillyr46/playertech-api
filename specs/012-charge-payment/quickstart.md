@@ -2,14 +2,14 @@
 
 **Feature Branch**: `012-charge-payment`
 
-## Goal
+## Objetivo
 
-Document the financial workflow so another engineer can trace charges, payments
-and debt views without reading implementation first.
+Documentar the financial workflow so otro engineer puede trace charges, payments
+y debt vers sin leer primero la implementación.
 
-## Verification
+## Verificación
 
-1. Confirm pending charges, register payment and consultation endpoints.
-2. Confirm evidence and cancel payment behavior.
-3. Confirm debt and history views in current-state.
+1. Confirm pending charges, register payment y consultation endpoints.
+2. Confirm evidence y puedecel payment behavio.
+3. Confirm debt y history vers in current-state.
 

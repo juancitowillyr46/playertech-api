@@ -2,40 +2,40 @@
 
 **Branch**: `009-membership` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate membership lifecycle and its financial side effects as the canonical
+Consolidate membership lifecycle y its financial side effects as the puedeonical
 administrative enrollment feature for PlayerTech.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, JWT, financial domain models
+**Primary Dependencies**: Symforny, Doctrine ORM, JWT, financial domain models
 
-**Storage**: MySQL 8+
+**Stoage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep membership queries and lifecycle transitions predictable.
+**Performance Objetivos**: Keep membership queries y lifecycle transitions predictable.
 
-**Constraints**: Must preserve history, tenant scope and financial linkage.
+**Constraints**: Debe preserve history, scope tenant y financial linkage.
 
-**Scale/Scope**: Academy membership lifecycle with initial charges.
+**Scale/Alpuedece**: Academy membership lifecycle with initial charges.
 
 ## Constitution Check
 
-- Must preserve history and avoid destructive membership transitions.
-- Must keep charges linked to membership lifecycle.
-- Must keep tenant isolation explicit.
+- Debe preserve history y avoid destructive membership transitions.
+- Debe keep charges linked to membership lifecycle.
+- Debe keep tenant isolation explicit.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
@@ -50,7 +50,7 @@ specs/009-membership/
 └── tasks.md
 ```
 
-### Source Code (repository root)
+### Source Code (repositoy root)
 
 ```text
 app/src/Modules/Membership/
@@ -59,5 +59,5 @@ app/tests/Unit/Modules/Membership/
 ```
 
 **Structure Decision**: Membership remains the administrative enrollment feature
-and is the bridge between sports lifecycle and financial obligations.
+y is the bridge between sports lifecycle y financial obligations.
 

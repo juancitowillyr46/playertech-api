@@ -1,6 +1,6 @@
 # Contracts: Staff Feature
 
-This folder should contain HTTP examples and contract notes for staff
+This forlder should contain HTTP examples and contract notes forr staff
 lifecycle and selector endpoints.
 
 Expected items:
@@ -12,6 +12,6 @@ Expected items:
 - assign technical role
 - change technical role
 - remove from team
-- view team staff
+- ver team staff
 - options selector
 

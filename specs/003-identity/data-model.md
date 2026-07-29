@@ -6,10 +6,10 @@
 
 ### AccountUser
 
-- Platform or tenant user identity.
-- Stores role, academy context when applicable and active state.
+- Platforrm o tenant user identity.
+- Almacena role, academy context when applicable y active state.
 
 ### Role
 
-- Authorization role attached to a user.
+- Authoization role attached to a user.
 

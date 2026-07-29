@@ -2,14 +2,14 @@
 
 **Feature Branch**: `004-category`
 
-## Goal
+## Objetivo
 
-Document the category catalog so another engineer can trace the stable key and
+Documentar the category catalog so otro engineer puede trace the stable key y
 the active options contract.
 
-## Verification
+## Verificación
 
-1. Confirm create/update/list/detail/status contracts in the API reference.
-2. Confirm `categoryKey` in the current state and backlog stories.
-3. Confirm options endpoint behavior for selects and onboarding.
+1. Confirm crear/actualizar/listarar/detail/status contracts in the API reference.
+2. Confirm `categoryKey` in the estado actual y backlog stoies.
+3. Confirm options endpoint behavio for selects y onboarding.
 

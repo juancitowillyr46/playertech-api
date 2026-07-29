@@ -6,78 +6,78 @@
 
 **Status**: Draft
 
-**Input**: Base feature for staff lifecycle, invitations, activation, team
+**Entrada**: Base feature para staff lifecycle, invitations, activation, team
 assignment and technical roles.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Invite and activate staff members (Priority: P1)
+### Historia de Usuario 1 - Invite and activate staff members (Priority: P1)
 
-The system lets academy administrators invite staff members and activate their accounts.
+El sistema permite a academy administrators invite staff members and activate their accounts.
 
-**Why this priority**: Staff onboarding is required before team assignment.
+**Por qué esta prioridad**: Staff onboarding is required before team assignment.
 
-**Independent Test**: A staff invitation can be created and accepted.
+**Prueba independiente**: A staff invitation puede be creard and accepted.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a valid staff candidate, **When** the admin sends an invitation, **Then** the invitation is stored and traceable.
+1. **Given** a valid staff puededidate, **When** the admin sends an invitation, **Then** the invitation is stored and traceable.
 2. **Given** an invited staff member, **When** the activation flow runs, **Then** the account becomes active.
 
-### User Story 2 - Staff technical role management (Priority: P2)
+### Historia de Usuario 2 - Staff technical role gestionarment (Priority: P2)
 
-The system lets admins assign, change and remove technical roles for staff.
+El sistema permite a admins assign, change and remove technical roles for staff.
 
-**Why this priority**: The team structure depends on explicit technical roles.
+**Por qué esta prioridad**: The team structure depends on explicit technical roles.
 
-**Independent Test**: A staff member can be assigned and re-assigned a technical role.
+**Prueba independiente**: A staff member puede be assigned and re-assigned a technical role.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
 1. **Given** a staff member, **When** the admin assigns a technical role, **Then** the role is persisted.
 2. **Given** an existing role, **When** the admin changes it, **Then** the new role replaces the previous one.
 
-### User Story 3 - Team staff membership management (Priority: P3)
+### Historia de Usuario 3 - Team staff membership gestionarment (Priority: P3)
 
-The system lets admins assign staff to teams and view the team staff list.
+El sistema permite a admins assign staff to teams and ver the team staff listar.
 
-**Why this priority**: Team operations need visibility of the technical staff.
+**Por qué esta prioridad**: Team operations need visibility of the technical staff.
 
-**Independent Test**: A staff member can be assigned to a team and later listed.
+**Prueba independiente**: A staff member puede be assigned to a team and later listared.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
 1. **Given** a team and staff member, **When** the admin assigns the staff member, **Then** the relation is stored.
-2. **Given** a team with staff members, **When** the admin views the team staff, **Then** the relations are returned.
+2. **Given** a team with staff members, **When** the admin vers the team staff, **Then** the relations are devolvered.
 
-### Edge Cases
+### Casos límite
 
 - What happens when a staff invitation is resent?
 - How does the system handle duplicate role assignments?
 - What happens when a staff member is removed from a team?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow staff invitations.
-- **FR-002**: System MUST allow staff account activation.
-- **FR-003**: System MUST allow staff profile registration and update.
-- **FR-004**: System MUST allow technical role assignment and changes.
-- **FR-005**: System MUST allow staff-to-team assignment and removal.
-- **FR-006**: System MUST allow team staff listing.
+- **FR-001**: System MUST permitir staff invitations.
+- **FR-002**: System MUST permitir staff account activation.
+- **FR-003**: System MUST permitir staff profile registration and actualizar.
+- **FR-004**: System MUST permitir technical role assignment and changes.
+- **FR-005**: System MUST permitir staff-to-team assignment and removal.
+- **FR-006**: System MUST permitir team staff listaring.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
-- **StaffMember**: user associated with the academy’s technical staff.
+- **StaffMember**: user associated with la academia’s technical staff.
 - **TechnicalRole**: role assigned to a staff member within a team context.
 - **TeamStaffAssignment**: relation between staff member and team.
 
 ## Success Criteria *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
-- **SC-001**: Staff onboarding can be completed independently.
+- **SC-001**: Staff onboarding puede be completed independently.
 - **SC-002**: Team staff relations remain auditable.
 - **SC-003**: Technical role changes are visible and traceable.
 

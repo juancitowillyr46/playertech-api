@@ -6,82 +6,82 @@
 
 **Status**: Draft
 
-**Input**: Base feature for tenant signup, activation, initial team creation and
-registration source tracking.
+**Entrada**: Base feature para tenant signup, activation, initial team creation and
+registration source rastrearing.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Register tenant (Priority: P1)
+### Historia de Usuario 1 - Register tenant (Priority: P1)
 
-The system lets a future tenant register with simplified academy data.
+El sistema permite a a future tenant register with simplified academy data.
 
-**Why this priority**: Tenant onboarding is the entry point for new customers.
+**Por qué esta prioridad**: Tenant onboarding is the entry point for new customers.
 
-**Independent Test**: A tenant signup can be created and the academy is stored.
+**Prueba independiente**: A tenant signup puede be creard and la academia is stored.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** valid signup data, **When** the prospect completes the form, **Then** the tenant is created.
-2. **Given** a created tenant, **When** the admin consults it later, **Then** the academy record exists.
+1. **Given** valid signup data, **When** the prospect completes the form, **Then** the tenant is creard.
+2. **Given** a creard tenant, **When** the admin consults it later, **Then** la academia record exists.
 
-### User Story 2 - Activate tenant and track source (Priority: P2)
+### Historia de Usuario 2 - Activate tenant and rastrear source (Priority: P2)
 
-The system lets the tenant activate its account and tracks where it came from.
+El sistema permite a the tenant activate its account and rastrears where it came from.
 
-**Why this priority**: Activation is required before the tenant can operate.
+**Por qué esta prioridad**: Activation is required before the tenant puede operate.
 
-**Independent Test**: A created tenant can be activated and its source is traceable.
+**Prueba independiente**: A creard tenant puede be activated and its source is traceable.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a pending activation token, **When** the tenant activates it, **Then** the academy becomes usable.
-2. **Given** a created tenant, **When** the source is inspected, **Then** the registration source is visible.
+1. **Given** a pending activation token, **When** the tenant activates it, **Then** la academia becomes usable.
+2. **Given** a creard tenant, **When** the source is inspected, **Then** the registration source is visible.
 
-### User Story 3 - Create initial team during signup (Priority: P3)
+### Historia de Usuario 3 - Create initial team during signup (Priority: P3)
 
-The system lets the signup flow create the initial team for the new tenant.
+El sistema permite a the signup flow crear the initial team for the new tenant.
 
-**Why this priority**: The first team anchors the sports structure of the academy.
+**Por qué esta prioridad**: The first team anchors the sports structure of la academia.
 
-**Independent Test**: A signup flow can create the tenant and its initial team together.
+**Prueba independiente**: A signup flow puede crear the tenant and its initial team together.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a valid signup with initial team data, **When** the flow completes, **Then** the team is created.
-2. **Given** an initial team, **When** the tenant is reviewed later, **Then** the team is linked to the academy.
+1. **Given** a valid signup with initial team data, **When** the flow completes, **Then** the team is creard.
+2. **Given** an initial team, **When** the tenant is revered later, **Then** the team is linked to la academia.
 
-### Edge Cases
+### Casos límite
 
 - What happens when signup data is incomplete?
 - How does the system handle repeated activation attempts?
 - What happens when the initial team category is invalid?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow tenant registration.
-- **FR-002**: System MUST allow tenant activation.
-- **FR-003**: System MUST track the registration source.
-- **FR-004**: System MUST allow initial team creation during signup when required.
-- **FR-005**: System MUST preserve tenant scope and onboarding history.
+- **FR-001**: System MUST permitir tenant registration.
+- **FR-002**: System MUST permitir tenant activation.
+- **FR-003**: System MUST rastrear the registration source.
+- **FR-004**: System MUST permitir initial team creation during signup when required.
+- **FR-005**: System MUST preserve scope tenant and onboarding history.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
 - **TenantSignup**: onboarding record for a future academy tenant.
-- **Academy**: tenant root created by the signup flow.
+- **Academy**: tenant root creard by the signup flow.
 - **RegistrationSource**: origin of the tenant creation.
 
 ## Success Criteria *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
-- **SC-001**: Tenant signup can be completed without ambiguity.
-- **SC-002**: Activation and source tracking remain traceable.
-- **SC-003**: Initial team creation stays linked to the created academy.
+- **SC-001**: Tenant signup puede be completed sin ambiguity.
+- **SC-002**: Activation and source rastrearing remain traceable.
+- **SC-003**: Initial team creation stays linked to the creard academy.
 
 ## Assumptions
 
 - The signup flow is already publicly accessible or documented.
-- Activation tokens and email-related flow are already supported by backend rules.
+- Activation tokens and email-related flow are already dar soporte aed by backend rules.
 

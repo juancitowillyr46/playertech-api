@@ -4,7 +4,7 @@
 
 ## Entities
 
-### Dashboard Summary
+### Dashboard Resumen
 
-- Aggregated read model with operational counters and financial summaries.
+- Aggregated leer model with operational counters y financial summaries.
 

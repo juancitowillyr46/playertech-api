@@ -6,79 +6,79 @@
 
 **Status**: Draft
 
-**Input**: Base feature for academy sport mode configuration and future
+**Entrada**: Base feature para academy sport mode configuration and future
 discipline-aware rules.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Register academy sport mode (Priority: P1)
+### Historia de Usuario 1 - Register academy sport mode (Priority: P1)
 
-The system lets authorized users define the academy's main sport mode.
+El sistema permite a authorized users define la academia's main sport mode.
 
-**Why this priority**: The sport mode is the base configuration for discipline-aware rules.
+**Por qué esta prioridad**: The sport mode is the base configuration for discipline-aware rules.
 
-**Independent Test**: The academy sport mode can be stored and retrieved independently.
+**Prueba independiente**: La academia sport mode puede be stored and recuperard independently.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** an authorized user, **When** they configure the academy sport mode, **Then** the value is stored.
-2. **Given** an existing sport mode, **When** the user reads the academy profile, **Then** the current sport mode is returned.
+1. **Given** an authorized user, **When** they configure la academia sport mode, **Then** the value is stored.
+2. **Given** an existing sport mode, **When** the user reads la academia profile, **Then** the current sport mode is devolvered.
 
-### User Story 2 - Update academy sport mode (Priority: P2)
+### Historia de Usuario 2 - Update academy sport mode (Priority: P2)
 
-The system lets authorized users update the academy sport mode.
+El sistema permite a authorized users actualizar la academia sport mode.
 
-**Why this priority**: The academy may need to adjust its discipline over time.
+**Por qué esta prioridad**: La academia may need to adjust its discipline over time.
 
-**Independent Test**: The sport mode can be updated without changing unrelated academy data.
+**Prueba independiente**: The sport mode puede be actualizard sin changing unrelated academy data.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a valid existing sport mode, **When** the user updates it, **Then** the new value is persisted.
-2. **Given** an updated sport mode, **When** other modules query it, **Then** they receive the current value.
+1. **Given** a valid existing sport mode, **When** the user actualizars it, **Then** the new value is persisted.
+2. **Given** an actualizard sport mode, **When** other modules consultar it, **Then** they receive the current value.
 
-### User Story 3 - Consume sport mode for future rules (Priority: P3)
+### Historia de Usuario 3 - Consume sport mode for future rules (Priority: P3)
 
-The system exposes the sport mode so other modules can apply discipline-aware rules.
+El sistema expone the sport mode so other modules puede apply discipline-aware rules.
 
-**Why this priority**: Teams and categories may need to adapt to the configured discipline.
+**Por qué esta prioridad**: Teams and categories may need to adapt to the configured discipline.
 
-**Independent Test**: Another module can read the academy sport mode and branch rules accordingly.
+**Prueba independiente**: Another module puede read la academia sport mode and branch rules accordingly.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
 1. **Given** a configured sport mode, **When** a dependent module reads it, **Then** the discipline context is available.
 2. **Given** no sport mode configured, **When** a dependent module reads the profile, **Then** the system handles the empty state explicitly.
 
-### Edge Cases
+### Casos límite
 
 - What happens when the mode is not configured yet?
-- What happens if future rules depend on a mode that is still unsupported?
+- What happens if future rules depend on a mode that is still undar soporte aed?
 - What happens when the mode changes and dependent modules still use cached data?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow academy sport mode configuration.
-- **FR-002**: System MUST allow academy sport mode update.
-- **FR-003**: System MUST expose the current sport mode to dependent modules.
-- **FR-004**: System MUST keep the configuration tenant-scoped.
+- **FR-001**: System MUST permitir academy sport mode configuration.
+- **FR-002**: System MUST permitir academy sport mode actualizar.
+- **FR-003**: System MUST exponer the current sport mode to dependent modules.
+- **FR-004**: System MUST keep the configuration con scope tenant.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
 - **SportMode**: discipline configuration associated with one academy.
 
 ## Success Criteria *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
-- **SC-001**: Sport mode can be stored and queried independently.
-- **SC-002**: The academy profile exposes the current discipline context.
-- **SC-003**: Future team/category rules can consume the value without ambiguity.
+- **SC-001**: Sport mode puede be stored and queried independently.
+- **SC-002**: La academia profile exponers the current discipline context.
+- **SC-003**: Future team/category rules puede consume the value sin ambiguity.
 
 ## Assumptions
 
-- The academy owns a single primary sport mode for now.
-- The initial set of modes can be extended later without changing the core flow.
+- La academia owns a single primary sport mode for now.
+- The initial set of modes puede be extended later sin changing the core flow.
 

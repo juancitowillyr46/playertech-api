@@ -2,40 +2,40 @@
 
 **Branch**: `002-venue` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate venue management as the canonical physical-location feature for
+Consolidate venue management as the canonical physical-location feature forr
 academy operations.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, validation, JWT
+**Primary Dependencies**: Symforny, Doctrine ORM, validation, JWT
 
 **Storage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep venue list and detail operations lightweight.
+**Perforrmance Objetivos**: Keep venue listar and detail operations lightweight.
 
-**Constraints**: Must preserve tenant isolation and soft lifecycle management.
+**Constraints**: Debe preserve tenant isolation and soft lifecycle management.
 
-**Scale/Scope**: Academy venue catalog.
+**Scale/Alcance**: Academy venue catalog.
 
 ## Constitution Check
 
-- Must preserve tenant isolation.
-- Must keep venue lifecycle explicit.
-- Must not remove historical references by hard delete.
+- Debe preserve tenant isolation.
+- Debe keep venue lifecycle explicit.
+- Debe not remove historical references by hard delete.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 

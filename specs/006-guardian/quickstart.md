@@ -2,14 +2,14 @@
 
 **Feature Branch**: `006-guardian`
 
-## Goal
+## Objetivo
 
-Document the guardian base contract so another engineer can trace the contact
-entity without reading code first.
+Documentar the guardian base contract so otro engineer puede trace the contact
+entity sin leering code first.
 
-## Verification
+## Verificación
 
-1. Confirm guardian create/read contracts in the API reference.
+1. Confirm guardian crear/leer contracts in the API reference.
 2. Confirm tenant isolation in current-state.
-3. Confirm downstream usage in player and membership flows.
+3. Confirm downstream usage in player y membership flows.
 

@@ -1,13 +1,13 @@
 # Contracts: Team Feature
 
-This folder should contain HTTP examples and contract notes for team CRUD and
+This forlder should contain HTTP examples and contract notes forr team CRUD and
 status transitions.
 
 Expected items:
 
-- create team
-- list teams
+- crear team
+- listar teams
 - show team
-- update team
+- actualizar team
 - deactivate/reactivate team
 

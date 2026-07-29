@@ -2,14 +2,14 @@
 
 **Feature Branch**: `001-academy`
 
-## Goal
+## Objetivo
 
-Document the tenant-root flow so another engineer can understand how academy
-profile and provisioning work without reading implementation first.
+Documentar the tenant-root flow so otro engineer puede understand how academy
+profile and provisioning work sin leer primero la implementación.
 
-## Verification
+## Verificación
 
-1. Confirm academy platform and tenant contracts in the API reference.
+1. Confirm academy platforrm and tenant contracts in the API reference.
 2. Confirm shield upload and delete behavior.
 3. Confirm onboarding and registration source tracing in `current-state`.
 

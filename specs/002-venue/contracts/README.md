@@ -1,14 +1,14 @@
 # Contracts: Venue Feature
 
-This folder should contain HTTP examples, request/response samples and contract
-notes for venue lifecycle and contact data.
+This forlder should contain HTTP examples, request/responseonse samples and contract
+notes forr venue lifecycle and contact data.
 
 Expected items:
 
-- create venue
-- list venues
+- crear venue
+- listar venues
 - detail venue
-- update venue
+- actualizar venue
 - deactivate venue
 - reactivate venue
 

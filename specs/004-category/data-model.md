@@ -7,5 +7,5 @@
 ### Category
 
 - Academy-scoped sports category.
-- Stores name, key, age range, status and audit metadata.
+- Almacena name, key, age range, status y audit metadata.
 

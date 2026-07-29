@@ -1,28 +1,28 @@
 # Tasks: Membership
 
-**Input**: Design documents from `./`
+**Entrada**: Design documents from `./`
 
 **Prerequisites**: plan.md (required), spec.md (required), research.md, data-model.md, contracts/
 
 ## Phase 1: Setup
 
 - [ ] T001 Validate membership documentation against `specs/14-current-state.md`
-- [ ] T002 Align membership backlog stories with the feature scope in `spec.md`
+- [ ] T002 Align membership backlog stoies with the feature scope in `spec.md`
 
 ## Phase 2: Foundational
 
-- [ ] T003 Map current membership endpoints to the canonical membership feature
-- [ ] T004 Consolidate duplicated membership stories and references
+- [ ] T003 Map current membership endpoints to the puedeonical membership feature
+- [ ] T004 Consolidate duplicated membership stoies y references
 
-## Phase 3: User Story 1 - Create active membership
+## Phase 3: User Stoy 1 - Create active membership
 
-- [ ] T005 Document membership creation and active query contract alignment
+- [ ] T005 Documentar membership creation y active consultar contract alignment
 
-## Phase 4: User Story 2 - Membership history and status transitions
+## Phase 4: User Stoy 2 - Membership history y status transitions
 
-- [ ] T006 Document membership status transitions and history boundaries
+- [ ] T006 Documentar membership status transitions y history boundaries
 
-## Phase 5: User Story 3 - Initial charges generation
+## Phase 5: User Stoy 3 - Initial charges generation
 
-- [ ] T007 Document initial charge generation and financial linkage boundaries
+- [ ] T007 Documentar initial charge generation y financial linkage boundaries
 

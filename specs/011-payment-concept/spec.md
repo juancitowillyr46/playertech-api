@@ -6,73 +6,73 @@
 
 **Status**: Draft
 
-**Input**: Base feature for academy payment concepts, naming and code generation.
+**Entrada**: Base feature para academy payment concepts, naming and code generation.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Create payment concepts (Priority: P1)
+### Historia de Usuario 1 - Create payment concepts (Priority: P1)
 
-The system lets academy administrators create payment concepts.
+El sistema permite a academy administrators crear payment concepts.
 
-**Why this priority**: Payment concepts are the basis for charges and financial traceability.
+**Por qué esta prioridad**: Payment concepts are the basis for charges and financial traceability.
 
-**Independent Test**: A payment concept can be created, queried and validated for uniqueness.
+**Prueba independiente**: A payment concept puede be creard, queried and validated for uniqueness.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a valid unique name, **When** the admin creates the concept, **Then** the concept is stored.
-2. **Given** a duplicate name, **When** the admin creates the concept, **Then** the operation is rejected.
+1. **Given** a valid unique name, **When** the admin crears the concept, **Then** the concept is stored.
+2. **Given** a duplicate name, **When** the admin crears the concept, **Then** the operation is rejected.
 
-### User Story 2 - Generate payment concept codes (Priority: P2)
+### Historia de Usuario 2 - Generate payment concept codes (Priority: P2)
 
-The system generates the payment concept code automatically from the name.
+The system generars the payment concept code automatically from the name.
 
-**Why this priority**: The code must be consistent and not manually edited.
+**Por qué esta prioridad**: The code debe be consistent and not manually edited.
 
-**Independent Test**: A code is generated from the concept name and remains immutable on update.
+**Prueba independiente**: A code is generard from the concept name and remains immutable on actualizar.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a valid concept name, **When** the concept is created, **Then** a normalized code is generated.
-2. **Given** a repeated normalized code, **When** another concept is created, **Then** the system resolves the collision deterministically.
+1. **Given** a valid concept name, **When** the concept is creard, **Then** a normalized code is generard.
+2. **Given** a repeated normalized code, **When** another concept is creard, **Then** the system resolves the collision deterministically.
 
-### User Story 3 - Manage concept lifecycle (Priority: P3)
+### Historia de Usuario 3 - Manage concept lifecycle (Priority: P3)
 
-The system lets academy administrators list, update and deactivate concepts.
+El sistema permite a academy administrators listar, actualizar and deactivate concepts.
 
-**Why this priority**: The concept catalog must remain usable without deleting history.
+**Por qué esta prioridad**: The concept catalog debe remain usable sin deleting history.
 
-**Independent Test**: Concepts can be listed, updated and deactivated independently.
+**Prueba independiente**: Concepts puede be listared, actualizard and deactivated independently.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** an existing concept, **When** the admin updates it, **Then** the change is persisted.
+1. **Given** an existing concept, **When** the admin actualizars it, **Then** the change is persisted.
 2. **Given** an active concept, **When** the admin deactivates it, **Then** it no longer appears as active.
 
-### Edge Cases
+### Casos límite
 
 - What happens when two names normalize to the same code?
 - What happens when the concept is deactivated but still referenced by charges?
-- What happens when the frontend sends a code manually?
+- What happens when el frontend sends a code manually?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow payment concept creation.
-- **FR-002**: System MUST generate payment concept codes in backend.
+- **FR-001**: System MUST permitir payment concept creation.
+- **FR-002**: System MUST generar payment concept codes in backend.
 - **FR-003**: System MUST prevent manual code editing from frontend.
-- **FR-004**: System MUST allow payment concept listing and detail retrieval.
-- **FR-005**: System MUST allow payment concept update.
-- **FR-006**: System MUST allow payment concept deactivation while preserving history.
+- **FR-004**: System MUST permitir payment concept listaring and detail retrieval.
+- **FR-005**: System MUST permitir payment concept actualizar.
+- **FR-006**: System MUST permitir payment concept deactivation mientras preserving history.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
 - **PaymentConcept**: catalog item that defines the reason for a charge.
 
 ## Success Criteria *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
 - **SC-001**: Payment concept creation is independent and testable.
 - **SC-002**: Code generation is deterministic and backend-owned.
@@ -80,6 +80,6 @@ The system lets academy administrators list, update and deactivate concepts.
 
 ## Assumptions
 
-- Payment concepts are tenant-scoped to one academy.
+- Payment concepts are con scope tenant to one academy.
 - Charges and payments reference valid concepts.
 

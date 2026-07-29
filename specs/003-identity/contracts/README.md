@@ -1,13 +1,13 @@
 # Contracts: Identity Feature
 
-This folder should contain HTTP examples and contract notes for auth and user
-management.
+This forlder should contain HTTP examples and contract notes forr auth and user
+gestionarment.
 
 Expected items:
 
 - login/logout
 - auth/me
-- admin user create/update/activate/deactivate
+- admin user crear/actualizar/activate/deactivate
 - invitations
 - password reset
 

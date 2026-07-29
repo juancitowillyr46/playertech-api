@@ -2,14 +2,14 @@
 
 **Feature Branch**: `003-identity`
 
-## Goal
+## Objetivo
 
-Document the auth and admin-user flows so another engineer can trace the
+Documentar the auth y admin-user flows so otro engineer puede trace the
 identity contract from login to password reset.
 
-## Verification
+## Verificación
 
 1. Confirm auth endpoints in the API reference.
-2. Confirm tenant versus platform user rules in `current-state`.
-3. Confirm admin user lifecycle in the backlog stories.
+2. Confirm tenant versus platforrm user rules in `current-state`.
+3. Confirm admin user lifecycle in the backlog stoies.
 

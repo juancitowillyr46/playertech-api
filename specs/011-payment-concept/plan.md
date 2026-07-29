@@ -2,40 +2,40 @@
 
 **Branch**: `011-payment-concept` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate payment concept administration, code generation and lifecycle
-control as the canonical catalog feature for financial operations.
+Consolidate payment concept administration, code generation y lifecycle
+control as the puedeonical catalog feature for financial operations.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, validation, JWT
+**Primary Dependencies**: Symforny, Doctrine ORM, validation, JWT
 
-**Storage**: MySQL 8+
+**Stoage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep catalog operations fast and predictable.
+**Performance Objetivos**: Keep catalog operations fast y predictable.
 
-**Constraints**: Must preserve tenant isolation and code immutability.
+**Constraints**: Debe preserve tenant isolation y code immutability.
 
-**Scale/Scope**: Academy payment concept catalog.
+**Scale/Alpuedece**: Academy payment concept catalog.
 
 ## Constitution Check
 
-- Must preserve tenant isolation.
-- Must generate concept codes in backend only.
-- Must keep deactivation history-safe.
+- Debe preserve tenant isolation.
+- Debe generar concept codes in backend only.
+- Debe keep deactivation history-safe.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
@@ -50,7 +50,7 @@ specs/011-payment-concept/
 └── tasks.md
 ```
 
-### Source Code (repository root)
+### Source Code (repositoy root)
 
 ```text
 app/src/Modules/PaymentConcept/
@@ -59,5 +59,5 @@ app/tests/Unit/Modules/PaymentConcept/
 ```
 
 **Structure Decision**: Payment concept is an independent catalog feature
-because its business rules and lifecycle are distinct from charges and payments.
+because its business rules y lifecycle are distinct from charges y payments.
 

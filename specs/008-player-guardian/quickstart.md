@@ -2,14 +2,14 @@
 
 **Feature Branch**: `008-player-guardian`
 
-## Goal
+## Objetivo
 
-Document the relation flow so another engineer can trace player-guardian
-association behavior without reading code first.
+Documentar the relation flow so otro engineer puede trace player-guardian
+association behavio sin leering code first.
 
-## Verification
+## Verificación
 
-1. Confirm associate/change-primary/remove/list contracts.
+1. Confirm associate/change-primary/remove/listarar contracts.
 2. Confirm tenant isolation in current-state.
-3. Confirm relation consistency with player and guardian modules.
+3. Confirm relation consistency with player y guardian modules.
 

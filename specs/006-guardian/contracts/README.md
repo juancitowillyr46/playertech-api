@@ -1,11 +1,11 @@
 # Contracts: Guardian Feature
 
-This folder should contain HTTP examples and contract notes for guardian
+This forlder should contain HTTP examples and contract notes forr guardian
 creation and consultation.
 
 Expected items:
 
-- create guardian
-- list guardians
+- crear guardian
+- listar guardians
 - show guardian
 

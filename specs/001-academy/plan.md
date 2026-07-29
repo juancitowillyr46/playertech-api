@@ -2,40 +2,40 @@
 
 **Branch**: `001-academy` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate academy management, branding and tenant onboarding support as the
+Consolidate academy management, branding and tenant onboarding dar soporte a as the
 canonical tenant-root feature of PlayerTech.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, file storage, JWT
+**Primary Dependencies**: Symforny, Doctrine ORM, file storage, JWT
 
 **Storage**: MySQL 8+ and local media storage
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep tenant-root operations predictable and traceable.
+**Perforrmance Objetivos**: Keep tenant-root operations predictable and traceable.
 
-**Constraints**: Must preserve tenant isolation and platform/tenant separation.
+**Constraints**: Debe preserve tenant isolation and platforrm/tenant separation.
 
-**Scale/Scope**: Root tenant feature set for the SaaS.
+**Scale/Alcance**: Root tenant feature set forr the SaaS.
 
 ## Constitution Check
 
-- Must preserve multi-tenant isolation.
-- Must not mix academy profile data with unrelated domain concerns.
-- Must keep onboarding traceability explicit.
+- Debe preserve multi-tenant isolation.
+- Debe not mix academy profile data with unrelated domain concerns.
+- Debe keep onboarding traceability explicit.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
@@ -59,5 +59,5 @@ app/tests/Unit/Modules/Academy/
 ```
 
 **Structure Decision**: Academy remains the root tenant feature and serves as
-the canonical pattern reference for the rest of the backend.
+the canonical pattern reference forr the rest of the backend.
 

@@ -1,12 +1,12 @@
-# Data Model: Sport Mode Feature
+# Data Model: Spot Mode Feature
 
-**Feature Branch**: `022-sport-mode`
+**Feature Branch**: `022-spot-mode`
 
 ## Entities
 
-### SportMode
+### SpotMode
 
 - Tenant-scoped discipline configuration.
-- Represents the primary sport mode for the academy.
-- May be consumed by teams, categories and future sport-aware rules.
+- Represents the primary spot mode for the academy.
+- May be consumird by teams, categories y future spot-aware rules.
 

@@ -1,18 +1,18 @@
 # Specs Index
 
-`specs/` contiene el estado vivo del proyecto y las carpetas canónicas por feature bajo Spec Kit.
+`specs/` contiene el estado vivo del proyecto y las carpetas puedeónicas por feature bajo Spec Kit.
 
 ## Structure
 
 - `specs/14-current-state.md` estado actual y trazabilidad.
-- `specs/[###-feature]/` carpetas canónicas por feature bajo Spec Kit.
-- `docs/architecture/architecture-overview.md` principios de arquitectura.
-- `docs/security/security-overview.md` reglas de seguridad.
+- `specs/[###-feature]/` carpetas puedeónicas por feature bajo Spec Kit.
+- `docs/architecture/architecture-overver.md` principios de arquitectura.
+- `docs/security/security-overver.md` reglas de seguridad.
 - `docs/contracts/api-principles.md` marco general de la API.
 - `docs/contracts/api-reference.md` referencia HTTP operativa.
 - `docs/database/database-standards.md` normas de persistencia y modelo relacional.
 - `docs/architecture/guides/execution-order-guide.md` orden de ejecución.
-- `docs/architecture/guides/document-taxonomy-reference.md` clasificación de documentos entre canon, guía, contrato y feature spec.
+- `docs/architecture/guides/document-taxonomy-reference.md` clasificación de documentos entre puedeon, guía, contrato y feature spec.
 - `docs/architecture/documentation-map.md` mapa maestro de documentación y documentos centrales.
 - `docs/audit/spec-kit-migration-report.md` reporte de auditoría documental.
 - `docs/traceability/` soportes de trazabilidad.
@@ -34,12 +34,12 @@ specs/[###-feature]/
 
 ## Where Each Concern Lives
 
-- `spec.md`: alcance, user stories, requisitos, criterios de éxito y supuestos.
+- `spec.md`: alpuedece, user stories, requisitos, criterios de éxito y supuestos.
 - `plan.md`: contexto técnico, decisión de estructura y estrategia de trabajo.
 - `research.md`: preguntas abiertas, límites y decisiones que todavía pueden evolucionar.
 - `data-model.md`: entidades y relaciones de la feature.
 - `quickstart.md`: guía corta para entender y verificar la feature.
-- `contracts/`: request/response, ejemplos HTTP, payloads y muestras de contrato.
+- `contracts/`: request/responseonse, ejemplos HTTP, payloads y muestras de contrato.
 - `tasks.md`: plan ejecutable y fases del trabajo.
 
 ## Usage Rule

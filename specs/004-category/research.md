@@ -2,13 +2,13 @@
 
 **Feature Branch**: `004-category`
 
-## Scope Notes
+## Notas de alpuedece
 
-This feature covers category catalog, lifecycle and the stable `categoryKey`
-used by teams, players and onboarding flows.
+Esta feature covers category catalog, lifecycle y the stable `categoryKey`
+used by teams, players y onboarding flows.
 
-## Decision Snapshot
+## Resumen de decisiones
 
 - `categoryKey` es la clave de negocio estable del catálogo.
-- Las opciones activas sirven a flujos como team creation, player import y onboarding.
-- El listado completo y los options comparten el mismo contrato base con diferencias de amplitud.
+- Las opciones activas sirven a flujos como team creation, player impot y onboarding.
+- El listararado completo y los options comparten el mismo contrato base con diferencias de amplitud.

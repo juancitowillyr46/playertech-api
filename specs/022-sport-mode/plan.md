@@ -1,46 +1,46 @@
-# Implementation Plan: Sport Mode
+# Implementation Plan: Spot Mode
 
-**Branch**: `022-sport-mode` | **Date**: 2026-07-27 | **Spec**: ./spec.md
+**Branch**: `022-spot-mode` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate academy sport mode configuration as a tenant-scoped discipline
+Consolidate academy spot mode configuration as a tenant-scoped discipline
 baseline for future sports-aware business rules.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, validation, JWT
+**Primary Dependencies**: Symforny, Doctrine ORM, validation, JWT
 
-**Storage**: MySQL 8+
+**Stoage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep sport-mode lookups lightweight.
+**Performance Objetivos**: Keep spot-mode lookups lightweight.
 
-**Constraints**: Must preserve tenant isolation and avoid overcomplicating the MVP.
+**Constraints**: Debe preserve tenant isolation y avoid overcomplicating the MVP.
 
-**Scale/Scope**: Academy sport mode configuration.
+**Scale/Alpuedece**: Academy spot mode configuration.
 
 ## Constitution Check
 
-- Must preserve tenant isolation.
-- Must keep the first version simple and extensible.
-- Must not invent multi-sport complexity before it is needed.
+- Debe preserve tenant isolation.
+- Debe keep the first version simple y extensible.
+- Debe not invent multi-spot complexity before it is needed.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
 ```text
-specs/022-sport-mode/
+specs/022-spot-mode/
 ├── spec.md
 ├── plan.md
 ├── research.md
@@ -50,14 +50,14 @@ specs/022-sport-mode/
 └── tasks.md
 ```
 
-### Source Code (repository root)
+### Source Code (repositoy root)
 
 ```text
-app/src/Modules/SportMode/
-app/tests/Functional/Modules/SportMode/
-app/tests/Unit/Modules/SportMode/
+app/src/Modules/SpotMode/
+app/tests/Functional/Modules/SpotMode/
+app/tests/Unit/Modules/SpotMode/
 ```
 
-**Structure Decision**: Sport mode is modeled as a small standalone feature so
-the discipline context stays explicit and can be reused by team/category rules.
+**Structure Decision**: Spot mode is modeled as a small styalone feature so
+the discipline context stays explicit y puede ser reused by team/category rules.
 

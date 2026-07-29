@@ -2,14 +2,14 @@
 
 **Feature Branch**: `010-team-assignment`
 
-## Goal
+## Objetivo
 
-Document team assignment behavior so another engineer can trace the relation
-without reading the implementation first.
+Documentar team assignment behavio so otro engineer puede trace the relation
+sin leering the implementation first.
 
-## Verification
+## Verificación
 
-1. Confirm assign/change-primary/finalize/list contracts.
+1. Confirm assign/change-primary/finalize/listarar contracts.
 2. Confirm relation history in current-state.
 3. Confirm player-team relation matches the sports domain model.
 

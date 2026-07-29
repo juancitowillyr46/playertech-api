@@ -6,85 +6,82 @@
 
 **Status**: Draft
 
-**Input**: Base feature for platform and tenant identity, authentication,
-authorization, admin users, tenant owner bootstrap, auth/me and password reset.
+**Entrada**: Base feature para platform y tenant identity, authentication, authorization, admin users, tenant owner bootstrap, auth/me y password reset.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Authentication and profile access (Priority: P1)
+### Historia de Usuario 1 - Authentication and profile access (Priority: P1)
 
-The system lets authenticated users log in and retrieve their current identity.
+El sistema permite a los usuarios autenticados iniciar sesión y recuperar su identidad actual.
 
-**Why this priority**: Identity is the entry point for all other backend flows.
+**Por qué esta prioridad**: Identity es el punto de entrada para todos los demás flujos del backend.
 
-**Independent Test**: A user can authenticate and call `/api/v1/auth/me` successfully.
+**Prueba independiente**: Un usuario puede autenticarse y llamar exitosamente a `/api/v1/auth/me`.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** valid credentials, **When** the user logs in, **Then** the API returns a valid JWT session.
-2. **Given** a valid token, **When** the user requests their profile, **Then** the API returns the authenticated identity.
+1. **Given** credenciales válidas, **When** el usuario inicia sesión, **Then** la API devuelve una sesión JWT válida.
+2. **Given** un token válido, **When** el usuario solicita su perfil, **Then** la API devuelve la identidad autenticada.
 
-### User Story 2 - Tenant and platform user administration (Priority: P2)
+### Historia de Usuario 2 - Tenant and platform user administration (Priority: P2)
 
-The system lets platform and academy administrators manage user lifecycle
-without mixing `ROLE_ROOT` and tenant-scoped behavior.
+El sistema permite a los administradores de plataforma y academia gestionar el lifecycle de los usuarios sin mezclar `ROLE_ROOT` con el comportamiento tenant-scoped.
 
-**Why this priority**: Operational control of users is required for secure platform adoption.
+**Por qué esta prioridad**: El control operativo de usuarios es necesario para una adopción segura de la plataforma.
 
-**Independent Test**: An admin can create, update, enable and disable users in the correct context.
+**Prueba independiente**: Un admin puede crear, actualizar, habilitar y deshabilitar usuarios en el contexto correcto.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a platform admin, **When** they create a root user, **Then** the user is created without tenant context.
-2. **Given** an academy admin, **When** they manage users, **Then** the users remain isolated to the academy.
+1. **Given** un admin de plataforma, **When** crea un root user, **Then** el usuario se crea sin tenant context.
+2. **Given** un admin de academia, **When** gestiona usuarios, **Then** los usuarios permanecen aislados a la academia.
 
-### User Story 3 - Tenant onboarding support (Priority: P3)
+### Historia de Usuario 3 - Tenant onboarding support (Priority: P3)
 
-The system supports tenant owner bootstrap and password reset flows.
+El sistema da soporte al bootstrap del tenant owner y a los flujos de password reset.
 
-**Why this priority**: Onboarding and recovery are required for a complete identity lifecycle.
+**Por qué esta prioridad**: El onboarding y la recuperación son necesarios para un lifecycle de identity completo.
 
-**Independent Test**: A tenant owner can be bootstrapped and a user can request a password reset.
+**Prueba independiente**: Un tenant owner puede bootstrapearse y un usuario puede solicitar un password reset.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a new academy, **When** the owner bootstrap flow runs, **Then** the first admin account is created.
-2. **Given** an authenticated user, **When** they request password recovery, **Then** the recovery flow starts.
+1. **Given** una academia nueva, **When** corre el flujo de owner bootstrap, **Then** se crea la primera cuenta admin.
+2. **Given** un usuario autenticado, **When** solicita recuperación de password, **Then** el flujo de recuperación se inicia.
 
-### Edge Cases
+### Casos límite
 
-- What happens when credentials are invalid?
-- How does the system handle disabled users?
-- What happens when a tenant-scoped user lacks academy context?
+- ¿Qué ocurre cuando las credenciales son inválidas?
+- ¿Cómo maneja el sistema los usuarios deshabilitados?
+- ¿Qué ocurre cuando un usuario tenant-scoped no tiene academy context?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow users to authenticate with the supported login contract.
-- **FR-002**: System MUST expose the authenticated identity through `/api/v1/auth/me`.
-- **FR-003**: System MUST separate platform users from tenant users.
-- **FR-004**: System MUST allow platform user administration.
-- **FR-005**: System MUST allow tenant user administration within academy scope.
-- **FR-006**: System MUST support tenant owner bootstrap flows.
-- **FR-007**: System MUST support password recovery flows for authenticated users.
+- **FR-001**: El sistema MUST permitir autenticarse con el contrato de login definido.
+- **FR-002**: El sistema MUST exponer la identidad autenticada mediante `/api/v1/auth/me`.
+- **FR-003**: El sistema MUST separar los usuarios de plataforma de los usuarios tenant.
+- **FR-004**: El sistema MUST permitir la administración de usuarios de plataforma.
+- **FR-005**: El sistema MUST permitir la administración de usuarios tenant dentro del scope de la academia.
+- **FR-006**: El sistema MUST dar soporte a los flujos de bootstrap del tenant owner.
+- **FR-007**: El sistema MUST dar soporte a los flujos de password recovery para usuarios autenticados.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
-- **User**: authenticated system identity with role and tenant context.
-- **Role**: authorization scope for platform or tenant behavior.
-- **Permission**: capability attached to roles.
+- **User**: identidad autenticada del sistema con role y tenant context.
+- **Role**: scope de autorización para comportamiento de plataforma o tenant.
+- **Permission**: capability asociada a roles.
 
-## Success Criteria *(mandatory)*
+## Criterios de éxito *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
-- **SC-001**: Users can complete login and `auth/me` flow without ambiguity in context.
-- **SC-002**: Platform and tenant user operations are traceable to the correct scope.
-- **SC-003**: Onboarding and recovery flows are independently testable.
+- **SC-001**: Los usuarios pueden completar el flujo de login y `auth/me` sin ambigüedad de contexto.
+- **SC-002**: Las operaciones de usuarios de plataforma y tenant son trazables al scope correcto.
+- **SC-003**: Los flujos de onboarding y recovery son testeables de forma independiente.
 
-## Assumptions
+## Suposiciones
 
-- Existing JWT and security infrastructure is reused.
-- The backend remains multi-tenant and root/tenant separation stays mandatory.
-
+- La infraestructura existente de JWT y security se reutiliza.
+- El backend sigue siendo multi-tenant y la separación root/tenant es obligatoria.

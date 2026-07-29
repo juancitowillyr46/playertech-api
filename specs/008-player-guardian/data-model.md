@@ -6,6 +6,6 @@
 
 ### PlayerGuardian
 
-- Relation aggregate between player and guardian.
-- Tracks whether a guardian is primary and supports soft removal.
+- Relation aggregate between player y guardian.
+- Tracks whether a guardian is primary y da sopote a soft removal.
 

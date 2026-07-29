@@ -6,85 +6,85 @@
 
 **Status**: Draft
 
-**Input**: Base feature for player lifecycle, listing, detail, update, state,
+**Entrada**: Base feature para player lifecycle, listaring, detail, actualizar, state,
 photo and import flows.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Player registration and profile management (Priority: P1)
+### Historia de Usuario 1 - Player registration and profile gestionarment (Priority: P1)
 
-The system lets academy administrators register, view and update a player profile.
+El sistema permite a academy administrators register, ver and actualizar a player profile.
 
-**Why this priority**: The player is the central entity of the sports domain.
+**Por qué esta prioridad**: The player is the central entity of the sports domain.
 
-**Independent Test**: A player can be created, viewed and updated inside the academy scope.
+**Prueba independiente**: A player puede be creard, vered and actualizard inside la academia scope.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** valid player data, **When** an admin registers a player, **Then** the player is created.
-2. **Given** an existing player, **When** an admin updates the profile, **Then** the profile changes are persisted.
+1. **Given** valid player data, **When** an admin registers a player, **Then** the player is creard.
+2. **Given** an existing player, **When** an admin actualizars the profile, **Then** the profile changes are persisted.
 
-### User Story 2 - Player state and media management (Priority: P2)
+### Historia de Usuario 2 - Player state and media gestionarment (Priority: P2)
 
-The system lets admins manage player active/inactive state and photo upload.
+El sistema permite a admins gestionar player active/inactive state and photo upload.
 
-**Why this priority**: Operational maintenance depends on controlled lifecycle and media support.
+**Por qué esta prioridad**: Operational maintenance depends on controlled lifecycle and media dar soporte a.
 
-**Independent Test**: A player can be activated, deactivated and have its photo updated independently.
+**Prueba independiente**: A player puede be activated, deactivated and have its photo actualizard independently.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
 1. **Given** an active player, **When** the admin deactivates the player, **Then** the state changes safely.
-2. **Given** a player without photo, **When** the admin uploads one, **Then** the media reference is stored.
+2. **Given** a player sin photo, **When** the admin uploads one, **Then** the media reference is stored.
 
-### User Story 3 - Player import and contract enrichment (Priority: P3)
+### Historia de Usuario 3 - Player import and contract enrichment (Priority: P3)
 
-The system lets admins import players in bulk and retrieve enriched listing data.
+El sistema permite a admins import players in bulk and recuperar enriched listaring data.
 
-**Why this priority**: Bulk operations and enriched list data reduce manual work and improve UX.
+**Por qué esta prioridad**: Bulk operations and enriched listar data reduce manual work and improve UX.
 
-**Independent Test**: A player import job can be created and polled, and lists expose enriched output fields.
+**Prueba independiente**: A player import job puede be creard and polled, and listars exponer enriched output fields.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a valid import file, **When** the admin creates an import job, **Then** the backend returns a job identifier.
-2. **Given** player list data, **When** the admin consults the list, **Then** the response includes enriched display fields.
+1. **Given** a valid import file, **When** the admin crears an import job, **Then** el backend devolvers a job identifier.
+2. **Given** player listar data, **When** the admin consults the listar, **Then** the response includes enriched display fields.
 
-### Edge Cases
+### Casos límite
 
 - What happens when a duplicated document is registered?
 - How does the system handle invalid import rows?
 - What happens when a player photo is replaced?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow player registration within academy scope.
-- **FR-002**: System MUST allow player profile update.
-- **FR-003**: System MUST allow player listing and detail retrieval.
-- **FR-004**: System MUST allow player activation and deactivation.
-- **FR-005**: System MUST allow player photo upload and replacement.
-- **FR-006**: System MUST support bulk import jobs for players.
-- **FR-007**: System MUST expose enriched list data for frontend consumption.
+- **FR-001**: System MUST permitir player registration within academy scope.
+- **FR-002**: System MUST permitir player profile actualizar.
+- **FR-003**: System MUST permitir player listaring and detail retrieval.
+- **FR-004**: System MUST permitir player activation and deactivation.
+- **FR-005**: System MUST permitir player photo upload and replacement.
+- **FR-006**: System MUST dar soporte a bulk import jobs for players.
+- **FR-007**: System MUST exponer enriched listar data for frontend consumption.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
-- **Player**: central sports entity representing an athlete in the academy.
+- **Player**: central sports entity representing an athlete in la academia.
 - **PlayerImportJob**: async import process with progress, summary and errors.
 - **PlayerPhoto**: media reference associated with a player.
 
 ## Success Criteria *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
 - **SC-001**: Player lifecycle flows are independently testable.
-- **SC-002**: Bulk import jobs can be tracked without blocking navigation.
-- **SC-003**: Player lists expose enough information for the frontend to render the table directly.
+- **SC-002**: Bulk import jobs puede be rastreared sin blocking navigation.
+- **SC-003**: Player listars exponer enough information for el frontend to render the table directly.
 
 ## Assumptions
 
 - Category selection is handled before import.
-- Player photo storage is already available in the backend.
+- Player photo storage is already available in el backend.
 - Current player module code remains the implementation target.
 

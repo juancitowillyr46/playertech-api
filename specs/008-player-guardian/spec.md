@@ -6,74 +6,74 @@
 
 **Status**: Draft
 
-**Input**: Base feature for player-guardian association, primary guardian
-changes, association removal, create-and-associate and listing.
+**Entrada**: Base feature para player-guardian association, primary guardian
+changes, association removal, crear-and-associate and listaring.
 
-## User Scenarios & Testing *(mandatory)*
+## Escenarios de usuario y pruebas *(mandatory)*
 
-### User Story 1 - Associate guardian to player (Priority: P1)
+### Historia de Usuario 1 - Associate guardian to player (Priority: P1)
 
-The system lets academy administrators associate a guardian to a player.
+El sistema permite a academy administrators associate a guardian to a player.
 
-**Why this priority**: Every active player must have a primary guardian.
+**Por qué esta prioridad**: Every active player debe have a primary guardian.
 
-**Independent Test**: A guardian can be associated and retrieved for a player.
+**Prueba independiente**: A guardian puede be associated and recuperard for a player.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
 1. **Given** a player and guardian, **When** the admin associates them, **Then** the relation is stored.
-2. **Given** the relation exists, **When** the admin lists it, **Then** the association is visible.
+2. **Given** the relation exists, **When** the admin listars it, **Then** the association is visible.
 
-### User Story 2 - Primary guardian management (Priority: P2)
+### Historia de Usuario 2 - Primary guardian gestionarment (Priority: P2)
 
-The system lets admins change the primary guardian of a player.
+El sistema permite a admins change the primary guardian of a player.
 
-**Why this priority**: The primary guardian is the operational responsible party.
+**Por qué esta prioridad**: The primary guardian is the operational responsible party.
 
-**Independent Test**: The primary guardian can be changed without losing the relation history.
+**Prueba independiente**: The primary guardian puede be changed sin losing the relation history.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
 1. **Given** multiple guardians, **When** the admin marks one as primary, **Then** exactly one primary remains.
 2. **Given** a primary guardian, **When** the admin changes it, **Then** the new primary is persisted.
 
-### User Story 3 - Create and remove associations (Priority: P3)
+### Historia de Usuario 3 - Create and remove associations (Priority: P3)
 
-The system lets admins create a guardian and associate it to a player, or remove
+El sistema permite a admins crear a guardian and associate it to a player, or remove
 an association safely.
 
-**Why this priority**: Operational onboarding needs concise relation management.
+**Por qué esta prioridad**: Operational onboarding needs concise relation gestionarment.
 
-**Independent Test**: An association can be created and removed safely.
+**Prueba independiente**: An association puede be creard and removed safely.
 
-**Acceptance Scenarios**:
+**Escenarios de aceptación**:
 
-1. **Given** a new guardian, **When** the admin creates and associates it, **Then** the relation is created in one step.
+1. **Given** a new guardian, **When** the admin crears and associates it, **Then** the relation is creard in one step.
 2. **Given** an existing association, **When** the admin removes it, **Then** the relation is no longer active.
 
-### Edge Cases
+### Casos límite
 
 - What happens when a player already has a primary guardian?
 - How does the system handle removing the last guardian association?
 - What happens when a guardian is associated twice?
 
-## Requirements *(mandatory)*
+## Requisitos *(mandatory)*
 
-### Functional Requirements
+### Requisitos funcionales
 
-- **FR-001**: System MUST allow association of a guardian to a player.
-- **FR-002**: System MUST allow changing the primary guardian.
-- **FR-003**: System MUST allow safe removal of associations.
-- **FR-004**: System MUST allow create-and-associate flows.
-- **FR-005**: System MUST allow listing guardians related to a player.
+- **FR-001**: System MUST permitir association of a guardian to a player.
+- **FR-002**: System MUST permitir changing the primary guardian.
+- **FR-003**: System MUST permitir safe removal of associations.
+- **FR-004**: System MUST permitir crear-and-associate flows.
+- **FR-005**: System MUST permitir listaring guardians related to a player.
 
-### Key Entities *(include if feature involves data)*
+### Entidades clave *(include if feature involves data)*
 
 - **PlayerGuardian**: association between player and guardian with primary state.
 
 ## Success Criteria *(mandatory)*
 
-### Measurable Outcomes
+### Resultados medibles
 
 - **SC-001**: Guardian relations are independently testable.
 - **SC-002**: Primary guardian transitions remain consistent.
@@ -81,6 +81,6 @@ an association safely.
 
 ## Assumptions
 
-- Guardian and player already exist or can be created in the same scope.
+- Guardian and player already exist or puede be creard in the same scope.
 - The primary guardian is required for membership and financial flows.
 

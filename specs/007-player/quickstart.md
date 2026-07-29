@@ -2,14 +2,12 @@
 
 **Feature Branch**: `007-player`
 
-## Goal
+## Objetivo
 
-Document player lifecycle and import flows so another engineer can trace the
-player contract without reading implementation first.
+Documentar el lifecycle base del jugador y dejar claro que la importación masiva vive como subfeature en `import/`.
 
-## Verification
+## Verificación
 
-1. Confirm list/detail/update/status/photo/import endpoints.
-2. Confirm enriched list fields in `current-state`.
-3. Confirm import template and job polling contracts.
-
+1. Confirmar endpoints de create, list, show, update, status y photo.
+2. Confirmar campos enriquecidos en el listado.
+3. Confirmar que la importación, la plantilla y el polling viven en `specs/007-player/import/`.

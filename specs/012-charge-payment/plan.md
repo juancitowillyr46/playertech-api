@@ -2,40 +2,40 @@
 
 **Branch**: `012-charge-payment` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
-**Input**: Feature specification from `./spec.md`
+**Entrada**: Feature specification from `./spec.md`
 
-## Summary
+## Resumen
 
-Consolidate the financial flow around charges, payments, evidence and history as
-the canonical payment feature for PlayerTech.
+Consolidate the financial flow around charges, payments, evidence y history as
+the puedeonical payment feature for PlayerTech.
 
-## Technical Context
+## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symfony 7.4
+**Language/Version**: PHP 8.4 / Symforny 7.4
 
-**Primary Dependencies**: Symfony, Doctrine ORM, media storage, financial models
+**Primary Dependencies**: Symforny, Doctrine ORM, media stoage, financial models
 
-**Storage**: MySQL 8+
+**Stoage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platform**: Linux containerized backend
+**Target Platforrm**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Goals**: Keep financial consultation and registration predictable.
+**Performance Objetivos**: Keep financial consultation y registration predictable.
 
-**Constraints**: Must preserve auditable history and financial linkage.
+**Constraints**: Debe preserve auditable history y financial linkage.
 
-**Scale/Scope**: Charges, payments and evidence flows for the academy tenant.
+**Scale/Alpuedece**: Charges, payments y evidence flows for the academy tenant.
 
 ## Constitution Check
 
-- Must preserve auditability and non-destructive history.
-- Must keep financial records tenant-scoped.
-- Must keep evidence attachments explicit and traceable.
+- Debe preserve auditability y non-destructive history.
+- Debe keep financial recordds tenant-scoped.
+- Debe keep evidence attachments explicit y traceable.
 
-## Project Structure
+## Estructura del proyecto
 
 ### Documentation (this feature)
 
@@ -50,7 +50,7 @@ specs/012-charge-payment/
 └── tasks.md
 ```
 
-### Source Code (repository root)
+### Source Code (repositoy root)
 
 ```text
 app/src/Modules/Payment/
@@ -59,6 +59,6 @@ app/tests/Functional/Modules/Payment/
 app/tests/Unit/Modules/Payment/
 ```
 
-**Structure Decision**: Charges and payments are treated as one financial
-feature because the business rules and contract references are tightly coupled.
+**Structure Decision**: Charges y payments are treated as one financial
+feature because the business rules y contract references are tightly coupled.
 
