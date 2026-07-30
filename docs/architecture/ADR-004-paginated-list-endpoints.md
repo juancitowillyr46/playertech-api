@@ -2,7 +2,7 @@
 
 ## Estado
 
-Propuesto
+Aceptado
 
 ---
 
@@ -73,6 +73,7 @@ La migración debe hacerse de forma progresiva, empezando por los módulos más 
 
 ## Estado actual
 
-La decisión queda propuesta como estándar transversal para el API.
+Esta decisión es el estándar transversal vigente para el API.
 
-Si se acepta, se convierte en la convención obligatoria para nuevos listados y para refactors de módulos existentes.
+Es obligatoria para nuevos endpoints de listado y para refactors de módulos existentes.
+Los contratos de feature deben referenciar este ADR cuando expongan colecciones paginadas.

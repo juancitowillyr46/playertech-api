@@ -182,6 +182,9 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 
 # Current Iteration Notes
 
+* SDD governance refined: `ADR-004` is accepted as the mandatory pagination standard; `docs/contracts/api-reference.md` is the canonical HTTP reference; the constitution now defines source precedence, accepted ADR authority, pre-generation context checks, and requirement-to-test traceability.
+* Database migration standards formalized in `docs/database/migration-standards.md`; feature plans must document schema changes, tasks must include migrations, and quickstarts must validate them on `*_test`.
+
 * Auth/JWT reordenado a `Modules/Identity`.
 * El login no usa AuthController; se ejecuta desde el firewall `json_login`.
 * `AccountUser` queda como entidad tecnica acoplada al framework por pragmatismo.

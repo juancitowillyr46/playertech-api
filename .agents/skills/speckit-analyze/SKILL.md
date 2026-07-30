@@ -79,6 +79,11 @@ For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot
 
 Load only the minimal necessary context from each artifact:
 
+Also inspect accepted ADRs and canonical project contracts relevant to the feature,
+especially `docs/architecture/documentation-map.md` and
+`docs/contracts/api-reference.md` for HTTP features. Report contradictions between
+those sources and feature artifacts as findings.
+
 **From spec.md:**
 
 - Overview/Context

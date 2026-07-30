@@ -58,6 +58,14 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 2. **Load context**: Read FEATURE_SPEC and `.specify/memory/constitution.md`. Load IMPL_PLAN template (already copied).
 
+   Write all generated artifact prose in Spanish by default. Preserve technical
+   identifiers, class names, endpoints, JSON fields, file paths, and code blocks exactly.
+
+   Before generating design artifacts, inspect applicable accepted ADRs,
+   `docs/architecture/documentation-map.md`, `docs/contracts/api-reference.md`,
+   security, database, testing, module-creation, execution-order, and current-state
+   guidance. Treat accepted ADRs and canonical contracts as constraints for the plan.
+
 3. **Execute plan workflow**: Follow the structure in IMPL_PLAN template to:
    - Fill Technical Context (mark unknowns as "NEEDS CLARIFICATION")
    - Fill Constitution Check section from constitution
@@ -144,6 +152,10 @@ Command ends after Phase 1 design. Report branch, IMPL_PLAN path, and generated 
    - Document the contract format appropriate for the project type
    - Examples: public APIs for libraries, command schemas for CLI tools, endpoints for web services, grammars for parsers, UI contracts for applications
    - Skip if project is purely internal (build scripts, one-off tools, etc.)
+   - For HTTP list endpoints, align the contract with
+     `docs/architecture/ADR-004-paginated-list-endpoints.md` and
+     `docs/contracts/api-reference.md`. Distinguish internal DTO names from public
+     JSON names when their conventions differ.
 
 3. **Create quickstart validation guide** → `quickstart.md`:
    - Document runnable validation scenarios that prove the feature works end-to-end

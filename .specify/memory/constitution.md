@@ -136,3 +136,57 @@ Este documento define las reglas verificables para operar el proyecto bajo Spec-
 - Condición de aprobación: otra sesión puede explicar por qué se eligió HU, subfeature o épica sin leer el chat completo.
 - Excepciones permitidas: ajustes menores de redacción o correcciones de documentación ya establecida.
 - Validación: revisar si la capacidad nueva cambia o no el problema principal del dominio, si necesita mini flujo propio y si merece carpeta especÍfica.
+
+## Principio XVI. Fuentes canónicas y precedencia
+
+- Regla: cada decisión debe tener una única fuente normativa según su alcance: `specs/` para features vigentes, `docs/architecture/` para arquitectura, `docs/contracts/` para API, `docs/domains/` para dominio, `docs/backlog/` para intención funcional y `specs/14-current-state.md` para estado y trazabilidad.
+- Justificación: evita contradicciones entre backlog, specs, contratos, ADRs y memoria técnica.
+- Evidencia requerida: los documentos secundarios deben enlazar a la fuente canónica y no redefinirla.
+- Condición de aprobación: un cambio puede identificar qué documento tiene autoridad sobre cada regla.
+- Excepciones permitidas: documentos históricos ubicados en `_archive` o reportes de auditoría que no definan contratos.
+- Validación: aplicar el mapa documental y resolver conflictos antes de implementar.
+
+## Principio XVII. Decisiones arquitectónicas aceptadas
+
+- Regla: los ADR en estado `Aceptado` son obligatorios para nuevas features y refactors relevantes; los ADR `Propuestos` no son reglas vigentes.
+- Justificación: convierte las decisiones técnicas aprobadas en restricciones verificables sin duplicar su contenido en la constitución.
+- Evidencia requerida: el plan y los contratos de una feature deben referenciar los ADR aplicables.
+- Condición de aprobación: ninguna implementación contradice un ADR aceptado sin una nueva decisión formal.
+- Excepciones permitidas: únicamente mediante un ADR posterior o una actualización formal del ADR existente.
+- Validación: revisión de ADRs aplicables durante `speckit-plan` y `speckit-analyze`.
+
+## Principio XVIII. Contrato HTTP canónico
+
+- Regla: los nuevos contratos HTTP deben alinearse con `docs/contracts/api-reference.md`, usar el envelope vigente y documentar compatibilidad cuando corresponda.
+- Justificación: evita que cada feature invente una variante de respuesta, naming o paginación.
+- Evidencia requerida: contrato de feature, ejemplo HTTP, pruebas funcionales y referencia operativa alineados.
+- Condición de aprobación: no existen diferencias no justificadas entre spec, contrato, pruebas y referencia HTTP.
+- Excepciones permitidas: ninguna sin decisión arquitectónica explícita.
+- Validación: contract tests y análisis cruzado de artefactos.
+
+## Principio XIX. Contexto obligatorio antes de generar artefactos
+
+- Regla: antes de generar plan, modelo, contratos o tareas, se deben revisar la constitución, los ADRs aplicables, la arquitectura, seguridad, testing, current state y backlog relacionado.
+- Justificación: las decisiones transversales deben influir en los artefactos desde su generación, no corregirse después manualmente.
+- Evidencia requerida: el plan registra las decisiones aplicables y los contratos reflejan sus convenciones.
+- Condición de aprobación: los artefactos generados no contienen contradicciones con fuentes canónicas vigentes.
+- Excepciones permitidas: ninguna para features con cambio de contrato, persistencia, seguridad o comportamiento.
+- Validación: preflight de SpecKit y `speckit-analyze`.
+
+## Principio XX. Trazabilidad requisito-prueba
+
+- Regla: cada requisito verificable debe poder seguirse desde epic o HU hasta spec, contrato, tarea, prueba y current state cuando el cambio sea relevante.
+- Justificación: permite validar que una implementación cumple intención y contrato, no solo que compila.
+- Evidencia requerida: referencias cruzadas o matriz de trazabilidad.
+- Condición de aprobación: no quedan requisitos verificables sin tarea o prueba aplicable.
+- Excepciones permitidas: cambios documentales menores sin impacto funcional.
+- Validación: revisión de cobertura en `speckit-tasks` y `speckit-analyze`.
+
+## Principio XXI. Política de idioma documental
+
+- Regla: la prosa de la documentación del proyecto y los artefactos generados por SpecKit deben escribirse en español, salvo solicitud explícita en otro idioma.
+- Justificación: mantiene la comprensión del negocio y evita mezclar idiomas dentro de un mismo documento.
+- Evidencia requerida: specs, planes, research, modelos, quickstarts y tareas con narrativa uniforme en español.
+- Condición de aprobación: se conservan en inglés únicamente los identificadores técnicos, nombres de clases, endpoints, campos JSON, rutas y bloques de código canónicos.
+- Excepciones permitidas: contratos o documentación externa que deban conservar un formato oficial, siempre que la prosa propia del proyecto siga en español.
+- Validación: revisión de idioma durante `speckit-specify`, `speckit-plan`, `speckit-tasks` y `speckit-analyze`.

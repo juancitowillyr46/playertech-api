@@ -162,11 +162,11 @@ GET /api/v1/players?categoryId=uuid&status=ACTIVE
 * Los filtros permitidos deben estar documentados por recurso.
 * El ordenamiento debe ser explícito y controlado.
 * No se aceptan filtros arbitrarios sin contrato.
-* `sort` usa `camelCase` como estándar canónico; el backend puede aceptar aliases históricos en `snake_case` durante compatibilidad transitoria.
+* Los nombres de query params usan `snake_case`; el valor de `sort` identifica un campo del recurso y puede usar la convención de nombres de respuesta.
 
 ## Payload Naming
 
-* Los query params usan `snake_case` salvo los parámetros contractualmente estandarizados en `camelCase` como `sort`.
+* Los query params usan `snake_case`.
 * Los JSON bodies usan `camelCase`.
 * Las respuestas JSON usan `camelCase`.
 * La compatibilidad con respuestas históricas en `snake_case` ya no es el comportamiento esperado para contratos nuevos.

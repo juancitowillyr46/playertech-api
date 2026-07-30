@@ -60,7 +60,7 @@ Reglas del estándar:
 
 ## Naming Convention
 
-* Query params: `snake_case`, excepto parámetros estandarizados en contrato como `sort`.
+* Query params: `snake_case`.
 * Request bodies: `camelCase`.
 * Respuestas JSON: `camelCase`.
 
@@ -582,8 +582,7 @@ Regla de contrato:
 - `createdAt` pertenece al perfil de auditoría y se usa como filtro/orden de negocio.
 - `birthDateFrom` y `birthDateTo` son el filtro canónico para criterios de edad.
 - `age` es un campo derivado de salida y no debe usarse como filtro persistente.
-- `sort` debe enviarse en `camelCase`.
-- El backend puede aceptar aliases históricos en `snake_case` mientras exista compatibilidad transitoria, pero el contrato canónico es `camelCase`.
+- `sort` es un query param en `snake_case`; su valor identifica el campo por el que se ordena y usa el nombre canónico del recurso.
 
 ```json
 {

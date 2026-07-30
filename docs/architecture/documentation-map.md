@@ -55,6 +55,7 @@ Vive en `docs/backlog/`.
 | Seguridad | [`docs/security/security-overview.md`](../../docs/security/security-overview.md) |
 | API global | [`docs/contracts/api-principles.md`](../../docs/contracts/api-principles.md) |
 | Base de datos | [`docs/database/database-standards.md`](../../docs/database/database-standards.md) |
+| Migraciones | [`docs/database/migration-standards.md`](../../docs/database/migration-standards.md) |
 | Testing | [`docs/architecture/guides/testing-strategy.md`](../../docs/architecture/guides/testing-strategy.md) |
 | Execution order | [`docs/architecture/guides/execution-order-guide.md`](../../docs/architecture/guides/execution-order-guide.md) |
 | Current state | [`specs/14-current-state.md`](../../specs/14-current-state.md) |
@@ -184,6 +185,13 @@ Vive en `docs/backlog/`.
 3. Si buscas decisión técnica o memoria, lee `docs/architecture/`.
 4. Si buscas un flujo funcional completo, lee su documento central en `docs/`.
 5. Si hay conflicto entre un satélite y su documento central, manda el central.
+
+## Autoridad Transversal
+
+- Las decisiones arquitectónicas aceptadas en `docs/architecture/ADR-*.md` son obligatorias para nuevas features y refactors relevantes.
+- La referencia HTTP operativa canónica es `docs/contracts/api-reference.md`; Postman refleja ese contrato para validación manual y QA.
+- `docs/contracts/api-principles.md` define el marco general y no puede contradecir la referencia HTTP operativa.
+- Un ADR o contrato en estado `Propuesto` expresa una alternativa pendiente, no una regla vigente.
 
 ## Reglas De Mantenimiento
 

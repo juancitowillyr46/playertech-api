@@ -62,6 +62,9 @@ You **MUST** consider the user input before proceeding (if not empty).
    - **IF EXISTS**: Load `.specify/memory/constitution.md` for project principles and governance constraints
    - Note: Not all projects have all documents. Generate tasks based on what's available.
 
+Generate task prose in Spanish by default. Preserve technical identifiers, class names,
+endpoints, JSON fields, file paths, and code blocks exactly.
+
 3. **Execute task generation workflow**:
    - Load plan.md and extract tech stack, libraries, project structure
    - Load spec.md and extract user stories with their priorities (P1, P2, P3, etc.)

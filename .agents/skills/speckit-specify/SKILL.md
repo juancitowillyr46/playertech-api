@@ -58,6 +58,11 @@ The text the user typed after `/speckit-specify` in the triggering message **is*
 
 Given that feature description, do this:
 
+Write the generated documentation prose in Spanish by default. Preserve technical
+identifiers, class names, endpoints, JSON fields, file paths, and code blocks exactly.
+Do not mix Spanish and English prose within the same document section unless the user
+explicitly requests bilingual output.
+
 1. **Generate a concise short name** (2-4 words) for the feature:
    - Analyze the feature description and extract the most meaningful keywords
    - Create a 2-4 word short name that captures the essence of the feature
