@@ -6,7 +6,7 @@ Devolver un documento para mostrarlo en línea en el navegador cuando el formato
 
 ## Endpoint
 
-`GET /api/v1/academy/players/{playerId}/documents/{documentId}/view`
+`GET /api/v1/academy/players/{playerId}/documents/{documentId}`
 
 ## Comportamiento de respuesta
 

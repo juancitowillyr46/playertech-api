@@ -436,3 +436,4 @@ Para considerar la base listara antes de implementar cualquier lógica de negoci
 * Se corrigió el wiring del repositorio de jobs de importación de jugadores y se formalizó el UUID/mapping XML de `PlayerImportJob`, desbloqueando el arranque del contenedor Symfony.
 * Los campos monetarios `DECIMAL(12,2)` ahora usan el tipo DBAL explícito `decimal_float`, compatible con las propiedades `float` existentes y con validación Doctrine limpia.
 * EP-024 quedó validada con pruebas unitarias, integración de repositorio y prueba funcional HTTP de carga, listado, vista, descarga, reemplazo y eliminación.
+* EP-024 quedó alineada con la colección Postman, incluyendo ejemplos exitosos y errores previsibles; el listado valida primero la pertenencia del jugador para evitar respuestas cross-tenant ambiguas.

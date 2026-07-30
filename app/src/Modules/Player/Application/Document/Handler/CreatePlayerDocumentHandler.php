@@ -13,8 +13,8 @@ final readonly class CreatePlayerDocumentHandler
     public function __invoke(CreatePlayerDocumentCommand $command): PlayerDocumentResponse
     {
         $academy = new AcademyId($command->academyId); $player = $this->playerFinder->findOrFail($academy, new PlayerId($command->playerId));
-        $file = $this->validator->validate($command->file); $file['storageName'] = $this->storage->store($command->file, $file['extension']);
-        $document = PlayerDocument::create(PlayerDocumentId::generate(), $player->academyId(), $player->id(), DocumentType::fromInput($command->documentType), $file, $command->observations, $command->actorId);
+        $type = DocumentType::fromInput($command->documentType); $file = $this->validator->validate($command->file); $file['storageName'] = $this->storage->store($command->file, $file['extension']);
+        $document = PlayerDocument::create(PlayerDocumentId::generate(), $player->academyId(), $player->id(), $type, $file, $command->observations, $command->actorId);
         try { $this->repository->save($document); } catch (\Throwable $e) { $this->storage->delete($file['storageName']); throw $e; }
         return PlayerDocumentResponse::fromDocument($document);
     }

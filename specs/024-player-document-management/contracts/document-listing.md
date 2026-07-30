@@ -24,9 +24,11 @@ Devolver los documentos activos asociados a un jugador, dentro del tenant autent
       "originalFileName": "cedula.pdf",
       "mimeType": "application/pdf",
       "fileSize": 123456,
-      "uploadedBy": "uuid",
+      "playerId": "uuid",
       "observations": null,
-      "createdAt": "2026-07-30T10:00:00Z"
+      "fileExtension": "pdf",
+      "createdAt": "2026-07-30T10:00:00Z",
+      "updatedAt": null
     }
   ],
   "meta": {

@@ -17,6 +17,7 @@ final class PlayerDocumentControllerTest extends TestDatabaseKernel
     private EntityManagerInterface $entityManager;
     private string $token;
     private string $playerId;
+    private string $otherPlayerId;
 
     protected function setUp(): void
     {
@@ -24,15 +25,18 @@ final class PlayerDocumentControllerTest extends TestDatabaseKernel
         SchemaResetter::reset($this->entityManager, array_map(fn (string $class) => $this->entityManager->getClassMetadata($class), [Academy::class, AccountUser::class, Player::class, \App\Modules\Player\Domain\Document\PlayerDocument::class]));
         $academy = Academy::create(AcademyId::generate(), new Name('Academia Documentos'), new Email('documents@test.local'), new PhoneNumber('+57 300 111 2233'), 'Colombia', 'Cundinamarca', null, null, null, null, 'signup', new Address('Calle 1'), new City('Bogota'), null, AuditTrail::create('system'));
         $player = Player::create(PlayerId::generate(), $academy->id(), 'CC', 'Ana', 'Rojas', new \DateTimeImmutable('2010-01-01'), 'DOC-100', null, null, null, null, null, null, null, null, AuditTrail::create('system'));
+        $otherAcademy = Academy::create(AcademyId::generate(), new Name('Otra Academia'), new Email('other-documents@test.local'), new PhoneNumber('+57 300 111 2244'), 'Colombia', 'Cundinamarca', null, null, null, null, 'signup', new Address('Calle 2'), new City('Bogota'), null, AuditTrail::create('system'));
+        $otherPlayer = Player::create(PlayerId::generate(), $otherAcademy->id(), 'CC', 'Luis', 'Diaz', new \DateTimeImmutable('2010-01-01'), 'DOC-200', null, null, null, null, null, null, null, null, AuditTrail::create('system'));
         $user = new AccountUser(); $user->setEmail('documents-admin@test.local'); $user->setPasswordHash('hash'); $user->setAcademyId($academy->id()->value()); $user->setRole(AccountUser::ROLE_ACADEMY_ADMIN); $user->setStatus(AccountUser::STATUS_ACTIVE); $user->setFullName('Document Admin');
-        $this->entityManager->persist($academy); $this->entityManager->persist($player); $this->entityManager->persist($user); $this->entityManager->flush();
-        $this->playerId = $player->id()->value(); $this->token = $this->jwtManager($container)->create($user);
+        $this->entityManager->persist($academy); $this->entityManager->persist($player); $this->entityManager->persist($otherAcademy); $this->entityManager->persist($otherPlayer); $this->entityManager->persist($user); $this->entityManager->flush();
+        $this->playerId = $player->id()->value(); $this->otherPlayerId = $otherPlayer->id()->value(); $this->token = $this->jwtManager($container)->create($user);
     }
 
     public function testItUploadsListsViewsDownloadsReplacesAndDeletesDocument(): void
     {
         $first = $this->upload('first.pdf', '%PDF-1.4 first');
         self::assertSame(201, $first->getStatusCode()); $documentId = json_decode($first->getContent(), true, 512, JSON_THROW_ON_ERROR)['data']['id'];
+        $crossTenant = $this->request('/api/v1/academy/players/'.$this->otherPlayerId.'/documents', 'GET'); self::assertSame(404, $crossTenant->getStatusCode());
         $list = $this->request('/api/v1/academy/players/'.$this->playerId.'/documents', 'GET'); self::assertSame(200, $list->getStatusCode(), $list->getContent()); self::assertCount(1, json_decode($list->getContent(), true, 512, JSON_THROW_ON_ERROR)['data']);
         $view = $this->request('/api/v1/academy/players/'.$this->playerId.'/documents/'.$documentId, 'GET'); self::assertSame(200, $view->getStatusCode()); self::assertStringContainsString('inline', (string) $view->headers->get('Content-Disposition'));
         $download = $this->request('/api/v1/academy/players/'.$this->playerId.'/documents/'.$documentId.'/download', 'GET'); self::assertSame(200, $download->getStatusCode()); self::assertStringContainsString('attachment', (string) $download->headers->get('Content-Disposition'));

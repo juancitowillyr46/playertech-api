@@ -6,7 +6,7 @@ Reemplazar el archivo y metadata seleccionada de un documento existente conserva
 
 ## Endpoint
 
-`POST /api/v1/academy/players/{playerId}/documents/{documentId}/replace`
+`PUT /api/v1/academy/players/{playerId}/documents/{documentId}`
 
 ## Request
 
@@ -14,7 +14,7 @@ Reemplazar el archivo y metadata seleccionada de un documento existente conserva
 
 Fields:
 
-- `documentType` optional
+- `documentType` required
 - `file` required
 - `observations` optional
 

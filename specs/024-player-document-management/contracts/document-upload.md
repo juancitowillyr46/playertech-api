@@ -35,7 +35,9 @@ Fields:
     "mimeType": "application/pdf",
     "fileSize": 123456,
     "observations": "some note",
-    "createdAt": "2026-07-30T10:00:00Z"
+    "fileExtension": "pdf",
+    "createdAt": "2026-07-30T10:00:00Z",
+    "updatedAt": null
   },
   "meta": {}
 }

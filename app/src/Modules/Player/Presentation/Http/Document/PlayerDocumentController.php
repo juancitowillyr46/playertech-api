@@ -48,5 +48,5 @@ final class PlayerDocumentController extends AbstractPaginatedApiController
     private function academy(): \App\Modules\Academy\Domain\Academy\AcademyId { return new \App\Modules\Academy\Domain\Academy\AcademyId($this->tenantContext->requireAcademyId()); }
     private function actor(): string { return $this->requireAuthenticatedUserId($this->security); }
     private function assertAdmin(): void { if (!$this->security->isGranted('ROLE_ACADEMY_ADMIN')) { throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException('Solo Owner/Admin puede gestionar documentos.'); } }
-    private function binary(PlayerDocumentFileResponse $result, string $disposition): BinaryFileResponse { $response = new BinaryFileResponse($result->path); $response->headers->set('Content-Type', $result->document->mimeType()); $response->setContentDisposition($disposition, $result->document->originalFileName()); return $response; }
+    private function binary(PlayerDocumentFileResponse $result, string $disposition): BinaryFileResponse { $response = new BinaryFileResponse($result->path); $response->headers->set('Content-Type', $result->document->mimeType()); $response->headers->set('X-Content-Type-Options', 'nosniff'); $response->setContentDisposition($disposition, $result->document->originalFileName()); return $response; }
 }
