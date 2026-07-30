@@ -179,6 +179,11 @@ Si el proyecto lo trabaja una sola persona, aplicar estas reglas antes que un fl
 - Si un agente necesita contexto adicional, debe leer primero la documentación del proyecto antes de modificar código.
 - Si una instrucción del usuario entra en conflicto con estas reglas, pedir confirmación o explicar la discrepancia.
 - Si una tarea requiere cambiar arquitectura, documentación o flujo de ejecución, hacerlo de forma coordinada y trazable.
+- Antes de escribir código, revisar `docs/architecture/guides/development-standards.md`, `docs/architecture/guides/testing-strategy.md`, la guía de creación de módulos y ejemplos del módulo afectado.
+- Implementar respetando el formato estructurado del proyecto: métodos multilínea cuando mejoren legibilidad, imports explícitos, tipos declarados y separación clara de responsabilidades.
+- Validar dentro de Docker, no con el PHP del host: usar PHP 8.4, Symfony 7.4 y Composer 2.x del contenedor oficial.
+- Ejecutar las herramientas de calidad disponibles antes de finalizar: `php -l`, PHPUnit, `doctrine:mapping:info`, validación de schema cuando corresponda y `git diff --check`.
+- No afirmar que se ejecutó PHP-CS-Fixer, PHPStan u otra herramienta si no está declarada y disponible en el proyecto.
 
 ---
 

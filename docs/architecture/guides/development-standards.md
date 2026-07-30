@@ -14,6 +14,37 @@ Su objetivo es garantizar:
 
 Todos los módulos deberán seguir estas reglas.
 
+## Runtime and Quality Context
+
+El contexto oficial de validación es el contenedor Docker de la aplicación:
+
+* PHP 8.4.x.
+* Symfony 7.4.x.
+* Doctrine ORM 3.x.
+* Composer 2.x.
+* PHPUnit 11.x.
+* MySQL 8.x.
+
+El PHP del host no es una referencia válida para validar la aplicación. La versión
+de Composer del host tampoco sustituye la del contenedor.
+
+## Quality Gates Before Completion
+
+Antes de considerar terminado un cambio PHP, el agente debe:
+
+1. Leer esta guía y la documentación específica del módulo antes de implementar.
+2. Mantener código estructurado y legible; evitar métodos comprimidos en una sola línea cuando dificulten la lectura.
+3. Validar sintaxis con `php -l`.
+4. Ejecutar las pruebas PHPUnit aplicables dentro del contenedor.
+5. Ejecutar `php bin/console doctrine:mapping:info` si se modifican mappings o entidades persistentes.
+6. Ejecutar `php bin/console doctrine:schema:validate --skip-sync` cuando se modifique persistencia.
+7. Ejecutar `git diff --check` antes de entregar.
+
+PHP-CS-Fixer y PHPStan no están actualmente declarados como herramientas directas del
+proyecto. No deben reportarse como ejecutados hasta que se agreguen a `require-dev`, se
+configure su política y se incorporen sus comandos Composer. Su incorporación futura
+debe mantener compatibilidad con PHP 8.4, Symfony 7.4 y Composer 2.x.
+
 ## Current Backend Standard
 
 La base técnica actual ya opera con estas convenciones:
