@@ -10,7 +10,7 @@
         <field name="academyId" column="academy_id" type="academy_id"/>
         <field name="paymentId" column="payment_id" type="payment_id"/>
         <field name="chargeId" column="charge_id" type="charge_id"/>
-        <field name="amount" column="amount" type="decimal" precision="12" scale="2"/>
+        <field name="amount" column="amount" type="decimal_float" precision="12" scale="2"/>
         <embedded name="auditTrail" class="App\Shared\Domain\ValueObject\AuditTrail" use-column-prefix="false"/>
         <field name="deletedAt" column="deleted_at" type="datetime_immutable" nullable="true"/>
         <field name="deletedBy" column="deleted_by" type="guid" nullable="true"/>

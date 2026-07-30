@@ -432,3 +432,7 @@ Para considerar la base listara antes de implementar cualquier lógica de negoci
 * `EP-002` amplió el contrato de sedes para exponer `address` y `phone` opcionales también en el listarado, no solo en el detalle.
 * El listarado de `Venue` ahora normaliza `sort` permitidos en backend; `created_at` y aliases históricos se traducen a `auditTrail.createdAt.value` para evitar errores 500 por paths internos de Doctrine.
 * El listarado de `Venue` quedó validado con una prueba unitaria de código puro (`ListVenuesHandlerTest`) ejecutada dentro del contenedor, sin BD, para confirmar el contrato de responseuesta del handler.
+* `EP-024` incorporó la gestión privada de documentos del jugador: listado paginado, carga validada, vista inline, descarga, reemplazo conservando el UUID y eliminación con soft delete y borrado físico.
+* Se corrigió el wiring del repositorio de jobs de importación de jugadores y se formalizó el UUID/mapping XML de `PlayerImportJob`, desbloqueando el arranque del contenedor Symfony.
+* Los campos monetarios `DECIMAL(12,2)` ahora usan el tipo DBAL explícito `decimal_float`, compatible con las propiedades `float` existentes y con validación Doctrine limpia.
+* EP-024 quedó validada con pruebas unitarias, integración de repositorio y prueba funcional HTTP de carga, listado, vista, descarga, reemplazo y eliminación.

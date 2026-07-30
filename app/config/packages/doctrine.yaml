@@ -3,10 +3,13 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         charset: utf8mb4
         types:
+            decimal_float: App\Shared\Infrastructure\Persistence\Doctrine\Type\DecimalFloatType
             academy_id: App\Modules\Academy\Infrastructure\Persistence\Doctrine\Type\AcademyIdType
             venue_id: App\Modules\Venue\Infrastructure\Persistence\Doctrine\Type\VenueIdType
             category_id: App\Modules\Category\Infrastructure\Persistence\Doctrine\Type\CategoryIdType
             player_id: App\Modules\Player\Infrastructure\Persistence\Doctrine\Type\PlayerIdType
+            player_document_id: App\Modules\Player\Infrastructure\Persistence\Doctrine\Type\PlayerDocumentIdType
+            player_import_job_id: App\Modules\Player\Infrastructure\Persistence\Doctrine\Type\PlayerImportJobIdType
             team_id: App\Modules\Team\Infrastructure\Persistence\Doctrine\Type\TeamIdType
             legal_guardian_id: App\Modules\Guardian\Infrastructure\Persistence\Doctrine\Type\LegalGuardianIdType
             player_guardian_id: App\Modules\Player\Infrastructure\Persistence\Doctrine\Type\PlayerGuardianIdType
@@ -61,10 +64,16 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Modules/Player/Infrastructure/Persistence/Doctrine/Mapping/Player'
                 prefix: App\Modules\Player\Domain\Player
                 alias: Player
+            PlayerDocument:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Modules/Player/Infrastructure/Persistence/Doctrine/Mapping/PlayerDocument'
+                prefix: App\Modules\Player\Domain\Document
+                alias: PlayerDocument
             PlayerImportJob:
                 is_bundle: false
-                type: attribute
-                dir: '%kernel.project_dir%/src/Modules/Player/Domain/Import'
+                type: xml
+                dir: '%kernel.project_dir%/src/Modules/Player/Infrastructure/Persistence/Doctrine/Mapping/Import'
                 prefix: App\Modules\Player\Domain\Import
                 alias: PlayerImportJob
             PlayerGuardian:

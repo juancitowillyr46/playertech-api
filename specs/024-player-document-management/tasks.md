@@ -18,11 +18,11 @@
 
 **Propósito**: Estructura base y soporte compartido para el subdominio documental de Player
 
-- [ ] T001 Crear la carpeta de subdominio documental en `app/src/Modules/Player/Domain/Document/`
-- [ ] T002 Crear la carpeta de aplicación documental en `app/src/Modules/Player/Application/Document/`
-- [ ] T003 Crear la carpeta de persistencia documental en `app/src/Modules/Player/Infrastructure/Persistence/`
-- [ ] T004 Crear la carpeta HTTP documental en `app/src/Modules/Player/Presentation/Http/Document/`
-- [ ] T005 Crear la carpeta de contratos del feature en `specs/024-player-document-management/contracts/`
+- [X] T001 Crear la carpeta de subdominio documental en `app/src/Modules/Player/Domain/Document/`
+- [X] T002 Crear la carpeta de aplicación documental en `app/src/Modules/Player/Application/Document/`
+- [X] T003 Crear la carpeta de persistencia documental en `app/src/Modules/Player/Infrastructure/Persistence/`
+- [X] T004 Crear la carpeta HTTP documental en `app/src/Modules/Player/Presentation/Http/Document/`
+- [X] T005 Crear la carpeta de contratos del feature en `specs/024-player-document-management/contracts/`
 
 ---
 
@@ -30,15 +30,15 @@
 
 **Propósito**: Dominio base, modelo de metadata y abstracciones de almacenamiento requeridas por todas las historias
 
-- [ ] T006 Definir el valor objeto o catálogo de tipos de documento soportados en `app/src/Modules/Player/Domain/Document/DocumentType.php`
-- [ ] T007 [P] Definir la entidad de dominio `PlayerDocument` con estado, auditoría y soft delete en `app/src/Modules/Player/Domain/Document/PlayerDocument.php`
-- [ ] T008 [P] Definir la interfaz de repositorio de documentos en `app/src/Modules/Player/Domain/Document/PlayerDocumentRepository.php`
-- [ ] T009 Definir el contrato de almacenamiento privado para archivos documentales en `app/src/Modules/Player/Domain/Document/PlayerDocumentStorage.php`
-- [ ] T010 Definir el contrato de validación de archivos documentales en `app/src/Modules/Player/Domain/Document/PlayerDocumentUploadValidator.php`
-- [ ] T011 [P] Crear el mapping XML base de `PlayerDocument` en `app/src/Modules/Player/Infrastructure/Persistence/Doctrine/Mapping/PlayerDocument/PlayerDocument.orm.xml`
-- [ ] T012 Implementar la infraestructura de almacenamiento privado para documentos en `app/src/Modules/Player/Infrastructure/Persistence/FileSystemPlayerDocumentStorage.php`
-- [ ] T013 Implementar el repositorio Doctrine de documentos en `app/src/Modules/Player/Infrastructure/Persistence/PlayerDocumentRepository.php`
-- [ ] T014 Crear la migración Doctrine de `player_documents` en `app/migrations/`, incluyendo UUID, `academy_id`, `player_id`, metadata documental, auditoría, soft delete, foreign keys e índices para listados activos, y registrar el wiring en `app/config/services.yaml` y `app/config/packages/doctrine.yaml`
+- [X] T006 Definir el valor objeto o catálogo de tipos de documento soportados en `app/src/Modules/Player/Domain/Document/DocumentType.php`
+- [X] T007 [P] Definir la entidad de dominio `PlayerDocument` con estado, auditoría y soft delete en `app/src/Modules/Player/Domain/Document/PlayerDocument.php`
+- [X] T008 [P] Definir la interfaz de repositorio de documentos en `app/src/Modules/Player/Domain/Document/PlayerDocumentRepository.php`
+- [X] T009 Definir el contrato de almacenamiento privado para archivos documentales en `app/src/Modules/Player/Domain/Document/PlayerDocumentStorage.php`
+- [X] T010 Definir el contrato de validación de archivos documentales en `app/src/Modules/Player/Domain/Document/PlayerDocumentUploadValidator.php`
+- [X] T011 [P] Crear el mapping XML base de `PlayerDocument` en `app/src/Modules/Player/Infrastructure/Persistence/Doctrine/Mapping/PlayerDocument/PlayerDocument.orm.xml`
+- [X] T012 Implementar la infraestructura de almacenamiento privado para documentos en `app/src/Modules/Player/Infrastructure/Persistence/FileSystemPlayerDocumentStorage.php`
+- [X] T013 Implementar el repositorio Doctrine de documentos en `app/src/Modules/Player/Infrastructure/Persistence/PlayerDocumentRepository.php`
+- [X] T014 Crear la migración Doctrine de `player_documents` en `app/migrations/`, incluyendo UUID, `academy_id`, `player_id`, metadata documental, auditoría, soft delete, foreign keys e índices para listados activos, y registrar el wiring en `app/config/services.yaml` y `app/config/packages/doctrine.yaml`
 
 **Checkpoint**: La base documental existe y las historias pueden construirse sobre contratos reales
 
@@ -52,13 +52,13 @@
 
 ### Implementación de la historia de usuario 1
 
-- [ ] T015 [US1] Crear la query `ListPlayerDocumentsQuery` en `app/src/Modules/Player/Application/Document/Query/ListPlayerDocumentsQuery.php`
-- [ ] T016 [US1] Crear la respuesta paginada `PlayerDocumentListResponse` en `app/src/Modules/Player/Application/Document/Response/PlayerDocumentListResponse.php`
-- [ ] T017 [US1] Crear el handler `ListPlayerDocumentsHandler` en `app/src/Modules/Player/Application/Document/Handler/ListPlayerDocumentsHandler.php`
-- [ ] T018 [US1] Implementar la recuperación paginada de documentos activos en `app/src/Modules/Player/Infrastructure/Persistence/PlayerDocumentRepository.php`
-- [ ] T019 [US1] Crear el endpoint HTTP de listado en `app/src/Modules/Player/Presentation/Http/Document/PlayerDocumentController.php`
-- [ ] T020 [US1] Añadir la transformación de respuesta estándar para documentos listados en `app/src/Modules/Player/Application/Document/Response/PlayerDocumentItemResponse.php`
-- [ ] T021 [US1] Conectar el listado con la resolución de tenant del contexto autenticado en `app/src/Modules/Player/Presentation/Http/Document/PlayerDocumentController.php`
+- [X] T015 [US1] Crear la query `ListPlayerDocumentsQuery` en `app/src/Modules/Player/Application/Document/Query/ListPlayerDocumentsQuery.php`
+- [X] T016 [US1] Crear la respuesta paginada `PlayerDocumentListResponse` en `app/src/Modules/Player/Application/Document/Response/PlayerDocumentListResponse.php`
+- [X] T017 [US1] Crear el handler `ListPlayerDocumentsHandler` en `app/src/Modules/Player/Application/Document/Handler/ListPlayerDocumentsHandler.php`
+- [X] T018 [US1] Implementar la recuperación paginada de documentos activos en `app/src/Modules/Player/Infrastructure/Persistence/PlayerDocumentRepository.php`
+- [X] T019 [US1] Crear el endpoint HTTP de listado en `app/src/Modules/Player/Presentation/Http/Document/PlayerDocumentController.php`
+- [X] T020 [US1] Añadir la transformación de respuesta estándar para documentos listados en `app/src/Modules/Player/Application/Document/Response/PlayerDocumentItemResponse.php`
+- [X] T021 [US1] Conectar el listado con la resolución de tenant del contexto autenticado en `app/src/Modules/Player/Presentation/Http/Document/PlayerDocumentController.php`
 
 **Checkpoint**: El listado de documentos del jugador funciona de forma independiente
 
@@ -72,15 +72,15 @@
 
 ### Implementación de la historia de usuario 2
 
-- [ ] T022 [US2] Crear la request HTTP multipart de subida en `app/src/Modules/Player/Presentation/Http/Document/Request/CreatePlayerDocumentRequest.php`
-- [ ] T023 [US2] Crear el command `CreatePlayerDocumentCommand` en `app/src/Modules/Player/Application/Document/Command/CreatePlayerDocumentCommand.php`
-- [ ] T024 [US2] Crear la respuesta `PlayerDocumentResponse` para creación en `app/src/Modules/Player/Application/Document/Response/PlayerDocumentResponse.php`
-- [ ] T025 [US2] Crear el handler `CreatePlayerDocumentHandler` en `app/src/Modules/Player/Application/Document/Handler/CreatePlayerDocumentHandler.php`
-- [ ] T026 [US2] Implementar la validación de tipo, tamaño, extensión, MIME y sanitización de nombre en `app/src/Modules/Player/Domain/Document/PlayerDocumentUploadValidator.php`
-- [ ] T027 [US2] Implementar la generación de nombre interno único y persistencia privada del archivo en `app/src/Modules/Player/Infrastructure/Persistence/FileSystemPlayerDocumentStorage.php`
-- [ ] T028 [US2] Implementar el guardado de metadata y auditoría del documento en `app/src/Modules/Player/Infrastructure/Persistence/PlayerDocumentRepository.php`
-- [ ] T029 [US2] Conectar la ruta HTTP de subida en `app/src/Modules/Player/Presentation/Http/Document/PlayerDocumentController.php`
-- [ ] T030 [US2] Asegurar limpieza del archivo cuando falle la persistencia de metadata en `app/src/Modules/Player/Application/Document/Handler/CreatePlayerDocumentHandler.php`
+- [X] T022 [US2] Crear la request HTTP multipart de subida en `app/src/Modules/Player/Presentation/Http/Document/Request/CreatePlayerDocumentRequest.php`
+- [X] T023 [US2] Crear el command `CreatePlayerDocumentCommand` en `app/src/Modules/Player/Application/Document/Command/CreatePlayerDocumentCommand.php`
+- [X] T024 [US2] Crear la respuesta `PlayerDocumentResponse` para creación en `app/src/Modules/Player/Application/Document/Response/PlayerDocumentResponse.php`
+- [X] T025 [US2] Crear el handler `CreatePlayerDocumentHandler` en `app/src/Modules/Player/Application/Document/Handler/CreatePlayerDocumentHandler.php`
+- [X] T026 [US2] Implementar la validación de tipo, tamaño, extensión, MIME y sanitización de nombre en `app/src/Modules/Player/Domain/Document/PlayerDocumentUploadValidator.php`
+- [X] T027 [US2] Implementar la generación de nombre interno único y persistencia privada del archivo en `app/src/Modules/Player/Infrastructure/Persistence/FileSystemPlayerDocumentStorage.php`
+- [X] T028 [US2] Implementar el guardado de metadata y auditoría del documento en `app/src/Modules/Player/Infrastructure/Persistence/PlayerDocumentRepository.php`
+- [X] T029 [US2] Conectar la ruta HTTP de subida en `app/src/Modules/Player/Presentation/Http/Document/PlayerDocumentController.php`
+- [X] T030 [US2] Asegurar limpieza del archivo cuando falle la persistencia de metadata en `app/src/Modules/Player/Application/Document/Handler/CreatePlayerDocumentHandler.php`
 
 **Checkpoint**: La subida de documentos funciona de extremo a extremo con validación y rollback de archivo
 
@@ -94,14 +94,14 @@
 
 ### Implementación de la historia de usuario 3
 
-- [ ] T031 [US3] Crear la query `ShowPlayerDocumentQuery` en `app/src/Modules/Player/Application/Document/Query/ShowPlayerDocumentQuery.php`
-- [ ] T032 [US3] Crear la query `DownloadPlayerDocumentQuery` en `app/src/Modules/Player/Application/Document/Query/DownloadPlayerDocumentQuery.php`
-- [ ] T033 [US3] Crear las respuestas `PlayerDocumentFileResponse` y `PlayerDocumentDownloadResponse` en `app/src/Modules/Player/Application/Document/Response/`
-- [ ] T034 [US3] Crear los handlers `ShowPlayerDocumentHandler` y `DownloadPlayerDocumentHandler` en `app/src/Modules/Player/Application/Document/Handler/`
-- [ ] T035 [US3] Implementar lectura segura del archivo privado en `app/src/Modules/Player/Infrastructure/Persistence/FileSystemPlayerDocumentStorage.php`
-- [ ] T036 [US3] Implementar la entrega inline y attachment con headers correctos en `app/src/Modules/Player/Presentation/Http/Document/PlayerDocumentController.php`
-- [ ] T037 [US3] Añadir control de tenant y validación de documento activo antes de servir el archivo en `app/src/Modules/Player/Application/Document/Handler/ShowPlayerDocumentHandler.php`
-- [ ] T038 [US3] Añadir control de tenant y validación de documento activo antes de descargar el archivo en `app/src/Modules/Player/Application/Document/Handler/DownloadPlayerDocumentHandler.php`
+- [X] T031 [US3] Crear la query `ShowPlayerDocumentQuery` en `app/src/Modules/Player/Application/Document/Query/ShowPlayerDocumentQuery.php`
+- [X] T032 [US3] Crear la query `DownloadPlayerDocumentQuery` en `app/src/Modules/Player/Application/Document/Query/DownloadPlayerDocumentQuery.php`
+- [X] T033 [US3] Crear las respuestas `PlayerDocumentFileResponse` y `PlayerDocumentDownloadResponse` en `app/src/Modules/Player/Application/Document/Response/`
+- [X] T034 [US3] Crear los handlers `ShowPlayerDocumentHandler` y `DownloadPlayerDocumentHandler` en `app/src/Modules/Player/Application/Document/Handler/`
+- [X] T035 [US3] Implementar lectura segura del archivo privado en `app/src/Modules/Player/Infrastructure/Persistence/FileSystemPlayerDocumentStorage.php`
+- [X] T036 [US3] Implementar la entrega inline y attachment con headers correctos en `app/src/Modules/Player/Presentation/Http/Document/PlayerDocumentController.php`
+- [X] T037 [US3] Añadir control de tenant y validación de documento activo antes de servir el archivo en `app/src/Modules/Player/Application/Document/Handler/ShowPlayerDocumentHandler.php`
+- [X] T038 [US3] Añadir control de tenant y validación de documento activo antes de descargar el archivo en `app/src/Modules/Player/Application/Document/Handler/DownloadPlayerDocumentHandler.php`
 
 **Checkpoint**: La visualización y descarga están disponibles y protegidas por tenant
 
@@ -115,15 +115,15 @@
 
 ### Implementación de la historia de usuario 4
 
-- [ ] T039 [US4] Crear la request HTTP multipart de reemplazo en `app/src/Modules/Player/Presentation/Http/Document/Request/ReplacePlayerDocumentRequest.php`
-- [ ] T040 [US4] Crear el command `ReplacePlayerDocumentCommand` en `app/src/Modules/Player/Application/Document/Command/ReplacePlayerDocumentCommand.php`
-- [ ] T041 [US4] Crear el handler `ReplacePlayerDocumentHandler` en `app/src/Modules/Player/Application/Document/Handler/ReplacePlayerDocumentHandler.php`
-- [ ] T042 [US4] Implementar la lógica de reemplazo conservando el identificador en `app/src/Modules/Player/Domain/Document/PlayerDocument.php`
-- [ ] T043 [US4] Implementar el borrado físico del archivo anterior tras reemplazo exitoso en `app/src/Modules/Player/Infrastructure/Persistence/FileSystemPlayerDocumentStorage.php`
-- [ ] T044 [US4] Crear el command `DeletePlayerDocumentCommand` en `app/src/Modules/Player/Application/Document/Command/DeletePlayerDocumentCommand.php`
-- [ ] T045 [US4] Crear el handler `DeletePlayerDocumentHandler` en `app/src/Modules/Player/Application/Document/Handler/DeletePlayerDocumentHandler.php`
-- [ ] T046 [US4] Implementar soft delete y borrado físico del archivo en `app/src/Modules/Player/Infrastructure/Persistence/PlayerDocumentRepository.php` y `app/src/Modules/Player/Infrastructure/Persistence/FileSystemPlayerDocumentStorage.php`
-- [ ] T047 [US4] Conectar las rutas HTTP de reemplazo y borrado en `app/src/Modules/Player/Presentation/Http/Document/PlayerDocumentController.php`
+- [X] T039 [US4] Crear la request HTTP multipart de reemplazo en `app/src/Modules/Player/Presentation/Http/Document/Request/ReplacePlayerDocumentRequest.php`
+- [X] T040 [US4] Crear el command `ReplacePlayerDocumentCommand` en `app/src/Modules/Player/Application/Document/Command/ReplacePlayerDocumentCommand.php`
+- [X] T041 [US4] Crear el handler `ReplacePlayerDocumentHandler` en `app/src/Modules/Player/Application/Document/Handler/ReplacePlayerDocumentHandler.php`
+- [X] T042 [US4] Implementar la lógica de reemplazo conservando el identificador en `app/src/Modules/Player/Domain/Document/PlayerDocument.php`
+- [X] T043 [US4] Implementar el borrado físico del archivo anterior tras reemplazo exitoso en `app/src/Modules/Player/Infrastructure/Persistence/FileSystemPlayerDocumentStorage.php`
+- [X] T044 [US4] Crear el command `DeletePlayerDocumentCommand` en `app/src/Modules/Player/Application/Document/Command/DeletePlayerDocumentCommand.php`
+- [X] T045 [US4] Crear el handler `DeletePlayerDocumentHandler` en `app/src/Modules/Player/Application/Document/Handler/DeletePlayerDocumentHandler.php`
+- [X] T046 [US4] Implementar soft delete y borrado físico del archivo en `app/src/Modules/Player/Infrastructure/Persistence/PlayerDocumentRepository.php` y `app/src/Modules/Player/Infrastructure/Persistence/FileSystemPlayerDocumentStorage.php`
+- [X] T047 [US4] Conectar las rutas HTTP de reemplazo y borrado en `app/src/Modules/Player/Presentation/Http/Document/PlayerDocumentController.php`
 
 **Checkpoint**: El reemplazo y la eliminación quedan funcionales con preservación de identidad y limpieza de archivo
 
@@ -137,11 +137,11 @@
 
 ### Implementación de la historia de usuario 5
 
-- [ ] T048 [US5] Crear tests unitarios de validación de archivo en `app/tests/Unit/Modules/Player/Document/PlayerDocumentUploadValidatorTest.php`
-- [ ] T049 [US5] Ajustar la validación de extensión y MIME real en `app/src/Modules/Player/Domain/Document/PlayerDocumentUploadValidator.php`
-- [ ] T050 [US5] Asegurar el rechazo de archivos vacíos y de más de 3,145,728 bytes en `app/src/Modules/Player/Domain/Document/PlayerDocumentUploadValidator.php`
-- [ ] T051 [US5] Normalizar el nombre original a metadata segura en `app/src/Modules/Player/Domain/Document/PlayerDocumentUploadValidator.php`
-- [ ] T052 [US5] Confirmar que el flujo de subida falla antes de persistir cuando la validación no pasa en `app/src/Modules/Player/Application/Document/Handler/CreatePlayerDocumentHandler.php`
+- [X] T048 [US5] Crear tests unitarios de validación de archivo en `app/tests/Unit/Modules/Player/Document/PlayerDocumentUploadValidatorTest.php`
+- [X] T049 [US5] Ajustar la validación de extensión y MIME real en `app/src/Modules/Player/Domain/Document/PlayerDocumentUploadValidator.php`
+- [X] T050 [US5] Asegurar el rechazo de archivos vacíos y de más de 3,145,728 bytes en `app/src/Modules/Player/Domain/Document/PlayerDocumentUploadValidator.php`
+- [X] T051 [US5] Normalizar el nombre original a metadata segura en `app/src/Modules/Player/Domain/Document/PlayerDocumentUploadValidator.php`
+- [X] T052 [US5] Confirmar que el flujo de subida falla antes de persistir cuando la validación no pasa en `app/src/Modules/Player/Application/Document/Handler/CreatePlayerDocumentHandler.php`
 
 **Checkpoint**: La validación de carga bloquea archivos inválidos antes de almacenamiento permanente
 
@@ -151,11 +151,11 @@
 
 **Propósito**: Consistencia transversal, documentación y verificación final
 
-- [ ] T053 [P] Agregar pruebas de integración del repositorio y mapping XML en `app/tests/Integration/Modules/Player/Document/PlayerDocumentRepositoryTest.php`
-- [ ] T054 [P] Agregar pruebas funcionales HTTP para listar, subir, ver, descargar, reemplazar y eliminar en `app/tests/Functional/Modules/Player/Document/PlayerDocumentControllerTest.php`
-- [ ] T055 Actualizar trazabilidad de estado actual en `specs/14-current-state.md`
-- [ ] T056 Ejecutar y validar los escenarios de `specs/024-player-document-management/quickstart.md`
-- [ ] T057 Verificar que los contratos en `specs/024-player-document-management/contracts/` coinciden con la implementación final y con `docs/contracts/api-reference.md` y `docs/architecture/ADR-004-paginated-list-endpoints.md`
+- [X] T053 [P] Agregar pruebas de integración del repositorio y mapping XML en `app/tests/Integration/Modules/Player/Document/PlayerDocumentRepositoryTest.php`
+- [X] T054 [P] Agregar pruebas funcionales HTTP para listar, subir, ver, descargar, reemplazar y eliminar en `app/tests/Functional/Modules/Player/Document/PlayerDocumentControllerTest.php`
+- [X] T055 Actualizar trazabilidad de estado actual en `specs/14-current-state.md`
+- [X] T056 Ejecutar y validar los escenarios de `specs/024-player-document-management/quickstart.md`
+- [X] T057 Verificar que los contratos en `specs/024-player-document-management/contracts/` coinciden con la implementación final y con `docs/contracts/api-reference.md` y `docs/architecture/ADR-004-paginated-list-endpoints.md`
 
 ---
 

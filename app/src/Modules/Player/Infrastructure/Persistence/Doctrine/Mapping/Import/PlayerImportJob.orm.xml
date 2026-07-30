@@ -1,57 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<doctrine-mapping
-    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="
-        http://doctrine-project.org/schemas/orm/doctrine-mapping
-        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-
-    <entity
-        name="App\Modules\Player\Domain\Import\PlayerImportJob"
-        table="player_import_jobs">
-
-        <id
-            name="id"
-            column="id"
-            type="player_import_job_id"/>
-
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Modules\Player\Domain\Import\PlayerImportJob" table="player_import_jobs">
+        <id name="id" column="id" type="player_import_job_id"/>
         <field name="academyId" column="academy_id" type="academy_id"/>
-
         <field name="createdBy" column="created_by" type="guid"/>
-
         <field name="categoryId" column="category_id" type="guid"/>
-
         <field name="originalFileName" column="original_file_name" type="string" length="255"/>
-
         <field name="filePath" column="file_path" type="string" length="500"/>
-
         <field name="status" column="status" type="string" length="30"/>
-
         <field name="progress" column="progress" type="integer"/>
-
         <field name="totalRows" column="total_rows" type="integer"/>
-
         <field name="processedRows" column="processed_rows" type="integer"/>
-
         <field name="successRows" column="success_rows" type="integer"/>
-
         <field name="errorRows" column="error_rows" type="integer"/>
-
         <field name="errors" column="errors" type="json"/>
-
         <field name="startedAt" column="started_at" type="datetime_immutable" nullable="true"/>
-
         <field name="finishedAt" column="finished_at" type="datetime_immutable" nullable="true"/>
-
         <field name="createdAt" column="created_at" type="datetime_immutable"/>
-
         <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true"/>
-
         <field name="deletedAt" column="deleted_at" type="datetime_immutable" nullable="true"/>
-
         <field name="deletedBy" column="deleted_by" type="guid" nullable="true"/>
-
     </entity>
-
 </doctrine-mapping>

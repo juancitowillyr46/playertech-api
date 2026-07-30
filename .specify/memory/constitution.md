@@ -190,3 +190,41 @@ Este documento define las reglas verificables para operar el proyecto bajo Spec-
 - Condición de aprobación: se conservan en inglés únicamente los identificadores técnicos, nombres de clases, endpoints, campos JSON, rutas y bloques de código canónicos.
 - Excepciones permitidas: contratos o documentación externa que deban conservar un formato oficial, siempre que la prosa propia del proyecto siga en español.
 - Validación: revisión de idioma durante `speckit-specify`, `speckit-plan`, `speckit-tasks` y `speckit-analyze`.
+
+## Principio XXII. Referencia HTTP operativa ejecutable
+
+- Regla: mientras no exista una documentación Swagger/OpenAPI interactiva, Postman será la referencia operativa ejecutable de la API.
+- Justificación: permite que frontend y QA validen contratos reales sin depender de documentación manual no ejecutable.
+- Evidencia requerida: cada endpoint nuevo o modificado debe actualizar la colección de Postman cuando corresponda, con método, URL, headers, body, respuestas de éxito y errores relevantes.
+- Condición de aprobación: `specs/`, `docs/contracts/api-reference.md`, Postman, pruebas funcionales y comportamiento implementado no presentan diferencias no justificadas.
+- Excepciones permitidas: cambios internos sin impacto HTTP.
+- Validación: revisión de la colección durante `speckit-plan`, `speckit-tasks` y `speckit-analyze`.
+
+## Principio XXIII. Límites entre módulos y subdominios
+
+- Regla: un concepto debe permanecer como subdominio de un módulo cuando su identidad, permisos y ciclo de vida dependan de un agregado principal.
+- Regla: un concepto debe convertirse en módulo independiente cuando tenga identidad propia, ciclo de vida autónomo, relaciones con múltiples agregados, casos de uso propios o límites de seguridad independientes.
+- Justificación: evita crear módulos artificiales y mantiene límites de dominio coherentes.
+- Evidencia requerida: el plan debe registrar la decisión de alcance cuando se introduzca una capacidad nueva o una entidad relevante.
+- Condición de aprobación: la decisión debe poder explicarse sin depender del historial de la conversación.
+- Excepciones permitidas: ninguna sin justificarlo en el plan o en un ADR.
+- Validación: revisión durante `speckit-specify`, `speckit-plan` y `speckit-analyze`.
+
+## Principio XXIV. Diagramas proporcionales al impacto
+
+- Regla: una feature que cambie flujo de negocio, contrato, seguridad, persistencia o integración debe incluir diagramas concisos cuando estos mejoren la comprensión del cambio.
+- Regla: los diagramas de flujo y secuencia deben usar Mermaid en Markdown; los modelos de datos deben usar Mermaid ERD en Markdown salvo una excepción justificada.
+- Regla: los flujos viven en `docs/flows/` y los diagramas de arquitectura o modelo de datos viven en `docs/architecture/diagrams/`.
+- Justificación: hace visibles las relaciones y decisiones sin convertir cada cambio menor en un documento pesado.
+- Evidencia requerida: el plan o la feature debe enlazar los diagramas aplicables y explicar cuando no se requiere ninguno.
+- Condición de aprobación: el diagrama debe ser conciso, legible y consistente con el contrato y el modelo implementado.
+- Excepciones permitidas: cambios documentales menores, correcciones internas sin impacto y features cuyo flujo ya esté cubierto por un diagrama canónico vigente.
+- Validación: revisión durante `speckit-plan`, `speckit-tasks`, `speckit-analyze` y `speckit-implement`.
+
+## Principio XXV. Sincronización de artefactos operativos
+
+- Regla: cuando una feature altere el contrato HTTP, persistencia, seguridad o flujo principal, sus artefactos deben actualizarse de forma coordinada.
+- Evidencia requerida: referencias entre spec, plan, tareas, contratos, Postman, diagramas, pruebas y `specs/14-current-state.md` cuando aplique.
+- Condición de aprobación: no quedan artefactos obligatorios desactualizados o sin una justificación explícita.
+- Excepciones permitidas: cambios sin impacto funcional o documental.
+- Validación: análisis cruzado con `speckit-analyze` antes de implementar o cerrar la feature.

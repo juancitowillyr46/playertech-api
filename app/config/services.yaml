@@ -1,6 +1,7 @@
 parameters:
     app.storage.directory: '%kernel.project_dir%/public/media'
     app.assets.base_url: '%env(APP_PUBLIC_URL)%/media'
+    app.player_document.storage_directory: '%kernel.project_dir%/var/storage/player-documents'
 
 services:
     _defaults:
@@ -26,6 +27,13 @@ services:
     App\Modules\Category\Domain\Category\CategoryRepository: '@App\Modules\Category\Infrastructure\Persistence\CategoryRepository'
     App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianRepository: '@App\Modules\Guardian\Infrastructure\Persistence\LegalGuardianRepository'
     App\Modules\Player\Domain\Player\PlayerRepository: '@App\Modules\Player\Infrastructure\Persistence\PlayerRepository'
+    App\Modules\Player\Domain\Import\PlayerImportJobRepository: '@App\Modules\Player\Infrastructure\Persistence\PlayerImportJobRepository'
+    App\Modules\Player\Domain\Document\PlayerDocumentRepository: '@App\Modules\Player\Infrastructure\Persistence\PlayerDocumentRepository'
+    App\Modules\Player\Domain\Document\PlayerDocumentUploadValidator: '@App\Modules\Player\Infrastructure\Persistence\PlayerDocumentUploadValidator'
+    App\Modules\Player\Domain\Document\PlayerDocumentStorage:
+        class: App\Modules\Player\Infrastructure\Persistence\FileSystemPlayerDocumentStorage
+        arguments:
+            $directory: '%app.player_document.storage_directory%'
     App\Modules\Player\Domain\PlayerGuardian\PlayerGuardianRepository: '@App\Modules\Player\Infrastructure\Persistence\PlayerGuardianRepository'
     App\Modules\Membership\Domain\Membership\MembershipRepository: '@App\Modules\Membership\Infrastructure\Persistence\MembershipRepository'
     App\Modules\PaymentConcept\Domain\PaymentConcept\PaymentConceptRepository: '@App\Modules\PaymentConcept\Infrastructure\Persistence\PaymentConceptRepository'

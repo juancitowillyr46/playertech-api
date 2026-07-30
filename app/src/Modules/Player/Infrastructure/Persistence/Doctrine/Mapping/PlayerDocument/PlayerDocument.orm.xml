@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Modules\Player\Domain\Document\PlayerDocument" table="player_documents">
+        <id name="id" column="id" type="player_document_id"/>
+        <field name="academyId" column="academy_id" type="academy_id"/>
+        <field name="playerId" column="player_id" type="player_id"/>
+        <field name="documentType" column="document_type" enum-type="App\Modules\Player\Domain\Document\DocumentType" type="string" length="20"/>
+        <field name="originalFileName" column="original_file_name" type="string" length="255"/>
+        <field name="storageName" column="storage_name" type="string" length="255" unique="true"/>
+        <field name="mimeType" column="mime_type" type="string" length="100"/>
+        <field name="fileSize" column="file_size" type="integer"/>
+        <field name="fileExtension" column="file_extension" type="string" length="10"/>
+        <field name="observations" column="observations" type="text" nullable="true"/>
+        <embedded name="auditTrail" class="App\Shared\Domain\ValueObject\AuditTrail" use-column-prefix="false"/>
+        <field name="deletedAt" column="deleted_at" type="datetime_immutable" nullable="true"/>
+        <field name="deletedBy" column="deleted_by" type="guid" nullable="true"/>
+    </entity>
+</doctrine-mapping>
