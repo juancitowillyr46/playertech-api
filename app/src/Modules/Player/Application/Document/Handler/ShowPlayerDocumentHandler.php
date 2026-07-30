@@ -1,11 +1,15 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Modules\Player\Application\Document\Handler;
+
 use App\Modules\Player\Application\Document\Query\ShowPlayerDocumentQuery;
 use App\Modules\Player\Application\Document\Response\PlayerDocumentFileResponse;
 use App\Modules\Player\Domain\Document\PlayerDocumentRepository;
 use App\Modules\Player\Domain\Document\PlayerDocumentStorage;
 use App\Modules\Player\Domain\Exception\PlayerDocumentNotFoundException;
+
 readonly class ShowPlayerDocumentHandler
 {
     public function __construct(private PlayerDocumentRepository $repository, private PlayerDocumentStorage $storage) {}

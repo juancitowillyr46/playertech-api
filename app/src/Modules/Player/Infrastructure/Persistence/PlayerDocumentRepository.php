@@ -15,8 +15,15 @@ use Doctrine\Persistence\ManagerRegistry;
 
 final class PlayerDocumentRepository extends ServiceEntityRepository implements Contract
 {
-    public function __construct(ManagerRegistry $registry) { parent::__construct($registry, PlayerDocument::class); }
-    public function save(PlayerDocument $document): void { $this->getEntityManager()->persist($document); $this->getEntityManager()->flush(); }
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, PlayerDocument::class);
+    }
+    public function save(PlayerDocument $document): void
+    {
+        $this->getEntityManager()->persist($document);
+        $this->getEntityManager()->flush();
+    }
     public function findActiveByPlayer(AcademyId $academyId, PlayerId $playerId, PaginationQuery $pagination): array
     {
         $qb = $this->createQueryBuilder('document')->where('document.academyId = :academy')->andWhere('document.playerId = :player')->andWhere('document.deletedAt IS NULL')->setParameter('academy', $academyId->value())->setParameter('player', $playerId->value())->orderBy('document.auditTrail.createdAt.value', $pagination->direction);

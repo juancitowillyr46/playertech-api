@@ -23,15 +23,21 @@ final readonly class FileSystemPlayerDocumentStorage implements PlayerDocumentSt
 
     public function path(string $storageName): string
     {
-        if ($storageName !== basename($storageName)) { throw new \RuntimeException('Nombre de almacenamiento inválido.'); }
+        if ($storageName !== basename($storageName)) {
+            throw new \RuntimeException('Nombre de almacenamiento inválido.');
+        }
         $path = $this->directory . '/' . $storageName;
-        if (!is_file($path)) { throw new \RuntimeException('El archivo documental no existe.'); }
+        if (!is_file($path)) {
+            throw new \RuntimeException('El archivo documental no existe.');
+        }
         return $path;
     }
 
     public function delete(string $storageName): void
     {
         $path = $this->directory . '/' . basename($storageName);
-        if (is_file($path)) { unlink($path); }
+        if (is_file($path)) {
+            unlink($path);
+        }
     }
 }

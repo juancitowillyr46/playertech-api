@@ -46,20 +46,71 @@ final class PlayerDocument implements Auditable
         return $oldStorageName;
     }
 
-    public function delete(string $actorId): void { $this->deletedAt = new \DateTimeImmutable(); $this->deletedBy = $actorId; $this->auditTrail->touch($actorId); }
-    public function id(): PlayerDocumentId { return $this->id; }
-    public function academyId(): AcademyId { return $this->academyId; }
-    public function playerId(): PlayerId { return $this->playerId; }
-    public function documentType(): DocumentType { return $this->documentType; }
-    public function originalFileName(): string { return $this->originalFileName; }
-    public function storageName(): string { return $this->storageName; }
-    public function mimeType(): string { return $this->mimeType; }
-    public function fileSize(): int { return $this->fileSize; }
-    public function fileExtension(): string { return $this->fileExtension; }
-    public function observations(): ?string { return $this->observations; }
-    public function auditTrail(): AuditTrail { return $this->auditTrail; }
-    public function setAuditTrail(AuditTrail $auditTrail): void { $this->auditTrail = $auditTrail; }
-    public function deletedAt(): ?\DateTimeImmutable { return $this->deletedAt; }
-    public function deletedBy(): ?string { return $this->deletedBy; }
-    private static function text(?string $value): ?string { $value = null === $value ? null : trim($value); return '' === $value ? null : $value; }
+    public function delete(string $actorId): void
+    {
+        $this->deletedAt = new \DateTimeImmutable();
+        $this->deletedBy = $actorId;
+        $this->auditTrail->touch($actorId);
+    }
+    public function id(): PlayerDocumentId
+    {
+        return $this->id;
+    }
+    public function academyId(): AcademyId
+    {
+        return $this->academyId;
+    }
+    public function playerId(): PlayerId
+    {
+        return $this->playerId;
+    }
+    public function documentType(): DocumentType
+    {
+        return $this->documentType;
+    }
+    public function originalFileName(): string
+    {
+        return $this->originalFileName;
+    }
+    public function storageName(): string
+    {
+        return $this->storageName;
+    }
+    public function mimeType(): string
+    {
+        return $this->mimeType;
+    }
+    public function fileSize(): int
+    {
+        return $this->fileSize;
+    }
+    public function fileExtension(): string
+    {
+        return $this->fileExtension;
+    }
+    public function observations(): ?string
+    {
+        return $this->observations;
+    }
+    public function auditTrail(): AuditTrail
+    {
+        return $this->auditTrail;
+    }
+    public function setAuditTrail(AuditTrail $auditTrail): void
+    {
+        $this->auditTrail = $auditTrail;
+    }
+    public function deletedAt(): ?\DateTimeImmutable
+    {
+        return $this->deletedAt;
+    }
+    public function deletedBy(): ?string
+    {
+        return $this->deletedBy;
+    }
+    private static function text(?string $value): ?string
+    {
+        $value = null === $value ? null : trim($value);
+        return '' === $value ? null : $value;
+    }
 }
