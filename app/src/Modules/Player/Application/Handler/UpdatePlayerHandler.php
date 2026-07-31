@@ -35,6 +35,20 @@ final readonly class UpdatePlayerHandler
             throw new PlayerAlreadyExistsException();
         }
 
+        if (null !== $command->input->email && '' !== trim($command->input->email)) {
+            $duplicate = $this->playerRepository->findOneByEmail($academyId, $command->input->email);
+            if (null !== $duplicate && $duplicate->id()->value() !== $player->id()->value()) {
+                throw new PlayerAlreadyExistsException('El correo electrónico ya existe para esta academia.');
+            }
+        }
+
+        if (null !== $command->input->phone && '' !== trim($command->input->phone)) {
+            $duplicate = $this->playerRepository->findOneByPhone($academyId, $command->input->phone);
+            if (null !== $duplicate && $duplicate->id()->value() !== $player->id()->value()) {
+                throw new PlayerAlreadyExistsException('El celular ya existe para esta academia.');
+            }
+        }
+
         $categoryId = null;
         if (null !== $command->input->categoryId) {
             $categoryId = new CategoryId($command->input->categoryId);

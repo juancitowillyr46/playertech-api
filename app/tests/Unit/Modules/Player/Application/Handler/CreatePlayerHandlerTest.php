@@ -50,4 +50,46 @@ final class CreatePlayerHandlerTest extends TestCase
 
         $handler($command);
     }
+
+    public function testItRejectsDuplicateEmailWithinTheSameAcademy(): void
+    {
+        $repository = new InMemoryPlayerRepository();
+        $handler = new CreatePlayerHandler($repository);
+
+        $handler(new CreatePlayerCommand(
+            '019eec93-9a11-7432-bd04-52306b2b3d8e',
+            '019eec93-9a11-7432-bd04-52306b2b3d8f',
+            new CreatePlayerInput('DNI', 'Juan', 'Pérez', '2014-05-18', '12345678', 'juan@example.com', '3125953354'),
+        ));
+
+        $this->expectException(PlayerAlreadyExistsException::class);
+        $this->expectExceptionMessage('El correo electrónico ya existe para esta academia.');
+
+        $handler(new CreatePlayerCommand(
+            '019eec93-9a11-7432-bd04-52306b2b3d8e',
+            '019eec93-9a11-7432-bd04-52306b2b3d8f',
+            new CreatePlayerInput('DNI', 'Pedro', 'López', '2014-05-18', '87654321', 'juan@example.com', '3001112233'),
+        ));
+    }
+
+    public function testItRejectsDuplicatePhoneWithinTheSameAcademy(): void
+    {
+        $repository = new InMemoryPlayerRepository();
+        $handler = new CreatePlayerHandler($repository);
+
+        $handler(new CreatePlayerCommand(
+            '019eec93-9a11-7432-bd04-52306b2b3d8e',
+            '019eec93-9a11-7432-bd04-52306b2b3d8f',
+            new CreatePlayerInput('DNI', 'Juan', 'Pérez', '2014-05-18', '12345678', 'juan@example.com', '3125953354'),
+        ));
+
+        $this->expectException(PlayerAlreadyExistsException::class);
+        $this->expectExceptionMessage('El celular ya existe para esta academia.');
+
+        $handler(new CreatePlayerCommand(
+            '019eec93-9a11-7432-bd04-52306b2b3d8e',
+            '019eec93-9a11-7432-bd04-52306b2b3d8f',
+            new CreatePlayerInput('DNI', 'Pedro', 'López', '2014-05-18', '87654321', 'pedro@example.com', '3125953354'),
+        ));
+    }
 }

@@ -42,6 +42,28 @@ final class InMemoryPlayerRepository implements PlayerRepository
         return null;
     }
 
+    public function findOneByEmail(AcademyId $academyId, string $email): ?Player
+    {
+        foreach ($this->players as $player) {
+            if ($player->academyId()->equals($academyId) && null !== $player->email() && mb_strtolower($player->email()) === mb_strtolower(trim($email))) {
+                return $player;
+            }
+        }
+
+        return null;
+    }
+
+    public function findOneByPhone(AcademyId $academyId, string $phone): ?Player
+    {
+        foreach ($this->players as $player) {
+            if ($player->academyId()->equals($academyId) && null !== $player->phone() && $player->phone() === trim($phone)) {
+                return $player;
+            }
+        }
+
+        return null;
+    }
+
     public function findAllByAcademy(
         AcademyId $academyId,
         PaginationQuery $pagination,

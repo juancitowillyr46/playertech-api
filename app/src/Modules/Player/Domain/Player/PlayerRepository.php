@@ -15,6 +15,10 @@ interface PlayerRepository
 
     public function findOneByDocumentNumber(AcademyId $academyId, string $documentNumber): ?Player;
 
+    public function findOneByEmail(AcademyId $academyId, string $email): ?Player;
+
+    public function findOneByPhone(AcademyId $academyId, string $phone): ?Player;
+
     /**
      * @return array{items: Player[], total: int}
      */

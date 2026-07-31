@@ -159,6 +159,150 @@ final class UpdatePlayerHandlerTest extends TestCase
             ),
         ));
     }
+
+    public function testItRejectsDuplicateEmailWithinTheSameAcademy(): void
+    {
+        $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
+        $playerId = new PlayerId('019eec93-9a11-7432-bd04-52306b2b3d90');
+        $otherPlayerId = new PlayerId('019eec93-9a11-7432-bd04-52306b2b3d91');
+
+        $playerRepository = new InMemoryPlayerRepository();
+        $categoryRepository = new UpdatePlayerCategoryInMemoryRepository();
+
+        $playerRepository->save(Player::create(
+            $playerId,
+            $academyId,
+            'DNI',
+            'Juan',
+            'Pérez',
+            new \DateTimeImmutable('2014-05-18'),
+            '12345678',
+            'juan@example.com',
+            '3125953354',
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
+        ));
+        $playerRepository->save(Player::create(
+            $otherPlayerId,
+            $academyId,
+            'DNI',
+            'Pedro',
+            'López',
+            new \DateTimeImmutable('2014-06-18'),
+            '87654321',
+            'pedro@example.com',
+            '3001112233',
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
+        ));
+
+        $handler = new UpdatePlayerHandler(
+            new PlayerFinder($playerRepository),
+            new CategoryFinder($categoryRepository),
+            $playerRepository,
+        );
+
+        $this->expectException(PlayerAlreadyExistsException::class);
+        $this->expectExceptionMessage('El correo electrónico ya existe para esta academia.');
+
+        $handler(new UpdatePlayerCommand(
+            '019eec93-9a11-7432-bd04-52306b2b3d8e',
+            $academyId->value(),
+            $playerId->value(),
+            new UpdatePlayerInput(
+                'DNI',
+                'Juan Carlos',
+                'Pérez Gómez',
+                '2014-05-20',
+                '12345678',
+                null,
+                'pedro@example.com',
+                '3009998888',
+            ),
+        ));
+    }
+
+    public function testItRejectsDuplicatePhoneWithinTheSameAcademy(): void
+    {
+        $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
+        $playerId = new PlayerId('019eec93-9a11-7432-bd04-52306b2b3d90');
+        $otherPlayerId = new PlayerId('019eec93-9a11-7432-bd04-52306b2b3d91');
+
+        $playerRepository = new InMemoryPlayerRepository();
+        $categoryRepository = new UpdatePlayerCategoryInMemoryRepository();
+
+        $playerRepository->save(Player::create(
+            $playerId,
+            $academyId,
+            'DNI',
+            'Juan',
+            'Pérez',
+            new \DateTimeImmutable('2014-05-18'),
+            '12345678',
+            'juan@example.com',
+            '3125953354',
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
+        ));
+        $playerRepository->save(Player::create(
+            $otherPlayerId,
+            $academyId,
+            'DNI',
+            'Pedro',
+            'López',
+            new \DateTimeImmutable('2014-06-18'),
+            '87654321',
+            'pedro@example.com',
+            '3001112233',
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
+        ));
+
+        $handler = new UpdatePlayerHandler(
+            new PlayerFinder($playerRepository),
+            new CategoryFinder($categoryRepository),
+            $playerRepository,
+        );
+
+        $this->expectException(PlayerAlreadyExistsException::class);
+        $this->expectExceptionMessage('El celular ya existe para esta academia.');
+
+        $handler(new UpdatePlayerCommand(
+            '019eec93-9a11-7432-bd04-52306b2b3d8e',
+            $academyId->value(),
+            $playerId->value(),
+            new UpdatePlayerInput(
+                'DNI',
+                'Juan Carlos',
+                'Pérez Gómez',
+                '2014-05-20',
+                '12345678',
+                null,
+                'juan@example.com',
+                '3001112233',
+            ),
+        ));
+    }
 }
 
 final class UpdatePlayerCategoryInMemoryRepository implements CategoryRepository

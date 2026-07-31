@@ -14,6 +14,12 @@
             <unique-constraint
                 name="UNIQ_PLAYER_ACADEMY_DOCUMENT_NUMBER"
                 columns="academy_id,document_number"/>
+            <unique-constraint
+                name="UNIQ_PLAYER_ACADEMY_EMAIL"
+                columns="academy_id,email"/>
+            <unique-constraint
+                name="UNIQ_PLAYER_ACADEMY_PHONE"
+                columns="academy_id,phone"/>
         </unique-constraints>
 
         <indexes>

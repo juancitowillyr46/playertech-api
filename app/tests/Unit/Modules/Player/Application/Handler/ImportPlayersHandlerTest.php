@@ -80,6 +80,57 @@ final class ImportPlayersHandlerTest extends TestCase
         ));
     }
 
+    public function testItRejectsDuplicateEmailAndPhoneDuringImport(): void
+    {
+        $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
+        $categoryId = new CategoryId('019eec93-9a11-7432-bd04-52306b2b3d70');
+        $playerRepository = new InMemoryPlayerRepository();
+        $categoryRepository = new InMemoryCategoryRepository();
+        $categoryRepository->save(Category::create(
+            $categoryId,
+            $academyId,
+            'SUB_14',
+            new Name('Sub 14'),
+            new MinimumAge(12),
+            new MaximumAge(14),
+            new Description('Categoria base'),
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
+        ));
+
+        $playerRepository->save(Player::create(
+            PlayerId::generate(),
+            $academyId,
+            'DNI',
+            'Jugador',
+            'Existente',
+            new \DateTimeImmutable('2014-05-18'),
+            '99999999',
+            'existing@example.com',
+            '+573001112233',
+            null,
+            null,
+            null,
+            null,
+            $categoryId,
+            null,
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
+        ));
+
+        $handler = new ImportPlayersHandler($playerRepository, $categoryRepository);
+        $file = $this->createWorkbook([
+            ['document_type', 'first_name', 'last_name', 'birth_date', 'document_number', 'email', 'phone', 'nationality', 'gender', 'federation_id', 'dominant_foot', 'category_key'],
+            ['DNI', 'Juan', 'Pérez', '2014-05-18', '12345678', 'existing@example.com', '3001112233', 'Colombiana', 'Masculino', 'F001', 'Derecho', 'SUB_14'],
+        ]);
+
+        $this->expectException(ValidationException::class);
+
+        $handler(new ImportPlayersCommand(
+            '019eec93-9a11-7432-bd04-52306b2b3d8e',
+            $academyId->value(),
+            $file,
+        ));
+    }
+
     /**
      * @param array<int, array<int, string>> $rows
      */

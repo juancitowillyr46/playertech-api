@@ -63,6 +63,28 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerRe
             ->getOneOrNullResult();
     }
 
+    public function findOneByEmail(AcademyId $academyId, string $email): ?Player
+    {
+        return $this->createQueryBuilder('player')
+            ->where('player.academyId = :academyId')
+            ->andWhere('LOWER(player.email) = LOWER(:email)')
+            ->setParameter('academyId', $academyId->value())
+            ->setParameter('email', trim($email))
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneByPhone(AcademyId $academyId, string $phone): ?Player
+    {
+        return $this->createQueryBuilder('player')
+            ->where('player.academyId = :academyId')
+            ->andWhere('player.phone = :phone')
+            ->setParameter('academyId', $academyId->value())
+            ->setParameter('phone', trim($phone))
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function findAllByAcademy(
         AcademyId $academyId,
         PaginationQuery $pagination,
