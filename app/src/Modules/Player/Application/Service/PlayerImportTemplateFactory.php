@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Modules\Player\Application\Service;
 
 use App\Modules\Category\Domain\Category\Category;
-use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Category\Domain\Category\CategoryRepository;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -18,72 +17,74 @@ final readonly class PlayerImportTemplateFactory
     ) {
     }
 
-    public function create(AcademyId $academyId, ?CategoryId $selectedCategoryId = null): Spreadsheet
+    public function create(AcademyId $academyId): Spreadsheet
     {
         $spreadsheet = new Spreadsheet();
-        $dataSheet = $spreadsheet->getActiveSheet();
+        $referenceSheet = $spreadsheet->getActiveSheet();
+        $referenceSheet->setTitle('Referencias');
+
+        $referenceSheet->fromArray([
+            ['Instrucciones:'],
+            ['1. Ubica la columna que deseas utilizar en la pestaña "Datos" del Excel. Ejemplo: documentType'],
+            ['2. Busca en la pestaña "Referencias" la tabla que se relaciona con el nombre de la columna'],
+            ['3. Ubicate en la columna Código y copia el texto que contiene la celda. Ejemplo: CC'],
+            ['4. Vuelve a la pestaña "Datos" y pega el valor en la celda que se encuentra encima de la columna. Ejemplo: documentType'],
+        ], null, 'A1');
+        $referenceSheet->getStyle('A1')->getFont()->setBold(true);
+        $referenceSheet->getStyle('A2:A5')->getAlignment()->setWrapText(true);
+
+        $currentRow = 8;
+        $categories = $this->categoryRepository->findActiveByAcademy($academyId);
+        $currentRow = $this->writeTable($referenceSheet, $currentRow, 'Categorías disponibles (categories)', array_map(
+            static fn (Category $category): array => [
+                'name' => $category->name()->value(),
+                'code' => $category->categoryKey(),
+            ],
+            $categories
+        ));
+
+        $currentRow = $this->writeFormatTable($referenceSheet, $currentRow + 2, [
+            ['field' => 'birthDate', 'format' => 'YYYY-MM-DD', 'example' => '1989-09-04'],
+            ['field' => 'email', 'format' => 'correo válido', 'example' => 'juan.rodas.manez@gmail.com'],
+            ['field' => 'phone', 'format' => 'número colombiano. El backend agrega +57 internamente', 'example' => '3125953354'],
+        ]);
+
+        $currentRow = $this->writeTable($referenceSheet, $currentRow + 2, 'Tipo de documento (documentType)', [
+            ['name' => 'Cédula de ciudadanía', 'code' => 'CC'],
+            ['name' => 'Cédula de extranjería', 'code' => 'CE'],
+            ['name' => 'Tarjeta de identidad', 'code' => 'TI'],
+            ['name' => 'PPT', 'code' => 'PPT'],
+            ['name' => 'Pasaporte', 'code' => 'PASSPORT'],
+        ]);
+
+        $currentRow = $this->writeTable($referenceSheet, $currentRow + 2, 'Nacionalidades (nationality)', [
+            ['name' => 'Colombiano(a)', 'code' => 'COLOMBIAN'],
+            ['name' => 'Peruano(a)', 'code' => 'PERUVIAN'],
+            ['name' => 'Chileno(a)', 'code' => 'CHILEAN'],
+            ['name' => 'Ecuatoriano(a)', 'code' => 'ECUADORIAN'],
+            ['name' => 'Mexicano(a)', 'code' => 'MEXICAN'],
+            ['name' => 'Español(a)', 'code' => 'SPANISH'],
+        ]);
+
+        $currentRow = $this->writeTable($referenceSheet, $currentRow + 2, 'Pies dominantes (dominantFoot)', [
+            ['name' => 'Derecho', 'code' => 'RIGHT'],
+            ['name' => 'Izquierdo', 'code' => 'LEFT'],
+            ['name' => 'Ambidiestro', 'code' => 'BOTH'],
+        ]);
+
+        $this->writeTable($referenceSheet, $currentRow + 2, 'Genero (gender)', [
+            ['name' => 'Masculino', 'code' => 'MALE'],
+            ['name' => 'Femenino', 'code' => 'FEMALE'],
+        ]);
+
+        $dataSheet = $spreadsheet->createSheet();
         $dataSheet->setTitle('Datos');
 
         $headers = ['documentType', 'firstName', 'lastName', 'birthDate', 'documentNumber', 'email', 'phone', 'nationality', 'gender', 'federationId', 'dominantFoot'];
         $dataSheet->fromArray([$headers], null, 'A1');
         $dataSheet->freezePane('A2');
 
-        $referenceSheet = $spreadsheet->createSheet();
-        $referenceSheet->setTitle('Referencias');
-
-        if (null !== $selectedCategoryId) {
-            $selectedCategory = $this->categoryRepository->findById($academyId, $selectedCategoryId);
-            if (null !== $selectedCategory) {
-                $referenceSheet->fromArray([['Categoría seleccionada', 'label', 'value', 'categoryKey', 'status']], null, 'A1');
-                $referenceSheet->fromArray([[
-                    'Categoría seleccionada',
-                    $selectedCategory->name()->value(),
-                    $selectedCategory->id()->value(),
-                    $selectedCategory->categoryKey(),
-                    $selectedCategory->status()->value(),
-                ]], null, 'A2');
-            }
-        }
-
-        $this->writeSection($referenceSheet, 8, 'Tipos de documento', [
-            ['label' => 'Cédula de ciudadanía', 'value' => 'CC'],
-            ['label' => 'Cédula de extranjería', 'value' => 'CE'],
-            ['label' => 'Tarjeta de identidad', 'value' => 'TI'],
-            ['label' => 'PPT', 'value' => 'PPT'],
-            ['label' => 'Pasaporte', 'value' => 'PASSPORT'],
-        ]);
-
-        $this->writeSection($referenceSheet, 16, 'Nacionalidades', [
-            ['label' => 'Colombia', 'value' => 'Colombia'],
-            ['label' => 'Perú', 'value' => 'Perú'],
-            ['label' => 'Chile', 'value' => 'Chile'],
-            ['label' => 'Ecuador', 'value' => 'Ecuador'],
-            ['label' => 'México', 'value' => 'México'],
-            ['label' => 'España', 'value' => 'España'],
-        ]);
-
-        $this->writeSection($referenceSheet, 24, 'Pies dominantes', [
-            ['label' => 'Derecho', 'value' => 'RIGHT'],
-            ['label' => 'Izquierdo', 'value' => 'LEFT'],
-            ['label' => 'Ambidiestro', 'value' => 'BOTH'],
-        ]);
-
-        $categories = $this->categoryRepository->findActiveByAcademy($academyId);
-
-        $referenceSheet->fromArray([['Categorías activas', 'label', 'value', 'categoryKey', 'status']], null, 'A30');
-        $row = 31;
-        foreach ($categories as $category) {
-            $referenceSheet->fromArray([[
-                'Categoría',
-                $category->name()->value(),
-                $category->id()->value(),
-                $category->categoryKey(),
-                $category->status()->value(),
-            ]], null, 'A' . $row);
-            $row++;
-        }
-
-        foreach ([$dataSheet, $referenceSheet] as $sheet) {
+        foreach ([$referenceSheet, $dataSheet] as $sheet) {
             foreach (range('A', $sheet->getHighestColumn()) as $column) {
                 $sheet->getColumnDimension($column)->setAutoSize(true);
             }
@@ -92,17 +93,38 @@ final readonly class PlayerImportTemplateFactory
         return $spreadsheet;
     }
 
-    private function writeSection(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet, int $startRow, string $title, array $rows): void
+    private function writeTable(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet, int $startRow, string $title, array $rows): int
     {
         $sheet->setCellValue('A' . $startRow, $title);
         $sheet->getStyle('A' . $startRow)->getFont()->setBold(true);
-        $sheet->fromArray([['label', 'value']], null, 'A' . ($startRow + 1));
-        $sheet->getStyle('A' . ($startRow + 1) . ':B' . ($startRow + 1))->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB('D9EAF7');
+        $headers = ['Nombre', 'Código'];
+        $sheet->fromArray([$headers], null, 'A' . ($startRow + 1));
+        $endColumn = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(count($headers));
+        $sheet->getStyle('A' . ($startRow + 1) . ':' . $endColumn . ($startRow + 1))->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB('D9EAF7');
 
         $rowNumber = $startRow + 2;
         foreach ($rows as $row) {
-            $sheet->fromArray([[$row['label'], $row['value']]], null, 'A' . $rowNumber);
+            $values = [$row['name'] ?? $row['label'] ?? '', $row['code'] ?? $row['value'] ?? ''];
+            $sheet->fromArray([$values], null, 'A' . $rowNumber);
             $rowNumber++;
         }
+
+        return $rowNumber - 1;
+    }
+
+    private function writeFormatTable(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet, int $startRow, array $rows): int
+    {
+        $sheet->setCellValue('A' . $startRow, 'Formas correctas');
+        $sheet->getStyle('A' . $startRow)->getFont()->setBold(true);
+        $sheet->fromArray([['Campos', 'Formatos', 'Ejemplos']], null, 'A' . ($startRow + 1));
+        $sheet->getStyle('A' . ($startRow + 1) . ':C' . ($startRow + 1))->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB('D9EAF7');
+
+        $rowNumber = $startRow + 2;
+        foreach ($rows as $row) {
+            $sheet->fromArray([[$row['field'], $row['format'], $row['example']]], null, 'A' . $rowNumber);
+            $rowNumber++;
+        }
+
+        return $rowNumber - 1;
     }
 }

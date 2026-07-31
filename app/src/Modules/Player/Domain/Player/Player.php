@@ -76,7 +76,7 @@ final class Player implements Auditable
         $this->birthDate = $birthDate;
         $this->documentNumber = self::normalizeText($documentNumber, 'document number');
         $this->email = self::normalizeNullableText($email);
-        $this->phone = self::normalizeNullableText($phone);
+        $this->phone = self::normalizeNullablePhone($phone);
         $this->nationality = self::normalizeNullableText($nationality);
         $this->gender = self::normalizeNullableText($gender);
         $this->federationId = self::normalizeNullableText($federationId);
@@ -235,7 +235,7 @@ final class Player implements Auditable
         $this->birthDate = $birthDate;
         $this->documentNumber = self::normalizeText($documentNumber, 'document number');
         $this->email = self::normalizeNullableText($email);
-        $this->phone = self::normalizeNullableText($phone);
+        $this->phone = self::normalizeNullablePhone($phone);
         $this->nationality = self::normalizeNullableText($nationality);
         $this->gender = self::normalizeNullableText($gender);
         $this->federationId = self::normalizeNullableText($federationId);
@@ -308,5 +308,33 @@ final class Player implements Auditable
         $value = trim($value);
 
         return '' === $value ? null : $value;
+    }
+
+    private static function normalizeNullablePhone(?string $value): ?string
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        $value = trim($value);
+        if ('' === $value) {
+            return null;
+        }
+
+        $normalized = preg_replace('/\D+/', '', $value);
+
+        if (null === $normalized || '' === $normalized) {
+            throw new \InvalidArgumentException('phone cannot be empty.');
+        }
+
+        if (10 === strlen($normalized) && str_starts_with($normalized, '3')) {
+            return '+57' . $normalized;
+        }
+
+        if (12 === strlen($normalized) && str_starts_with($normalized, '57')) {
+            return '+' . $normalized;
+        }
+
+        throw new \InvalidArgumentException('phone must be a valid Colombian mobile number.');
     }
 }

@@ -7,5 +7,8 @@ Documento de referencia para la descarga oficial de la plantilla Excel.
 ## Comportamiento esperado
 
 - Responde con un archivo `.xlsx`.
-- Incluye al menos `Datos` y `Referencias`.
+- Incluye las hojas `Referencias` y `Datos`.
+- La hoja `Referencias` debe mostrar primero las categorías activas del tenant.
+- La hoja `Referencias` debe incluir un bloque de instrucciones, una tabla de formatos correctos y tablas de referencia para `documentType`, `nationality`, `dominantFoot` y `gender`.
+- La hoja `Datos` debe incluir solo encabezados y celdas vacías.
 - Usa datos válidos del tenant autenticado.

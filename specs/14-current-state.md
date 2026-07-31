@@ -224,7 +224,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Player` ya quedó documentado también en `docs/domains/player/player-domain-spec.md` como contrato central del dominio, para no depender solo del feature spec y del flujo de importación.
 * El listarado de `Player` expone `photo`, `categoryName`, `genderName`, `age` y `createdAt`; además, el detalle, la forto y la importación masiva quedaron alineados con el contrato HTTP vigente.
 * La importación de `Player` queda documentada como flujo central en `docs/flows/player/player-import-flow-spec.md` y su UX satélite en `docs/flows/player/player-import-ux-spec.md`.
-* El backend ya valida la categoría seleccionada antes de crear un job de importación y la plantilla oficial de Excel se genera con referencias desde backend.
+* El backend ya valida la categoría seleccionada antes de crear un job de importación y la plantilla oficial de Excel se genera con referencias desde backend en una hoja `Referencias` con categorías activas, formatos correctos y tablas de valores válidos.
 * `Player` ahora expone eliminación de forto mediante `DELETE /api/v1/academy/players/{playerId}/photo`, no solo subida/reemplazo.
 * `Team`, `Venue` y `Category` también quedaron reforrzados con contrato central de dominio en `docs/domains/` para reflejar `categoryName`, sort normalizado, `categoryKey` estable y reglas de primaria/estado.
 * `Academy`, `Identity`, `Guardian`, `Billing` y `Staff` también quedaron reforrzados con documento central de dominio en `docs/domains/`, alineando contexto tenant, reset de contraseña, relación base de acudientes, bloque financiero y selectors de staff con the backend real.

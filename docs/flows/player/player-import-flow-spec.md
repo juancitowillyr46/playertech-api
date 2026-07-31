@@ -48,8 +48,15 @@ Requisitos:
 
 - devuelve archivo `.xlsx`
 - generado por backend
-- debe incluir hojas `Datos` y `Referencias`
+- debe incluir hojas `Referencias` y `Datos`
 - la plantilla debe respetar el tenant autenticado
+- la hoja `Referencias` debe ser breve, legible y explicar:
+  - cómo usar la tabla de categorías
+  - cómo copiar el valor de `Código`
+  - cómo pegarlo en `Datos`
+  - el formato esperado para `birthDate`
+  - el formato esperado para `email`
+  - el formato esperado para `phone` con prefijo `+57`
 
 ### 3. Crear job de importación
 
@@ -135,6 +142,8 @@ Para MVP:
 
 - no incluir `categoryKey` por fila
 - la categoría se define una sola vez en el flujo
+- no incluir filas de prueba
+- dejar solo encabezados y celdas vacías para llenado real
 
 Columnas:
 
@@ -158,16 +167,41 @@ Debe incluir catálogos válidos generados por backend:
 - nacionalidades
 - pies dominantes
 - categorías activas del tenant
+- ayuda de formato con ejemplos para `birthDate`, `email` y `phone`
 
 Formato recomendado:
 
-- `label`
-- `value`
+- `Nombre`
+- `Código`
 
-En categorías además:
+En la tabla de categorías además:
 
-- `categoryKey`
-- `status`
+- la primera tabla debe ser categorías activas
+- no exponer `uuid`
+- no exponer `status`
+
+### Bloque de Instrucciones
+
+Debe ser corta, clara y fácil de leer.
+
+Contenido mínimo:
+
+1. Llena solo la pestaña `Datos`.
+2. Para cada columna, revisa su tabla en `Referencias`.
+3. Copia el valor de la columna `Código` y pégalo en `Datos`.
+
+Reglas de formato:
+
+- `birthDate`: usar `YYYY-MM-DD`, por ejemplo `1989-09-04`
+- `email`: usar un correo válido
+- `phone`: usar un número colombiano; el backend agrega automáticamente el prefijo `+57`, por ejemplo `3125953354`
+
+Recomendaciones:
+
+- no cambiar los nombres de las columnas
+- no agregar filas de prueba
+- usar solo valores válidos de `Referencias`
+- dejar vacías las columnas que no apliquen
 
 ## Reglas de Negocio
 

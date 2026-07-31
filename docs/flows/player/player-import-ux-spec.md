@@ -27,6 +27,7 @@ La importación actual de jugadores es síncrona y no ofrece una experiencia de 
 - mantener la vista del listado activa mientras se importa
 - recibir progreso visible
 - ver errores por fila al finalizar
+- entender con facilidad cómo llenar formatos como fechas, correos y teléfonos
 
 ## UX Principles
 
@@ -35,6 +36,8 @@ La importación actual de jugadores es síncrona y no ofrece una experiencia de 
 - Ofrecer progreso visible y entendible.
 - Reducir fricción para usuarios que importan jugadores de múltiples categorías.
 - Evitar que el usuario tenga que adivinar `categoryKey`.
+- Mantener instrucciones cortas y legibles.
+- Dar ejemplos claros para fechas, correos y teléfonos.
 
 ## Recommended Interaction Model
 
@@ -79,6 +82,16 @@ El dialog debe dividirse en tres bloques:
 - CTA:
   - `Descargar plantilla`
 
+La plantilla debe verse simple y clara:
+
+- hoja `Referencias` con copy corto en la parte superior
+- hoja `Datos` sin filas de prueba
+- tablas de referencia con valores válidos y concisos
+- ejemplos visibles de formato para:
+  - fechas
+  - correo
+  - celular con prefijo `+57`
+
 #### Block B: Category Reference
 
 Mostrar una referencia visible de categorías para ayudar al usuario a llenar el archivo.
@@ -87,7 +100,6 @@ Cada categoría debe mostrar:
 
 - `name`
 - `categoryKey`
-- `status`
 
 Opcionalmente:
 
@@ -134,6 +146,10 @@ La UI debe dejar claro que:
 - el usuario no debe inventar la key
 - la key es una referencia de negocio definida por backend
 - el frontend puede ayudar copiando o exportando la referencia
+- el usuario debe copiar códigos válidos, no escribir valores libres
+- `birthDate` usa formato `YYYY-MM-DD`
+- `email` debe ser válido
+- `phone` puede ingresarse como número colombiano local; el backend agregará automáticamente el prefijo `+57`
 
 ## Import Flow States
 

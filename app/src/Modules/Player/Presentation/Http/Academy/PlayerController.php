@@ -152,14 +152,8 @@ final class PlayerController extends AbstractPaginatedApiController
     #[Route('/import/template', name: 'api_v1_academy_players_import_template', methods: ['GET'])]
     public function importTemplate(Request $request): BinaryFileResponse
     {
-        $categoryId = $request->query->getString('categoryId');
-        if ('' === trim($categoryId)) {
-            throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('La categoría es obligatoria.');
-        }
-
         $spreadsheet = $this->playerImportTemplateFactory->create(
-            new AcademyId($this->tenantContext->requireAcademyId()),
-            new CategoryId($categoryId),
+            new AcademyId($this->tenantContext->requireAcademyId())
         );
 
         $path = sys_get_temp_dir() . '/' . uniqid('player-import-template-', true) . '.xlsx';

@@ -14,7 +14,6 @@ use App\Shared\Domain\ValueObject\Description;
 use App\Shared\Domain\ValueObject\MaximumAge;
 use App\Shared\Domain\ValueObject\MinimumAge;
 use App\Shared\Domain\ValueObject\Name;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use PHPUnit\Framework\TestCase;
 
 final class PlayerImportTemplateFactoryTest extends TestCase
@@ -23,6 +22,7 @@ final class PlayerImportTemplateFactoryTest extends TestCase
     {
         $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
         $categoryId = new CategoryId('019eec93-9a11-7432-bd04-52306b2b3d70');
+        $secondCategoryId = new CategoryId('019eec93-9a11-7432-bd04-52306b2b3d71');
         $repository = new InMemoryCategoryRepository(
             Category::create(
                 $categoryId,
@@ -33,17 +33,42 @@ final class PlayerImportTemplateFactoryTest extends TestCase
                 new MaximumAge(14),
                 new Description('Categoria formativa'),
                 AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
+            ),
+            Category::create(
+                $secondCategoryId,
+                $academyId,
+                'SUB-16',
+                new Name('Sub 16'),
+                new MinimumAge(15),
+                new MaximumAge(16),
+                new Description('Categoria competitiva'),
+                AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8d'),
             )
         );
 
         $factory = new PlayerImportTemplateFactory($repository);
-        $spreadsheet = $factory->create($academyId, $categoryId);
+        $spreadsheet = $factory->create($academyId);
 
-        self::assertSame('Datos', $spreadsheet->getSheet(0)->getTitle());
-        self::assertSame('Referencias', $spreadsheet->getSheet(1)->getTitle());
-        self::assertSame('Categoría seleccionada', $spreadsheet->getSheet(1)->getCell('A1')->getValue());
-        self::assertSame('Sub 14', $spreadsheet->getSheet(1)->getCell('B2')->getValue());
-        self::assertSame('SUB-14', $spreadsheet->getSheet(1)->getCell('D2')->getValue());
+        self::assertSame('Referencias', $spreadsheet->getSheet(0)->getTitle());
+        self::assertSame('Datos', $spreadsheet->getSheet(1)->getTitle());
+        self::assertSame('Referencias', $spreadsheet->getSheetByName('Referencias')->getTitle());
+        self::assertSame('Instrucciones:', $spreadsheet->getSheetByName('Referencias')->getCell('A1')->getValue());
+        self::assertSame('Categorías disponibles (categories)', $spreadsheet->getSheetByName('Referencias')->getCell('A8')->getValue());
+        self::assertSame('Nombre', $spreadsheet->getSheetByName('Referencias')->getCell('A9')->getValue());
+        self::assertSame('Código', $spreadsheet->getSheetByName('Referencias')->getCell('B9')->getValue());
+        self::assertSame('Sub 14', $spreadsheet->getSheetByName('Referencias')->getCell('A10')->getValue());
+        self::assertSame('SUB-14', $spreadsheet->getSheetByName('Referencias')->getCell('B10')->getValue());
+        self::assertSame('Sub 16', $spreadsheet->getSheetByName('Referencias')->getCell('A11')->getValue());
+        self::assertSame('SUB-16', $spreadsheet->getSheetByName('Referencias')->getCell('B11')->getValue());
+        self::assertSame('Formas correctas', $spreadsheet->getSheetByName('Referencias')->getCell('A13')->getValue());
+        self::assertSame('Campos', $spreadsheet->getSheetByName('Referencias')->getCell('A14')->getValue());
+        self::assertSame('Formatos', $spreadsheet->getSheetByName('Referencias')->getCell('B14')->getValue());
+        self::assertSame('Ejemplos', $spreadsheet->getSheetByName('Referencias')->getCell('C14')->getValue());
+        self::assertSame('+573125953354', $spreadsheet->getSheetByName('Referencias')->getCell('C16')->getValue());
+        self::assertSame('Tipo de documento (documentType)', $spreadsheet->getSheetByName('Referencias')->getCell('A19')->getValue());
+        self::assertSame('Nacionalidades (nationality)', $spreadsheet->getSheetByName('Referencias')->getCell('A27')->getValue());
+        self::assertSame('Pies dominantes (dominantFoot)', $spreadsheet->getSheetByName('Referencias')->getCell('A36')->getValue());
+        self::assertSame('Genero (gender)', $spreadsheet->getSheetByName('Referencias')->getCell('A42')->getValue());
     }
 }
 

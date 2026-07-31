@@ -50,7 +50,7 @@ Este documento consolida el contexto tecnico persistente de PlayerTech para que 
 - Los listados deben converger hacia un contrato paginado uniforme con `data` + `meta`.
 - Los endpoints de listado deben exponer `page`, `per_page`, `sort` y `direction` como contrato estable de API.
 - En `Player`, el contrato de listado debe exponer `photo`, `categoryName`, `genderName`, `age` y `createdAt`; para filtros operativos se usan `gender`, `categoryId`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`, donde el rango de nacimiento es el filtro canónico para criterios de edad y `age` solo es derivado de salida.
-- La importación de jugadores se maneja por job asíncrono con categoría seleccionada previamente, plantilla oficial generada por backend y polling de estado desde frontend.
+- La importación de jugadores se maneja por job asíncrono con categoría seleccionada previamente, plantilla oficial generada por backend con hoja `Referencias` y polling de estado desde frontend.
 - El flujo central de importación vive en `docs/flows/player/player-import-flow-spec.md` y su UX satélite en `docs/flows/player/player-import-ux-spec.md`.
 
 ## Estado Real Del Codigo

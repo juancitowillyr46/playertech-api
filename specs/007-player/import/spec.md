@@ -6,7 +6,7 @@
 
 **Estado**: Draft
 
-**Alpuedece**: Importación asíncrona de jugadores desde Excel, con plantilla oficial generada por backend, categoría seleccionada previamente, polling de progreso y reporte de errores por fila.
+**Alcance**: Importación asíncrona de jugadores desde Excel, con plantilla oficial generada por backend, categoría seleccionada previamente, polling de progreso y reporte de errores por fila.
 
 ## Escenarios de usuario y pruebas *(mandatory)*
 
@@ -14,22 +14,22 @@
 
 El sistema permite importar jugadores en lote sin bloquear la navegación del usuario.
 
-**Prueba independent**: Un usuario puede crear un import job y consultar su estado hasta llegar a un estado terminal.
+**Prueba independiente**: Un usuario puede crear un import job y consultar su estado hasta llegar a un estado terminal.
 
 **Escenarios de aceptación**:
 
 1. **Given** un archivo Excel válido, **When** el admin crea el job, **Then** el backend responseonde con un identificador del proceso.
-2. **Given** un job en progreso, **When** el frontend consulta su estado, **Then** el backend devuelve progreso, summary y errores si aplipuede.
+2. **Given** un job en progreso, **When** el frontend consulta su estado, **Then** el backend devuelve progreso, summary y errores si aplica.
 
 ### Historia de Usuario 2 - Official template and reference data
 
 El sistema permite descargar una plantilla oficial con hojas `Datos` y `Referencias`.
 
-**Prueba independent**: La plantilla descargada corresponseonde al contrato oficial y refleja la verdad del tenant autenticado.
+**Prueba independiente**: La plantilla descargada corresponde al contrato oficial y refleja la verdad del tenant autenticado.
 
 **Escenarios de aceptación**:
 
-1. **Given** una categoría activa, **When** el admin descarga la plantilla, **Then** el backend entrega un `.xlsx` con referencias válidas.
+1. **Given** categorías activas en el tenant, **When** el admin descarga la plantilla, **Then** el backend entrega un `.xlsx` con referencias válidas y una hoja `Referencias` legible.
 2. **Given** un job de importación, **When** existen errores parciales, **Then** los registros válidos se conservan y los errores quedan reportados.
 
 ### Casos límite
@@ -42,12 +42,12 @@ El sistema permite descargar una plantilla oficial con hojas `Datos` y `Referenc
 
 ### Requisitos funcionales
 
-- **FR-001**: El sistema MUST permiten the user to select the category antes de subir el archivo.
-- **FR-002**: El sistema MUST generar an official Excel template desde backend.
-- **FR-003**: El sistema MUST crear an async import job from `multipart/forrm-data`.
-- **FR-004**: El sistema MUST exponer import job progress mediante polling.
-- **FR-005**: El sistema MUST devolver summary and a nivel de fila errors when the import finishes.
-- **FR-006**: El sistema MUST dar soporte a terminal states forr queued, validating, processing, completed, completed with errors and failed.
+- **FR-001**: El sistema MUST permitir que el usuario seleccione la categoría antes de subir el archivo.
+- **FR-002**: El sistema MUST generar una plantilla Excel oficial desde backend.
+- **FR-003**: El sistema MUST crear un async import job desde `multipart/form-data`.
+- **FR-004**: El sistema MUST exponer el progreso del job mediante polling.
+- **FR-005**: El sistema MUST devolver summary y errores por fila cuando el import finaliza.
+- **FR-006**: El sistema MUST dar soporte a terminal states: `COMPLETED`, `COMPLETED_WITH_ERRORS` y `FAILED`.
 
 ### Entidades clave *(include if feature involves data)*
 

@@ -7,6 +7,13 @@
 - Rastrea el estado, el progreso, el summary y los errores de la importación.
 - Pertenece al contexto tenant actual.
 - Referencia el `categoryId` seleccionado para todo el job.
+- El `categoryId` se aplica a todo el archivo, no por fila.
+
+### ImportTemplate
+
+- Plantilla Excel oficial descargada desde backend.
+- Contiene una hoja `Referencias` con categorías activas, ayuda de formato y tablas de valores válidos.
+- Contiene una hoja `Datos` con solo encabezados vacíos para edición manual.
 
 ### ImportErrorRow
 

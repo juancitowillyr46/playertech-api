@@ -143,9 +143,27 @@ Respuesta:
 
 #### Download Import Template
 
-`GET /api/v1/academy/players/import/template?categoryId=uuid`
+`GET /api/v1/academy/players/import/template`
 
-Devuelve un archivo `.xlsx` con hojas `Datos` y `Referencias`.
+Devuelve un archivo `.xlsx` con hojas `Referencias` y `Datos`.
+
+La hoja `Referencias` debe incluir:
+
+- un bloque breve de instrucciones en la parte superior
+- la tabla de categorías activas del tenant, con columnas `Nombre` y `Código`
+- la tabla `Formas correctas` con `Campos`, `Formatos` y `Ejemplos`
+- tablas de referencia para `documentType`, `nationality`, `dominantFoot` y `gender`
+
+Reglas de la plantilla:
+
+- la categoría no se ingresa por fila
+- la tabla de categorías no expone `uuid` ni `status`
+- la hoja `Datos` debe contener solo encabezados y celdas vacías
+- `birthDate` usa `YYYY-MM-DD`
+- `email` debe ser válido
+- `phone` puede ingresarse como número colombiano local; el backend lo normaliza internamente a formato `+57XXXXXXXXXX`
+
+La hoja `Datos` debe contener solo encabezados y celdas vacías, sin filas de prueba.
 
 #### Create Import Job
 
@@ -157,6 +175,8 @@ Campos:
 
 - `categoryId`
 - `file`
+
+El `categoryId` pertenece al job completo y no por fila.
 
 Respuesta:
 

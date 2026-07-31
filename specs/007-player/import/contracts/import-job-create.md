@@ -6,9 +6,11 @@ Contrato para crear el job de importación.
 
 ## Request
 
-- `multipart/forrm-data`
+- `multipart/form-data`
 - `categoryId`
 - `file`
+
+`categoryId` define la categoría del job completo y no se repite por fila.
 
 ## Response
 
