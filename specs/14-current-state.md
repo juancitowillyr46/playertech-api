@@ -437,3 +437,5 @@ Para considerar la base listara antes de implementar cualquier lógica de negoci
 * Los campos monetarios `DECIMAL(12,2)` ahora usan el tipo DBAL explícito `decimal_float`, compatible con las propiedades `float` existentes y con validación Doctrine limpia.
 * EP-024 quedó validada con pruebas unitarias, integración de repositorio y prueba funcional HTTP de carga, listado, vista, descarga, reemplazo y eliminación.
 * EP-024 quedó alineada con la colección Postman, incluyendo ejemplos exitosos y errores previsibles; el listado valida primero la pertenencia del jugador para evitar respuestas cross-tenant ambiguas.
+* EP-025 centralizó el catálogo global de tipos de documento en `Shared`, publicó `GET /api/v1/academy/document-types/options` y dejó la ruta anterior bajo `players` fuera del contrato oficial.
+* La estrategia de pruebas separa suites `unit`, `integration`, `functional` y `contract`; la guía de ejecución define cuándo usar `playertech_test`, cómo preparar migraciones y cómo ensayar actualizaciones con datos.

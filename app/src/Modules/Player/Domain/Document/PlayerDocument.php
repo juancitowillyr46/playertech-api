@@ -7,6 +7,7 @@ namespace App\Modules\Player\Domain\Document;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Shared\Domain\Contracts\Auditable;
+use App\Shared\Domain\Document\DocumentType;
 use App\Shared\Domain\ValueObject\AuditTrail;
 
 final class PlayerDocument implements Auditable

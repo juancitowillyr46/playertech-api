@@ -31,4 +31,18 @@ final class InMemoryMembershipRepository implements MembershipRepository
 
         return null;
     }
+
+    public function findActiveByPlayerIdOrFail(AcademyId $academyId, PlayerId $playerId): Membership
+    {
+        return $this->findActiveByPlayerId($academyId, $playerId) ?? throw new \RuntimeException('Membership not found.');
+    }
+
+    public function findAllByPlayerId(AcademyId $academyId, PlayerId $playerId): array
+    {
+        return array_values(array_filter(
+            $this->memberships,
+            static fn (Membership $membership): bool => $membership->academyId()->value() === $academyId->value()
+                && $membership->playerId()->value() === $playerId->value(),
+        ));
+    }
 }

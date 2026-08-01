@@ -4,6 +4,8 @@
 
 La estrategia de pruebas debe proteger la base técnica antes de expandir el negocio.
 
+La guía operativa para seleccionar y ejecutar cada capa está en `docs/architecture/guides/testing-execution-guide.md`.
+
 ---
 
 # Testing Goals

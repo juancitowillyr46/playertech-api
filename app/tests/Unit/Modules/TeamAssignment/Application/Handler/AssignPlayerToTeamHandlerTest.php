@@ -41,6 +41,8 @@ final class AssignPlayerToTeamHandlerTest extends TestCase
             null,
             null,
             null,
+            null,
+            null,
             AuditTrail::create('actor-id'),
         );
         $playerRepository->save($player);
@@ -83,6 +85,8 @@ final class AssignPlayerToTeamHandlerTest extends TestCase
             'Pérez',
             new \DateTimeImmutable('2014-05-18'),
             '12345678',
+            null,
+            null,
             null,
             null,
             null,

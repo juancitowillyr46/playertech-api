@@ -7,6 +7,7 @@ namespace App\Modules\Player\Application\Service;
 use App\Modules\Category\Domain\Category\Category;
 use App\Modules\Category\Domain\Category\CategoryRepository;
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Shared\Domain\Document\DocumentType;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
@@ -46,16 +47,21 @@ final readonly class PlayerImportTemplateFactory
         $currentRow = $this->writeFormatTable($referenceSheet, $currentRow + 2, [
             ['field' => 'birthDate', 'format' => 'YYYY-MM-DD', 'example' => '1989-09-04'],
             ['field' => 'email', 'format' => 'correo válido', 'example' => 'juan.rodas.manez@gmail.com'],
-            ['field' => 'phone', 'format' => 'número colombiano. El backend agrega +57 internamente', 'example' => '3125953354'],
+            ['field' => 'phone', 'format' => 'número colombiano; se guarda con prefijo +57', 'example' => '3125953354'],
         ]);
 
-        $currentRow = $this->writeTable($referenceSheet, $currentRow + 2, 'Tipo de documento (documentType)', [
-            ['name' => 'Cédula de ciudadanía', 'code' => 'CC'],
-            ['name' => 'Cédula de extranjería', 'code' => 'CE'],
-            ['name' => 'Tarjeta de identidad', 'code' => 'TI'],
-            ['name' => 'PPT', 'code' => 'PPT'],
-            ['name' => 'Pasaporte', 'code' => 'PASSPORT'],
-        ]);
+        $currentRow = $this->writeTable(
+            $referenceSheet,
+            $currentRow + 2,
+            'Tipo de documento (documentType)',
+            array_map(
+                static fn (array $option): array => [
+                    'name' => $option['label'],
+                    'code' => $option['value'],
+                ],
+                DocumentType::options(),
+            ),
+        );
 
         $currentRow = $this->writeTable($referenceSheet, $currentRow + 2, 'Nacionalidades (nationality)', [
             ['name' => 'Colombiano(a)', 'code' => 'COLOMBIAN'],

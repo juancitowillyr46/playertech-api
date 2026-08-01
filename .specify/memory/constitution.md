@@ -238,3 +238,24 @@ Este documento define las reglas verificables para operar el proyecto bajo Spec-
 - Condición de aprobación: el cambio pasa las validaciones disponibles de sintaxis, formato, contenedor, mapping, pruebas y análisis estático cuando estén configurados.
 - Excepciones permitidas: una herramienta aún no instalada puede quedar como brecha documentada, pero no debe presentarse como validación ejecutada.
 - Validación: ejecutar los comandos dentro del contenedor Docker y registrar cualquier limitación en el reporte final o en `specs/14-current-state.md` cuando sea relevante.
+
+## Principio XXVII. Selección explícita de capa de pruebas
+
+- Regla: cada cambio debe seleccionar la capa mínima de pruebas que corresponda a su impacto: unit para reglas aisladas, integration para persistencia y functional/contract para HTTP y seguridad.
+- Regla: las pruebas unitarias no deben tocar Kernel, Doctrine ni bases de datos.
+- Justificación: evita convertir cada cambio en una suite lenta y evita usar una base compartida cuando no aporta evidencia adicional.
+- Evidencia requerida: la HU, el plan o la tarea identifican la capa de prueba aplicable.
+- Condición de aprobación: el cambio tiene pruebas proporcionales a su riesgo y no depende del orden de ejecución.
+- Excepciones permitidas: ninguna para pruebas unitarias; las excepciones de infraestructura deben documentarse.
+- Validación: revisión durante `speckit-plan`, `speckit-tasks`, `speckit-analyze` y `speckit-implement`.
+
+## Principio XXVIII. Reproducibilidad de test y migraciones
+
+- Regla: `playertech_test` debe ser reproducible desde migraciones y nunca debe ser modificada por pruebas unitarias.
+- Regla: CI/CD debe validar tanto la creación del schema desde cero como la actualización de una base con datos representativos.
+- Regla: `SchemaResetter` no debe utilizarse como aislamiento global por defecto; solo aplica a pruebas de infraestructura que lo justifiquen.
+- Justificación: separa la velocidad del desarrollo diario de la confianza necesaria antes de integrar o desplegar.
+- Evidencia requerida: guía de ejecución, comandos reproducibles, validación de mappings/schema y ensayo de migraciones.
+- Condición de aprobación: las suites no dependen del orden ni de tablas creadas por otro test y las migraciones no destruyen datos fuera de su alcance.
+- Excepciones permitidas: ninguna para despliegues; una suite excepcional debe explicar su aislamiento.
+- Validación: ejecución en Docker durante CI/CD y revisión de `testing-execution-guide.md`.

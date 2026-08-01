@@ -44,8 +44,8 @@ final class ImportPlayersHandlerTest extends TestCase
 
         $handler = new ImportPlayersHandler($playerRepository, $categoryRepository);
         $file = $this->createWorkbook([
-            ['document_type', 'first_name', 'last_name', 'birth_date', 'document_number', 'nationality', 'gender', 'federation_id', 'dominant_foot', 'category_key'],
-            ['DNI', 'Juan', 'Pérez', '2014-05-18', '12345678', 'Colombiana', 'Masculino', 'F001', 'Derecho', 'SUB_14'],
+            ['document_type', 'first_name', 'last_name', 'birth_date', 'document_number', 'email', 'phone', 'nationality', 'gender', 'federation_id', 'dominant_foot', 'category_key'],
+            ['DNI', 'Juan', 'Pérez', '2014-05-18', '12345678', null, null, 'Colombiana', 'Masculino', 'F001', 'Derecho', 'SUB_14'],
         ]);
 
         $responses = $handler(new ImportPlayersCommand(

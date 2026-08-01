@@ -7,9 +7,10 @@ namespace App\Modules\Player\Application\Document\Handler;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Player\Application\Document\Command\ReplacePlayerDocumentCommand;
 use App\Modules\Player\Application\Document\Response\PlayerDocumentResponse;
-use App\Modules\Player\Domain\Document\{DocumentType,PlayerDocumentId,PlayerDocumentRepository,PlayerDocumentStorage,PlayerDocumentUploadValidator};
+use App\Modules\Player\Domain\Document\{PlayerDocumentId,PlayerDocumentRepository,PlayerDocumentStorage,PlayerDocumentUploadValidator};
 use App\Modules\Player\Domain\Exception\PlayerDocumentNotFoundException;
 use App\Modules\Player\Domain\Player\PlayerId;
+use App\Shared\Domain\Document\DocumentType;
 
 final readonly class ReplacePlayerDocumentHandler
 {

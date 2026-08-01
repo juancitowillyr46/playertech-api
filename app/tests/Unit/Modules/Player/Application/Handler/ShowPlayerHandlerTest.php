@@ -35,6 +35,8 @@ final class ShowPlayerHandlerTest extends TestCase
             null,
             null,
             null,
+            null,
+            null,
             AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
         ));
 

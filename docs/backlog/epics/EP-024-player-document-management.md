@@ -72,6 +72,8 @@ Ejemplos:
 
 Inicialmente el catálogo de tipos de documentos será administrado por el sistema y podrá evolucionar posteriormente hacia una configuración por academia.
 
+Para los documentos adjuntos, los valores y etiquetas oficiales provienen de `EP-025 - Catálogos maestros compartidos` y su contrato `GET /api/v1/academy/document-types/options`.
+
 ---
 
 ## Modelo conceptual

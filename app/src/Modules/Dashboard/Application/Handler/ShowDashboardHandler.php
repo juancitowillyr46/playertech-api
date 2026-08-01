@@ -12,14 +12,16 @@ use App\Modules\Charge\Application\Response\ChargeResponse;
 use App\Modules\Charge\Domain\Charge\ChargeRepository;
 use App\Modules\Payment\Domain\Payment\PaymentRepository;
 use App\Modules\Player\Domain\Player\PlayerId;
+use App\Shared\Application\Pagination\PaginationQuery;
 final readonly class ShowDashboardHandler
 {
     public function __construct(private PlayerRepository $playerRepository, private MembershipRepository $membershipRepository, private ChargeRepository $chargeRepository, private PaymentRepository $paymentRepository) {}
     public function __invoke(ShowDashboardQuery $query): DashboardResponse
     {
         $academyId = new AcademyId($query->academyId);
-        $players = $this->playerRepository->findAllByAcademy($academyId);
-        $charges = $this->chargeRepository->findPendingByAcademy($academyId);
+        $pagination = new PaginationQuery(1, PHP_INT_MAX);
+        $players = $this->playerRepository->findAllByAcademy($academyId, $pagination)['items'];
+        $charges = $this->chargeRepository->findPendingByAcademy($academyId, $pagination)['items'];
         $payments = $this->paymentRepository->findAllByAcademy($academyId);
 
         $activePlayers = array_values(array_filter($players, static fn ($player) => $player->status()->isActive()));

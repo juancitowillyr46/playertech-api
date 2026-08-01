@@ -14,8 +14,8 @@ final class Version20260730000100 extends AbstractMigration
     {
         $this->addSql('CREATE TABLE player_documents (
             id CHAR(36) NOT NULL,
-            academy_id CHAR(36) NOT NULL,
-            player_id CHAR(36) NOT NULL,
+            academy_id CHAR(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+            player_id CHAR(36) COLLATE utf8mb4_0900_ai_ci NOT NULL,
             document_type VARCHAR(20) NOT NULL,
             original_file_name VARCHAR(255) NOT NULL,
             storage_name VARCHAR(255) NOT NULL,

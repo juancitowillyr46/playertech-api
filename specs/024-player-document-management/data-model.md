@@ -27,7 +27,7 @@ Representa un documento asociado a un jugador dentro de un tenant.
 
 - Debe pertenecer exactamente a un jugador.
 - Debe pertenecer exactamente a un tenant mediante el jugador.
-- `documentType` debe ser uno de: `CE`, `CC`, `TI`, `PPT`, `PASSPORT`, `RC`.
+- `documentType` debe ser uno de los valores del catálogo compartido definido por `EP-025`: `CE`, `CC`, `TI`, `PPT`, `PASSPORT`, `RC`.
 - Los formatos se limitan a PDF, JPG, JPEG y PNG.
 - El tamaño máximo es 3.145.728 bytes.
 - `storageName` debe generarse internamente y no puede ser controlado por el usuario.

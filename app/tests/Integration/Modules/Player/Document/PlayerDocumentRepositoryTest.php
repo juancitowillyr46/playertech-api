@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Modules\Player\Document;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
-use App\Modules\Player\Domain\Document\{DocumentType,PlayerDocument,PlayerDocumentId};
+use App\Modules\Player\Domain\Document\{PlayerDocument,PlayerDocumentId};
 use App\Modules\Player\Domain\Player\{Player,PlayerId};
 use App\Modules\Player\Infrastructure\Persistence\PlayerDocumentRepository;
 use App\Shared\Application\Pagination\PaginationQuery;
+use App\Shared\Domain\Document\DocumentType;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Tests\Support\Database\SchemaResetter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

@@ -64,11 +64,12 @@ final class PlayerImportTemplateFactoryTest extends TestCase
         self::assertSame('Campos', $spreadsheet->getSheetByName('Referencias')->getCell('A14')->getValue());
         self::assertSame('Formatos', $spreadsheet->getSheetByName('Referencias')->getCell('B14')->getValue());
         self::assertSame('Ejemplos', $spreadsheet->getSheetByName('Referencias')->getCell('C14')->getValue());
-        self::assertSame('+573125953354', $spreadsheet->getSheetByName('Referencias')->getCell('C16')->getValue());
+        self::assertSame(3125953354, $spreadsheet->getSheetByName('Referencias')->getCell('C17')->getValue());
         self::assertSame('Tipo de documento (documentType)', $spreadsheet->getSheetByName('Referencias')->getCell('A19')->getValue());
-        self::assertSame('Nacionalidades (nationality)', $spreadsheet->getSheetByName('Referencias')->getCell('A27')->getValue());
-        self::assertSame('Pies dominantes (dominantFoot)', $spreadsheet->getSheetByName('Referencias')->getCell('A36')->getValue());
-        self::assertSame('Genero (gender)', $spreadsheet->getSheetByName('Referencias')->getCell('A42')->getValue());
+        self::assertSame('RC', $spreadsheet->getSheetByName('Referencias')->getCell('B26')->getValue());
+        self::assertSame('Nacionalidades (nationality)', $spreadsheet->getSheetByName('Referencias')->getCell('A28')->getValue());
+        self::assertSame('Pies dominantes (dominantFoot)', $spreadsheet->getSheetByName('Referencias')->getCell('A37')->getValue());
+        self::assertSame('Genero (gender)', $spreadsheet->getSheetByName('Referencias')->getCell('A43')->getValue());
     }
 }
 

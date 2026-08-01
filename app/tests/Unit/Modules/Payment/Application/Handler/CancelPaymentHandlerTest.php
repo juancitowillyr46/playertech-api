@@ -17,7 +17,7 @@ final class CancelPaymentHandlerTest extends TestCase
     public function testItCancelsPayment(): void
     {
         $academyId = AcademyId::generate();
-        $payment = Payment::create(PaymentId::generate(), $academyId, MembershipId::generate(), PlayerId::generate(), LegalGuardianId::generate(), PaymentConceptId::generate(), new \DateTimeImmutable('2026-07-09'), 100.00, null, AuditTrail::create('actor-id'));
+        $payment = Payment::create(PaymentId::generate(), $academyId, MembershipId::generate(), PlayerId::generate(), LegalGuardianId::generate(), PaymentConceptId::generate(), new \DateTimeImmutable('2026-07-09'), 100.00, 'CASH', null, AuditTrail::create('actor-id'));
         $repo = new InMemoryPaymentRepository();
         $repo->save($payment);
         $handler = new CancelPaymentHandler($repo);

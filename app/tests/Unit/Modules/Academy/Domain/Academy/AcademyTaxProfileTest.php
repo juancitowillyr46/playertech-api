@@ -39,6 +39,7 @@ final class AcademyTaxProfileTest extends TestCase
         $academy->updateTaxProfile(
             'NIT',
             '901234567-8',
+            null,
             'RESPONSABLE_IVA',
             'facturacion@example.com',
             'actor-id',

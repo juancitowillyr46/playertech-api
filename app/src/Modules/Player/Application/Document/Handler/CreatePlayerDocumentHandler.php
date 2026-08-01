@@ -8,8 +8,9 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Player\Application\Document\Command\CreatePlayerDocumentCommand;
 use App\Modules\Player\Application\Document\Response\PlayerDocumentResponse;
 use App\Modules\Player\Application\Services\PlayerFinder;
-use App\Modules\Player\Domain\Document\{DocumentType,PlayerDocument,PlayerDocumentId,PlayerDocumentRepository,PlayerDocumentStorage,PlayerDocumentUploadValidator};
+use App\Modules\Player\Domain\Document\{PlayerDocument,PlayerDocumentId,PlayerDocumentRepository,PlayerDocumentStorage,PlayerDocumentUploadValidator};
 use App\Modules\Player\Domain\Player\PlayerId;
+use App\Shared\Domain\Document\DocumentType;
 
 final readonly class CreatePlayerDocumentHandler
 {

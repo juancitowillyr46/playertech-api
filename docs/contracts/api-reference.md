@@ -453,6 +453,40 @@ Exponer un listado liviano de categorías activas para selects y combos sin pagi
 }
 ```
 
+### Document Type Options
+
+```http
+GET /api/v1/academy/document-types/options
+```
+
+### Access
+
+* Usuario tenant autenticado con contexto válido de academia.
+* No requiere exclusivamente `ROLE_ACADEMY_ADMIN`.
+* No recibe `academy_id` desde el cliente.
+
+### Purpose
+
+Exponer el catálogo global y estático de tipos de documento para Player, LegalGuardian, importaciones y gestión documental.
+
+### Response
+
+```json
+{
+  "data": [
+    { "value": "CE", "label": "Cédula de extranjería" },
+    { "value": "CC", "label": "Cédula de ciudadanía" },
+    { "value": "TI", "label": "Tarjeta de identidad" },
+    { "value": "PPT", "label": "PPT" },
+    { "value": "PASSPORT", "label": "Pasaporte" },
+    { "value": "RC", "label": "Registro civil" }
+  ],
+  "meta": {}
+}
+```
+
+La ruta anterior `/api/v1/academy/players/document-types/options` queda reemplazada por esta ruta neutral.
+
 ### Rules
 
 * Devuelve solo categorías activas y no borradas lógicamente.

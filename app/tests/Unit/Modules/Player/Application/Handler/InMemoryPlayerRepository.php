@@ -56,7 +56,11 @@ final class InMemoryPlayerRepository implements PlayerRepository
     public function findOneByPhone(AcademyId $academyId, string $phone): ?Player
     {
         foreach ($this->players as $player) {
-            if ($player->academyId()->equals($academyId) && null !== $player->phone() && $player->phone() === trim($phone)) {
+            $normalizedPhone = preg_replace('/\D+/', '', trim($phone));
+            if (null !== $normalizedPhone && 10 === strlen($normalizedPhone) && str_starts_with($normalizedPhone, '3')) {
+                $normalizedPhone = '57' . $normalizedPhone;
+            }
+            if ($player->academyId()->equals($academyId) && null !== $player->phone() && ltrim($player->phone(), '+') === $normalizedPhone) {
                 return $player;
             }
         }

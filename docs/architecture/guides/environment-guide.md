@@ -98,6 +98,8 @@ docker exec docker-app-1 bash -lc 'cd /var/www/html && php bin/console doctrine:
 * `app/.env.test` para PHPUnit y CI.
 * `app/tests/bootstrap.php` para preparar la base de test.
 
+La selección de suites y el ensayo de migraciones están definidos en `docs/architecture/guides/testing-execution-guide.md`.
+
 ---
 
 # Notes

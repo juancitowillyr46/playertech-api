@@ -115,13 +115,14 @@ final class PlayerController extends AbstractPaginatedApiController
         }
 
         $jobId = PlayerImportJobId::generate();
+        $actorId = $this->requireActorId();
         $importDirectory = $this->ensureImportDirectory();
         $storedPath = $importDirectory . '/' . $jobId->value() . '.xlsx';
         $file->move($importDirectory, $jobId->value() . '.xlsx');
         $job = PlayerImportJob::create(
             $jobId,
             $academyId,
-            $this->requireActorId(),
+            $actorId,
             $categoryId,
             $file->getClientOriginalName(),
             $storedPath
@@ -129,12 +130,12 @@ final class PlayerController extends AbstractPaginatedApiController
 
         $this->playerImportJobRepository->save($job);
 
-        register_shutdown_function(function () use ($jobId): void {
+        register_shutdown_function(function () use ($jobId, $academyId, $actorId, $categoryId): void {
             ($this->processPlayerImportJobHandler)(
                 new \App\Modules\Player\Application\Import\ProcessPlayerImportJobMessage(
-                    $this->tenantContext->requireAcademyId(),
+                    $academyId->value(),
                     $jobId->value(),
-                    $this->requireActorId(),
+                    $actorId,
                     $categoryId,
                 )
             );

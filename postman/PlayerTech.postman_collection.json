@@ -2104,6 +2104,35 @@
       ]
     },
     {
+      "name": "Shared Catalogs",
+      "item": [
+        {
+          "name": "Document Types - Options",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/document-types/options",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "academy", "document-types", "options"]
+            }
+          },
+          "response": [
+            {
+              "name": "Document Types - Options Example",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"data\": [\n    { \"value\": \"CE\", \"label\": \"Cédula de extranjería\" },\n    { \"value\": \"CC\", \"label\": \"Cédula de ciudadanía\" },\n    { \"value\": \"TI\", \"label\": \"Tarjeta de identidad\" },\n    { \"value\": \"PPT\", \"label\": \"PPT\" },\n    { \"value\": \"PASSPORT\", \"label\": \"Pasaporte\" },\n    { \"value\": \"RC\", \"label\": \"Registro civil\" }\n  ],\n  \"meta\": {}\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Player Documents",
       "description": "Gestión de documentos privados asociados a un jugador.",
       "item": [

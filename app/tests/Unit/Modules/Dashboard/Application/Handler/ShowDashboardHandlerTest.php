@@ -24,12 +24,12 @@ final class ShowDashboardHandlerTest extends TestCase
         $membershipRepo = new InMemoryMembershipRepository();
         $chargeRepo = new InMemoryChargeRepository();
         $paymentRepo = new InMemoryPaymentRepository();
-        $player = Player::create(PlayerId::generate(), $academyId, 'DNI', 'Juan', 'Pérez', new \DateTimeImmutable('2014-05-18'), '12345678', null, null, null, null, null, null, AuditTrail::create('actor-id'));
+        $player = Player::create(PlayerId::generate(), $academyId, 'DNI', 'Juan', 'Pérez', new \DateTimeImmutable('2014-05-18'), '12345678', null, null, null, null, null, null, null, null, AuditTrail::create('actor-id'));
         $playerRepo->save($player);
         $membership = Membership::create(MembershipId::generate(), $academyId, $player->id(), \App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId::generate(), AuditTrail::create('actor-id'));
         $membershipRepo->save($membership);
-        $chargeRepo->save(Charge::create(ChargeId::generate(), $academyId, $membership->id(), PaymentConceptId::generate(), 'Uniforme', 80.00, AuditTrail::create('actor-id')));
-        $paymentRepo->save(Payment::create(PaymentId::generate(), $academyId, $membership->id(), $player->id(), \App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId::generate(), PaymentConceptId::generate(), new \DateTimeImmutable('2026-07-09'), 80.00, null, AuditTrail::create('actor-id')));
+        $chargeRepo->save(Charge::create(ChargeId::generate(), $academyId, $player->id(), $membership->id(), PaymentConceptId::generate(), 'Uniforme', 80.00, new \DateTimeImmutable('2026-07-09'), 'MANUAL', AuditTrail::create('actor-id')));
+        $paymentRepo->save(Payment::create(PaymentId::generate(), $academyId, $membership->id(), $player->id(), \App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId::generate(), PaymentConceptId::generate(), new \DateTimeImmutable('2026-07-09'), 80.00, 'CASH', null, AuditTrail::create('actor-id')));
         $handler = new ShowDashboardHandler($playerRepo, $membershipRepo, $chargeRepo, $paymentRepo);
         $response = $handler(new ShowDashboardQuery($academyId->value()));
         self::assertSame(1, $response->toArray()['activePlayers']);

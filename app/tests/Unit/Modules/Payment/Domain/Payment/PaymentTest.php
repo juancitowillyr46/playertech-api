@@ -14,7 +14,7 @@ final class PaymentTest extends TestCase
 {
     public function testItCreatesRegisteredPayment(): void
     {
-        $payment = Payment::create(PaymentId::generate(), AcademyId::generate(), MembershipId::generate(), PlayerId::generate(), LegalGuardianId::generate(), PaymentConceptId::generate(), new \DateTimeImmutable('2026-07-09'), 100.00, null, AuditTrail::create('actor-id'));
+        $payment = Payment::create(PaymentId::generate(), AcademyId::generate(), MembershipId::generate(), PlayerId::generate(), LegalGuardianId::generate(), PaymentConceptId::generate(), new \DateTimeImmutable('2026-07-09'), 100.00, 'CASH', null, AuditTrail::create('actor-id'));
         self::assertTrue($payment->status()->isRegistered());
     }
 }
