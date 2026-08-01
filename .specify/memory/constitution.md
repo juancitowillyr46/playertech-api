@@ -259,3 +259,14 @@ Este documento define las reglas verificables para operar el proyecto bajo Spec-
 - Condición de aprobación: las suites no dependen del orden ni de tablas creadas por otro test y las migraciones no destruyen datos fuera de su alcance.
 - Excepciones permitidas: ninguna para despliegues; una suite excepcional debe explicar su aislamiento.
 - Validación: ejecución en Docker durante CI/CD y revisión de `testing-execution-guide.md`.
+
+## Principio XXIX. Contratos como interfaz entre chats Codex
+
+- Regla: los contratos publicados en `specs/*/contracts/` son la fuente canónica de comunicación entre backend y frontend, aunque se desarrollen en ramas, repositorios o chats Codex separados.
+- Regla: el handoff debe identificar el commit backend, la ruta del contrato, el endpoint afectado y cualquier cambio de compatibilidad.
+- Regla: el frontend debe implementar contra el contrato y no inferir rutas, campos, valores o envelopes desde controladores, entidades o prompts generados ad hoc.
+- Justificación: evita repetir prompts, reduce divergencias entre ramas y permite que ambos chats trabajen sobre una interfaz versionada y auditable.
+- Evidencia requerida: contrato actualizado, commit de referencia, Postman sincronizado cuando aplique y guía de integración disponible en `docs/architecture/guides/frontend-contract-integration-guide.md`.
+- Condición de aprobación: frontend puede implementar el consumo sin requerir contexto adicional de la conversación ni reinterpretar el contrato.
+- Excepciones permitidas: prototipos explícitamente descartables o cambios internos sin impacto en consumidores.
+- Validación: revisión durante `speckit-plan`, `speckit-tasks`, `speckit-analyze` y antes de cerrar un cambio de contrato.
