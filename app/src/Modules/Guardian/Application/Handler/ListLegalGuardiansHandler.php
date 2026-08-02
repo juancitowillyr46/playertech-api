@@ -21,6 +21,8 @@ final readonly class ListLegalGuardiansHandler
         $guardians = $this->guardianRepository->findAllByAcademy(
             $query->academyId,
             $query->pagination,
+            $query->documentNumber,
+            $query->documentType,
             $query->firstName,
             $query->lastName,
             $query->fullName,

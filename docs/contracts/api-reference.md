@@ -330,7 +330,7 @@ La API de `Player` ya expone un contrato operativo enriquecido que debe mantener
   - incluye `genderName`
   - incluye `age`
   - incluye `createdAt`
-  - admite filtros por `gender`, `categoryId`, `firstName`, `lastName`, `fullName`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`
+  - admite filtros por `gender`, `categoryId`, `documentNumber`, `documentType`, `firstName`, `lastName`, `fullName`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`
   - admite ordenamiento por `created_at`, `category_id`, `gender`, `birth_date`, `document_number`, `first_name`, `last_name` y `status`
 - `GET /api/v1/academy/players/{playerId}`
   - devuelve detalle completo del jugador
@@ -1666,6 +1666,8 @@ Consultar el listado paginado de acudientes de la academia actual.
 - `firstName`
 - `lastName`
 - `fullName`
+- `documentNumber`
+- `documentType`
 
 ### Sort aliases
 
@@ -1680,6 +1682,8 @@ Consultar el listado paginado de acudientes de la academia actual.
 - `firstName` filtra por nombre del acudiente.
 - `lastName` filtra por apellido del acudiente.
 - `fullName` filtra por coincidencia parcial sobre nombre o apellido.
+- `documentNumber` filtra por número de documento.
+- `documentType` filtra por tipo de documento.
 - Los filtros de texto deben ser case-insensitive y accent-insensitive.
 
 ## Show Guardian

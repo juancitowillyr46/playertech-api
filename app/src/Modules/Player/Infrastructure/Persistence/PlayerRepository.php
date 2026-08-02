@@ -90,6 +90,8 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerRe
         PaginationQuery $pagination,
         ?string $gender = null,
         ?string $categoryId = null,
+        ?string $documentNumber = null,
+        ?string $documentType = null,
         ?string $firstName = null,
         ?string $lastName = null,
         ?string $fullName = null,
@@ -116,21 +118,31 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerRe
                 ->setParameter('categoryId', trim($categoryId));
         }
 
+        if (null !== $documentNumber && '' !== trim($documentNumber)) {
+            $qb->andWhere('LOWER(player.documentNumber) = :documentNumber')
+                ->setParameter('documentNumber', $this->normalizeSearchText($documentNumber));
+        }
+
+        if (null !== $documentType && '' !== trim($documentType)) {
+            $qb->andWhere('UPPER(player.documentType) = :documentType')
+                ->setParameter('documentType', strtoupper(trim($documentType)));
+        }
+
         if (null !== $firstName && '' !== trim($firstName)) {
-            $qb->andWhere($this->accentInsensitiveLike('player.firstName', ':firstName'))
+            $qb->andWhere('LOWER(player.firstName) LIKE :firstName')
                 ->setParameter('firstName', '%'.$this->normalizeSearchText($firstName).'%');
         }
 
         if (null !== $lastName && '' !== trim($lastName)) {
-            $qb->andWhere($this->accentInsensitiveLike('player.lastName', ':lastName'))
+            $qb->andWhere('LOWER(player.lastName) LIKE :lastName')
                 ->setParameter('lastName', '%'.$this->normalizeSearchText($lastName).'%');
         }
 
         if (null !== $fullName && '' !== trim($fullName)) {
             $qb->andWhere('(
-                '.$this->accentInsensitiveLike('player.firstName', ':fullName').'
-                OR '.$this->accentInsensitiveLike('player.lastName', ':fullName').'
-                OR '.$this->accentInsensitiveLike("CONCAT(player.firstName, ' ', player.lastName)", ':fullName').'
+                LOWER(player.firstName) LIKE :fullName
+                OR LOWER(player.lastName) LIKE :fullName
+                OR LOWER(CONCAT(player.firstName, \' \', player.lastName)) LIKE :fullName
             )')
                 ->setParameter('fullName', '%'.$this->normalizeSearchText($fullName).'%');
         }
@@ -169,15 +181,6 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerRe
             ->getResult();
 
         return ['items' => $items, 'total' => $total];
-    }
-
-    private function accentInsensitiveLike(string $fieldExpression, string $parameter): string
-    {
-        return sprintf(
-            "LOWER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(%s, 'á', 'a'), 'é', 'e'), 'í', 'i'), 'ó', 'o'), 'ú', 'u'), 'ü', 'u'), 'ñ', 'n'), 'Á', 'a'), 'É', 'e'), 'Ñ', 'n')) LIKE %s",
-            $fieldExpression,
-            $parameter,
-        );
     }
 
     private function normalizeSearchText(string $value): string

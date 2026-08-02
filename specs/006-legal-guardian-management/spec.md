@@ -108,7 +108,7 @@ El sistema permite a los administradores de academia reactivar un acudiente prev
 - **FR-006**: El sistema MUST permitir la actualización de acudientes dentro de la academia autenticada.
 - **FR-007**: El sistema MUST permitir inactivar acudientes sin borrar su historial.
 - **FR-008**: El sistema MUST permitir reactivar acudientes previamente inactivados.
-- **FR-009**: El sistema MUST permitir filtros por `firstName`, `lastName` y `fullName` en el listado de acudientes.
+- **FR-009**: El sistema MUST permitir filtros por `documentNumber`, `documentType`, `firstName`, `lastName` y `fullName` en el listado de acudientes.
 - **FR-010**: El sistema MUST normalizar el ordenamiento del listado de acudientes con aliases seguros.
 - **FR-011**: El sistema MUST tratar la búsqueda textual como case-insensitive y accent-insensitive.
 

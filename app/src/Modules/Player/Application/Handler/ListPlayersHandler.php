@@ -25,6 +25,8 @@ final readonly class ListPlayersHandler
             $query->pagination,
             $query->gender,
             $query->categoryId,
+            $query->documentNumber,
+            $query->documentType,
             $query->firstName,
             $query->lastName,
             $query->fullName,

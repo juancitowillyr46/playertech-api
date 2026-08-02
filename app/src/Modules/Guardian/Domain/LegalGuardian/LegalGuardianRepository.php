@@ -21,6 +21,8 @@ interface LegalGuardianRepository
     public function findAllByAcademy(
         AcademyId $academyId,
         PaginationQuery $pagination,
+        ?string $documentNumber = null,
+        ?string $documentType = null,
         ?string $firstName = null,
         ?string $lastName = null,
         ?string $fullName = null,

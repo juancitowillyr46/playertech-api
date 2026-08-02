@@ -34,7 +34,7 @@ Para identificar rápidamente a los responsables legales disponibles y reutiliza
 * El listado debe respetar el contexto de la academia autenticada.
 * El listado debe ser paginado.
 * El listado debe soportar ordenamiento por `created_at`, `document_number`, `first_name`, `last_name` y `status`.
-* El listado debe soportar filtros por `firstName`, `lastName` y `fullName`.
+* El listado debe soportar filtros por `documentNumber`, `documentType`, `firstName`, `lastName` y `fullName`.
 * Los filtros de texto deben comportarse como case-insensitive y accent-insensitive.
 * No debe exponer acudientes de otras academias.
 

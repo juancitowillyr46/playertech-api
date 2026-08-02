@@ -65,6 +65,8 @@ final class LegalGuardianRepository extends ServiceEntityRepository implements L
     public function findAllByAcademy(
         AcademyId $academyId,
         PaginationQuery $pagination,
+        ?string $documentNumber = null,
+        ?string $documentType = null,
         ?string $firstName = null,
         ?string $lastName = null,
         ?string $fullName = null,
@@ -79,20 +81,30 @@ final class LegalGuardianRepository extends ServiceEntityRepository implements L
             ->orderBy(sprintf('guardian.%s', $sortField), $pagination->direction);
 
         if (null !== $firstName && '' !== trim($firstName)) {
-            $qb->andWhere($this->accentInsensitiveLike('guardian.firstName', ':firstName'))
+            $qb->andWhere('LOWER(guardian.firstName) LIKE :firstName')
                 ->setParameter('firstName', '%'.$this->normalizeSearchText($firstName).'%');
         }
 
         if (null !== $lastName && '' !== trim($lastName)) {
-            $qb->andWhere($this->accentInsensitiveLike('guardian.lastName', ':lastName'))
+            $qb->andWhere('LOWER(guardian.lastName) LIKE :lastName')
                 ->setParameter('lastName', '%'.$this->normalizeSearchText($lastName).'%');
         }
 
+        if (null !== $documentNumber && '' !== trim($documentNumber)) {
+            $qb->andWhere('LOWER(guardian.documentNumber) = :documentNumber')
+                ->setParameter('documentNumber', $this->normalizeSearchText($documentNumber));
+        }
+
+        if (null !== $documentType && '' !== trim($documentType)) {
+            $qb->andWhere('UPPER(guardian.documentType) = :documentType')
+                ->setParameter('documentType', strtoupper(trim($documentType)));
+        }
+
         if (null !== $fullName && '' !== trim($fullName)) {
-            $qb->andWhere('('.
-                $this->accentInsensitiveLike('guardian.firstName', ':fullName').' OR '.
-                $this->accentInsensitiveLike('guardian.lastName', ':fullName').
-            ')')
+            $qb->andWhere('(
+                LOWER(guardian.firstName) LIKE :fullName
+                OR LOWER(guardian.lastName) LIKE :fullName
+            )')
                 ->setParameter('fullName', '%'.$this->normalizeSearchText($fullName).'%');
         }
 
@@ -111,15 +123,6 @@ final class LegalGuardianRepository extends ServiceEntityRepository implements L
             'items' => $items,
             'total' => $total,
         ];
-    }
-
-    private function accentInsensitiveLike(string $fieldExpression, string $parameter): string
-    {
-        return sprintf(
-            "LOWER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(%s, 'á', 'a'), 'é', 'e'), 'í', 'i'), 'ó', 'o'), 'ú', 'u'), 'ü', 'u'), 'ñ', 'n'), 'Á', 'a'), 'É', 'e'), 'Ñ', 'n')) LIKE %s",
-            $fieldExpression,
-            $parameter,
-        );
     }
 
     private function normalizeSearchText(string $value): string

@@ -14,6 +14,8 @@ final readonly class ListPlayersQuery
         public PaginationQuery $pagination,
         public ?string $gender = null,
         public ?string $categoryId = null,
+        public ?string $documentNumber = null,
+        public ?string $documentType = null,
         public ?string $firstName = null,
         public ?string $lastName = null,
         public ?string $fullName = null,

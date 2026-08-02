@@ -29,6 +29,7 @@ Permite mantener un directorio confiable de acudientes por academia, con trazabi
 4. Actualizar acudiente.
 5. Inactivar acudiente.
 6. Reactivar acudiente.
+7. Filtrar el listado por `documentNumber` y `documentType` además de los filtros de nombre.
 
 ## Historias de Usuario
 * [HU-001 - Listar Acudientes](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/stories/EP-006-legal-guardian-management/HU-001-list-guardians.md)

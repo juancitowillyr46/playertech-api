@@ -27,6 +27,8 @@ interface PlayerRepository
         PaginationQuery $pagination,
         ?string $gender = null,
         ?string $categoryId = null,
+        ?string $documentNumber = null,
+        ?string $documentType = null,
         ?string $firstName = null,
         ?string $lastName = null,
         ?string $fullName = null,

@@ -76,6 +76,8 @@ final class ListPlayersHandlerTest extends TestCase
             new PaginationQuery(),
             'Masculino',
             $categoryId->value(),
+            '12345678',
+            'DNI',
             'Juan',
             'perez',
             'juan perez',

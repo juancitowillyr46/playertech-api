@@ -73,6 +73,8 @@ final class InMemoryPlayerRepository implements PlayerRepository
         PaginationQuery $pagination,
         ?string $gender = null,
         ?string $categoryId = null,
+        ?string $documentNumber = null,
+        ?string $documentType = null,
         ?string $firstName = null,
         ?string $lastName = null,
         ?string $fullName = null,
@@ -83,7 +85,7 @@ final class InMemoryPlayerRepository implements PlayerRepository
     ): array {
         $items = array_values(array_filter(
             $this->players,
-            function (Player $player) use ($academyId, $gender, $categoryId, $firstName, $lastName, $fullName, $createdAtFrom, $createdAtTo, $birthDateFrom, $birthDateTo): bool {
+            function (Player $player) use ($academyId, $gender, $categoryId, $documentNumber, $documentType, $firstName, $lastName, $fullName, $createdAtFrom, $createdAtTo, $birthDateFrom, $birthDateTo): bool {
                 if (!$player->academyId()->equals($academyId)) {
                     return false;
                 }
@@ -93,6 +95,14 @@ final class InMemoryPlayerRepository implements PlayerRepository
                 }
 
                 if (null !== $categoryId && '' !== trim($categoryId) && (null === $player->categoryId() || $player->categoryId()?->value() !== trim($categoryId))) {
+                    return false;
+                }
+
+                if (null !== $documentNumber && '' !== trim($documentNumber) && $this->normalizeSearchText($player->documentNumber()) !== $this->normalizeSearchText($documentNumber)) {
+                    return false;
+                }
+
+                if (null !== $documentType && '' !== trim($documentType) && mb_strtoupper(trim($player->documentType())) !== mb_strtoupper(trim($documentType))) {
                     return false;
                 }
 

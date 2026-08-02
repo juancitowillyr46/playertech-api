@@ -52,6 +52,8 @@ final class GuardianController extends AbstractPaginatedApiController
             new ListLegalGuardiansQuery(
                 new AcademyId($this->tenantContext->requireAcademyId()),
                 $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value'),
+                $this->optionalQueryString($request, 'documentNumber'),
+                $this->optionalQueryString($request, 'documentType'),
                 $this->optionalQueryString($request, 'firstName'),
                 $this->optionalQueryString($request, 'lastName'),
                 $this->optionalQueryString($request, 'fullName'),

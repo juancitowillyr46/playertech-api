@@ -181,6 +181,8 @@ final class GuardianLifecycleHandlersTest extends TestCase
         $response = $handler(new ListLegalGuardiansQuery(
             $academyId,
             new PaginationQuery(1, 20, 'created_at', 'DESC'),
+            '12345678',
+            'CC',
             null,
             'castaño',
             'jose castaño',
@@ -237,6 +239,8 @@ final class InMemoryGuardianRepository implements LegalGuardianRepository
     public function findAllByAcademy(
         AcademyId $academyId,
         PaginationQuery $pagination,
+        ?string $documentNumber = null,
+        ?string $documentType = null,
         ?string $firstName = null,
         ?string $lastName = null,
         ?string $fullName = null,
@@ -244,8 +248,16 @@ final class InMemoryGuardianRepository implements LegalGuardianRepository
     {
         $items = array_values(array_filter(
             $this->items,
-            function (LegalGuardian $guardian) use ($academyId, $firstName, $lastName, $fullName): bool {
+            function (LegalGuardian $guardian) use ($academyId, $documentNumber, $documentType, $firstName, $lastName, $fullName): bool {
                 if (!$guardian->academyId()->equals($academyId)) {
+                    return false;
+                }
+
+                if (null !== $documentNumber && '' !== trim($documentNumber) && $this->normalizeSearchText((string) $guardian->documentNumber()) !== $this->normalizeSearchText($documentNumber)) {
+                    return false;
+                }
+
+                if (null !== $documentType && '' !== trim($documentType) && mb_strtoupper(trim((string) $guardian->documentType())) !== mb_strtoupper(trim($documentType))) {
                     return false;
                 }
 

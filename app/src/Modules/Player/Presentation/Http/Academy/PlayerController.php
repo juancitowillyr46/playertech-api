@@ -208,6 +208,8 @@ final class PlayerController extends AbstractPaginatedApiController
                 $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value'),
                 $this->nullableQueryString($request, 'gender'),
                 $this->nullableQueryString($request, 'categoryId'),
+                $this->nullableQueryString($request, 'documentNumber'),
+                $this->nullableQueryString($request, 'documentType'),
                 $this->nullableQueryString($request, 'firstName'),
                 $this->nullableQueryString($request, 'lastName'),
                 $this->nullableQueryString($request, 'fullName'),
