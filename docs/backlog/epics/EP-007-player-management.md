@@ -41,6 +41,7 @@ El jugador es la entidad central del dominio funcional de PlayerTech.
 6. Gestionar estado del jugador: desactivar y reactivar.
 7. Importar jugadores y categorías desde Excel.
 8. Resolver categorias mediante `category_key` estable para importaciones e integraciones.
+9. Exponer un resumen liviano del jugador por `playerId` para consumos operativos.
 
 ## Historias Candidatas
 
@@ -52,6 +53,7 @@ El jugador es la entidad central del dominio funcional de PlayerTech.
 * Importar jugadores en lote.
 * Definir clave de negocio estable para categorias.
 * Subir foto del jugador.
+* Exponer resumen compacto del jugador.
 * Filtrar listados por `gender`, `categoryId`, `documentNumber`, `documentType`, `firstName`, `lastName`, `fullName`, `createdAt` y `birthDate`.
 
 ## Base Técnica de Referencia
@@ -86,3 +88,13 @@ Sí.
 
 ## Estado
 Implementado en runtime y alineado en `specs/14-current-state.md`.
+
+## Contratos HTTP Cubiertos
+* `POST /api/v1/academy/players`
+* `GET /api/v1/academy/players`
+* `GET /api/v1/academy/players/{playerId}`
+* `GET /api/v1/academy/players/{playerId}/summary`
+* `PUT /api/v1/academy/players/{playerId}`
+* `PATCH /api/v1/academy/players/{playerId}/inactivate`
+* `PATCH /api/v1/academy/players/{playerId}/activate`
+* `PATCH /api/v1/academy/players/{playerId}/photo`

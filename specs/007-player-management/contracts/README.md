@@ -14,4 +14,4 @@ Este directorio contiene los contratos HTTP del lifecycle base de `Player`.
 
 ## Subfeature
 
-La importación masiva vive en `specs/007-player/import/contracts/` para no mezclar el contrato base con el flujo asíncrono.
+La importación masiva vive en `specs/007-player-management/import/contracts/` para no mezclar el contrato base con el flujo asíncrono.

@@ -25,4 +25,4 @@
 ## Phase 5: Player import subfeature
 
 - [x] T007 Documentar player import, listing enrichment and polling boundaries at feature level
-- [ ] T008 Review and finalize `specs/007-player/import/`
+- [ ] T008 Review and finalize `specs/007-player-management/import/`

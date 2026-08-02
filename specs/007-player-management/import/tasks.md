@@ -14,5 +14,5 @@
 
 ## Phase 3: Alignment
 
-- [ ] T007 Alinear el feature principal `007-player` con la subfeature de import
+- [ ] T007 Alinear el feature principal `007-player-management` con la subfeature de import
 - [ ] T008 Alinear las historias del backlog con el contrato de import

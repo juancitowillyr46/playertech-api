@@ -18,9 +18,11 @@ use App\Modules\Player\Application\Handler\CreatePlayerHandler;
 use App\Modules\Player\Application\Import\ProcessPlayerImportJobHandler;
 use App\Modules\Player\Application\Handler\ListPlayersHandler;
 use App\Modules\Player\Application\Handler\InactivatePlayerHandler;
+use App\Modules\Player\Application\Handler\ShowPlayerSummaryHandler;
 use App\Modules\Player\Application\Handler\UpdatePlayerHandler;
 use App\Modules\Player\Application\Query\ListPlayersQuery;
 use App\Modules\Player\Application\Handler\ShowPlayerHandler;
+use App\Modules\Player\Application\Query\ShowPlayerSummaryQuery;
 use App\Modules\Player\Application\Query\ShowPlayerQuery;
 use App\Modules\Player\Application\Response\PlayerImportJobResponse;
 use App\Modules\Player\Application\Service\PlayerImportTemplateFactory;
@@ -53,6 +55,7 @@ final class PlayerController extends AbstractPaginatedApiController
         private readonly ValidatorInterface $validator,
         private readonly CreatePlayerHandler $createPlayerHandler,
         private readonly ListPlayersHandler $listPlayersHandler,
+        private readonly ShowPlayerSummaryHandler $showPlayerSummaryHandler,
         private readonly ShowPlayerHandler $showPlayerHandler,
         private readonly UpdatePlayerHandler $updatePlayerHandler,
         private readonly UploadPlayerPhotoHandler $uploadPlayerPhotoHandler,
@@ -231,6 +234,22 @@ final class PlayerController extends AbstractPaginatedApiController
     {
         $view = ($this->showPlayerHandler)(
             new ShowPlayerQuery(
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                new PlayerId($playerId)
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/{playerId}/summary', name: 'api_v1_academy_players_summary', methods: ['GET'])]
+    public function summary(string $playerId): JsonResponse
+    {
+        $view = ($this->showPlayerSummaryHandler)(
+            new ShowPlayerSummaryQuery(
                 new AcademyId($this->tenantContext->requireAcademyId()),
                 new PlayerId($playerId)
             )

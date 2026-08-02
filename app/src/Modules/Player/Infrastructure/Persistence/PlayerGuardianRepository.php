@@ -66,6 +66,20 @@ final class PlayerGuardianRepository extends ServiceEntityRepository implements 
             ->getResult();
     }
 
+    public function findAllByGuardian(AcademyId $academyId, LegalGuardianId $guardianId): array
+    {
+        return $this->createQueryBuilder('playerGuardian')
+            ->where('playerGuardian.academyId = :academyId')
+            ->andWhere('playerGuardian.guardianId = :guardianId')
+            ->andWhere('playerGuardian.deletedAt IS NULL')
+            ->setParameter('academyId', $academyId->value())
+            ->setParameter('guardianId', $guardianId->value())
+            ->orderBy('playerGuardian.isPrimary', 'DESC')
+            ->addOrderBy('playerGuardian.auditTrail.createdAt.value', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findPrimaryByPlayer(AcademyId $academyId, PlayerId $playerId): ?PlayerGuardian
     {
         return $this->createQueryBuilder('playerGuardian')

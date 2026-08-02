@@ -240,10 +240,11 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `CategoryController` y `VenueController` quedaron homogeneizados para usar el `TenantContext` del controlador y no mezclar inyección por parámetro.
 * La jerarquía compartida de excepciones de `Shared` quedó aplicada y el `ProblemDetailsExceptionSubscriber` traduce por tipo base.
 * `EP-007` quedó reescrita como inicio forrmal del dominio `Player` y ya tiene HUs mínimas para registrar, listarar, consultar, actualizar y deactivar.
-* `HU-001` de `EP-007` quedó implementada y validada en runtime con `POST /api/v1/academy/players`.
-* `HU-002` de `EP-007` quedó implementada y validada en runtime con `GET /api/v1/academy/players`.
+* `HU-001` de `EP-007-player-management` quedó implementada y validada en runtime con `POST /api/v1/academy/players`.
+* `HU-002` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players`.
+* `HU-010` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}/summary`.
 * El listado de `Player` ya expone `photo`, `categoryName`, `genderName`, `age` y `createdAt` como campos de salida, con filtros por `gender`, `categoryId`, `documentNumber`, `documentType`, `firstName`, `lastName`, `fullName`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`; la búsqueda de texto quedó definida como case-insensitive y accent-insensitive.
-* La importación masiva de `Player` quedó documentada como subfeature separada en `specs/007-player/import/` para mantener el lifecycle base limpio y desacoplado.
+* La importación masiva de `Player` quedó documentada como subfeature separada en `specs/007-player-management/import/` para mantener el lifecycle base limpio y desacoplado.
 * La suspension de una academia bloquea a todos sus usuarios, pero no elimina ni deactiva usuarios en cascada.
 * Las validaciones de negocio de `Academy` devuelven Problem Details JSON; el caso de duplicado de correo se resuelve con excepcion de dominio y responseuesta `409`.
 * `Academy` incorpora soft delete con `deleted_at` y `deleted_by`, y Doctrine ya tiene un filtro global para excluir entidades borradas lógicamente.
@@ -275,11 +276,11 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La subida de escudo institucional para `Academy` y la forto del jugador para `Player` ya quedaron implementadas como historias de media separadas.
 * Las categorias ahora tienen `category_key` estable para soportar importaciones y contratos de integracion sin depender del UUID.
 * La auditoria Doctrine ya quedó centralizada con un `AuditSubscriber` y el filtro `SoftDelete` está activo.
-* `HU-003` de `EP-007` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}`.
-* `HU-004` de `EP-007` quedó implementada y validada en runtime con `PUT /api/v1/academy/players/{playerId}`.
-* `HU-005` de `EP-007` quedó consolidada como gestión de estado del jugador: deactivar y reactivar con endpoints `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate`.
-* Se abrió la historia `HU-007` de `EP-007` para importación masiva de jugadores desde Excel como base de migración de datos.
-* `HU-007` de `EP-007` quedó orientada a un flujo asíncrono con selección previa de categoría, plantilla generada por backend y polling de progreso.
+* `HU-003` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}`.
+* `HU-004` de `EP-007-player-management` quedó implementada y validada en runtime con `PUT /api/v1/academy/players/{playerId}`.
+* `HU-005` de `EP-007-player-management` quedó consolidada como gestión de estado del jugador: desactivar y reactivar con endpoints `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate`.
+* Se abrió la historia `HU-007` de `EP-007-player-management` para importación masiva de jugadores desde Excel como base de migración de datos.
+* `HU-007` de `EP-007-player-management` quedó orientada a un flujo asíncrono con selección previa de categoría, plantilla generada por backend y polling de progreso.
 * El módulo `Player` ahora incluye `category_id` como referencia opcional y el endpoint de importación masiva `POST /api/v1/academy/players/import` trabaja con `categoryId` por job, no por fila.
 * La plantilla oficial de importación de jugadores se genera desde backend con hojas `Datos` y `Referencias`.
 * El flujo documental central de importación de jugadores se reorganizó fuera de `docs/domains/player/` hacia `docs/flows/player/` para separar dominio puro de flujo y UX.
@@ -304,7 +305,8 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El perfil fiscal del MVP se presenta al usuario como `Inforrmación fiscal` y se mantiene como un único perfil principal por academia.
 * La documentación operativa de `EP-006` ya refleja el alta de acudientes con `documentType`, `documentNumber`, `address` y `relationship` para que el front consuma el contrato actualizado.
 * Los comprobantes de pago del MVP deben tomar siempre the academy marcada como principal/default para los datos fiscales del emisor.
-* `HU-009` de `EP-007` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la forto del jugador.
+* `HU-009` de `EP-007-player-management` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la foto del jugador.
+* `HU-007` de `EP-006-legal-guardian-management` quedó implementada y validada en runtime con `GET /api/v1/academy/guardians/{guardianId}/players`.
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría; la responseuesta del alta usa un contract específico para onboarding y no el responseonse operativo de `Team`.
 * El MVP checklistar debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y forto de `Player`.
 * `EP-006` ya expone lectura y creación de acudientes por academia en HTTP, incluyendo el campo `relationship`, y `EP-008` ya cubre la relación jugador-acudiente con alta de acudiente, asociación, cambio de principal, eliminación lógica y vista por jugador.

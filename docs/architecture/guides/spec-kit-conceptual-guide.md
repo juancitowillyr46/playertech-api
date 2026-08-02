@@ -474,7 +474,7 @@ Si despues aparecen mapas, geocoding y cobertura territorial, puede nacer una su
 
 ### Spec
 
-- `specs/007-player/spec.md`
+- `specs/007-player-management/spec.md`
 
 ### Flow
 

@@ -21,5 +21,10 @@ interface PlayerGuardianRepository
      */
     public function findAllByPlayer(AcademyId $academyId, PlayerId $playerId): array;
 
+    /**
+     * @return PlayerGuardian[]
+     */
+    public function findAllByGuardian(AcademyId $academyId, \App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId $guardianId): array;
+
     public function findPrimaryByPlayer(AcademyId $academyId, PlayerId $playerId): ?PlayerGuardian;
 }

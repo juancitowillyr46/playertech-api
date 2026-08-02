@@ -377,7 +377,7 @@ This spec should be implemented first using mock data.
 ## Trazabilidad SDD
 
 - Flujo central: `docs/flows/player/player-import-flow-spec.md`
-- Backlog origen: `docs/backlog/stories/EP-007/HU-007-import-players-bulk.md`
+- Backlog origen: `docs/backlog/stories/EP-007-player-management/HU-007-import-players-bulk.md`
 - Contrato HTTP: `docs/contracts/api-reference.md`
 
 ### Why Mock First

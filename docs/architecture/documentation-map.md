@@ -104,10 +104,10 @@ Vive en `docs/backlog/`.
 | Rol | Documento |
 | --- | --- |
 | Contrato operativo general | [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md) |
-| Feature spec | [`specs/007-player/spec.md`](../../specs/007-player/spec.md) |
+| Feature spec | [`specs/007-player-management/spec.md`](../../specs/007-player-management/spec.md) |
 | Documento central de dominio | [`docs/domains/player/player-domain-spec.md`](../domains/player/player-domain-spec.md) |
-| Contexto funcional | [`docs/backlog/epics/EP-007.md`](../backlog/epics/EP-007.md) |
-| HUs | [`docs/backlog/stories/EP-007/`](../backlog/stories/EP-007/) |
+| Contexto funcional | [`docs/backlog/epics/EP-007-player-management.md`](../backlog/epics/EP-007-player-management.md) |
+| HUs | [`docs/backlog/stories/EP-007-player-management/`](../backlog/stories/EP-007-player-management/) |
 
 ### Player Import Flow
 
@@ -115,10 +115,10 @@ Vive en `docs/backlog/`.
 | --- | --- |
 | Flujo central | [`docs/flows/player/player-import-flow-spec.md`](../flows/player/player-import-flow-spec.md) |
 | Satélite UX | [`docs/flows/player/player-import-ux-spec.md`](../flows/player/player-import-ux-spec.md) |
-| Feature spec | [`specs/007-player/spec.md`](../../specs/007-player/spec.md) |
+| Feature spec | [`specs/007-player-management/spec.md`](../../specs/007-player-management/spec.md) |
 | Documento central de dominio | [`docs/domains/player/player-domain-spec.md`](../domains/player/player-domain-spec.md) |
 | Contrato HTTP | [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md) |
-| Backlog origen | [`docs/backlog/stories/EP-007/HU-007-import-players-bulk.md`](../backlog/stories/EP-007/HU-007-import-players-bulk.md) |
+| Backlog origen | [`docs/backlog/stories/EP-007-player-management/HU-007-import-players-bulk.md`](../backlog/stories/EP-007-player-management/HU-007-import-players-bulk.md) |
 
 ### Guardian
 

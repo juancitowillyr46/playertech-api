@@ -6,7 +6,7 @@ Este indice organiza el backlog por prioridad funcional para facilitar la navega
 
 1. [`EP-001`](./epics/EP-001.md) Academy
 2. [`EP-003`](./epics/EP-003.md) Identity
-3. [`EP-007`](./epics/EP-007.md) Player
+3. [`EP-007-player-management`](./epics/EP-007-player-management.md) Player
 4. [`EP-005`](./epics/EP-005.md) Team
 5. [`EP-008`](./epics/EP-008.md) PlayerGuardian
 6. [`EP-009`](./epics/EP-009.md) Membership

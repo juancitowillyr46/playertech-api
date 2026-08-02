@@ -83,4 +83,4 @@ Documento central del dominio `Category`.
 ## Functional Guides
 
 - Backlog epic: [`docs/backlog/epics/EP-004.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/epics/EP-004.md)
-- Player relation and business key story: [`docs/backlog/stories/EP-007/HU-008-category-business-key.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/stories/EP-007/HU-008-category-business-key.md)
+- Player relation and business key story: [`docs/backlog/stories/EP-007-player-management/HU-008-category-business-key.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/stories/EP-007-player-management/HU-008-category-business-key.md)

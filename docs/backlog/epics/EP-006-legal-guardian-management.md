@@ -30,6 +30,7 @@ Permite mantener un directorio confiable de acudientes por academia, con trazabi
 5. Inactivar acudiente.
 6. Reactivar acudiente.
 7. Filtrar el listado por `documentNumber` y `documentType` además de los filtros de nombre.
+8. Listar los jugadores relacionados a un acudiente por `guardianId`.
 
 ## Historias de Usuario
 * [HU-001 - Listar Acudientes](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/stories/EP-006-legal-guardian-management/HU-001-list-guardians.md)
@@ -38,6 +39,7 @@ Permite mantener un directorio confiable de acudientes por academia, con trazabi
 * [HU-004 - Editar Acudiente](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/stories/EP-006-legal-guardian-management/HU-004-update-guardian.md)
 * [HU-005 - Inactivar Acudiente](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/stories/EP-006-legal-guardian-management/HU-005-inactivate-guardian.md)
 * [HU-006 - Reactivar Acudiente](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/stories/EP-006-legal-guardian-management/HU-006-reactivate-guardian.md)
+* [HU-007 - Listar Jugadores Relacionados](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/stories/EP-006-legal-guardian-management/HU-007-list-related-players.md)
 
 ## Métricas de Éxito
 * Número de acudientes registrados por academia.
@@ -54,6 +56,7 @@ Permite mantener un directorio confiable de acudientes por academia, con trazabi
 * `PUT /api/v1/academy/guardians/{guardianId}`.
 * `PATCH /api/v1/academy/guardians/{guardianId}/inactivate`
 * `PATCH /api/v1/academy/guardians/{guardianId}/activate`
+* `GET /api/v1/academy/guardians/{guardianId}/players`
 
 ## Preguntas Abiertas
 Ninguna

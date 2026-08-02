@@ -1,6 +1,6 @@
 # Data Model: Player Feature
 
-**Feature Branch**: `007-player`
+**Feature Branch**: `007-player-management`
 
 ## Entities
 
@@ -17,5 +17,5 @@
 
 ## Boundary
 
-- `PlayerImportJob` is documented in `specs/007-player/import/data-model.md`.
+- `PlayerImportJob` is documented in `specs/007-player-management/import/data-model.md`.
 - The base feature should stay forcused on lifecycle and media behavior.

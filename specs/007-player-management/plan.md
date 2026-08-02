@@ -1,6 +1,6 @@
 # Implementation Plan: Player
 
-**Branch**: `007-player` | **Date**: 2026-07-27 | **Spec**: ./spec.md
+**Branch**: `007-player-management` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
 **Entrada**: Feature specification from `./spec.md`
 
@@ -39,7 +39,7 @@ Consolidar `Player` como feature principal del dominio deportivo, dejando la imp
 ### Documentation (this feature)
 
 ```text
-specs/007-player/
+specs/007-player-management/
 ├── spec.md
 ├── plan.md
 ├── research.md
@@ -47,7 +47,7 @@ specs/007-player/
 ├── quickstart.md
 ├── contracts/
 └── tasks.md
-specs/007-player/import/
+specs/007-player-management/import/
 ├── spec.md
 ├── plan.md
 ├── research.md

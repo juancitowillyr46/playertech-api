@@ -1,6 +1,6 @@
 # Player Feature
 
-**Feature Branch**: `007-player`
+**Feature Branch**: `007-player-management`
 
 **Created**: 2026-07-27
 

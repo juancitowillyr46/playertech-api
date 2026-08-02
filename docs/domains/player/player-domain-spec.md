@@ -7,7 +7,7 @@ Documento central del dominio `Player`.
 ## Canonical Sources
 
 - API operativa: [`docs/contracts/api-reference.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/contracts/api-reference.md)
-- Feature spec: [`specs/007-player/spec.md`](/home/juan-rodas/projects/playertech/playertech-api/specs/007-player/spec.md)
+- Feature spec: [`specs/007-player-management/spec.md`](/home/juan-rodas/projects/playertech/playertech-api/specs/007-player-management/spec.md)
 - Estado actual: [`specs/14-current-state.md`](/home/juan-rodas/projects/playertech/playertech-api/specs/14-current-state.md)
 - Memoria persistente: [`docs/architecture/memory/project-memory.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/architecture/memory/project-memory.md)
 
@@ -160,6 +160,6 @@ Documento central del dominio `Player`.
 
 ## Functional Guides
 
-- Backlog epic: [`docs/backlog/epics/EP-007.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/epics/EP-007.md)
+- Backlog epic: [`docs/backlog/epics/EP-007-player-management.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/epics/EP-007-player-management.md)
 - Player import flow: [`docs/flows/player/player-import-flow-spec.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/flows/player/player-import-flow-spec.md)
 - Player import UX: [`docs/flows/player/player-import-ux-spec.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/flows/player/player-import-ux-spec.md)

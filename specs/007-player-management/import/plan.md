@@ -1,6 +1,6 @@
 # Implementation Plan: Player Import
 
-**Branch**: `007-player/import` | **Date**: 2026-07-29 | **Spec**: ./spec.md
+**Branch**: `007-player-management/import` | **Date**: 2026-07-29 | **Spec**: ./spec.md
 
 ## Resumen
 
@@ -26,7 +26,7 @@ Separar la importación como subfeature evita mezclar el lifecycle base del juga
 ## Estructura del proyecto
 
 ```text
-specs/007-player/import/
+specs/007-player-management/import/
 ├── spec.md
 ├── plan.md
 ├── research.md
@@ -42,4 +42,4 @@ specs/007-player/import/
 2. Definir contrato de creación del job.
 3. Definir contrato de estado del job.
 4. Documentar summary y errores por fila.
-5. Alinear el feature principal `007-player` con esta subfeature.
+5. Alinear el feature principal `007-player-management` con esta subfeature.

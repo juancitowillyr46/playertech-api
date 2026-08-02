@@ -1,6 +1,6 @@
 # Player Import Subfeature
 
-**Feature Branch**: `007-player/import`
+**Feature Branch**: `007-player-management/import`
 
 **Creado**: 2026-07-29
 

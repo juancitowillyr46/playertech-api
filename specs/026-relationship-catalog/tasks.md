@@ -50,7 +50,7 @@
 **Propósito**: Alinear contratos operativos, trazabilidad y validaciones de calidad del repositorio.
 
 - [ ] T018 [P] Registrar la implementación de `EP-025`/`HU-002`, la ubicación compartida y la ruta oficial en `specs/14-current-state.md`.
-- [ ] T019 [P] Actualizar referencias cruzadas en las historias afectadas de Player y LegalGuardian, `specs/007-player/`, `specs/006-legal-guardian-management/` y cualquier spec que dependa del catálogo de parentescos.
+- [ ] T019 [P] Actualizar referencias cruzadas en las historias afectadas de Player y LegalGuardian, `specs/007-player-management/`, `specs/006-legal-guardian-management/` y cualquier spec que dependa del catálogo de parentescos.
 - [ ] T020 Ejecutar el quickstart de `specs/026-relationship-catalog/quickstart.md` dentro de Docker, incluyendo `php -l`, `debug:router`, PHPUnit y validación de Postman.
 - [ ] T021 Ejecutar `git diff --check` y revisar que no existan referencias activas a listas duplicadas de parentescos fuera del catálogo compartido.
 

@@ -56,7 +56,7 @@
 **Propósito**: Alinear contratos operativos, trazabilidad y validaciones de calidad del repositorio.
 
 - [x] T020 [P] Registrar la implementación de `EP-025`/`HU-001`, la ubicación compartida y la ruta oficial en `specs/14-current-state.md`.
-- [x] T021 [P] Actualizar referencias cruzadas en `docs/backlog/epics/EP-024-player-document-management.md`, historias afectadas de EP-024, `specs/024-player-document-management/` y `specs/007-player/import/` para apuntar al catálogo de `EP-025`.
+- [x] T021 [P] Actualizar referencias cruzadas en `docs/backlog/epics/EP-024-player-document-management.md`, historias afectadas de EP-024, `specs/024-player-document-management/` y `specs/007-player-management/import/` para apuntar al catálogo de `EP-025`.
 - [x] T022 Ejecutar el quickstart de `specs/025-document-type-catalog/quickstart.md` dentro de Docker, incluyendo `php -l`, `debug:router`, PHPUnit y validación de Postman.
 - [x] T023 Ejecutar `git diff --check` y revisar que no existan referencias activas a la ruta anterior ni listas duplicadas de tipos de documento fuera del catálogo compartido.
 

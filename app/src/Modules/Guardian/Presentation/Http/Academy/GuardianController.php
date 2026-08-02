@@ -9,6 +9,8 @@ use App\Modules\Guardian\Application\Command\ActivateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\CreateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\InactivateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\UpdateLegalGuardianCommand;
+use App\Modules\Guardian\Application\Player\ListByGuardian\ListGuardianPlayersHandler;
+use App\Modules\Guardian\Application\Player\ListByGuardian\ListGuardianPlayersQuery;
 use App\Modules\Guardian\Application\Handler\ActivateLegalGuardianHandler;
 use App\Modules\Guardian\Application\Handler\InactivateLegalGuardianHandler;
 use App\Modules\Guardian\Application\Handler\ListLegalGuardiansHandler;
@@ -37,6 +39,7 @@ final class GuardianController extends AbstractPaginatedApiController
         private readonly ValidatorInterface $validator,
         private readonly CreateLegalGuardianHandler $createLegalGuardianHandler,
         private readonly ListLegalGuardiansHandler $listLegalGuardiansHandler,
+        private readonly ListGuardianPlayersHandler $listGuardianPlayersHandler,
         private readonly ShowLegalGuardianHandler $showLegalGuardianHandler,
         private readonly UpdateLegalGuardianHandler $updateLegalGuardianHandler,
         private readonly InactivateLegalGuardianHandler $inactivateLegalGuardianHandler,
@@ -71,6 +74,23 @@ final class GuardianController extends AbstractPaginatedApiController
         $value = trim((string) $request->query->get($key, ''));
 
         return '' === $value ? null : $value;
+    }
+
+    #[Route('/{guardianId}/players', name: 'api_v1_academy_guardians_players_list', methods: ['GET'])]
+    public function listPlayers(string $guardianId, Request $request): JsonResponse
+    {
+        $items = ($this->listGuardianPlayersHandler)(
+            new ListGuardianPlayersQuery(
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                new \App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId($guardianId),
+                $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value'),
+            )
+        );
+
+        return new JsonResponse([
+            'data' => array_map(static fn ($item) => $item->toArray(), $items),
+            'meta' => new \stdClass(),
+        ]);
     }
 
     #[Route('/{guardianId}', name: 'api_v1_academy_guardians_show', methods: ['GET'])]
