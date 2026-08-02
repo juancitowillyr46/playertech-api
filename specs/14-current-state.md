@@ -88,6 +88,7 @@ La base tecnica actual incluye:
 | Backlog normalization pass 3 | Documentation | Done | `unrastreared` | `EP-009` quedó con numeración continua y evidencia de pago puedeónica en `EP-012` |
 | Category business key forundation | Functional / Technical Enabler | Done | `unrastreared` | `Category` ahora expone `category_key` estable, unico por academia, para contratos API e importaciones |
 | Guardian module forundation | Functional / Technical Enabler | Done | `unrastreared` | `LegalGuardian` queda disponible como aggregate root con XML puro, custom type UUID y endpoint de alta dentro de Academy |
+| Guardian lifecycle completion | Functional / Technical Enabler | Done | `unrastreared` | `LegalGuardian` ahora expone create, list, detail, update, inactivate y activate con contratos HTTP, handlers y pruebas unitarias asociadas |
 | PlayerGuardian relation forundation | Functional / Technical Enabler | Done | `unrastreared` | `PlayerGuardian` cubre asociar, cambiar principal y eliminar relación con soft delete y aislamiento por academia |
 | Doctrine Tenant Filter | Non-Functional / Technical Enabler | Done | `unrastreared` | Filtro global que aísla automáticamente las consultas por `academy_id` para seguridad multi-tenant |
 | Doctrine AuditSubscriber | Non-Functional / Technical Enabler | Done | `unrastreared` | Filler centralizado de `auditTrail` para entidades auditable en persistencia Doctrine |
@@ -307,6 +308,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría; la responseuesta del alta usa un contract específico para onboarding y no el responseonse operativo de `Team`.
 * El MVP checklistar debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y forto de `Player`.
 * `EP-006` ya expone lectura y creación de acudientes por academia en HTTP, incluyendo el campo `relationship`, y `EP-008` ya cubre la relación jugador-acudiente con alta de acudiente, asociación, cambio de principal, eliminación lógica y vista por jugador.
+* `EP-006` completó su ciclo de vida de acudientes con actualización, inactivación y reactivación, cerrando el contrato completo del módulo.
 * El bloque de módulos aún pendiente para el MVP ya no incluye `EP-012`; `EP-008`, `EP-009`, `EP-010`, `EP-011`, `EP-012` y `EP-013` ya se consideran resueltos.
 * La capa fiscal forrmal sigue fuera del MVP y quedó concentrada en `EP-023`.
 * Se documentó una auditoría SDD dthe backend en `docs/architecture/audits/SDD-backend-audit.md`, con diagnóstico de madurez, vacíos de trazabilidad y propuesta incremental de adopción.
@@ -438,5 +440,6 @@ Para considerar la base listara antes de implementar cualquier lógica de negoci
 * EP-024 quedó validada con pruebas unitarias, integración de repositorio y prueba funcional HTTP de carga, listado, vista, descarga, reemplazo y eliminación.
 * EP-024 quedó alineada con la colección Postman, incluyendo ejemplos exitosos y errores previsibles; el listado valida primero la pertenencia del jugador para evitar respuestas cross-tenant ambiguas.
 * EP-025 centralizó el catálogo global de tipos de documento en `Shared`, publicó `GET /api/v1/academy/document-types/options` y dejó la ruta anterior bajo `players` fuera del contrato oficial.
+* EP-025 también incorporó el catálogo global de parentescos en `Shared`, publicó `GET /api/v1/academy/relationships/options` y alineó la documentación operativa con el mismo patrón de catálogo estático.
 * La estrategia de pruebas separa suites `unit`, `integration`, `functional` y `contract`; la guía de ejecución define cuándo usar `playertech_test`, cómo preparar migraciones y cómo ensayar actualizaciones con datos.
 * Se formalizó el handoff entre chats Codex mediante contratos versionados en `specs/*/contracts/`, commit de referencia y la guía `frontend-contract-integration-guide.md`; el frontend no debe depender de prompts repetidos ni inferir contratos desde el código backend.

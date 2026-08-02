@@ -165,6 +165,99 @@ Reglas de la plantilla:
 
 La hoja `Datos` debe contener solo encabezados y celdas vacías, sin filas de prueba.
 
+### Shared Master Data
+
+#### Document Types Options
+
+`GET /api/v1/academy/document-types/options`
+
+Respuesta:
+
+```json
+{
+  "data": [
+    {
+      "label": "Cédula de extranjería",
+      "value": "CE"
+    },
+    {
+      "label": "Cédula de ciudadanía",
+      "value": "CC"
+    },
+    {
+      "label": "Tarjeta de identidad",
+      "value": "TI"
+    },
+    {
+      "label": "PPT",
+      "value": "PPT"
+    },
+    {
+      "label": "Pasaporte",
+      "value": "PASSPORT"
+    },
+    {
+      "label": "Registro civil",
+      "value": "RC"
+    }
+  ],
+  "meta": {}
+}
+```
+
+#### Relationships Options
+
+`GET /api/v1/academy/relationships/options`
+
+Respuesta:
+
+```json
+{
+  "data": [
+    {
+      "label": "Padre",
+      "value": "FATHER"
+    },
+    {
+      "label": "Madre",
+      "value": "MOTHER"
+    },
+    {
+      "label": "Abuelo",
+      "value": "GRANDFATHER"
+    },
+    {
+      "label": "Abuela",
+      "value": "GRANDMA"
+    },
+    {
+      "label": "Tutor",
+      "value": "TUTOR"
+    },
+    {
+      "label": "Hermano",
+      "value": "BROTHER"
+    },
+    {
+      "label": "Hermana",
+      "value": "SISTER"
+    },
+    {
+      "label": "Otro",
+      "value": "OTHER"
+    }
+  ],
+  "meta": {}
+}
+```
+
+Reglas:
+
+- Ambos catálogos viven en `Shared`.
+- Ambos endpoints requieren autenticación y contexto válido de academia.
+- Ninguno recibe `academy_id` desde el cliente.
+- Ninguno depende de paginación.
+
 #### Create Import Job
 
 `POST /api/v1/academy/players/import`

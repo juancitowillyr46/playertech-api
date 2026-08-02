@@ -6,6 +6,8 @@
 
 - `specs/14-current-state.md` estado actual y trazabilidad.
 - `specs/[###-feature]/` carpetas puedeónicas por feature bajo Spec Kit.
+- `specs/025-document-type-catalog/` catálogo compartido de tipos de documento.
+- `specs/026-relationship-catalog/` catálogo compartido de parentescos.
 - `docs/architecture/architecture-overver.md` principios de arquitectura.
 - `docs/security/security-overver.md` reglas de seguridad.
 - `docs/contracts/api-principles.md` marco general de la API.

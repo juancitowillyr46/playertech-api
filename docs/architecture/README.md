@@ -28,6 +28,8 @@ Este directorio concentra decisiones persistentes, auditorías, políticas y gu�
 - `guides/spec-kit-structure.md` estructura objetivo del proyecto bajo Spec Kit.
 - `guides/specs-organization-and-sdd-plan.md` plan de organización y adopción SDD.
 - `guides/document-taxonomy-reference.md` clasificación de documentos entre canon, guía, contrato y feature spec.
+- `specs/025-document-type-catalog/` catálogo compartido de tipos de documento.
+- `specs/026-relationship-catalog/` catálogo compartido de parentescos.
 
 ### Plantillas
 

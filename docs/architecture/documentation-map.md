@@ -126,7 +126,7 @@ Vive en `docs/backlog/`.
 | --- | --- |
 | Central vigente | [`docs/contracts/api-reference.md`](../../docs/contracts/api-reference.md) |
 | Documento central de dominio | [`docs/domains/guardian/guardian-domain-spec.md`](../domains/guardian/guardian-domain-spec.md) |
-| Feature spec | [`specs/006-guardian/spec.md`](../../specs/006-guardian/spec.md) |
+| Feature spec | [`specs/006-legal-guardian-management/spec.md`](../../specs/006-legal-guardian-management/spec.md) |
 | Contexto funcional | [`docs/backlog/epics/EP-006.md`](../backlog/epics/EP-006.md) |
 | HUs | [`docs/backlog/stories/EP-006/`](../backlog/stories/EP-006/) |
 
@@ -167,6 +167,8 @@ Vive en `docs/backlog/`.
 | --- | --- |
 | Capa transversal | [`docs/domains/shared/shared-domain-spec.md`](../domains/shared/shared-domain-spec.md) |
 | Base de VOs y tipos | [`docs/domains/shared/shared-domain-spec.md`](../domains/shared/shared-domain-spec.md) |
+| Catálogo compartido de tipos de documento | [`specs/025-document-type-catalog/spec.md`](../../specs/025-document-type-catalog/spec.md) |
+| Catálogo compartido de parentescos | [`specs/026-relationship-catalog/spec.md`](../../specs/026-relationship-catalog/spec.md) |
 
 ### Fiscal / Receipts
 

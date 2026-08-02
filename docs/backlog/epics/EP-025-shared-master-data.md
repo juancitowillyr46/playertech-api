@@ -79,6 +79,7 @@ El catálogo será consumido inicialmente por:
 ## Historias de Usuario
 
 - HU-001 - Consultar el catálogo de tipos de documento.
+- HU-002 - Consultar el catálogo de parentescos.
 
 ---
 
@@ -103,4 +104,3 @@ La tabla maestra será una historia independiente y no forma parte de la HU-001.
 - La gestión de documentos físicos continúa perteneciendo al módulo que posee la relación de negocio correspondiente.
 - El endpoint debe respetar autenticación, autorización y el envelope de respuestas vigente.
 - El contrato HTTP debe documentarse en la especificación técnica asociada.
-
