@@ -23,6 +23,7 @@ final readonly class ListLegalGuardiansHandler
             $query->pagination,
             $query->firstName,
             $query->lastName,
+            $query->fullName,
         );
 
         $items = array_map(

@@ -1665,6 +1665,7 @@ Consultar el listado paginado de acudientes de la academia actual.
 - `direction`
 - `firstName`
 - `lastName`
+- `fullName`
 
 ### Sort aliases
 
@@ -1678,6 +1679,8 @@ Consultar el listado paginado de acudientes de la academia actual.
 
 - `firstName` filtra por nombre del acudiente.
 - `lastName` filtra por apellido del acudiente.
+- `fullName` filtra por coincidencia parcial sobre nombre o apellido.
+- Los filtros de texto deben ser case-insensitive y accent-insensitive.
 
 ## Show Guardian
 

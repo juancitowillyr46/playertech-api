@@ -83,7 +83,7 @@ final class InMemoryPlayerRepository implements PlayerRepository
     ): array {
         $items = array_values(array_filter(
             $this->players,
-            static function (Player $player) use ($academyId, $gender, $categoryId, $firstName, $lastName, $fullName, $createdAtFrom, $createdAtTo, $birthDateFrom, $birthDateTo): bool {
+            function (Player $player) use ($academyId, $gender, $categoryId, $firstName, $lastName, $fullName, $createdAtFrom, $createdAtTo, $birthDateFrom, $birthDateTo): bool {
                 if (!$player->academyId()->equals($academyId)) {
                     return false;
                 }
@@ -96,19 +96,19 @@ final class InMemoryPlayerRepository implements PlayerRepository
                     return false;
                 }
 
-                $playerFirstName = mb_strtolower(trim($player->firstName()));
-                $playerLastName = mb_strtolower(trim($player->lastName()));
+                $playerFirstName = $this->normalizeSearchText($player->firstName());
+                $playerLastName = $this->normalizeSearchText($player->lastName());
 
-                if (null !== $firstName && '' !== trim($firstName) && !str_contains($playerFirstName, mb_strtolower(trim($firstName)))) {
+                if (null !== $firstName && '' !== trim($firstName) && !str_contains($playerFirstName, $this->normalizeSearchText($firstName))) {
                     return false;
                 }
 
-                if (null !== $lastName && '' !== trim($lastName) && !str_contains($playerLastName, mb_strtolower(trim($lastName)))) {
+                if (null !== $lastName && '' !== trim($lastName) && !str_contains($playerLastName, $this->normalizeSearchText($lastName))) {
                     return false;
                 }
 
                 if (null !== $fullName && '' !== trim($fullName)) {
-                    $needle = mb_strtolower(trim($fullName));
+                    $needle = $this->normalizeSearchText($fullName);
                     $combined = $playerFirstName . ' ' . $playerLastName;
 
                     if (!str_contains($playerFirstName, $needle) && !str_contains($playerLastName, $needle) && !str_contains($combined, $needle)) {
@@ -140,5 +140,13 @@ final class InMemoryPlayerRepository implements PlayerRepository
             'items' => array_slice($items, ($pagination->page - 1) * $pagination->perPage, $pagination->perPage),
             'total' => count($items),
         ];
+    }
+
+    private function normalizeSearchText(string $value): string
+    {
+        $trimmed = trim($value);
+        $normalized = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $trimmed);
+
+        return mb_strtolower($normalized !== false ? $normalized : $trimmed);
     }
 }

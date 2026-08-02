@@ -23,5 +23,6 @@ interface LegalGuardianRepository
         PaginationQuery $pagination,
         ?string $firstName = null,
         ?string $lastName = null,
+        ?string $fullName = null,
     ): array;
 }

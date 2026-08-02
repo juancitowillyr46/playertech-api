@@ -117,23 +117,22 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerRe
         }
 
         if (null !== $firstName && '' !== trim($firstName)) {
-            $qb->andWhere('LOWER(player.firstName) LIKE :firstName')
-                ->setParameter('firstName', '%'.mb_strtolower(trim($firstName)).'%');
+            $qb->andWhere($this->accentInsensitiveLike('player.firstName', ':firstName'))
+                ->setParameter('firstName', '%'.$this->normalizeSearchText($firstName).'%');
         }
 
         if (null !== $lastName && '' !== trim($lastName)) {
-            $qb->andWhere('LOWER(player.lastName) LIKE :lastName')
-                ->setParameter('lastName', '%'.mb_strtolower(trim($lastName)).'%');
+            $qb->andWhere($this->accentInsensitiveLike('player.lastName', ':lastName'))
+                ->setParameter('lastName', '%'.$this->normalizeSearchText($lastName).'%');
         }
 
         if (null !== $fullName && '' !== trim($fullName)) {
-            $normalizedFullName = '%'.mb_strtolower(trim($fullName)).'%';
             $qb->andWhere('(
-                LOWER(player.firstName) LIKE :fullName
-                OR LOWER(player.lastName) LIKE :fullName
-                OR LOWER(CONCAT(player.firstName, \' \', player.lastName)) LIKE :fullName
+                '.$this->accentInsensitiveLike('player.firstName', ':fullName').'
+                OR '.$this->accentInsensitiveLike('player.lastName', ':fullName').'
+                OR '.$this->accentInsensitiveLike("CONCAT(player.firstName, ' ', player.lastName)", ':fullName').'
             )')
-                ->setParameter('fullName', $normalizedFullName);
+                ->setParameter('fullName', '%'.$this->normalizeSearchText($fullName).'%');
         }
 
         if (null !== $createdAtFrom && '' !== trim($createdAtFrom)) {
@@ -170,5 +169,22 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerRe
             ->getResult();
 
         return ['items' => $items, 'total' => $total];
+    }
+
+    private function accentInsensitiveLike(string $fieldExpression, string $parameter): string
+    {
+        return sprintf(
+            "LOWER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(%s, 'á', 'a'), 'é', 'e'), 'í', 'i'), 'ó', 'o'), 'ú', 'u'), 'ü', 'u'), 'ñ', 'n'), 'Á', 'a'), 'É', 'e'), 'Ñ', 'n')) LIKE %s",
+            $fieldExpression,
+            $parameter,
+        );
+    }
+
+    private function normalizeSearchText(string $value): string
+    {
+        $trimmed = trim($value);
+        $normalized = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $trimmed);
+
+        return mb_strtolower($normalized !== false ? $normalized : $trimmed);
     }
 }

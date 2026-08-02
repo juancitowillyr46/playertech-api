@@ -242,7 +242,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `EP-007` quedó reescrita como inicio forrmal del dominio `Player` y ya tiene HUs mínimas para registrar, listarar, consultar, actualizar y deactivar.
 * `HU-001` de `EP-007` quedó implementada y validada en runtime con `POST /api/v1/academy/players`.
 * `HU-002` de `EP-007` quedó implementada y validada en runtime con `GET /api/v1/academy/players`.
-* El listado de `Player` ya expone `photo`, `categoryName`, `genderName`, `age` y `createdAt` como campos de salida, con filtros por `gender`, `categoryId`, `firstName`, `lastName`, `fullName`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`.
+* El listado de `Player` ya expone `photo`, `categoryName`, `genderName`, `age` y `createdAt` como campos de salida, con filtros por `gender`, `categoryId`, `firstName`, `lastName`, `fullName`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`; la búsqueda de texto quedó definida como case-insensitive y accent-insensitive.
 * La importación masiva de `Player` quedó documentada como subfeature separada en `specs/007-player/import/` para mantener el lifecycle base limpio y desacoplado.
 * La suspension de una academia bloquea a todos sus usuarios, pero no elimina ni deactiva usuarios en cascada.
 * Las validaciones de negocio de `Academy` devuelven Problem Details JSON; el caso de duplicado de correo se resuelve con excepcion de dominio y responseuesta `409`.
@@ -433,7 +433,7 @@ Para considerar la base listara antes de implementar cualquier lógica de negoci
 * `EP-003` ya incorporó el flujo inicial de usuarios administrativos por invitación y activación con correo, como primer slice de la evolución de staff.
 * `EP-002` amplió el contrato de sedes para exponer `address` y `phone` opcionales también en el listarado, no solo en el detalle.
 * El listado de `Venue` ahora normaliza `sort` permitidos en backend; `created_at` y aliases históricos se traducen a `auditTrail.createdAt.value` para evitar errores 500 por paths internos de Doctrine.
-* El listado de `LegalGuardian` ahora normaliza `sort` con aliases seguros (`created_at`, `document_number`, `first_name`, `last_name`, `status`) y filtra por `firstName` y `lastName` con el mismo patrón de `Player`.
+* El listado de `LegalGuardian` ahora normaliza `sort` con aliases seguros (`created_at`, `document_number`, `first_name`, `last_name`, `status`) y filtra por `firstName`, `lastName` y `fullName` con el mismo patrón de `Player`, incluyendo búsqueda case-insensitive y accent-insensitive.
 * El listarado de `Venue` quedó validado con una prueba unitaria de código puro (`ListVenuesHandlerTest`) ejecutada dentro del contenedor, sin BD, para confirmar el contrato de responseuesta del handler.
 * `EP-024` incorporó la gestión privada de documentos del jugador: listado paginado, carga validada, vista inline, descarga, reemplazo conservando el UUID y eliminación con soft delete y borrado físico.
 * Se corrigió el wiring del repositorio de jobs de importación de jugadores y se formalizó el UUID/mapping XML de `PlayerImportJob`, desbloqueando el arranque del contenedor Symfony.

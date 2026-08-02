@@ -67,6 +67,7 @@ final class LegalGuardianRepository extends ServiceEntityRepository implements L
         PaginationQuery $pagination,
         ?string $firstName = null,
         ?string $lastName = null,
+        ?string $fullName = null,
     ): array
     {
         $sortField = $this->sortFieldResolver->resolve($pagination->sort);
@@ -78,13 +79,21 @@ final class LegalGuardianRepository extends ServiceEntityRepository implements L
             ->orderBy(sprintf('guardian.%s', $sortField), $pagination->direction);
 
         if (null !== $firstName && '' !== trim($firstName)) {
-            $qb->andWhere('LOWER(guardian.firstName) LIKE :firstName')
-                ->setParameter('firstName', '%'.mb_strtolower(trim($firstName)).'%');
+            $qb->andWhere($this->accentInsensitiveLike('guardian.firstName', ':firstName'))
+                ->setParameter('firstName', '%'.$this->normalizeSearchText($firstName).'%');
         }
 
         if (null !== $lastName && '' !== trim($lastName)) {
-            $qb->andWhere('LOWER(guardian.lastName) LIKE :lastName')
-                ->setParameter('lastName', '%'.mb_strtolower(trim($lastName)).'%');
+            $qb->andWhere($this->accentInsensitiveLike('guardian.lastName', ':lastName'))
+                ->setParameter('lastName', '%'.$this->normalizeSearchText($lastName).'%');
+        }
+
+        if (null !== $fullName && '' !== trim($fullName)) {
+            $qb->andWhere('('.
+                $this->accentInsensitiveLike('guardian.firstName', ':fullName').' OR '.
+                $this->accentInsensitiveLike('guardian.lastName', ':fullName').
+            ')')
+                ->setParameter('fullName', '%'.$this->normalizeSearchText($fullName).'%');
         }
 
         $total = (int) (clone $qb)
@@ -102,5 +111,22 @@ final class LegalGuardianRepository extends ServiceEntityRepository implements L
             'items' => $items,
             'total' => $total,
         ];
+    }
+
+    private function accentInsensitiveLike(string $fieldExpression, string $parameter): string
+    {
+        return sprintf(
+            "LOWER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(%s, 'á', 'a'), 'é', 'e'), 'í', 'i'), 'ó', 'o'), 'ú', 'u'), 'ü', 'u'), 'ñ', 'n'), 'Á', 'a'), 'É', 'e'), 'Ñ', 'n')) LIKE %s",
+            $fieldExpression,
+            $parameter,
+        );
+    }
+
+    private function normalizeSearchText(string $value): string
+    {
+        $trimmed = trim($value);
+        $normalized = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $trimmed);
+
+        return mb_strtolower($normalized !== false ? $normalized : $trimmed);
     }
 }

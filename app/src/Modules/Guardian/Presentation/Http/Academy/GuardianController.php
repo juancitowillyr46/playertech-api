@@ -52,8 +52,9 @@ final class GuardianController extends AbstractPaginatedApiController
             new ListLegalGuardiansQuery(
                 new AcademyId($this->tenantContext->requireAcademyId()),
                 $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value'),
-                $this->nullableQueryString($request, 'firstName'),
-                $this->nullableQueryString($request, 'lastName'),
+                $this->optionalQueryString($request, 'firstName'),
+                $this->optionalQueryString($request, 'lastName'),
+                $this->optionalQueryString($request, 'fullName'),
             )
         );
 
@@ -61,6 +62,13 @@ final class GuardianController extends AbstractPaginatedApiController
             'data' => array_map(static fn ($item) => $item->toArray(), $items->items),
             'meta' => $items->meta->toArray(),
         ]);
+    }
+
+    private function optionalQueryString(Request $request, string $key): ?string
+    {
+        $value = trim((string) $request->query->get($key, ''));
+
+        return '' === $value ? null : $value;
     }
 
     #[Route('/{guardianId}', name: 'api_v1_academy_guardians_show', methods: ['GET'])]

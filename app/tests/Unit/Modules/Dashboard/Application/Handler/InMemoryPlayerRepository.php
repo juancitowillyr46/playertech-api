@@ -35,4 +35,12 @@ final class InMemoryPlayerRepository implements PlayerRepository
             'total' => count($items),
         ];
     }
+
+    private function normalizeSearchText(string $value): string
+    {
+        $trimmed = trim($value);
+        $normalized = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $trimmed);
+
+        return mb_strtolower($normalized !== false ? $normalized : $trimmed);
+    }
 }

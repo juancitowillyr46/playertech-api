@@ -14,6 +14,7 @@ final readonly class ListLegalGuardiansQuery
         public PaginationQuery $pagination,
         public ?string $firstName = null,
         public ?string $lastName = null,
+        public ?string $fullName = null,
     ) {
     }
 }

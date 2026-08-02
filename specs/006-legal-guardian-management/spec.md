@@ -35,7 +35,7 @@ El sistema permite a los administradores listar y consultar acudientes dentro de
 
 1. **Given** acudientes en la academia, **When** el admin los lista, **Then** la respuesta devuelve datos paginados.
 2. **Given** un criterio de ordenamiento válido, **When** el admin consulta el listado, **Then** el backend resuelve el alias seguro correspondiente.
-3. **Given** filtros por nombre o apellido, **When** el admin consulta el listado, **Then** la respuesta devuelve sólo los acudientes coincidentes.
+3. **Given** filtros por nombre, apellido o nombre completo, **When** el admin consulta el listado, **Then** la respuesta devuelve sólo los acudientes coincidentes.
 4. **Given** un identificador de acudiente, **When** el admin lo consulta, **Then** el detalle del acudiente se devuelve.
 
 ### Historia de Usuario 3 - Soporte de datos operativos del acudiente (Priority: P3)
@@ -108,8 +108,9 @@ El sistema permite a los administradores de academia reactivar un acudiente prev
 - **FR-006**: El sistema MUST permitir la actualización de acudientes dentro de la academia autenticada.
 - **FR-007**: El sistema MUST permitir inactivar acudientes sin borrar su historial.
 - **FR-008**: El sistema MUST permitir reactivar acudientes previamente inactivados.
-- **FR-009**: El sistema MUST permitir filtros por `firstName` y `lastName` en el listado de acudientes.
+- **FR-009**: El sistema MUST permitir filtros por `firstName`, `lastName` y `fullName` en el listado de acudientes.
 - **FR-010**: El sistema MUST normalizar el ordenamiento del listado de acudientes con aliases seguros.
+- **FR-011**: El sistema MUST tratar la búsqueda textual como case-insensitive y accent-insensitive.
 
 ### Entidades clave *(include if feature involves data)*
 

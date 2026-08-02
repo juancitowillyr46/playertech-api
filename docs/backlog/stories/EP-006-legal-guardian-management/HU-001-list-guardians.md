@@ -34,7 +34,8 @@ Para identificar rápidamente a los responsables legales disponibles y reutiliza
 * El listado debe respetar el contexto de la academia autenticada.
 * El listado debe ser paginado.
 * El listado debe soportar ordenamiento por `created_at`, `document_number`, `first_name`, `last_name` y `status`.
-* El listado debe soportar filtros por `firstName` y `lastName`.
+* El listado debe soportar filtros por `firstName`, `lastName` y `fullName`.
+* Los filtros de texto deben comportarse como case-insensitive y accent-insensitive.
 * No debe exponer acudientes de otras academias.
 
 ---
@@ -43,7 +44,7 @@ Para identificar rápidamente a los responsables legales disponibles y reutiliza
 
 * Dado una academia con acudientes, cuando consulto el listado, entonces el sistema muestra los acudientes paginados.
 * Dado un criterio de ordenamiento válido, cuando consulto el listado, entonces el sistema aplica el alias seguro correspondiente.
-* Dado un filtro por nombre o apellido, cuando consulto el listado, entonces el sistema devuelve sólo los acudientes que coinciden con el criterio.
+* Dado un filtro por nombre, apellido o nombre completo, cuando consulto el listado, entonces el sistema devuelve sólo los acudientes que coinciden con el criterio.
 * Dado una academia sin acudientes, cuando consulto el listado, entonces el sistema devuelve una lista vacía.
 
 ---

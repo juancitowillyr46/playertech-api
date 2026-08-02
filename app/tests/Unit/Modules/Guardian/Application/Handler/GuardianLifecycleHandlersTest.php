@@ -9,9 +9,11 @@ use App\Modules\Guardian\Application\Command\ActivateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\InactivateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\UpdateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Dto\UpdateLegalGuardianInput;
+use App\Modules\Guardian\Application\Handler\ListLegalGuardiansHandler;
 use App\Modules\Guardian\Application\Handler\ActivateLegalGuardianHandler;
 use App\Modules\Guardian\Application\Handler\InactivateLegalGuardianHandler;
 use App\Modules\Guardian\Application\Handler\UpdateLegalGuardianHandler;
+use App\Modules\Guardian\Application\Query\ListLegalGuardiansQuery;
 use App\Modules\Guardian\Domain\Exception\LegalGuardianAlreadyExistsException;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardian;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
@@ -152,6 +154,41 @@ final class GuardianLifecycleHandlersTest extends TestCase
         $activateHandler(new ActivateLegalGuardianCommand('actor-id', $academyId, $guardianId->value()));
         self::assertTrue($repository->findById($academyId, $guardianId)?->status()->isActive());
     }
+
+    public function testItListsGuardiansUsingAccentInsensitiveFilters(): void
+    {
+        $academyId = AcademyId::generate();
+        $guardianId = LegalGuardianId::generate();
+
+        $repository = new InMemoryGuardianRepository(
+            LegalGuardian::create(
+                $guardianId,
+                $academyId,
+                'José',
+                'Castaño',
+                '+573000000000',
+                'jose@example.com',
+                'CC',
+                '12345678',
+                null,
+                'Padre',
+                AuditTrail::create('actor-id'),
+            )
+        );
+
+        $handler = new ListLegalGuardiansHandler($repository);
+
+        $response = $handler(new ListLegalGuardiansQuery(
+            $academyId,
+            new PaginationQuery(1, 20, 'created_at', 'DESC'),
+            null,
+            'castaño',
+            'jose castaño',
+        ));
+
+        self::assertCount(1, $response->items);
+        self::assertSame('Castaño', $response->items[0]->toArray()['lastName']);
+    }
 }
 
 final class InMemoryGuardianRepository implements LegalGuardianRepository
@@ -202,16 +239,51 @@ final class InMemoryGuardianRepository implements LegalGuardianRepository
         PaginationQuery $pagination,
         ?string $firstName = null,
         ?string $lastName = null,
+        ?string $fullName = null,
     ): array
     {
         $items = array_values(array_filter(
             $this->items,
-            static fn (LegalGuardian $guardian): bool => $guardian->academyId()->equals($academyId)
+            function (LegalGuardian $guardian) use ($academyId, $firstName, $lastName, $fullName): bool {
+                if (!$guardian->academyId()->equals($academyId)) {
+                    return false;
+                }
+
+                $guardianFirstName = $this->normalizeSearchText($guardian->firstName());
+                $guardianLastName = $this->normalizeSearchText($guardian->lastName());
+
+                if (null !== $firstName && '' !== trim($firstName) && !str_contains($guardianFirstName, $this->normalizeSearchText($firstName))) {
+                    return false;
+                }
+
+                if (null !== $lastName && '' !== trim($lastName) && !str_contains($guardianLastName, $this->normalizeSearchText($lastName))) {
+                    return false;
+                }
+
+                if (null !== $fullName && '' !== trim($fullName)) {
+                    $needle = $this->normalizeSearchText($fullName);
+                    $combined = $guardianFirstName . ' ' . $guardianLastName;
+
+                    if (!str_contains($guardianFirstName, $needle) && !str_contains($guardianLastName, $needle) && !str_contains($combined, $needle)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
         ));
 
         return [
             'items' => $items,
             'total' => count($items),
         ];
+    }
+
+    private function normalizeSearchText(string $value): string
+    {
+        $trimmed = trim($value);
+        $normalized = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $trimmed);
+
+        return mb_strtolower($normalized !== false ? $normalized : $trimmed);
     }
 }
