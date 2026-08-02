@@ -21,6 +21,7 @@ Permite mantener un directorio confiable de acudientes por academia, con trazabi
 * El tipo y número de documento son datos opcionales de apoyo.
 * El correo puede registrarse como dato opcional, pero si existe debe mantenerse único dentro de la academia.
 * El acudiente puede cambiar entre estado activo e inactivo.
+* Las respuestas del acudiente exponen `relationship` como valor técnico y `relationshipName` como etiqueta visible.
 
 ## Flujo de Negocio
 1. Registrar acudiente.
