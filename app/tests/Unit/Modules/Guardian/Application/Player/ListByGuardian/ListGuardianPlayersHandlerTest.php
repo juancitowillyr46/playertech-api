@@ -88,6 +88,7 @@ final class InMemoryPlayerRepository implements PlayerRepository
     public function findOneByDocumentNumber(AcademyId $academyId, string $documentNumber): ?Player { return null; }
     public function findOneByEmail(AcademyId $academyId, string $email): ?Player { return null; }
     public function findOneByPhone(AcademyId $academyId, string $phone): ?Player { return null; }
+    public function findAvailableByGuardian(AcademyId $academyId, LegalGuardianId $guardianId, ?string $query = null): array { return []; }
     public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination, ?string $gender = null, ?string $categoryId = null, ?string $documentNumber = null, ?string $documentType = null, ?string $firstName = null, ?string $lastName = null, ?string $fullName = null, ?string $createdAtFrom = null, ?string $createdAtTo = null, ?string $birthDateFrom = null, ?string $birthDateTo = null): array { return ['items' => [], 'total' => 0]; }
 }
 

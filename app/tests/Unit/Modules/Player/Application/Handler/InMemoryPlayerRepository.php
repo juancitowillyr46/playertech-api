@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Modules\Player\Application\Handler;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
 use App\Modules\Player\Domain\Player\Player;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Modules\Player\Domain\Player\PlayerRepository;
@@ -66,6 +67,34 @@ final class InMemoryPlayerRepository implements PlayerRepository
         }
 
         return null;
+    }
+
+    public function findAvailableByGuardian(AcademyId $academyId, LegalGuardianId $guardianId, ?string $query = null): array
+    {
+        $items = array_values(array_filter(
+            $this->players,
+            function (Player $player) use ($academyId, $query): bool {
+                if (!$player->academyId()->equals($academyId)) {
+                    return false;
+                }
+
+                if (null !== $query && '' !== trim($query)) {
+                    $needle = $this->normalizeSearchText($query);
+                    $firstName = $this->normalizeSearchText($player->firstName());
+                    $lastName = $this->normalizeSearchText($player->lastName());
+                    $combined = $firstName . ' ' . $lastName;
+                    $documentNumber = $this->normalizeSearchText($player->documentNumber());
+
+                    if (!str_contains($firstName, $needle) && !str_contains($lastName, $needle) && !str_contains($combined, $needle) && !str_contains($documentNumber, $needle)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        ));
+
+        return $items;
     }
 
     public function findAllByAcademy(

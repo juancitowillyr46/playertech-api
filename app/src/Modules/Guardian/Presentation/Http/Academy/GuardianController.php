@@ -9,6 +9,8 @@ use App\Modules\Guardian\Application\Command\ActivateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\CreateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\InactivateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\UpdateLegalGuardianCommand;
+use App\Modules\Guardian\Application\Player\Options\ListAvailablePlayersHandler;
+use App\Modules\Guardian\Application\Player\Options\ListAvailablePlayersQuery;
 use App\Modules\Guardian\Application\Player\ListByGuardian\ListGuardianPlayersHandler;
 use App\Modules\Guardian\Application\Player\ListByGuardian\ListGuardianPlayersQuery;
 use App\Modules\Guardian\Application\Handler\ActivateLegalGuardianHandler;
@@ -40,6 +42,7 @@ final class GuardianController extends AbstractPaginatedApiController
         private readonly CreateLegalGuardianHandler $createLegalGuardianHandler,
         private readonly ListLegalGuardiansHandler $listLegalGuardiansHandler,
         private readonly ListGuardianPlayersHandler $listGuardianPlayersHandler,
+        private readonly ListAvailablePlayersHandler $listAvailablePlayersHandler,
         private readonly ShowLegalGuardianHandler $showLegalGuardianHandler,
         private readonly UpdateLegalGuardianHandler $updateLegalGuardianHandler,
         private readonly InactivateLegalGuardianHandler $inactivateLegalGuardianHandler,
@@ -84,6 +87,23 @@ final class GuardianController extends AbstractPaginatedApiController
                 new AcademyId($this->tenantContext->requireAcademyId()),
                 new \App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId($guardianId),
                 $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value'),
+            )
+        );
+
+        return new JsonResponse([
+            'data' => array_map(static fn ($item) => $item->toArray(), $items),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/{guardianId}/players/options', name: 'api_v1_academy_guardians_players_options', methods: ['GET'])]
+    public function availablePlayers(string $guardianId, Request $request): JsonResponse
+    {
+        $items = ($this->listAvailablePlayersHandler)(
+            new ListAvailablePlayersQuery(
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                new \App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId($guardianId),
+                $this->optionalQueryString($request, 'q'),
             )
         );
 

@@ -1774,6 +1774,43 @@ PATCH /api/v1/academy/players/{playerId}/guardians/{guardianId}/primary
 DELETE /api/v1/academy/players/{playerId}/guardians/{guardianId}
 ```
 
+---
+
+# Guardian Available Players Options
+
+## Purpose
+
+Exponer un selector liviano para autocomplete en el formulario de asociación jugador-acudiente.
+
+## Endpoint
+
+```http
+GET /api/v1/academy/guardians/{guardianId}/players/options?q=juan
+```
+
+## Rules
+
+* El resultado debe incluir sólo jugadores de la academia autenticada.
+* El resultado debe excluir los jugadores ya asociados al acudiente.
+* La búsqueda por `q` debe ser parcial y apta para autocomplete.
+* El envelope debe seguir el estándar `data` / `meta`.
+
+## Suggested Response
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "firstName": "Juan",
+      "lastName": "Rodas",
+      "categoryName": "Sub 15"
+    }
+  ],
+  "meta": {}
+}
+```
+
 Para pruebas manuales sin Swagger:
 
 * Usar la colección de Postman como referencia operativa.

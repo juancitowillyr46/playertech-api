@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Tests\Unit\Modules\Dashboard\Application\Handler;
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
 use App\Modules\Player\Domain\Player\Player;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Modules\Player\Domain\Player\PlayerRepository;
@@ -15,6 +16,7 @@ final class InMemoryPlayerRepository implements PlayerRepository
     public function findOneByDocumentNumber(AcademyId $academyId, string $documentNumber): ?Player { return null; }
     public function findOneByEmail(AcademyId $academyId, string $email): ?Player { return null; }
     public function findOneByPhone(AcademyId $academyId, string $phone): ?Player { return null; }
+    public function findAvailableByGuardian(AcademyId $academyId, LegalGuardianId $guardianId, ?string $query = null): array { return []; }
     public function findAllByAcademy(
         AcademyId $academyId,
         PaginationQuery $pagination,

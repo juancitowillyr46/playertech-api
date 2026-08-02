@@ -96,6 +96,20 @@ El sistema permite a los administradores de academia reactivar un acudiente prev
 1. **Given** un acudiente inactivo, **When** el admin lo reactiva, **Then** el estado cambia a activo.
 2. **Given** un acudiente activo, **When** se intenta reactivarlo, **Then** el sistema informa que no aplica o mantiene el estado.
 
+### Historia de Usuario 7 - Seleccionar jugadores disponibles para asociar (Priority: P7)
+
+El sistema permite al frontend consultar un selector liviano de jugadores disponibles para asociar a un acudiente, usando autocomplete.
+
+**Por qué esta prioridad**: La asociación jugador-acudiente necesita una UX rápida que no incluya jugadores ya vinculados al mismo acudiente.
+
+**Prueba independiente**: Un acudiente puede consultar los jugadores aún no asociados a él y filtrar por texto parcial.
+
+**Escenarios de aceptación**:
+
+1. **Given** un acudiente con algunos jugadores ya asociados, **When** el frontend consulta el selector, **Then** la respuesta excluye los jugadores ya vinculados.
+2. **Given** un texto parcial, **When** el frontend consulta el selector con `q`, **Then** el sistema devuelve coincidencias livianas para autocomplete.
+3. **Given** un `guardianId` inválido o fuera del tenant, **When** se consulta el selector, **Then** el sistema responde con el error de dominio correspondiente.
+
 ## Requisitos *(mandatory)*
 
 ### Requisitos funcionales
@@ -111,6 +125,8 @@ El sistema permite a los administradores de academia reactivar un acudiente prev
 - **FR-009**: El sistema MUST permitir filtros por `documentNumber`, `documentType`, `firstName`, `lastName` y `fullName` en el listado de acudientes.
 - **FR-010**: El sistema MUST normalizar el ordenamiento del listado de acudientes con aliases seguros.
 - **FR-011**: El sistema MUST tratar la búsqueda textual como case-insensitive y accent-insensitive.
+- **FR-012**: El sistema MUST permitir listar los jugadores asociados a un acudiente autenticado.
+- **FR-013**: El sistema MUST permitir listar jugadores disponibles para asociar a un acudiente usando un contrato tipo autocomplete que excluya los ya asociados.
 
 ### Entidades clave *(include if feature involves data)*
 

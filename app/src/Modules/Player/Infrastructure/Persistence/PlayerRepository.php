@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Player\Infrastructure\Persistence;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
 use App\Modules\Player\Domain\Player\Player;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Modules\Player\Domain\Player\PlayerRepository as PlayerRepositoryContract;
@@ -83,6 +84,39 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerRe
             ->setParameter('phone', trim($phone))
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findAvailableByGuardian(AcademyId $academyId, LegalGuardianId $guardianId, ?string $query = null): array
+    {
+        $qb = $this->createQueryBuilder('player')
+            ->where('player.academyId = :academyId')
+            ->andWhere('player.deletedAt IS NULL')
+            ->andWhere('NOT EXISTS (
+                SELECT 1
+                FROM App\Modules\Player\Domain\PlayerGuardian\PlayerGuardian playerGuardian
+                WHERE playerGuardian.academyId = :academyId
+                  AND playerGuardian.playerId = player.id
+                  AND playerGuardian.guardianId = :guardianId
+                  AND playerGuardian.deletedAt IS NULL
+            )')
+            ->setParameter('academyId', $academyId->value())
+            ->setParameter('guardianId', $guardianId->value())
+            ->orderBy('player.firstName', 'ASC')
+            ->addOrderBy('player.lastName', 'ASC');
+
+        if (null !== $query && '' !== trim($query)) {
+            $needle = '%'.$this->normalizeSearchText($query).'%';
+
+            $qb->andWhere('(
+                LOWER(player.firstName) LIKE :query
+                OR LOWER(player.lastName) LIKE :query
+                OR LOWER(CONCAT(player.firstName, \' \', player.lastName)) LIKE :query
+                OR LOWER(player.documentNumber) LIKE :query
+            )')
+                ->setParameter('query', $needle);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     public function findAllByAcademy(
