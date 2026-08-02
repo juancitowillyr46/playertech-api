@@ -28,7 +28,7 @@ Homologar lo que ya existe en código con su huella documental en `specs/` y
 | Identity | `specs/003-identity/` | `EP-003` | `app/src/Modules/Identity/` | Partially aligned | Ya quedó normalizado documentalmente, pero sigue siendo el módulo con más variantes de auth/admin/root/tenant y merece mantener una revisión fina. |
 | Category | `specs/004-category/` | `EP-004` | `app/src/Modules/Category/` | Aligned | Contrato, category key, listados y options están bien homologados. |
 | Team | `specs/005-team/` | `EP-005` | `app/src/Modules/Team/` | Aligned | CRUD tenant-scoped estable con enriquecimiento de categoría resuelto. |
-| Guardian | `specs/006-guardian/` | `EP-006` | `app/src/Modules/Guardian/` | Aligned | Dominio de acudientes bien acotado. |
+| Guardian | `specs/006-legal-guardian-management/` | `EP-006` | `app/src/Modules/Guardian/` | Aligned | Dominio de acudientes bien acotado. |
 | Player | `specs/007-player/` | `EP-007` | `app/src/Modules/Player/` | Partially aligned | El módulo ya cubre el ciclo base, la foto, el estado y el import, pero sigue siendo el foco más cambiante y merece auditoría continua de contrato. |
 | PlayerGuardian | `specs/008-player-guardian/` | `EP-008` | `app/src/Modules/Player/` | Aligned | La relación jugador-acudiente está correctamente segmentada. |
 | Membership | `specs/009-membership/` | `EP-009` | `app/src/Modules/Membership/` | Partially aligned | Ya quedó ordenado a nivel backlog, pero depende fuertemente del bloque financiero y del cumplimiento de los estados administrativos. |

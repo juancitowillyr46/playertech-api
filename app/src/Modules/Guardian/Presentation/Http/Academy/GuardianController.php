@@ -5,19 +5,27 @@ declare(strict_types=1);
 namespace App\Modules\Guardian\Presentation\Http\Academy;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Guardian\Application\Command\ActivateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\CreateLegalGuardianCommand;
+use App\Modules\Guardian\Application\Command\InactivateLegalGuardianCommand;
+use App\Modules\Guardian\Application\Command\UpdateLegalGuardianCommand;
+use App\Modules\Guardian\Application\Handler\ActivateLegalGuardianHandler;
+use App\Modules\Guardian\Application\Handler\InactivateLegalGuardianHandler;
 use App\Modules\Guardian\Application\Handler\ListLegalGuardiansHandler;
 use App\Modules\Guardian\Application\Handler\CreateLegalGuardianHandler;
 use App\Modules\Guardian\Application\Handler\ShowLegalGuardianHandler;
+use App\Modules\Guardian\Application\Handler\UpdateLegalGuardianHandler;
 use App\Modules\Guardian\Application\Query\ListLegalGuardiansQuery;
 use App\Modules\Guardian\Application\Query\ShowLegalGuardianQuery;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
 use App\Modules\Guardian\Presentation\Http\Request\CreateLegalGuardianRequest;
+use App\Modules\Guardian\Presentation\Http\Request\UpdateLegalGuardianRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
 use App\Shared\Presentation\Http\AbstractPaginatedApiController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -30,6 +38,9 @@ final class GuardianController extends AbstractPaginatedApiController
         private readonly CreateLegalGuardianHandler $createLegalGuardianHandler,
         private readonly ListLegalGuardiansHandler $listLegalGuardiansHandler,
         private readonly ShowLegalGuardianHandler $showLegalGuardianHandler,
+        private readonly UpdateLegalGuardianHandler $updateLegalGuardianHandler,
+        private readonly InactivateLegalGuardianHandler $inactivateLegalGuardianHandler,
+        private readonly ActivateLegalGuardianHandler $activateLegalGuardianHandler,
         private readonly TenantContext $tenantContext,
     ) {
     }
@@ -40,7 +51,9 @@ final class GuardianController extends AbstractPaginatedApiController
         $items = ($this->listLegalGuardiansHandler)(
             new ListLegalGuardiansQuery(
                 new AcademyId($this->tenantContext->requireAcademyId()),
-                $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value')
+                $this->paginationQueryFromRequest($request, 'auditTrail.createdAt.value'),
+                $this->nullableQueryString($request, 'firstName'),
+                $this->nullableQueryString($request, 'lastName'),
             )
         );
 
@@ -84,5 +97,54 @@ final class GuardianController extends AbstractPaginatedApiController
             'data' => $view->toArray(),
             'meta' => new \stdClass(),
         ], 201);
+    }
+
+    #[Route('/{guardianId}', name: 'api_v1_academy_guardians_update', methods: ['PUT'])]
+    public function update(string $guardianId, Request $request): JsonResponse
+    {
+        $input = UpdateLegalGuardianRequest::fromArray($request->toArray());
+        $this->assertValid($this->validator, $input);
+
+        $view = ($this->updateLegalGuardianHandler)(
+            new UpdateLegalGuardianCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                $guardianId,
+                $input->toInput(),
+            )
+        );
+
+        return new JsonResponse([
+            'data' => $view->toArray(),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/{guardianId}/inactivate', name: 'api_v1_academy_guardians_inactivate', methods: ['PATCH'])]
+    public function inactivate(string $guardianId): Response
+    {
+        ($this->inactivateLegalGuardianHandler)(
+            new InactivateLegalGuardianCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                $guardianId,
+            )
+        );
+
+        return new Response(status: Response::HTTP_NO_CONTENT);
+    }
+
+    #[Route('/{guardianId}/activate', name: 'api_v1_academy_guardians_activate', methods: ['PATCH'])]
+    public function activate(string $guardianId): Response
+    {
+        ($this->activateLegalGuardianHandler)(
+            new ActivateLegalGuardianCommand(
+                $this->requireAuthenticatedUserId($this->security),
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                $guardianId,
+            )
+        );
+
+        return new Response(status: Response::HTTP_NO_CONTENT);
     }
 }

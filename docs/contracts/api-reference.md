@@ -330,6 +330,8 @@ La API de `Player` ya expone un contrato operativo enriquecido que debe mantener
   - incluye `genderName`
   - incluye `age`
   - incluye `createdAt`
+  - admite filtros por `gender`, `categoryId`, `firstName`, `lastName`, `fullName`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`
+  - admite ordenamiento por `created_at`, `category_id`, `gender`, `birth_date`, `document_number`, `first_name`, `last_name` y `status`
 - `GET /api/v1/academy/players/{playerId}`
   - devuelve detalle completo del jugador
 - `POST /api/v1/academy/players`
@@ -1648,12 +1650,34 @@ POST /api/v1/academy/users/{userId}/enable
 ## List Guardians
 
 ```http
-GET /api/v1/academy/guardians?page=1&per_page=20&sort=createdAt&direction=DESC
+GET /api/v1/academy/guardians?page=1&per_page=20&sort=created_at&direction=DESC
 ```
 
 ### Purpose
 
 Consultar el listado paginado de acudientes de la academia actual.
+
+### Query params
+
+- `page`
+- `per_page`
+- `sort`
+- `direction`
+- `firstName`
+- `lastName`
+
+### Sort aliases
+
+- `created_at` -> `auditTrail.createdAt.value`
+- `document_number` -> `documentNumber`
+- `first_name` -> `firstName`
+- `last_name` -> `lastName`
+- `status` -> `status.value`
+
+### Filters
+
+- `firstName` filtra por nombre del acudiente.
+- `lastName` filtra por apellido del acudiente.
 
 ## Show Guardian
 

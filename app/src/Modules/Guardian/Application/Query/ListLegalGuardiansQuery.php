@@ -12,6 +12,8 @@ final readonly class ListLegalGuardiansQuery
     public function __construct(
         public AcademyId $academyId,
         public PaginationQuery $pagination,
+        public ?string $firstName = null,
+        public ?string $lastName = null,
     ) {
     }
 }

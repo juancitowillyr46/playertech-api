@@ -168,6 +168,57 @@ final class LegalGuardian implements Auditable
         return $this->deletedBy;
     }
 
+    public function update(
+        string $firstName,
+        string $lastName,
+        ?string $phone,
+        ?string $email,
+        ?string $documentType,
+        ?string $documentNumber,
+        ?string $address,
+        string $relationship,
+        string $updatedBy
+    ): void {
+        $this->firstName = self::normalizeText($firstName, 'first name');
+        $this->lastName = self::normalizeText($lastName, 'last name');
+        $this->phone = self::normalizeNullableText($phone);
+        $this->email = self::normalizeNullableEmail($email);
+        $this->documentType = self::normalizeNullableText($documentType);
+        $this->documentNumber = self::normalizeNullableText($documentNumber);
+        $this->address = self::normalizeNullableText($address);
+        $this->relationship = self::normalizeText($relationship, 'relationship');
+
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
+    }
+
+    public function inactivate(string $updatedBy): void
+    {
+        if ($this->status->isInactive()) {
+            return;
+        }
+
+        $this->status = LegalGuardianStatus::inactive();
+
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
+    }
+
+    public function activate(string $updatedBy): void
+    {
+        if ($this->status->isActive()) {
+            return;
+        }
+
+        $this->status = LegalGuardianStatus::active();
+
+        if ($this->auditTrail) {
+            $this->auditTrail->touch($updatedBy);
+        }
+    }
+
     private static function normalizeText(string $value, string $field): string
     {
         $value = trim($value);

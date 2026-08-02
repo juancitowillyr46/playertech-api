@@ -67,6 +67,7 @@ El sistema permite a admins import players in bulk and recuperar enriched listar
 - **FR-005**: System MUST permitir player photo upload and replacement.
 - **FR-006**: System MUST dar soporte a bulk import jobs for players.
 - **FR-007**: System MUST exponer enriched listar data for frontend consumption.
+- **FR-008**: System MUST permitir filtros por `firstName`, `lastName` y `fullName` en el listado de jugadores.
 
 ### Entidades clave *(include if feature involves data)*
 
@@ -87,4 +88,3 @@ El sistema permite a admins import players in bulk and recuperar enriched listar
 - Category selection is handled before import.
 - Player photo storage is already available in el backend.
 - Current player module code remains the implementation target.
-

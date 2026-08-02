@@ -64,7 +64,7 @@ specs/002-venue/
 specs/003-identity/
 specs/004-category/
 specs/005-team/
-specs/006-guardian/
+specs/006-legal-guardian-management/
 specs/007-player/
 specs/008-player-guardian/
 specs/009-membership/
@@ -130,7 +130,7 @@ Carpeta:
 
 Carpeta:
 
-- `specs/006-guardian/`
+- `specs/006-legal-guardian-management/`
 
 ### EP-007 Gestión de Jugadores
 
@@ -240,7 +240,7 @@ Subfeatures sugeridas:
 5. `specs/009-membership/`
 6. `specs/012-charge-payment/`
 7. `specs/004-category/`
-8. `specs/006-guardian/`
+8. `specs/006-legal-guardian-management/`
 9. `specs/008-player-guardian/`
 10. `specs/010-team-assignment/`
 11. `specs/011-payment-concept/`
@@ -254,4 +254,3 @@ Subfeatures sugeridas:
 
 Esta estructura no obliga a mover todo inmediatamente.
 Sirve como destino objetivo para migrar sin perder trazabilidad.
-

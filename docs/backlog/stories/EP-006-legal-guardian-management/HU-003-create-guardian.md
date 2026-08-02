@@ -5,7 +5,7 @@
 | Campo | Valor |
 | --- | --- |
 | ID | HU-003 |
-| Épica | EP-006 Gestión de Acudientes |
+| Épica | EP-006 Legal Guardian Management |
 | Prioridad | Alta |
 | MVP | Sí |
 | Estado | Draft |

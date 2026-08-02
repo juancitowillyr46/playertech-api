@@ -126,7 +126,7 @@ Algunos features ya normalizados bajo esta estructura son:
 - `specs/003-identity/`
 - `specs/004-category/`
 - `specs/005-team/`
-- `specs/006-guardian/`
+- `specs/006-legal-guardian-management/`
 - `specs/007-player/`
 - `specs/008-player-guardian/`
 - `specs/009-membership/`

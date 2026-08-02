@@ -90,6 +90,9 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerRe
         PaginationQuery $pagination,
         ?string $gender = null,
         ?string $categoryId = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?string $fullName = null,
         ?string $createdAtFrom = null,
         ?string $createdAtTo = null,
         ?string $birthDateFrom = null,
@@ -111,6 +114,26 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerRe
         if (null !== $categoryId && '' !== trim($categoryId)) {
             $qb->andWhere('player.categoryId = :categoryId')
                 ->setParameter('categoryId', trim($categoryId));
+        }
+
+        if (null !== $firstName && '' !== trim($firstName)) {
+            $qb->andWhere('LOWER(player.firstName) LIKE :firstName')
+                ->setParameter('firstName', '%'.mb_strtolower(trim($firstName)).'%');
+        }
+
+        if (null !== $lastName && '' !== trim($lastName)) {
+            $qb->andWhere('LOWER(player.lastName) LIKE :lastName')
+                ->setParameter('lastName', '%'.mb_strtolower(trim($lastName)).'%');
+        }
+
+        if (null !== $fullName && '' !== trim($fullName)) {
+            $normalizedFullName = '%'.mb_strtolower(trim($fullName)).'%';
+            $qb->andWhere('(
+                LOWER(player.firstName) LIKE :fullName
+                OR LOWER(player.lastName) LIKE :fullName
+                OR LOWER(CONCAT(player.firstName, \' \', player.lastName)) LIKE :fullName
+            )')
+                ->setParameter('fullName', $normalizedFullName);
         }
 
         if (null !== $createdAtFrom && '' !== trim($createdAtFrom)) {

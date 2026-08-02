@@ -18,7 +18,12 @@ final readonly class ListLegalGuardiansHandler
 
     public function __invoke(ListLegalGuardiansQuery $query): PaginatedResult
     {
-        $guardians = $this->guardianRepository->findAllByAcademy($query->academyId, $query->pagination);
+        $guardians = $this->guardianRepository->findAllByAcademy(
+            $query->academyId,
+            $query->pagination,
+            $query->firstName,
+            $query->lastName,
+        );
 
         $items = array_map(
             static fn ($guardian): LegalGuardianResponse => LegalGuardianResponse::fromLegalGuardian($guardian),

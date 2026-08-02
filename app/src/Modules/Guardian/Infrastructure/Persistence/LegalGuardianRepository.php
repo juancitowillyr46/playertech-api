@@ -9,14 +9,27 @@ use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardian;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianRepository as LegalGuardianRepositoryContract;
 use App\Shared\Application\Pagination\PaginationQuery;
+use App\Shared\Application\Pagination\SortFieldResolver;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 final class LegalGuardianRepository extends ServiceEntityRepository implements LegalGuardianRepositoryContract
 {
+    private readonly SortFieldResolver $sortFieldResolver;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, LegalGuardian::class);
+        $this->sortFieldResolver = new SortFieldResolver(
+            [
+                'created_at' => 'auditTrail.createdAt.value',
+                'document_number' => 'documentNumber',
+                'first_name' => 'firstName',
+                'last_name' => 'lastName',
+                'status' => 'status.value',
+            ],
+            'auditTrail.createdAt.value',
+        );
     }
 
     public function save(LegalGuardian $guardian): void
@@ -49,13 +62,30 @@ final class LegalGuardianRepository extends ServiceEntityRepository implements L
             ->getOneOrNullResult();
     }
 
-    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
+    public function findAllByAcademy(
+        AcademyId $academyId,
+        PaginationQuery $pagination,
+        ?string $firstName = null,
+        ?string $lastName = null,
+    ): array
     {
+        $sortField = $this->sortFieldResolver->resolve($pagination->sort);
+
         $qb = $this->createQueryBuilder('guardian')
             ->where('guardian.academyId = :academyId')
             ->andWhere('guardian.deletedAt IS NULL')
             ->setParameter('academyId', $academyId->value())
-            ->orderBy(sprintf('guardian.%s', $pagination->sort), $pagination->direction);
+            ->orderBy(sprintf('guardian.%s', $sortField), $pagination->direction);
+
+        if (null !== $firstName && '' !== trim($firstName)) {
+            $qb->andWhere('LOWER(guardian.firstName) LIKE :firstName')
+                ->setParameter('firstName', '%'.mb_strtolower(trim($firstName)).'%');
+        }
+
+        if (null !== $lastName && '' !== trim($lastName)) {
+            $qb->andWhere('LOWER(guardian.lastName) LIKE :lastName')
+                ->setParameter('lastName', '%'.mb_strtolower(trim($lastName)).'%');
+        }
 
         $total = (int) (clone $qb)
             ->select('COUNT(guardian.id)')

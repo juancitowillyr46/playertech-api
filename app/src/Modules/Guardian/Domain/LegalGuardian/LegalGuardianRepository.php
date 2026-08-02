@@ -18,5 +18,10 @@ interface LegalGuardianRepository
     /**
      * @return array{items: LegalGuardian[], total: int}
      */
-    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array;
+    public function findAllByAcademy(
+        AcademyId $academyId,
+        PaginationQuery $pagination,
+        ?string $firstName = null,
+        ?string $lastName = null,
+    ): array;
 }

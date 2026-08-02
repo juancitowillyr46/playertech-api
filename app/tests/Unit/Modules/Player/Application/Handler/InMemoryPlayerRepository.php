@@ -73,6 +73,9 @@ final class InMemoryPlayerRepository implements PlayerRepository
         PaginationQuery $pagination,
         ?string $gender = null,
         ?string $categoryId = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?string $fullName = null,
         ?string $createdAtFrom = null,
         ?string $createdAtTo = null,
         ?string $birthDateFrom = null,
@@ -80,7 +83,7 @@ final class InMemoryPlayerRepository implements PlayerRepository
     ): array {
         $items = array_values(array_filter(
             $this->players,
-            static function (Player $player) use ($academyId, $gender, $categoryId, $createdAtFrom, $createdAtTo, $birthDateFrom, $birthDateTo): bool {
+            static function (Player $player) use ($academyId, $gender, $categoryId, $firstName, $lastName, $fullName, $createdAtFrom, $createdAtTo, $birthDateFrom, $birthDateTo): bool {
                 if (!$player->academyId()->equals($academyId)) {
                     return false;
                 }
@@ -91,6 +94,26 @@ final class InMemoryPlayerRepository implements PlayerRepository
 
                 if (null !== $categoryId && '' !== trim($categoryId) && (null === $player->categoryId() || $player->categoryId()?->value() !== trim($categoryId))) {
                     return false;
+                }
+
+                $playerFirstName = mb_strtolower(trim($player->firstName()));
+                $playerLastName = mb_strtolower(trim($player->lastName()));
+
+                if (null !== $firstName && '' !== trim($firstName) && !str_contains($playerFirstName, mb_strtolower(trim($firstName)))) {
+                    return false;
+                }
+
+                if (null !== $lastName && '' !== trim($lastName) && !str_contains($playerLastName, mb_strtolower(trim($lastName)))) {
+                    return false;
+                }
+
+                if (null !== $fullName && '' !== trim($fullName)) {
+                    $needle = mb_strtolower(trim($fullName));
+                    $combined = $playerFirstName . ' ' . $playerLastName;
+
+                    if (!str_contains($playerFirstName, $needle) && !str_contains($playerLastName, $needle) && !str_contains($combined, $needle)) {
+                        return false;
+                    }
                 }
 
                 if (null !== $createdAtFrom && '' !== trim($createdAtFrom) && $player->auditTrail()?->createdAt()->value() < new \DateTimeImmutable(trim($createdAtFrom))) {

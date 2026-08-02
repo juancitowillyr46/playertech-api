@@ -34,7 +34,7 @@ Para revisar rápidamente quiénes forman parte de la operación.
 * El listado debe respetar el contexto tenant.
 * No se deben exponer jugadores de otra academia.
 * El listado debe ser paginado desde el contrato de API.
-* El listado puede filtrarse por `gender`, `categoryId`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`.
+* El listado puede filtrarse por `gender`, `categoryId`, `firstName`, `lastName`, `fullName`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`.
 * `age` es un campo derivado de salida; el filtro canónico por rango de edad debe resolverse sobre `birthDateFrom` y `birthDateTo`.
 
 ---

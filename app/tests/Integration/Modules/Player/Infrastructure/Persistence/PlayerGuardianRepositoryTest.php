@@ -56,6 +56,10 @@ final class PlayerGuardianRepositoryTest extends KernelTestCase
             new PhoneNumber('+51 999 999 999'),
             'Colombia',
             'Cundinamarca',
+            null,
+            null,
+            null,
+            null,
             'signup',
             new Address('Av. Principal 123'),
             new City('Lima'),
@@ -77,6 +81,8 @@ final class PlayerGuardianRepositoryTest extends KernelTestCase
             null,
             null,
             null,
+            null,
+            null,
             AuditTrail::create('system'),
         );
 
@@ -87,6 +93,9 @@ final class PlayerGuardianRepositoryTest extends KernelTestCase
             'Lopez',
             '+51 999 111 222',
             'maria@example.com',
+            'CC',
+            '12345678',
+            null,
             'Madre',
             AuditTrail::create('system'),
         );

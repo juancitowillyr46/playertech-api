@@ -223,7 +223,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Category` y `Venue` ya quedaron implementados como módulos funcionales completos y el backlog debe seguir su mismo lifecycle con historias faltantes o inconsistentes.
 * `Category` y `Venue` comparten ahora el patrón de recuperación por `Finder`, reduciendo duplicación en handlers y homogeneizando Application.
 * `Player` ya quedó documentado también en `docs/domains/player/player-domain-spec.md` como contrato central del dominio, para no depender solo del feature spec y del flujo de importación.
-* El listarado de `Player` expone `photo`, `categoryName`, `genderName`, `age` y `createdAt`; además, el detalle, la forto y la importación masiva quedaron alineados con el contrato HTTP vigente.
+* El listarado de `Player` expone `photo`, `categoryName`, `genderName`, `age` y `createdAt`; además, el detalle, la foto y la importación masiva quedaron alineados con el contrato HTTP vigente.
 * La importación de `Player` queda documentada como flujo central en `docs/flows/player/player-import-flow-spec.md` y su UX satélite en `docs/flows/player/player-import-ux-spec.md`.
 * El backend ya valida la categoría seleccionada antes de crear un job de importación y la plantilla oficial de Excel se genera con referencias desde backend en una hoja `Referencias` con categorías activas, formatos correctos y tablas de valores válidos.
 * `Player` ahora expone eliminación de forto mediante `DELETE /api/v1/academy/players/{playerId}/photo`, no solo subida/reemplazo.
@@ -242,7 +242,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `EP-007` quedó reescrita como inicio forrmal del dominio `Player` y ya tiene HUs mínimas para registrar, listarar, consultar, actualizar y deactivar.
 * `HU-001` de `EP-007` quedó implementada y validada en runtime con `POST /api/v1/academy/players`.
 * `HU-002` de `EP-007` quedó implementada y validada en runtime con `GET /api/v1/academy/players`.
-* El listarado de `Player` ya expone `photo`, `categoryName`, `genderName`, `age` y `createdAt` como campos de salida, con filtros planeados por `gender`, `categoryId`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`.
+* El listado de `Player` ya expone `photo`, `categoryName`, `genderName`, `age` y `createdAt` como campos de salida, con filtros por `gender`, `categoryId`, `firstName`, `lastName`, `fullName`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`.
 * La importación masiva de `Player` quedó documentada como subfeature separada en `specs/007-player/import/` para mantener el lifecycle base limpio y desacoplado.
 * La suspension de una academia bloquea a todos sus usuarios, pero no elimina ni deactiva usuarios en cascada.
 * Las validaciones de negocio de `Academy` devuelven Problem Details JSON; el caso de duplicado de correo se resuelve con excepcion de dominio y responseuesta `409`.
@@ -432,7 +432,8 @@ Para considerar la base listara antes de implementar cualquier lógica de negoci
 * `EP-006` funciona como módulo maestro de acudientes con listarado, detalle y creación; `EP-008` queda como módulo operativo para relaciones jugador-acudiente y vista de acudientes por jugador.
 * `EP-003` ya incorporó el flujo inicial de usuarios administrativos por invitación y activación con correo, como primer slice de la evolución de staff.
 * `EP-002` amplió el contrato de sedes para exponer `address` y `phone` opcionales también en el listarado, no solo en el detalle.
-* El listarado de `Venue` ahora normaliza `sort` permitidos en backend; `created_at` y aliases históricos se traducen a `auditTrail.createdAt.value` para evitar errores 500 por paths internos de Doctrine.
+* El listado de `Venue` ahora normaliza `sort` permitidos en backend; `created_at` y aliases históricos se traducen a `auditTrail.createdAt.value` para evitar errores 500 por paths internos de Doctrine.
+* El listado de `LegalGuardian` ahora normaliza `sort` con aliases seguros (`created_at`, `document_number`, `first_name`, `last_name`, `status`) y filtra por `firstName` y `lastName` con el mismo patrón de `Player`.
 * El listarado de `Venue` quedó validado con una prueba unitaria de código puro (`ListVenuesHandlerTest`) ejecutada dentro del contenedor, sin BD, para confirmar el contrato de responseuesta del handler.
 * `EP-024` incorporó la gestión privada de documentos del jugador: listado paginado, carga validada, vista inline, descarga, reemplazo conservando el UUID y eliminación con soft delete y borrado físico.
 * Se corrigió el wiring del repositorio de jobs de importación de jugadores y se formalizó el UUID/mapping XML de `PlayerImportJob`, desbloqueando el arranque del contenedor Symfony.

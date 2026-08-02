@@ -54,7 +54,7 @@ de GitHub Spec Kit y reducir ambigüedad entre backlog, features y specs.
 ### EP-006 - Gestión de Acudientes
 
 - Tipo: feature raíz de dominio.
-- Carpeta sugerida: `specs/006-guardian/`.
+- Carpeta sugerida: `specs/006-legal-guardian-management/`.
 
 ### EP-007 - Gestión de Jugadores
 
@@ -155,4 +155,3 @@ Acción sugerida:
 3. Las HUs del backlog deben mapearse a una feature única.
 4. Si una épica mezcla más de un flujo estable, debe dividirse.
 5. Si una HU ya está implementada, debe reflejarse en `specs/14-current-state.md`.
-
