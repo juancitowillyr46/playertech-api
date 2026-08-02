@@ -24,7 +24,8 @@ Authorization: Bearer <token>
     "documentType": "CC",
     "documentNumber": "1088329031",
     "address": "Calle 1 # 2-3",
-    "relationship": "Padre",
+    "relationship": "FATHER",
+    "relationshipName": "Padre",
     "status": "ACTIVE"
   },
   "meta": {}
