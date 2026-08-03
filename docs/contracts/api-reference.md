@@ -1740,7 +1740,6 @@ Registrar un acudiente dentro de la academia actual con su parentesco.
     "documentNumber": "12345678",
     "address": "Av. Central 123",
     "relationship": "MOTHER",
-    "relationshipName": "Madre",
     "status": "ACTIVE"
   },
   "meta": {}

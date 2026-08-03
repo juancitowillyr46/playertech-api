@@ -12,6 +12,7 @@ use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianRepository;
 use App\Modules\Player\Domain\Exception\PlayerNotFoundException;
 use App\Modules\Player\Domain\Player\PlayerRepository;
 use App\Modules\Player\Domain\PlayerGuardian\PlayerGuardianRepository;
+use App\Shared\Domain\Relationship\Relationship;
 
 final readonly class ListGuardianPlayersHandler
 {
@@ -53,7 +54,7 @@ final readonly class ListGuardianPlayersHandler
                 $player->firstName(),
                 $player->lastName(),
                 $categoryName,
-                $guardian->relationship(),
+                Relationship::tryFrom($guardian->relationship())?->label() ?? $guardian->relationship(),
                 $relation->isPrimary(),
             );
         }, $relations));

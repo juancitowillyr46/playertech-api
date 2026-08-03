@@ -20,7 +20,6 @@ final readonly class LegalGuardianResponse
         private ?string $documentNumber,
         private ?string $address,
         private string $relationship,
-        private string $relationshipName,
         private string $status,
     ) {
     }
@@ -38,7 +37,6 @@ final readonly class LegalGuardianResponse
             $guardian->documentNumber(),
             $guardian->address(),
             $guardian->relationship(),
-            Relationship::tryFrom($guardian->relationship())?->label() ?? $guardian->relationship(),
             $guardian->status()->value(),
         );
     }
@@ -56,7 +54,6 @@ final readonly class LegalGuardianResponse
             'documentNumber' => $this->documentNumber,
             'address' => $this->address,
             'relationship' => $this->relationship,
-            'relationshipName' => $this->relationshipName,
             'status' => $this->status,
         ];
     }

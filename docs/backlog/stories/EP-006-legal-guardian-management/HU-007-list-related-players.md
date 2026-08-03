@@ -12,6 +12,7 @@ Permitir consultar los jugadores asociados a un acudiente específico.
 ## Alcance
 - Listar jugadores por `guardianId`.
 - Retornar `firstName`, `lastName`, `categoryName`, `relationshipName` y `principal`.
+- `relationshipName` debe exponer el label humano del parentesco, por ejemplo `Madre` para `MOTHER`.
 - Respetar el tenant autenticado.
 
 ## Criterios de aceptación
