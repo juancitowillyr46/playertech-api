@@ -51,6 +51,7 @@ final readonly class ListGuardianPlayersHandler
             }
 
             return new GuardianPlayerListItemResponse(
+                $player->id()->value(),
                 $player->firstName(),
                 $player->lastName(),
                 $categoryName,
