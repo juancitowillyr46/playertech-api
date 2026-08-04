@@ -134,7 +134,20 @@ final class ShowPlayerHandlerTest extends TestCase
     {
         $this->expectException(PlayerNotFoundException::class);
 
-        $handler = new ShowPlayerHandler(new PlayerFinder(new InMemoryPlayerRepository()));
+        $handler = new ShowPlayerHandler(
+            new PlayerFinder(new InMemoryPlayerRepository()),
+            new class implements \App\Modules\Category\Domain\Category\CategoryRepository {
+                public function save(\App\Modules\Category\Domain\Category\Category $category): void {}
+                public function findById(\App\Modules\Academy\Domain\Academy\AcademyId $academyId, \App\Modules\Category\Domain\Category\CategoryId $categoryId): ?\App\Modules\Category\Domain\Category\Category { return null; }
+                public function findByCategoryKey(\App\Modules\Academy\Domain\Academy\AcademyId $academyId, string $categoryKey): ?\App\Modules\Category\Domain\Category\Category { return null; }
+                public function findActiveByAcademy(\App\Modules\Academy\Domain\Academy\AcademyId $academyId): array { return []; }
+                public function findAllByAcademy(\App\Modules\Academy\Domain\Academy\AcademyId $academyId, \App\Shared\Application\Pagination\PaginationQuery $pagination): array { return ['items' => [], 'total' => 0]; }
+            },
+            new InMemoryPlayerGuardianRepository(),
+            new InMemoryGuardianRepository(),
+            new InMemoryTeamAssignmentRepository(),
+            new InMemoryTeamRepository(),
+        );
 
         $handler(new ShowPlayerQuery(
             new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f'),
