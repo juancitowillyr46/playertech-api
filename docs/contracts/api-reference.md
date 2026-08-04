@@ -205,6 +205,44 @@ Respuesta:
 }
 ```
 
+#### Nationalities Options
+
+`GET /api/v1/academy/nationalities/options`
+
+Respuesta:
+
+```json
+{
+  "data": [
+    {
+      "label": "Colombiano(a)",
+      "value": "COLOMBIAN"
+    },
+    {
+      "label": "Peruano(a)",
+      "value": "PERUVIAN"
+    },
+    {
+      "label": "Chileno(a)",
+      "value": "CHILEAN"
+    },
+    {
+      "label": "Ecuatoriano(a)",
+      "value": "ECUADORIAN"
+    },
+    {
+      "label": "Mexicano(a)",
+      "value": "MEXICAN"
+    },
+    {
+      "label": "Español(a)",
+      "value": "SPANISH"
+    }
+  ],
+  "meta": {}
+}
+```
+
 #### Relationships Options
 
 `GET /api/v1/academy/relationships/options`

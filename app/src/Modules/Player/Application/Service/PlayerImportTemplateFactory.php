@@ -8,6 +8,7 @@ use App\Modules\Category\Domain\Category\Category;
 use App\Modules\Category\Domain\Category\CategoryRepository;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Shared\Domain\Document\DocumentType;
+use App\Shared\Domain\Nationality\Nationality;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
@@ -63,14 +64,18 @@ final readonly class PlayerImportTemplateFactory
             ),
         );
 
-        $currentRow = $this->writeTable($referenceSheet, $currentRow + 2, 'Nacionalidades (nationality)', [
-            ['name' => 'Colombiano(a)', 'code' => 'COLOMBIAN'],
-            ['name' => 'Peruano(a)', 'code' => 'PERUVIAN'],
-            ['name' => 'Chileno(a)', 'code' => 'CHILEAN'],
-            ['name' => 'Ecuatoriano(a)', 'code' => 'ECUADORIAN'],
-            ['name' => 'Mexicano(a)', 'code' => 'MEXICAN'],
-            ['name' => 'Español(a)', 'code' => 'SPANISH'],
-        ]);
+        $currentRow = $this->writeTable(
+            $referenceSheet,
+            $currentRow + 2,
+            'Nacionalidades (nationality)',
+            array_map(
+                static fn (Nationality $nationality): array => [
+                    'name' => $nationality->label(),
+                    'code' => $nationality->value,
+                ],
+                Nationality::cases(),
+            ),
+        );
 
         $currentRow = $this->writeTable($referenceSheet, $currentRow + 2, 'Pies dominantes (dominantFoot)', [
             ['name' => 'Derecho', 'code' => 'RIGHT'],
