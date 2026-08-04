@@ -10,7 +10,7 @@ para que Player, LegalGuardian y las futuras funcionalidades compartan valores c
 
 ## Problema de negocio
 
-Algunos datos de referencia, como los tipos de documento, pueden ser utilizados por diferentes funcionalidades de la aplicación. Si cada módulo define sus propios valores y etiquetas, pueden aparecer inconsistencias entre formularios, importaciones, documentos y respuestas de la API.
+Algunos datos de referencia, como los tipos de documento, las nacionalidades, los géneros, los pies dominantes o los parentescos, pueden ser utilizados por diferentes funcionalidades de la aplicación. Si cada módulo define sus propios valores y etiquetas, pueden aparecer inconsistencias entre formularios, importaciones, documentos y respuestas de la API.
 
 Esto puede provocar:
 
@@ -27,6 +27,9 @@ Esto puede provocar:
 El MVP de esta épica deberá:
 
 - Definir un catálogo oficial de tipos de documento.
+- Definir un catálogo oficial de nacionalidades.
+- Definir un catálogo oficial de géneros.
+- Definir un catálogo oficial de pies dominantes.
 - Centralizar sus valores y etiquetas en el backend.
 - Exponer el catálogo mediante un endpoint autenticado.
 - Permitir su reutilización por Player, LegalGuardian, importaciones y gestión documental.
@@ -74,12 +77,27 @@ El catálogo será consumido inicialmente por:
 - Gestión documental de jugadores.
 - Futuras funcionalidades de `LegalGuardian`.
 
+El catálogo de nacionalidades será consumido inicialmente por:
+
+- Registro y actualización de jugadores.
+- Importación de jugadores.
+- Futuras funcionalidades que requieran una nacionalidad cerrada.
+
+Los catálogos de género y pie dominante serán consumidos inicialmente por:
+
+- Registro y actualización de jugadores.
+- Importación de jugadores.
+- Consultas de detalle y listado enriquecido de jugadores.
+
 ---
 
 ## Historias de Usuario
 
 - HU-001 - Consultar el catálogo de tipos de documento.
 - HU-002 - Consultar el catálogo de parentescos.
+- HU-003 - Consultar el catálogo de nacionalidades.
+- HU-004 - Consultar el catálogo de géneros.
+- HU-005 - Consultar el catálogo de pies dominantes.
 
 ---
 

@@ -42,6 +42,7 @@ El jugador es la entidad central del dominio funcional de PlayerTech.
 7. Importar jugadores y categorías desde Excel.
 8. Resolver categorias mediante `category_key` estable para importaciones e integraciones.
 9. Exponer un resumen liviano del jugador por `playerId` para consumos operativos.
+10. Consumir catálogos compartidos de referencia como `document-types`, `nationalities`, `relationships` y `options` de apoyo desde `Shared`.
 
 ## Historias Candidatas
 
@@ -55,6 +56,7 @@ El jugador es la entidad central del dominio funcional de PlayerTech.
 * Subir foto del jugador.
 * Exponer resumen compacto del jugador.
 * Filtrar listados por `gender`, `categoryId`, `documentNumber`, `documentType`, `firstName`, `lastName`, `fullName`, `createdAt` y `birthDate`.
+* Exponer catálogos compartidos para `documentType`, `nationality`, `dominantFoot` y `gender`.
 
 ## Base Técnica de Referencia
 

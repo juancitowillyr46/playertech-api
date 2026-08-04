@@ -8,6 +8,8 @@ use App\Modules\Category\Domain\Category\Category;
 use App\Modules\Category\Domain\Category\CategoryRepository;
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Shared\Domain\Document\DocumentType;
+use App\Shared\Domain\DominantFoot\DominantFoot;
+use App\Shared\Domain\Gender\Gender;
 use App\Shared\Domain\Nationality\Nationality;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
@@ -77,16 +79,31 @@ final readonly class PlayerImportTemplateFactory
             ),
         );
 
-        $currentRow = $this->writeTable($referenceSheet, $currentRow + 2, 'Pies dominantes (dominantFoot)', [
-            ['name' => 'Derecho', 'code' => 'RIGHT'],
-            ['name' => 'Izquierdo', 'code' => 'LEFT'],
-            ['name' => 'Ambidiestro', 'code' => 'BOTH'],
-        ]);
+        $currentRow = $this->writeTable(
+            $referenceSheet,
+            $currentRow + 2,
+            'Pies dominantes (dominantFoot)',
+            array_map(
+                static fn (DominantFoot $dominantFoot): array => [
+                    'name' => $dominantFoot->label(),
+                    'code' => $dominantFoot->value,
+                ],
+                DominantFoot::cases(),
+            ),
+        );
 
-        $this->writeTable($referenceSheet, $currentRow + 2, 'Genero (gender)', [
-            ['name' => 'Masculino', 'code' => 'MALE'],
-            ['name' => 'Femenino', 'code' => 'FEMALE'],
-        ]);
+        $this->writeTable(
+            $referenceSheet,
+            $currentRow + 2,
+            'Genero (gender)',
+            array_map(
+                static fn (Gender $gender): array => [
+                    'name' => $gender->label(),
+                    'code' => $gender->value,
+                ],
+                Gender::cases(),
+            ),
+        );
 
         $dataSheet = $spreadsheet->createSheet();
         $dataSheet->setTitle('Datos');

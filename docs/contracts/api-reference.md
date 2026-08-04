@@ -243,6 +243,54 @@ Respuesta:
 }
 ```
 
+#### Genders Options
+
+`GET /api/v1/academy/genders/options`
+
+Respuesta:
+
+```json
+{
+  "data": [
+    {
+      "label": "Masculino",
+      "value": "MALE"
+    },
+    {
+      "label": "Femenino",
+      "value": "FEMALE"
+    }
+  ],
+  "meta": {}
+}
+```
+
+#### Dominant Feet Options
+
+`GET /api/v1/academy/dominant-feet/options`
+
+Respuesta:
+
+```json
+{
+  "data": [
+    {
+      "label": "Pie derecho",
+      "value": "RIGHT"
+    },
+    {
+      "label": "Pie izquierdo",
+      "value": "LEFT"
+    },
+    {
+      "label": "Ambidiestro",
+      "value": "BOTH"
+    }
+  ],
+  "meta": {}
+}
+```
+
 #### Relationships Options
 
 `GET /api/v1/academy/relationships/options`

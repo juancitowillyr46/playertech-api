@@ -44,7 +44,7 @@ Para registrar en lote información que hoy se carga manualmente uno por uno.
 * Cada jugador debe quedar asociado a la academia actual.
 * El documento del jugador debe seguir siendo único por academia.
 * La categoría se selecciona antes de subir el archivo y aplica al job completo, no por fila.
-* La plantilla oficial debe descargarse desde backend.
+* La plantilla oficial debe descargarse desde backend y usar catálogos compartidos para `documentType`, `nationality`, `dominantFoot` y `gender`.
 * Si el archivo contiene errores estructurales o de negocio, el job debe quedar en `COMPLETED_WITH_ERRORS` o `FAILED` según corresponda.
 
 ---
@@ -62,6 +62,7 @@ Para registrar en lote información que hoy se carga manualmente uno por uno.
 
 * Selección previa de categoría.
 * Descarga de plantilla `.xlsx` desde backend con hojas `Datos` y `Referencias`.
+* La pestaña `Referencias` debe incluir el catálogo compartido de nacionalidades expuesto por `GET /api/v1/academy/nationalities/options`.
 * Subida de archivo `.xlsx`.
 * Creación de job asíncrono.
 * Polling de progreso desde frontend.
