@@ -34,6 +34,7 @@ Para revisar su información sin editarla.
 * El jugador debe existir.
 * El acceso debe respetar el contexto tenant.
 * El detalle no debe exponer datos de otra academia.
+* La respuesta del detalle debe exponer los labels visibles enriquecidos: `categoryName`, `documentTypeName`, `nationalityName`, `genderName` y `dominantFootName`.
 
 ---
 
@@ -41,6 +42,7 @@ Para revisar su información sin editarla.
 
 * Dado un jugador existente, cuando consulto su detalle, entonces el sistema devuelve sus datos.
 * Dado un jugador de otra academia, cuando intento consultarlo, entonces el sistema lo rechaza.
+* Dado un jugador con valores de catálogo asociados, cuando consulto su detalle, entonces el sistema devuelve los nombres visibles correspondientes.
 
 ---
 
@@ -49,4 +51,3 @@ Para revisar su información sin editarla.
 * Endpoint: `GET /api/v1/academy/players/{playerId}`
 * Respuesta: `PlayerResponse`
 * Validación: contexto tenant obligatorio mediante `TenantContext`
-

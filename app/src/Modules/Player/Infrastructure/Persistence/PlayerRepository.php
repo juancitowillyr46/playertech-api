@@ -75,17 +75,6 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerRe
             ->getOneOrNullResult();
     }
 
-    public function findOneByPhone(AcademyId $academyId, string $phone): ?Player
-    {
-        return $this->createQueryBuilder('player')
-            ->where('player.academyId = :academyId')
-            ->andWhere('player.phone = :phone')
-            ->setParameter('academyId', $academyId->value())
-            ->setParameter('phone', trim($phone))
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
     public function findAvailableByGuardian(AcademyId $academyId, LegalGuardianId $guardianId, ?string $query = null): array
     {
         $qb = $this->createQueryBuilder('player')

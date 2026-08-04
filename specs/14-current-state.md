@@ -78,7 +78,7 @@ La base tecnica actual incluye:
 | TeamAssignment module baseline | Functional / Technical Enabler | Done | `unrastreared` | `TeamAssignment` materializa la gestión de asignaciones deportivas con principal activo, finalización e historial sobre jugadores y equipos |
 | Player listar baseline | Functional / Technical Enabler | Done | `unrastreared` | `GET /api/v1/academy/players` listara jugadores del tenant actual con DTO resumido, forto, `createdAt` y prueba unitaria |
 | Player detail baseline | Functional / Technical Enabler | Done | `unrastreared` | `GET /api/v1/academy/players/{playerId}` devuelve detalle del jugador dentro del tenant con `PlayerResponse` y prueba unitaria |
-| Player actualizar baseline | Functional / Technical Enabler | Done | `unrastreared` | `PUT /api/v1/academy/players/{playerId}` actualiza datos del jugador dentro del tenant con validación de unicidad y prueba unitaria |
+| Player actualizar baseline | Functional / Technical Enabler | Done | `unrastreared` | `PUT /api/v1/academy/players/{playerId}` actualiza datos del jugador dentro del tenant con validación de documento y correo, permitiendo compartir `phone` entre jugadores del mismo tenant; prueba unitaria incluida |
 | Player status gestionarment | Functional / Technical Enabler | Done | `unrastreared` | `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate` cambian el estado del jugador con cobertura unitaria |
 | Player status gestionarment story | Functional / Documentation | Done | `unrastreared` | HU-005 consolidada documenta deactivar y reactivar como una sola gestion de estado |
 | Player bulk import async | Functional / Technical Enabler | Done | `unrastreared` | `POST /api/v1/academy/players/import` crea un job asíncrono con categoría seleccionada previamente, plantilla oficial desde backend y polling de progreso |
@@ -276,7 +276,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La subida de escudo institucional para `Academy` y la forto del jugador para `Player` ya quedaron implementadas como historias de media separadas.
 * Las categorias ahora tienen `category_key` estable para soportar importaciones y contratos de integracion sin depender del UUID.
 * La auditoria Doctrine ya quedó centralizada con un `AuditSubscriber` y el filtro `SoftDelete` está activo.
-* `HU-003` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}`.
+* `HU-003` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}`; el response incluye `categoryName`, `documentTypeName`, `nationalityName`, `genderName`, `dominantFootName`, `legalGuardian` y `team` como resúmenes del contexto principal del jugador.
 * `HU-004` de `EP-007-player-management` quedó implementada y validada en runtime con `PUT /api/v1/academy/players/{playerId}`.
 * `HU-005` de `EP-007-player-management` quedó consolidada como gestión de estado del jugador: desactivar y reactivar con endpoints `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate`.
 * Se abrió la historia `HU-007` de `EP-007-player-management` para importación masiva de jugadores desde Excel como base de migración de datos.
@@ -322,6 +322,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Se redefinió el perfil base de `Player` en `docs/domains/domain-overver.md` para separar identidad, atributos deportivos y datos que deben vivir en asignaciones o compras.
 * Se documentó un criterio SDD para la evolución del perfil de `Player` en `docs/domains/player/player-profile-evolution-notes.md`, con reglas para decidir qué atributos viven en el aggregate y cuáles deben quedar fuera.
 * El perfil base de `Player` incorporó `email` y `phone` como datos de contacto opcionales, sincronizados entre dominio, API, Postman y persistencia.
+* `Player` no usa `phone` como identificador único. Dos jugadores del mismo tenant pueden compartir el mismo número, por ejemplo en casos de hermanos o contactos familiares.
 * Se documentó una estrategia local-first de observabilidad en `docs/architecture/guides/observability-local-guide.md` para logs estructurados, correlation id y metricas basicas sin depender aun de una plataforrma externa.
 ---
 

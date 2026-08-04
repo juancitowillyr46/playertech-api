@@ -18,8 +18,6 @@ interface PlayerRepository
 
     public function findOneByEmail(AcademyId $academyId, string $email): ?Player;
 
-    public function findOneByPhone(AcademyId $academyId, string $phone): ?Player;
-
     /**
      * @return Player[]
      */

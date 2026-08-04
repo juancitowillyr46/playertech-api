@@ -162,6 +162,7 @@ Reglas de la plantilla:
 - `birthDate` usa `YYYY-MM-DD`
 - `email` debe ser válido
 - `phone` puede ingresarse como número colombiano local; el backend lo normaliza internamente a formato `+57XXXXXXXXXX`
+- `phone` no es una clave de unicidad en `Player`; se permiten números repetidos dentro del mismo tenant.
 
 La hoja `Datos` debe contener solo encabezados y celdas vacías, sin filas de prueba.
 
@@ -420,6 +421,13 @@ La API de `Player` ya expone un contrato operativo enriquecido que debe mantener
   - admite ordenamiento por `created_at`, `category_id`, `gender`, `birth_date`, `document_number`, `first_name`, `last_name` y `status`
 - `GET /api/v1/academy/players/{playerId}`
   - devuelve detalle completo del jugador
+  - incluye `categoryName`
+  - incluye `documentTypeName`
+  - incluye `nationalityName`
+  - incluye `genderName`
+  - incluye `dominantFootName`
+  - incluye `legalGuardian` como objeto resumido con `firstName` y `lastName` del acudiente principal
+  - incluye `team` como objeto resumido con `name` del equipo principal
 - `POST /api/v1/academy/players`
   - crea jugador en contexto tenant
 - `PUT /api/v1/academy/players/{playerId}`

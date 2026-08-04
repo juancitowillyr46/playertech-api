@@ -37,7 +37,6 @@ final readonly class ImportPlayersHandler
         $players = [];
         $documentNumbers = [];
         $emails = [];
-        $phones = [];
 
         foreach ($rows as $index => $row) {
             $line = $index + 2;
@@ -77,7 +76,6 @@ final readonly class ImportPlayersHandler
             }
 
             $normalizedEmail = '' === $email ? null : mb_strtolower($email);
-            $normalizedPhone = '' === $phone ? null : preg_replace('/\D+/', '', $phone);
 
             if (null !== $normalizedEmail) {
                 if (isset($emails[$normalizedEmail])) {
@@ -86,16 +84,6 @@ final readonly class ImportPlayersHandler
 
                 if (null !== $this->playerRepository->findOneByEmail($academyId, $email)) {
                     $violations->add($this->violation("rows[$line].email", 'El correo ya existe para esta academia.'));
-                }
-            }
-
-            if (null !== $normalizedPhone) {
-                if (isset($phones[$normalizedPhone])) {
-                    $violations->add($this->violation("rows[$line].phone", 'El celular está duplicado dentro del archivo.'));
-                }
-
-                if (null !== $this->playerRepository->findOneByPhone($academyId, $phone)) {
-                    $violations->add($this->violation("rows[$line].phone", 'El celular ya existe para esta academia.'));
                 }
             }
 
@@ -119,10 +107,6 @@ final readonly class ImportPlayersHandler
             $documentNumbers[$documentNumber] = true;
             if (null !== $normalizedEmail) {
                 $emails[$normalizedEmail] = true;
-            }
-
-            if (null !== $normalizedPhone) {
-                $phones[$normalizedPhone] = true;
             }
 
             if ($violations->count() > 0) {

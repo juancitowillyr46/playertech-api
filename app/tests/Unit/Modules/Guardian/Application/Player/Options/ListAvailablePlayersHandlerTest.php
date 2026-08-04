@@ -141,7 +141,6 @@ final class InMemoryPlayerRepository implements PlayerRepository
     public function findById(AcademyId $academyId, PlayerId $playerId): ?Player { return $this->items[$playerId->value()] ?? null; }
     public function findOneByDocumentNumber(AcademyId $academyId, string $documentNumber): ?Player { return null; }
     public function findOneByEmail(AcademyId $academyId, string $email): ?Player { return null; }
-    public function findOneByPhone(AcademyId $academyId, string $phone): ?Player { return null; }
     public function findAvailableByGuardian(AcademyId $academyId, LegalGuardianId $guardianId, ?string $query = null): array
     {
         return array_values(array_filter(

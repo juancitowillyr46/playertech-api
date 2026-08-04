@@ -38,10 +38,6 @@ final readonly class CreatePlayerHandler
             throw new PlayerAlreadyExistsException('El correo electrónico ya existe para esta academia.');
         }
 
-        if (null !== $input->phone && '' !== trim($input->phone) && null !== $this->playerRepository->findOneByPhone($academyId, $input->phone)) {
-            throw new PlayerAlreadyExistsException('El celular ya existe para esta academia.');
-        }
-
         $player = Player::create(
             PlayerId::generate(),
             $academyId,

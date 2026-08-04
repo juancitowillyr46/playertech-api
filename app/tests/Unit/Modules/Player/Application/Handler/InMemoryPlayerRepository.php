@@ -54,21 +54,6 @@ final class InMemoryPlayerRepository implements PlayerRepository
         return null;
     }
 
-    public function findOneByPhone(AcademyId $academyId, string $phone): ?Player
-    {
-        foreach ($this->players as $player) {
-            $normalizedPhone = preg_replace('/\D+/', '', trim($phone));
-            if (null !== $normalizedPhone && 10 === strlen($normalizedPhone) && str_starts_with($normalizedPhone, '3')) {
-                $normalizedPhone = '57' . $normalizedPhone;
-            }
-            if ($player->academyId()->equals($academyId) && null !== $player->phone() && ltrim($player->phone(), '+') === $normalizedPhone) {
-                return $player;
-            }
-        }
-
-        return null;
-    }
-
     public function findAvailableByGuardian(AcademyId $academyId, LegalGuardianId $guardianId, ?string $query = null): array
     {
         $items = array_values(array_filter(

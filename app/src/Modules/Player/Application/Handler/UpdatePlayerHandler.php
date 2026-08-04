@@ -42,13 +42,6 @@ final readonly class UpdatePlayerHandler
             }
         }
 
-        if (null !== $command->input->phone && '' !== trim($command->input->phone)) {
-            $duplicate = $this->playerRepository->findOneByPhone($academyId, $command->input->phone);
-            if (null !== $duplicate && $duplicate->id()->value() !== $player->id()->value()) {
-                throw new PlayerAlreadyExistsException('El celular ya existe para esta academia.');
-            }
-        }
-
         $categoryId = null;
         if (null !== $command->input->categoryId) {
             $categoryId = new CategoryId($command->input->categoryId);
