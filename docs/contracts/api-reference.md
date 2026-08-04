@@ -1923,6 +1923,7 @@ GET /api/v1/academy/guardians/options?q=juan
 
 * El resultado debe incluir sólo acudientes de la academia autenticada.
 * La búsqueda por `q` debe ser parcial, case-insensitive y accent-insensitive.
+* La búsqueda debe comparar contra `firstName`, `lastName` y el nombre completo del acudiente.
 * El envelope debe seguir el estándar `data` / `meta`.
 * La respuesta debe ser liviana para autocomplete.
 

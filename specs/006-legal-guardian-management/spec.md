@@ -122,7 +122,7 @@ El sistema permite al frontend consultar un selector liviano de acudientes dentr
 **Escenarios de aceptación**:
 
 1. **Given** acudientes en la academia, **When** el frontend consulta el selector, **Then** el sistema devuelve coincidencias livianas para autocomplete.
-2. **Given** un texto parcial, **When** el frontend consulta el selector con `q`, **Then** la respuesta filtra por nombres y apellidos del acudiente.
+2. **Given** un texto parcial, **When** el frontend consulta el selector con `q`, **Then** la respuesta filtra por `firstName`, `lastName` y el nombre completo del acudiente.
 3. **Given** un `q` vacío, **When** se consulta el selector, **Then** el sistema devuelve una muestra inicial de acudientes del tenant.
 
 ## Requisitos *(mandatory)*

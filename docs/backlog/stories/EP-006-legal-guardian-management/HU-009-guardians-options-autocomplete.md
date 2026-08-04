@@ -10,6 +10,7 @@ Permitir al frontend consultar un selector liviano de acudientes dentro de la ac
 - La búsqueda debe ser parcial.
 - Debe respetar el tenant autenticado.
 - La respuesta debe ser liviana para autocomplete.
+- La búsqueda debe comparar contra `firstName`, `lastName` y el nombre completo del acudiente.
 - No debe incluir paginación visible en el contrato.
 
 ## Respuesta esperada
