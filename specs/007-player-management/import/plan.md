@@ -6,6 +6,8 @@
 
 Separar la importación como subfeature evita mezclar el lifecycle base del jugador con un flujo asíncrono que tiene plantilla, job, polling y estados propios.
 
+El detalle enriquecido del jugador queda fuera del alcance de import, pero el spec principal ya lo documenta como contexto principal resumido con `legalGuardianMain` y `teamMain`.
+
 ## Contexto técnico
 
 **Language/Version**: PHP 8.4 / Symforny 7.4

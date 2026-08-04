@@ -30,8 +30,8 @@ final readonly class ShowPlayerHandler
     {
         $player = $this->playerFinder->findOrFail($query->academyId, $query->playerId);
         $categoryName = null;
-        $legalGuardian = null;
-        $team = null;
+        $legalGuardianMain = null;
+        $teamMain = null;
 
         if (null !== $player->categoryId()) {
             $category = $this->categoryRepository->findById($query->academyId, new CategoryId($player->categoryId()->value()));
@@ -43,7 +43,7 @@ final readonly class ShowPlayerHandler
             $guardian = $this->guardianRepository->findById($query->academyId, $primaryGuardian->guardianId());
 
             if (null !== $guardian) {
-                $legalGuardian = [
+                $legalGuardianMain = [
                     'firstName' => $guardian->firstName(),
                     'lastName' => $guardian->lastName(),
                 ];
@@ -55,12 +55,12 @@ final readonly class ShowPlayerHandler
             $assignedTeam = $this->teamRepository->findById($query->academyId, $primaryAssignment->teamId());
 
             if (null !== $assignedTeam) {
-                $team = [
+                $teamMain = [
                     'name' => $assignedTeam->name()->value(),
                 ];
             }
         }
 
-        return PlayerResponse::fromPlayer($player, $categoryName, $legalGuardian, $team);
+        return PlayerResponse::fromPlayer($player, $categoryName, $legalGuardianMain, $teamMain);
     }
 }

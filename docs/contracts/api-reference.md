@@ -426,8 +426,8 @@ La API de `Player` ya expone un contrato operativo enriquecido que debe mantener
   - incluye `nationalityName`
   - incluye `genderName`
   - incluye `dominantFootName`
-  - incluye `legalGuardian` como objeto resumido con `firstName` y `lastName` del acudiente principal
-  - incluye `team` como objeto resumido con `name` del equipo principal
+  - incluye `legalGuardianMain` como objeto resumido con `firstName` y `lastName` del acudiente principal
+  - incluye `teamMain` como objeto resumido con `name` del equipo principal
 - `POST /api/v1/academy/players`
   - crea jugador en contexto tenant
 - `PUT /api/v1/academy/players/{playerId}`

@@ -35,6 +35,7 @@ Para revisar su información sin editarla.
 * El acceso debe respetar el contexto tenant.
 * El detalle no debe exponer datos de otra academia.
 * La respuesta del detalle debe exponer los labels visibles enriquecidos: `categoryName`, `documentTypeName`, `nationalityName`, `genderName` y `dominantFootName`.
+* La respuesta del detalle debe exponer `legalGuardianMain` y `teamMain` como objetos resumidos o `null`.
 
 ---
 

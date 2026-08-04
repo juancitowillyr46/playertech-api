@@ -158,7 +158,7 @@ Documento central del dominio `Player`.
 - `categoryName` es un campo derivado de salida para consumo frontend.
 - La foto usa el contrato de media compartido con `Academy`.
 - `phone` es un dato de contacto opcional y no una clave de unicidad del jugador; el dominio permite teléfonos repetidos dentro del mismo tenant.
-- El detalle del jugador también expone `legalGuardian` y `team` como objetos resumidos del contexto principal.
+- El detalle del jugador también expone `legalGuardianMain` y `teamMain` como objetos resumidos del contexto principal.
 
 ## Functional Guides
 

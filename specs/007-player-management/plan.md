@@ -1,12 +1,12 @@
 # Implementation Plan: Player
 
-**Branch**: `007-player-management` | **Date**: 2026-07-27 | **Spec**: ./spec.md
+**Branch**: `007-player-management` | **Date**: 2026-08-04 | **Spec**: ./spec.md
 
 **Entrada**: Feature specification from `./spec.md`
 
 ## Resumen
 
-Consolidar `Player` como feature principal del dominio deportivo, dejando la importación masiva como subfeature explícita para no mezclar el lifecycle base con un flujo de negocio más amplio.
+Consolidar `Player` como feature principal del dominio deportivo, dejando la importación masiva como subfeature explícita y el detalle enriquecido con relaciones principales resumidas para no mezclar el lifecycle base con otros agregados.
 
 ## Contexto técnico
 

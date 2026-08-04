@@ -4,7 +4,7 @@
 
 **Creado**: 2026-07-29
 
-**Estado**: Draft
+**Estado**: Ready for implementation
 
 **Alcance**: Importación asíncrona de jugadores desde Excel, con plantilla oficial generada por backend, categoría seleccionada previamente, polling de progreso y reporte de errores por fila.
 
@@ -68,3 +68,8 @@ El sistema permite descargar una plantilla oficial con hojas `Datos` y `Referenc
 - La categoría se selecciona antes de subir el archivo.
 - La importación funciona únicamente con el contrato oficial de Excel.
 - El backend sigue siendo responseonsable de generar la plantilla.
+
+## Alignment Notes
+
+- El feature principal `007-player-management` expone el detalle enriquecido del jugador.
+- El detalle utiliza `legalGuardianMain` y `teamMain` como objetos resumidos o `null`.

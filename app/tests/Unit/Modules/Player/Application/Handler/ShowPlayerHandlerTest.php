@@ -126,8 +126,8 @@ final class ShowPlayerHandlerTest extends TestCase
         self::assertSame('Juan', $response->toArray()['firstName']);
         self::assertSame('Pérez', $response->toArray()['lastName']);
         self::assertSame('12345678', $response->toArray()['documentNumber']);
-        self::assertSame(['firstName' => 'Juan', 'lastName' => 'Pérez'], $response->toArray()['legalGuardian']);
-        self::assertSame(['name' => 'Team A'], $response->toArray()['team']);
+        self::assertSame(['firstName' => 'Juan', 'lastName' => 'Pérez'], $response->toArray()['legalGuardianMain']);
+        self::assertSame(['name' => 'Team A'], $response->toArray()['teamMain']);
     }
 
     public function testItRejectsMissingPlayer(): void

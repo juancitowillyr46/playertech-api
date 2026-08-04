@@ -4,7 +4,7 @@
 
 **Created**: 2026-07-27
 
-**Status**: Draft
+**Status**: Ready for implementation
 
 **Entrada**: Base feature para player lifecycle, listaring, detail, actualizar, state,
 photo and import flows.
@@ -23,6 +23,7 @@ El sistema permite a academy administrators register, ver and actualizar a playe
 
 1. **Given** valid player data, **When** an admin registers a player, **Then** the player is creard.
 2. **Given** an existing player, **When** an admin actualizars the profile, **Then** the profile changes are persisted.
+3. **Given** an existing player detail, **When** an admin consults it, **Then** the response includes the enriched labels and the primary relation summaries `legalGuardianMain` and `teamMain`.
 
 ### Historia de Usuario 2 - Player state and media gestionarment (Priority: P2)
 
@@ -68,6 +69,7 @@ El sistema permite a admins import players in bulk and recuperar enriched listar
 - **FR-006**: System MUST dar soporte a bulk import jobs for players.
 - **FR-007**: System MUST exponer enriched listar data for frontend consumption.
 - **FR-008**: System MUST permitir filtros por `documentNumber`, `documentType`, `firstName`, `lastName` y `fullName` en el listado de jugadores.
+- **FR-009**: System MUST exponer en el detalle del jugador los campos derivados `legalGuardianMain` y `teamMain` como objetos resumidos o `null`.
 
 ### Entidades clave *(include if feature involves data)*
 

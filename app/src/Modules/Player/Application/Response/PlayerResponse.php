@@ -34,8 +34,8 @@ final readonly class PlayerResponse
         private ?string $federationId,
         private ?string $dominantFoot,
         private ?string $dominantFootName,
-        private ?array $legalGuardian,
-        private ?array $team,
+        private ?array $legalGuardianMain,
+        private ?array $teamMain,
         private ?MediaResponse $photo,
         private string $status,
     ) {
@@ -44,8 +44,8 @@ final readonly class PlayerResponse
     public static function fromPlayer(
         Player $player,
         ?string $categoryName = null,
-        ?array $legalGuardian = null,
-        ?array $team = null,
+        ?array $legalGuardianMain = null,
+        ?array $teamMain = null,
     ): self
     {
         return new self(
@@ -68,8 +68,8 @@ final readonly class PlayerResponse
             $player->federationId(),
             $player->dominantFoot(),
             self::dominantFootNameFrom($player->dominantFoot()),
-            $legalGuardian,
-            $team,
+            $legalGuardianMain,
+            $teamMain,
             self::buildPhotoResponse($player->photo()),
             $player->status()->value(),
         );
@@ -121,8 +121,8 @@ final readonly class PlayerResponse
             'federationId' => $this->federationId,
             'dominantFoot' => $this->dominantFoot,
             'dominantFootName' => $this->dominantFootName,
-            'legalGuardian' => $this->legalGuardian,
-            'team' => $this->team,
+            'legalGuardianMain' => $this->legalGuardianMain,
+            'teamMain' => $this->teamMain,
             'photo' => $this->photo?->toArray(),
             'status' => $this->status,
         ];

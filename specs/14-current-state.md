@@ -276,7 +276,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La subida de escudo institucional para `Academy` y la forto del jugador para `Player` ya quedaron implementadas como historias de media separadas.
 * Las categorias ahora tienen `category_key` estable para soportar importaciones y contratos de integracion sin depender del UUID.
 * La auditoria Doctrine ya quedó centralizada con un `AuditSubscriber` y el filtro `SoftDelete` está activo.
-* `HU-003` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}`; el response incluye `categoryName`, `documentTypeName`, `nationalityName`, `genderName`, `dominantFootName`, `legalGuardian` y `team` como resúmenes del contexto principal del jugador.
+* `HU-003` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}`; el response incluye `categoryName`, `documentTypeName`, `nationalityName`, `genderName`, `dominantFootName`, `legalGuardianMain` y `teamMain` como resúmenes del contexto principal del jugador.
 * `HU-004` de `EP-007-player-management` quedó implementada y validada en runtime con `PUT /api/v1/academy/players/{playerId}`.
 * `HU-005` de `EP-007-player-management` quedó consolidada como gestión de estado del jugador: desactivar y reactivar con endpoints `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate`.
 * Se abrió la historia `HU-007` de `EP-007-player-management` para importación masiva de jugadores desde Excel como base de migración de datos.
