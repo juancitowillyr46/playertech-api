@@ -308,6 +308,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-009` de `EP-007-player-management` quedó implementada con `PATCH /api/v1/academy/players/{playerId}/photo` para subir y reemplazar la foto del jugador.
 * `HU-007` de `EP-006-legal-guardian-management` quedó implementada y validada en runtime con `GET /api/v1/academy/guardians/{guardianId}/players`.
 * `HU-008` de `EP-006-legal-guardian-management` quedó documentada como contrato de autocomplete para jugadores disponibles a asociar desde `GET /api/v1/academy/guardians/{guardianId}/players/options`.
+* `HU-009` de `EP-006-legal-guardian-management` quedó implementada como autocomplete de acudientes desde `GET /api/v1/academy/guardians/options`.
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría; la responseuesta del alta usa un contract específico para onboarding y no el responseonse operativo de `Team`.
 * El MVP checklistar debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y forto de `Player`.
 * `EP-006` ya expone lectura y creación de acudientes por academia en HTTP, incluyendo el campo `relationship`, y `EP-008` ya cubre la relación jugador-acudiente con alta de acudiente, asociación, cambio de principal, eliminación lógica y vista por jugador.

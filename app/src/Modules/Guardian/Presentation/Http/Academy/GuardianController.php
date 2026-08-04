@@ -9,6 +9,7 @@ use App\Modules\Guardian\Application\Command\ActivateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\CreateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\InactivateLegalGuardianCommand;
 use App\Modules\Guardian\Application\Command\UpdateLegalGuardianCommand;
+use App\Modules\Guardian\Application\Handler\ListGuardianOptionsHandler;
 use App\Modules\Guardian\Application\Player\Options\ListAvailablePlayersHandler;
 use App\Modules\Guardian\Application\Player\Options\ListAvailablePlayersQuery;
 use App\Modules\Guardian\Application\Player\ListByGuardian\ListGuardianPlayersHandler;
@@ -19,6 +20,7 @@ use App\Modules\Guardian\Application\Handler\ListLegalGuardiansHandler;
 use App\Modules\Guardian\Application\Handler\CreateLegalGuardianHandler;
 use App\Modules\Guardian\Application\Handler\ShowLegalGuardianHandler;
 use App\Modules\Guardian\Application\Handler\UpdateLegalGuardianHandler;
+use App\Modules\Guardian\Application\Query\ListGuardianOptionsQuery;
 use App\Modules\Guardian\Application\Query\ListLegalGuardiansQuery;
 use App\Modules\Guardian\Application\Query\ShowLegalGuardianQuery;
 use App\Modules\Identity\Infrastructure\Tenant\TenantContext;
@@ -40,6 +42,7 @@ final class GuardianController extends AbstractPaginatedApiController
         private readonly Security $security,
         private readonly ValidatorInterface $validator,
         private readonly CreateLegalGuardianHandler $createLegalGuardianHandler,
+        private readonly ListGuardianOptionsHandler $listGuardianOptionsHandler,
         private readonly ListLegalGuardiansHandler $listLegalGuardiansHandler,
         private readonly ListGuardianPlayersHandler $listGuardianPlayersHandler,
         private readonly ListAvailablePlayersHandler $listAvailablePlayersHandler,
@@ -77,6 +80,22 @@ final class GuardianController extends AbstractPaginatedApiController
         $value = trim((string) $request->query->get($key, ''));
 
         return '' === $value ? null : $value;
+    }
+
+    #[Route('/options', name: 'api_v1_academy_guardians_options', methods: ['GET'])]
+    public function options(Request $request): JsonResponse
+    {
+        $items = ($this->listGuardianOptionsHandler)(
+            new ListGuardianOptionsQuery(
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                $this->optionalQueryString($request, 'q'),
+            )
+        );
+
+        return new JsonResponse([
+            'data' => array_map(static fn ($item) => $item->toArray(), $items),
+            'meta' => new \stdClass(),
+        ]);
     }
 
     #[Route('/{guardianId}/players', name: 'api_v1_academy_guardians_players_list', methods: ['GET'])]

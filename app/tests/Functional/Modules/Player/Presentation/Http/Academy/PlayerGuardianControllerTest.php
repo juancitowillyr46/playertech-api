@@ -109,6 +109,8 @@ final class PlayerGuardianControllerTest extends TestDatabaseKernel
                 'lastName' => 'Lopez',
                 'phone' => '+51 999 111 222',
                 'email' => 'maria@example.com',
+                'documentType' => 'CC',
+                'documentNumber' => '12345678',
                 'relationship' => 'Madre',
             ], JSON_THROW_ON_ERROR)
         ));
@@ -145,6 +147,8 @@ final class PlayerGuardianControllerTest extends TestDatabaseKernel
         $playerGuardiansPayload = json_decode($playerGuardiansResponse->getContent(), true, 512, JSON_THROW_ON_ERROR);
         self::assertCount(1, $playerGuardiansPayload['data']);
         self::assertSame($guardianId, $playerGuardiansPayload['data'][0]['guardian']['id']);
+        self::assertSame('Cédula de ciudadanía', $playerGuardiansPayload['data'][0]['guardian']['documentTypeName']);
+        self::assertSame('Madre', $playerGuardiansPayload['data'][0]['guardian']['relationshipName']);
 
         $guardianListResponse = self::$kernel->handle(Request::create(
             '/api/v1/academy/guardians',

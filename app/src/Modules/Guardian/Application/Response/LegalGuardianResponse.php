@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Guardian\Application\Response;
 
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardian;
+use App\Shared\Domain\Document\DocumentType;
 use App\Shared\Domain\Relationship\Relationship;
 
 final readonly class LegalGuardianResponse
@@ -51,10 +52,50 @@ final readonly class LegalGuardianResponse
             'phone' => $this->phone,
             'email' => $this->email,
             'documentType' => $this->documentType,
+            'documentTypeName' => self::documentTypeNameFrom($this->documentType),
             'documentNumber' => $this->documentNumber,
             'address' => $this->address,
             'relationship' => $this->relationship,
+            'relationshipName' => self::relationshipNameFrom($this->relationship),
             'status' => $this->status,
         ];
+    }
+
+    private static function documentTypeNameFrom(?string $documentType): ?string
+    {
+        if (null === $documentType) {
+            return null;
+        }
+
+        $normalized = strtoupper(trim($documentType));
+
+        return DocumentType::tryFrom($normalized)?->label()
+            ?? self::matchLabelOrValue($normalized, DocumentType::cases())
+            ?? $documentType;
+    }
+
+    private static function relationshipNameFrom(string $relationship): string
+    {
+        $normalized = strtoupper(trim($relationship));
+
+        return Relationship::tryFrom($normalized)?->label()
+            ?? self::matchLabelOrValue($normalized, Relationship::cases())
+            ?? $relationship;
+    }
+
+    /**
+     * @param array<int, \UnitEnum> $cases
+     */
+    private static function matchLabelOrValue(string $value, array $cases): ?string
+    {
+        foreach ($cases as $case) {
+            if ($case instanceof DocumentType || $case instanceof Relationship) {
+                if (strtoupper(trim($case->value)) === $value || strtoupper(trim($case->label())) === $value) {
+                    return $case->label();
+                }
+            }
+        }
+
+        return null;
     }
 }

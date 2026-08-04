@@ -111,6 +111,20 @@ El sistema permite al frontend consultar un selector liviano de jugadores dispon
 2. **Given** un texto parcial, **When** el frontend consulta el selector con `q`, **Then** el sistema devuelve coincidencias livianas para autocomplete.
 3. **Given** un `guardianId` inválido o fuera del tenant, **When** se consulta el selector, **Then** el sistema responde con el error de dominio correspondiente.
 
+### Historia de Usuario 8 - Autocomplete de acudientes (Priority: P8)
+
+El sistema permite al frontend consultar un selector liviano de acudientes dentro de la academia autenticada, usando autocomplete.
+
+**Por qué esta prioridad**: El formulario de asociación jugador-acudiente necesita buscar acudientes existentes de forma rápida sin cargar el listado completo.
+
+**Prueba independiente**: Un admin puede buscar acudientes por texto parcial y recibir resultados livianos.
+
+**Escenarios de aceptación**:
+
+1. **Given** acudientes en la academia, **When** el frontend consulta el selector, **Then** el sistema devuelve coincidencias livianas para autocomplete.
+2. **Given** un texto parcial, **When** el frontend consulta el selector con `q`, **Then** la respuesta filtra por nombres y apellidos del acudiente.
+3. **Given** un `q` vacío, **When** se consulta el selector, **Then** el sistema devuelve una muestra inicial de acudientes del tenant.
+
 ## Requisitos *(mandatory)*
 
 ### Requisitos funcionales
@@ -129,6 +143,7 @@ El sistema permite al frontend consultar un selector liviano de jugadores dispon
 - **FR-012**: El sistema MUST exponer `relationshipName` como label visible del parentesco en los responses del módulo.
 - **FR-013**: El sistema MUST permitir listar los jugadores asociados a un acudiente autenticado.
 - **FR-014**: El sistema MUST permitir listar jugadores disponibles para asociar a un acudiente usando un contrato tipo autocomplete que excluya los ya asociados.
+- **FR-015**: El sistema MUST permitir listar acudientes disponibles para autocomplete mediante `GET /api/v1/academy/guardians/options`.
 
 ### Entidades clave *(include if feature involves data)*
 

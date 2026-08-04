@@ -1905,6 +1905,45 @@ GET /api/v1/academy/guardians/{guardianId}/players/options?q=juan
 }
 ```
 
+---
+
+# Guardian Options
+
+## Purpose
+
+Exponer un selector liviano para autocomplete de acudientes dentro de la academia autenticada.
+
+## Endpoint
+
+```http
+GET /api/v1/academy/guardians/options?q=juan
+```
+
+## Rules
+
+* El resultado debe incluir sólo acudientes de la academia autenticada.
+* La búsqueda por `q` debe ser parcial, case-insensitive y accent-insensitive.
+* El envelope debe seguir el estándar `data` / `meta`.
+* La respuesta debe ser liviana para autocomplete.
+
+## Suggested Response
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "firstName": "Juan",
+      "lastName": "Pérez",
+      "documentNumber": "1088329031",
+      "documentTypeName": "Cédula de ciudadanía",
+      "relationshipName": "Madre"
+    }
+  ],
+  "meta": {}
+}
+```
+
 Para pruebas manuales sin Swagger:
 
 * Usar la colección de Postman como referencia operativa.
