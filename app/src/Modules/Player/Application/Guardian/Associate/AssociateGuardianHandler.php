@@ -40,7 +40,10 @@ final readonly class AssociateGuardianHandler
             throw new PlayerGuardianAlreadyExistsException();
         }
 
-        $isPrimary = $command->input->isPrimary ?? (0 === count($this->playerGuardianRepository->findAllByPlayer($command->academyId, $command->playerId)));
+        $hasExistingGuardians = [] !== $this->playerGuardianRepository->findAllByPlayer($command->academyId, $command->playerId);
+        $isPrimary = $hasExistingGuardians
+            ? ($command->input->isPrimary ?? false)
+            : true;
 
         if ($isPrimary) {
             $currentPrimary = $this->playerGuardianRepository->findPrimaryByPlayer($command->academyId, $command->playerId);

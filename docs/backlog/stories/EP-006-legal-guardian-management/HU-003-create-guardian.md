@@ -36,6 +36,7 @@ Para asociarlo posteriormente a uno o varios jugadores y conservar sus datos de 
 * La dirección y el correo pueden registrarse como datos opcionales.
 * El correo debe ser único dentro de la academia si aplica.
 * El registro debe quedar disponible para asociación con jugadores.
+* Cuando un jugador no tiene acudientes relacionados y se crea su primera asociación, esa relación debe quedar como principal automáticamente.
 
 ---
 

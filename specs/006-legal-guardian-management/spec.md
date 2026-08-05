@@ -111,6 +111,20 @@ El sistema permite al frontend consultar un selector liviano de jugadores dispon
 2. **Given** un texto parcial, **When** el frontend consulta el selector con `q`, **Then** el sistema devuelve coincidencias livianas para autocomplete.
 3. **Given** un `guardianId` inválido o fuera del tenant, **When** se consulta el selector, **Then** el sistema responde con el error de dominio correspondiente.
 
+### Historia de Usuario 8 - Alta de primer acudiente como principal (Priority: P8)
+
+El sistema asegura que, cuando un jugador no tiene acudientes relacionados y se crea la primera asociación, ese vínculo se marque automáticamente como principal.
+
+**Por qué esta prioridad**: El primer acudiente del jugador debe quedar disponible de inmediato para flujos operativos y financieros sin depender de una decisión manual del frontend.
+
+**Prueba independiente**: Un jugador sin acudientes puede recibir su primera relación y quedar con `isPrimary = true` aunque el payload no lo envíe o lo envíe en `false`.
+
+**Escenarios de aceptación**:
+
+1. **Given** un jugador sin acudientes relacionados, **When** el admin crea la primera asociación con `isPrimary=false`, **Then** el sistema persiste la relación como principal.
+2. **Given** un jugador sin acudientes relacionados, **When** el admin crea la primera asociación sin enviar `isPrimary`, **Then** el sistema persiste la relación como principal.
+3. **Given** un jugador que ya tiene acudientes relacionados, **When** el admin crea una nueva asociación, **Then** el sistema respeta el valor solicitado para `isPrimary`.
+
 ### Historia de Usuario 8 - Autocomplete de acudientes (Priority: P8)
 
 El sistema permite al frontend consultar un selector liviano de acudientes dentro de la academia autenticada, usando autocomplete.
@@ -144,6 +158,7 @@ El sistema permite al frontend consultar un selector liviano de acudientes dentr
 - **FR-013**: El sistema MUST permitir listar los jugadores asociados a un acudiente autenticado.
 - **FR-014**: El sistema MUST permitir listar jugadores disponibles para asociar a un acudiente usando un contrato tipo autocomplete que excluya los ya asociados.
 - **FR-015**: El sistema MUST permitir listar acudientes disponibles para autocomplete mediante `GET /api/v1/academy/guardians/options`.
+- **FR-016**: El sistema MUST marcar como principal la primera relación acudiente-jugador creada para un jugador sin vínculos previos, independientemente del valor enviado por el cliente.
 
 ### Entidades clave *(include if feature involves data)*
 

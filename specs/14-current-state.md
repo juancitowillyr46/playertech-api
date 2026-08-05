@@ -309,6 +309,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `HU-007` de `EP-006-legal-guardian-management` quedó implementada y validada en runtime con `GET /api/v1/academy/guardians/{guardianId}/players`.
 * `HU-008` de `EP-006-legal-guardian-management` quedó documentada como contrato de autocomplete para jugadores disponibles a asociar desde `GET /api/v1/academy/guardians/{guardianId}/players/options`.
 * `HU-009` de `EP-006-legal-guardian-management` quedó implementada como autocomplete de acudientes desde `GET /api/v1/academy/guardians/options`.
+* La primera asociación de un acudiente a un jugador queda automáticamente como principal aunque el frontend envíe `isPrimary=false` o no lo envíe; las asociaciones posteriores respetan el valor pedido por el cliente.
 * La desvinculación `DELETE /api/v1/academy/players/{playerId}/guardians/{guardianId}` quedó definida como borrado físico de la relación `player_guardians`; no aplica soft delete para el pivote. Si el acudiente eliminado era principal, el frontend debe refrescar y reasignar un principal cuando corresponda.
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría; la responseuesta del alta usa un contract específico para onboarding y no el responseonse operativo de `Team`.
 * El MVP checklistar debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y forto de `Player`.
