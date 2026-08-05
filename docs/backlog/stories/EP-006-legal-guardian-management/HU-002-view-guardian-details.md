@@ -33,6 +33,7 @@ Para revisar su información completa antes de asociarlo o actualizarlo.
 
 * El acudiente debe pertenecer a la academia actual.
 * El detalle debe mostrar la información registrada y su estado.
+* El detalle debe exponer `phoneSingle` con el teléfono local sin prefijo internacional cuando aplique.
 
 ---
 
@@ -40,6 +41,7 @@ Para revisar su información completa antes de asociarlo o actualizarlo.
 
 * Dado un acudiente existente, cuando consulto su detalle, entonces el sistema muestra la información completa.
 * Dado un acudiente inexistente, cuando consulto el detalle, entonces el sistema informa el error.
+* Dado un acudiente con teléfono internacional, cuando consulto el detalle, entonces el sistema expone también `phoneSingle` sin prefijo internacional cuando exista.
 
 ---
 

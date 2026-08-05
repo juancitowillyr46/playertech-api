@@ -20,6 +20,7 @@ Authorization: Bearer <token>
     "firstName": "Juan",
     "lastName": "Rodas",
     "phone": "+573125953354",
+    "phoneSingle": "3125953354",
     "email": "juan.rodas@example.com",
     "documentType": "CC",
     "documentNumber": "1088329031",
@@ -35,3 +36,4 @@ Authorization: Bearer <token>
 
 - El acudiente debe pertenecer a la academia autenticada.
 - Si no existe, debe responder el error de recurso no encontrado vigente.
+- Cuando el teléfono aplique a formato colombiano, el detalle debe exponer `phoneSingle` sin prefijo internacional.

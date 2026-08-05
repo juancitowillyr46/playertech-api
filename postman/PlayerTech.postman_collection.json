@@ -285,7 +285,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000401\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"firstName\": \"Maria\",\n      \"lastName\": \"Lopez\",\n      \"phone\": \"+51 999 111 222\",\n      \"email\": \"maria@example.com\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000401\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"firstName\": \"Maria\",\n      \"lastName\": \"Lopez\",\n      \"phone\": \"+51 999 111 222\",\n      \"phoneSingle\": \"999111222\",\n      \"email\": \"maria@example.com\",\n      \"status\": \"ACTIVE\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 1,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
             }
           ]
         },
@@ -328,7 +328,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000401\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Lopez\",\n    \"phone\": \"+51 999 111 222\",\n    \"email\": \"maria@example.com\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000401\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Lopez\",\n    \"phone\": \"+51 999 111 222\",\n    \"phoneSingle\": \"999111222\",\n    \"email\": \"maria@example.com\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         },
@@ -378,7 +378,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000401\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Lopez\",\n    \"phone\": \"+51 999 111 222\",\n    \"email\": \"maria@example.com\",\n    \"documentType\": \"DNI\",\n    \"documentNumber\": \"12345678\",\n    \"address\": \"Av. Central 123\",\n    \"relationship\": \"Madre\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000401\",\n    \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Lopez\",\n    \"phone\": \"+51 999 111 222\",\n    \"phoneSingle\": \"999111222\",\n    \"email\": \"maria@example.com\",\n    \"documentType\": \"DNI\",\n    \"documentNumber\": \"12345678\",\n    \"address\": \"Av. Central 123\",\n    \"relationship\": \"Madre\",\n    \"status\": \"ACTIVE\"\n  },\n  \"meta\": {}\n}"
             }
           ]
         }
@@ -427,7 +427,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000501\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"playerId\": \"019f0000-0000-7000-8000-000000000300\",\n      \"isPrimary\": true,\n      \"guardian\": {\n        \"id\": \"019f0000-0000-7000-8000-000000000401\",\n        \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n        \"firstName\": \"Maria\",\n        \"lastName\": \"Lopez\",\n        \"phone\": \"+51 999 111 222\",\n        \"email\": \"maria@example.com\",\n        \"status\": \"ACTIVE\"\n      }\n    }\n  ],\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"019f0000-0000-7000-8000-000000000501\",\n      \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n      \"playerId\": \"019f0000-0000-7000-8000-000000000300\",\n      \"isPrimary\": true,\n      \"guardian\": {\n        \"id\": \"019f0000-0000-7000-8000-000000000401\",\n        \"academyId\": \"019f0000-0000-7000-8000-000000000001\",\n        \"firstName\": \"Maria\",\n        \"lastName\": \"Lopez\",\n        \"phone\": \"+51 999 111 222\",\n        \"phoneSingle\": \"999111222\",\n        \"email\": \"maria@example.com\",\n        \"status\": \"ACTIVE\"\n      }\n    }\n  ],\n  \"meta\": {}\n}"
             }
           ]
         }

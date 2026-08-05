@@ -50,6 +50,7 @@ final readonly class LegalGuardianResponse
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
             'phone' => $this->phone,
+            'phoneSingle' => self::phoneSingleFrom($this->phone),
             'email' => $this->email,
             'documentType' => $this->documentType,
             'documentTypeName' => self::documentTypeNameFrom($this->documentType),
@@ -81,6 +82,25 @@ final readonly class LegalGuardianResponse
         return Relationship::tryFrom($normalized)?->label()
             ?? self::matchLabelOrValue($normalized, Relationship::cases())
             ?? $relationship;
+    }
+
+    private static function phoneSingleFrom(?string $phone): ?string
+    {
+        if (null === $phone) {
+            return null;
+        }
+
+        $normalized = preg_replace('/[^\d]/', '', $phone);
+
+        if (null === $normalized || '' === $normalized) {
+            return null;
+        }
+
+        if (str_starts_with(trim($phone), '+57') && str_starts_with($normalized, '57')) {
+            return substr($normalized, 2);
+        }
+
+        return $normalized;
     }
 
     /**

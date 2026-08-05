@@ -15,6 +15,7 @@ final readonly class GuardianOptionResponse
         private string $firstName,
         private string $lastName,
         private ?string $documentNumber,
+        private ?string $phoneSingle,
         private ?string $documentTypeName,
         private ?string $relationshipName,
     ) {
@@ -27,6 +28,7 @@ final readonly class GuardianOptionResponse
             $guardian->firstName(),
             $guardian->lastName(),
             $guardian->documentNumber(),
+            self::phoneSingleFrom($guardian->phone()),
             self::documentTypeNameFrom($guardian->documentType()),
             self::relationshipNameFrom($guardian->relationship()),
         );
@@ -39,6 +41,7 @@ final readonly class GuardianOptionResponse
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
             'documentNumber' => $this->documentNumber,
+            'phoneSingle' => $this->phoneSingle,
             'documentTypeName' => $this->documentTypeName,
             'relationshipName' => $this->relationshipName,
         ];
@@ -60,5 +63,24 @@ final readonly class GuardianOptionResponse
         $normalized = strtoupper(trim($relationship));
 
         return Relationship::tryFrom($normalized)?->label() ?? $relationship;
+    }
+
+    private static function phoneSingleFrom(?string $phone): ?string
+    {
+        if (null === $phone) {
+            return null;
+        }
+
+        $normalized = preg_replace('/[^\d]/', '', $phone);
+
+        if (null === $normalized || '' === $normalized) {
+            return null;
+        }
+
+        if (str_starts_with(trim($phone), '+57') && str_starts_with($normalized, '57')) {
+            return substr($normalized, 2);
+        }
+
+        return $normalized;
     }
 }

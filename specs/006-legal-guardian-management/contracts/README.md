@@ -22,4 +22,5 @@ Este directorio contiene los contratos HTTP canónicos del módulo de acudientes
 - La actualización, inactivación y reactivación forman parte del alcance funcional documentado en la épica y las HUs.
 - El selector `players/options` es un contrato liviano para autocomplete y debe excluir jugadores ya asociados al acudiente.
 - El selector `guardians/options` es un contrato liviano para autocomplete de acudientes dentro de la academia autenticada y debe buscar por `firstName`, `lastName` y nombre completo.
+- Los responses de acudientes exponen `phone` completo y `phoneSingle` como representación local sin prefijo internacional cuando aplique.
 - Los contratos deben reflejar sólo lo que la implementación expone o se ha definido formalmente en backlog.

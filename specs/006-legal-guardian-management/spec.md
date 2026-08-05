@@ -174,6 +174,7 @@ El sistema permite al frontend consultar un selector liviano de acudientes dentr
 - **FR-015**: El sistema MUST permitir listar acudientes disponibles para autocomplete mediante `GET /api/v1/academy/guardians/options`.
 - **FR-016**: El sistema MUST marcar como principal la primera relación acudiente-jugador creada para un jugador sin vínculos previos, independientemente del valor enviado por el cliente.
 - **FR-017**: El sistema MUST promover automáticamente al acudiente no principal más reciente cuando se elimina la relación principal de un jugador y existan vínculos remanentes.
+- **FR-018**: El sistema MUST exponer `phoneSingle` como teléfono local sin prefijo internacional cuando el número almacenado aplique al formato colombiano.
 
 ### Entidades clave *(include if feature involves data)*
 

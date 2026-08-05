@@ -34,6 +34,7 @@ Authorization: Bearer <token>
     "firstName": "Juan",
     "lastName": "Rodas",
     "phone": "+573125953354",
+    "phoneSingle": "3125953354",
     "email": "juan.rodas.updated@example.com",
     "documentType": "CC",
     "documentNumber": "1088329031",
@@ -51,3 +52,4 @@ Authorization: Bearer <token>
 - El acudiente debe pertenecer a la academia autenticada.
 - El correo debe conservar unicidad por academia si se modifica.
 - No se debe permitir actualizar acudientes de otra academia.
+- Cuando el teléfono aplique a formato colombiano, el response debe incluir `phoneSingle` sin prefijo internacional.

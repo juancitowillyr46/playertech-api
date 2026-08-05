@@ -21,6 +21,7 @@ Authorization: Bearer <token>
       "firstName": "Juan",
       "lastName": "Rodas",
       "phone": "+573125953354",
+      "phoneSingle": "3125953354",
       "email": "juan.rodas@example.com",
       "documentType": "CC",
       "documentNumber": "1088329031",
@@ -45,3 +46,4 @@ Authorization: Bearer <token>
 
 - La respuesta debe estar paginada.
 - El listado sólo incluye acudientes de la academia autenticada.
+- Cuando el teléfono aplique a formato colombiano, cada item debe exponer `phoneSingle` sin prefijo internacional.
