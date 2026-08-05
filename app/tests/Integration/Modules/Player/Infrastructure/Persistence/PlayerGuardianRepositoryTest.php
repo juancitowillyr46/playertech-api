@@ -125,4 +125,16 @@ final class PlayerGuardianRepositoryTest extends KernelTestCase
         self::assertSame($this->guardianId->value(), $primary?->guardianId()->value());
         self::assertCount(1, $this->repository->findAllByPlayer($this->academyId, $this->playerId));
     }
+
+    public function testItRemovesAssociationPhysically(): void
+    {
+        $relation = $this->repository->findByPlayerAndGuardian($this->academyId, $this->playerId, $this->guardianId);
+
+        self::assertNotNull($relation);
+
+        $this->repository->remove($relation);
+
+        self::assertNull($this->repository->findByPlayerAndGuardian($this->academyId, $this->playerId, $this->guardianId));
+        self::assertCount(0, $this->repository->findAllByPlayer($this->academyId, $this->playerId));
+    }
 }

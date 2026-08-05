@@ -7,7 +7,6 @@ namespace App\Modules\Player\Application\Guardian\RemoveAssociation;
 use App\Modules\Guardian\Domain\Exception\LegalGuardianNotFoundException;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianRepository;
 use App\Modules\Player\Domain\Exception\PlayerGuardianNotFoundException;
-use App\Modules\Player\Domain\Exception\PrimaryGuardianRemovalNotAllowedException;
 use App\Modules\Player\Domain\Player\PlayerRepository;
 use App\Modules\Player\Domain\PlayerGuardian\PlayerGuardianRepository;
 
@@ -36,11 +35,6 @@ final readonly class RemoveGuardianAssociationHandler
             throw new PlayerGuardianNotFoundException();
         }
 
-        if ($playerGuardian->isPrimary()) {
-            throw new PrimaryGuardianRemovalNotAllowedException();
-        }
-
-        $playerGuardian->delete($command->actorId);
-        $this->playerGuardianRepository->save($playerGuardian);
+        $this->playerGuardianRepository->remove($playerGuardian);
     }
 }

@@ -26,6 +26,12 @@ final class PlayerGuardianRepository extends ServiceEntityRepository implements 
         $this->getEntityManager()->flush();
     }
 
+    public function remove(PlayerGuardian $playerGuardian): void
+    {
+        $this->getEntityManager()->remove($playerGuardian);
+        $this->getEntityManager()->flush();
+    }
+
     public function findById(AcademyId $academyId, PlayerGuardianId $playerGuardianId): ?PlayerGuardian
     {
         return $this->createQueryBuilder('playerGuardian')

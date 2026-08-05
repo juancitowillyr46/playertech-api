@@ -19,7 +19,7 @@ final class ListGuardianOptionsHandlerTest extends TestCase
     public function testItListsGuardiansForAutocomplete(): void
     {
         $academyId = AcademyId::generate();
-        $guardianRepository = new InMemoryGuardianRepository(
+        $guardianRepository = new InMemoryGuardianOptionsRepository(
             LegalGuardian::create(
                 LegalGuardianId::generate(),
                 $academyId,
@@ -60,7 +60,7 @@ final class ListGuardianOptionsHandlerTest extends TestCase
     }
 }
 
-final class InMemoryGuardianRepository implements LegalGuardianRepository
+final class InMemoryGuardianOptionsRepository implements LegalGuardianRepository
 {
     /** @var array<string, LegalGuardian> */
     private array $items = [];

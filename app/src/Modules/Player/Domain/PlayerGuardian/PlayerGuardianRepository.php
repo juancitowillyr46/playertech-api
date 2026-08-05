@@ -27,4 +27,6 @@ interface PlayerGuardianRepository
     public function findAllByGuardian(AcademyId $academyId, \App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId $guardianId): array;
 
     public function findPrimaryByPlayer(AcademyId $academyId, PlayerId $playerId): ?PlayerGuardian;
+
+    public function remove(PlayerGuardian $playerGuardian): void;
 }

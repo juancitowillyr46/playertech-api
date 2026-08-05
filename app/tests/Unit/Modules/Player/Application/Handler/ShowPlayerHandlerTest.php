@@ -192,6 +192,7 @@ final class InMemoryPlayerGuardianRepository implements PlayerGuardianRepository
     public function findAllByPlayer(AcademyId $academyId, \App\Modules\Player\Domain\Player\PlayerId $playerId): array { return []; }
     public function findAllByGuardian(AcademyId $academyId, LegalGuardianId $guardianId): array { return []; }
     public function findPrimaryByPlayer(AcademyId $academyId, \App\Modules\Player\Domain\Player\PlayerId $playerId): ?PlayerGuardian { return $this->items[array_key_first($this->items)] ?? null; }
+    public function remove(PlayerGuardian $playerGuardian): void { unset($this->items[$playerGuardian->id()->value()]); }
 }
 
 final class InMemoryTeamRepository implements TeamRepository

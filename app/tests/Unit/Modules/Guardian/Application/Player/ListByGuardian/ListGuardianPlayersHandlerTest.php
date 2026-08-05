@@ -130,6 +130,7 @@ final class InMemoryPlayerGuardianRepository implements PlayerGuardianRepository
         return array_values(array_filter($this->items, static fn (PlayerGuardian $relation): bool => $relation->academyId()->equals($academyId) && $relation->guardianId()->equals($guardianId)));
     }
     public function findPrimaryByPlayer(AcademyId $academyId, PlayerId $playerId): ?PlayerGuardian { return null; }
+    public function remove(PlayerGuardian $playerGuardian): void { unset($this->items[$playerGuardian->id()->value()]); }
 }
 
 final class InMemoryCategoryRepository implements CategoryRepository

@@ -1868,6 +1868,12 @@ PATCH /api/v1/academy/players/{playerId}/guardians/{guardianId}/primary
 DELETE /api/v1/academy/players/{playerId}/guardians/{guardianId}
 ```
 
+## Notes
+
+* La desvinculación elimina físicamente la relación `player_guardians`.
+* Si el jugador conserva otros acudientes, la operación no afecta esas asociaciones.
+* Si el acudiente eliminado era principal, el frontend debe refrescar el listado y decidir un nuevo principal si el flujo de negocio lo requiere.
+
 ---
 
 # Guardian Available Players Options
