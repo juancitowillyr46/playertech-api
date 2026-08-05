@@ -313,6 +313,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La desvinculación `DELETE /api/v1/academy/players/{playerId}/guardians/{guardianId}` quedó definida como borrado físico de la relación `player_guardians`; no aplica soft delete para el pivote. Si el acudiente eliminado era principal, el frontend debe refrescar y reasignar un principal cuando corresponda.
 * Al eliminar el acudiente principal de un jugador, el backend promueve automáticamente al vínculo no principal más reciente que quede disponible.
 * Los responses de acudientes exponen `phone` completo y `phoneSingle` sin prefijo internacional cuando aplique al formato colombiano.
+* `GET /api/v1/academy/players/{playerId}/guardians/options` quedó como selector contextual para autocomplete de acudientes disponibles de un jugador, excluyendo los ya vinculados.
 * `HU-009` de `EP-003` quedó implementada: el signup público crea el primer equipo con `category_id` y `team_name`, validando categoría activa y duplicados por academia/categoría; la responseuesta del alta usa un contract específico para onboarding y no el responseonse operativo de `Team`.
 * El MVP checklistar debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y forto de `Player`.
 * `EP-006` ya expone lectura y creación de acudientes por academia en HTTP, incluyendo el campo `relationship`, y `EP-008` ya cubre la relación jugador-acudiente con alta de acudiente, asociación, cambio de principal, eliminación lógica y vista por jugador.

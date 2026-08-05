@@ -228,4 +228,77 @@ final class PlayerGuardianControllerTest extends TestDatabaseKernel
 
         self::assertSame(204, $removeResponse->getStatusCode());
     }
+
+    public function testItListsAvailableGuardiansForAPlayerAutocomplete(): void
+    {
+        $firstGuardianResponse = self::$kernel->handle(Request::create(
+            '/api/v1/academy/guardians',
+            'POST',
+            server: [
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->jwtToken,
+                'CONTENT_TYPE' => 'application/json',
+            ],
+            content: json_encode([
+                'firstName' => 'Julio',
+                'lastName' => 'Ramos',
+                'phone' => '+51 999 111 222',
+                'email' => 'julio@example.com',
+                'documentType' => 'CC',
+                'documentNumber' => '12345678',
+                'relationship' => 'Padre',
+            ], JSON_THROW_ON_ERROR)
+        ));
+
+        $secondGuardianResponse = self::$kernel->handle(Request::create(
+            '/api/v1/academy/guardians',
+            'POST',
+            server: [
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->jwtToken,
+                'CONTENT_TYPE' => 'application/json',
+            ],
+            content: json_encode([
+                'firstName' => 'Juliana',
+                'lastName' => 'Perez',
+                'phone' => '+51 999 333 444',
+                'email' => 'juliana@example.com',
+                'documentType' => 'CC',
+                'documentNumber' => '87654321',
+                'relationship' => 'Madre',
+            ], JSON_THROW_ON_ERROR)
+        ));
+
+        $firstGuardianId = json_decode($firstGuardianResponse->getContent(), true, 512, JSON_THROW_ON_ERROR)['data']['id'];
+        $secondGuardianId = json_decode($secondGuardianResponse->getContent(), true, 512, JSON_THROW_ON_ERROR)['data']['id'];
+
+        self::$kernel->handle(Request::create(
+            '/api/v1/academy/players/'.$this->playerId.'/guardians',
+            'POST',
+            server: [
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->jwtToken,
+                'CONTENT_TYPE' => 'application/json',
+            ],
+            content: json_encode([
+                'guardianId' => $firstGuardianId,
+                'isPrimary' => true,
+            ], JSON_THROW_ON_ERROR)
+        ));
+
+        $optionsResponse = self::$kernel->handle(Request::create(
+            '/api/v1/academy/players/'.$this->playerId.'/guardians/options?q=jul',
+            'GET',
+            server: [
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->jwtToken,
+                'CONTENT_TYPE' => 'application/json',
+            ]
+        ));
+
+        self::assertSame(200, $optionsResponse->getStatusCode());
+        $payload = json_decode($optionsResponse->getContent(), true, 512, JSON_THROW_ON_ERROR);
+
+        self::assertCount(1, $payload['data']);
+        self::assertSame($secondGuardianId, $payload['data'][0]['id']);
+        self::assertSame('Juliana', $payload['data'][0]['firstName']);
+        self::assertSame('Perez', $payload['data'][0]['lastName']);
+        self::assertSame('51999333444', $payload['data'][0]['phoneSingle']);
+    }
 }

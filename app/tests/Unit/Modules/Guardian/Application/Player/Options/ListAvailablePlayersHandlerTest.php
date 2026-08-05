@@ -196,6 +196,7 @@ final class InMemoryGuardianRepository implements LegalGuardianRepository
         return null !== $guardian && $guardian->academyId()->equals($academyId) ? $guardian : null;
     }
     public function findOneByEmail(AcademyId $academyId, string $email): ?LegalGuardian { return null; }
+    public function findAvailableByPlayer(AcademyId $academyId, \App\Modules\Player\Domain\Player\PlayerId $playerId, ?string $query = null): array { return []; }
     public function findAllByAcademy(AcademyId $academyId, \App\Shared\Application\Pagination\PaginationQuery $pagination, ?string $documentNumber = null, ?string $documentType = null, ?string $firstName = null, ?string $lastName = null, ?string $fullName = null): array { return ['items' => [], 'total' => 0]; }
 }
 

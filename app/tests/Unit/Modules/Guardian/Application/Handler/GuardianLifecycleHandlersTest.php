@@ -236,6 +236,11 @@ final class InMemoryGuardianRepository implements LegalGuardianRepository
         return null;
     }
 
+    public function findAvailableByPlayer(AcademyId $academyId, \App\Modules\Player\Domain\Player\PlayerId $playerId, ?string $query = null): array
+    {
+        return [];
+    }
+
     public function findAllByAcademy(
         AcademyId $academyId,
         PaginationQuery $pagination,

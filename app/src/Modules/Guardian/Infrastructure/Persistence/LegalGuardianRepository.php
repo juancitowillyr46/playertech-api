@@ -8,6 +8,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardian;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianRepository as LegalGuardianRepositoryContract;
+use App\Modules\Player\Domain\Player\PlayerId;
 use App\Shared\Application\Pagination\PaginationQuery;
 use App\Shared\Application\Pagination\SortFieldResolver;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -60,6 +61,39 @@ final class LegalGuardianRepository extends ServiceEntityRepository implements L
             ->setParameter('email', $email)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findAvailableByPlayer(AcademyId $academyId, PlayerId $playerId, ?string $query = null): array
+    {
+        $qb = $this->createQueryBuilder('guardian')
+            ->where('guardian.academyId = :academyId')
+            ->andWhere('guardian.deletedAt IS NULL')
+            ->andWhere('NOT EXISTS (
+                SELECT 1
+                FROM App\Modules\Player\Domain\PlayerGuardian\PlayerGuardian playerGuardian
+                WHERE playerGuardian.academyId = :academyId
+                  AND playerGuardian.playerId = :playerId
+                  AND playerGuardian.guardianId = guardian.id
+                  AND playerGuardian.deletedAt IS NULL
+            )')
+            ->setParameter('academyId', $academyId->value())
+            ->setParameter('playerId', $playerId->value())
+            ->orderBy('guardian.firstName', 'ASC')
+            ->addOrderBy('guardian.lastName', 'ASC');
+
+        if (null !== $query && '' !== trim($query)) {
+            $needle = '%'.$this->normalizeSearchText($query).'%';
+
+            $qb->andWhere('(
+                LOWER(guardian.firstName) LIKE :query
+                OR LOWER(guardian.lastName) LIKE :query
+                OR LOWER(CONCAT(guardian.firstName, \' \', guardian.lastName)) LIKE :query
+                OR LOWER(guardian.documentNumber) LIKE :query
+            )')
+                ->setParameter('query', $needle);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     public function findAllByAcademy(

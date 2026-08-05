@@ -153,6 +153,20 @@ El sistema permite al frontend consultar un selector liviano de acudientes dentr
 2. **Given** un texto parcial, **When** el frontend consulta el selector con `q`, **Then** la respuesta filtra por `firstName`, `lastName` y el nombre completo del acudiente.
 3. **Given** un `q` vacío, **When** se consulta el selector, **Then** el sistema devuelve una muestra inicial de acudientes del tenant.
 
+### Historia de Usuario 9 - Autocomplete contextual de acudientes por jugador (Priority: P9)
+
+El sistema permite al frontend consultar un selector liviano de acudientes disponibles para asociar a un jugador específico, excluyendo los ya vinculados a ese jugador.
+
+**Por qué esta prioridad**: El formulario de asociación jugador-acudiente necesita sugerir únicamente candidatos válidos para el jugador activo.
+
+**Prueba independiente**: Un jugador puede consultar acudientes disponibles y el autocomplete excluye los ya relacionados.
+
+**Escenarios de aceptación**:
+
+1. **Given** un jugador con acudientes ya asociados, **When** el frontend consulta el selector contextual, **Then** la respuesta excluye los acudientes ya vinculados.
+2. **Given** un texto parcial, **When** el frontend consulta el selector contextual con `q`, **Then** el sistema devuelve coincidencias livianas para autocomplete.
+3. **Given** un `playerId` inválido o fuera del tenant, **When** se consulta el selector, **Then** el sistema responde con el error de dominio correspondiente.
+
 ## Requisitos *(mandatory)*
 
 ### Requisitos funcionales
@@ -175,6 +189,7 @@ El sistema permite al frontend consultar un selector liviano de acudientes dentr
 - **FR-016**: El sistema MUST marcar como principal la primera relación acudiente-jugador creada para un jugador sin vínculos previos, independientemente del valor enviado por el cliente.
 - **FR-017**: El sistema MUST promover automáticamente al acudiente no principal más reciente cuando se elimina la relación principal de un jugador y existan vínculos remanentes.
 - **FR-018**: El sistema MUST exponer `phoneSingle` como teléfono local sin prefijo internacional cuando el número almacenado aplique al formato colombiano.
+- **FR-019**: El sistema MUST permitir listar acudientes disponibles para un jugador específico mediante `GET /api/v1/academy/players/{playerId}/guardians/options`, excluyendo los ya vinculados a ese jugador.
 
 ### Entidades clave *(include if feature involves data)*
 

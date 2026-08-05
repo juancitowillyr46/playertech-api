@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Guardian\Domain\LegalGuardian;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Player\Domain\Player\PlayerId;
 use App\Shared\Application\Pagination\PaginationQuery;
 
 interface LegalGuardianRepository
@@ -14,6 +15,11 @@ interface LegalGuardianRepository
     public function findById(AcademyId $academyId, LegalGuardianId $guardianId): ?LegalGuardian;
 
     public function findOneByEmail(AcademyId $academyId, string $email): ?LegalGuardian;
+
+    /**
+     * @return LegalGuardian[]
+     */
+    public function findAvailableByPlayer(AcademyId $academyId, PlayerId $playerId, ?string $query = null): array;
 
     /**
      * @return array{items: LegalGuardian[], total: int}

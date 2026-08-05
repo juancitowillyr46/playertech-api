@@ -11,6 +11,8 @@ use App\Modules\Player\Application\Guardian\ListByPlayer\ListPlayerGuardiansHand
 use App\Modules\Player\Application\Guardian\ListByPlayer\ListPlayerGuardiansQuery;
 use App\Modules\Player\Application\Guardian\Associate\AssociateGuardianCommand;
 use App\Modules\Player\Application\Guardian\Associate\AssociateGuardianHandler;
+use App\Modules\Player\Application\Guardian\Options\ListAvailableGuardiansHandler;
+use App\Modules\Player\Application\Guardian\Options\ListAvailableGuardiansQuery;
 use App\Modules\Player\Application\Guardian\ChangePrimary\ChangePrimaryGuardianCommand;
 use App\Modules\Player\Application\Guardian\ChangePrimary\ChangePrimaryGuardianHandler;
 use App\Modules\Player\Application\Guardian\RemoveAssociation\RemoveGuardianAssociationCommand;
@@ -32,6 +34,7 @@ final class PlayerGuardianController extends AbstractApiController
         private readonly Security $security,
         private readonly ValidatorInterface $validator,
         private readonly ListPlayerGuardiansHandler $listPlayerGuardiansHandler,
+        private readonly ListAvailableGuardiansHandler $listAvailableGuardiansHandler,
         private readonly AssociateGuardianHandler $associateGuardianHandler,
         private readonly ChangePrimaryGuardianHandler $changePrimaryGuardianHandler,
         private readonly RemoveGuardianAssociationHandler $removeGuardianAssociationHandler,
@@ -46,6 +49,23 @@ final class PlayerGuardianController extends AbstractApiController
             new ListPlayerGuardiansQuery(
                 new AcademyId($this->tenantContext->requireAcademyId()),
                 new PlayerId($playerId),
+            )
+        );
+
+        return new JsonResponse([
+            'data' => array_map(static fn ($item) => $item->toArray(), $items),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/options', name: 'api_v1_academy_player_guardians_options', methods: ['GET'])]
+    public function availableGuardians(string $playerId, Request $request): JsonResponse
+    {
+        $items = ($this->listAvailableGuardiansHandler)(
+            new ListAvailableGuardiansQuery(
+                new AcademyId($this->tenantContext->requireAcademyId()),
+                new PlayerId($playerId),
+                $this->optionalQueryString($request, 'q'),
             )
         );
 
@@ -107,5 +127,18 @@ final class PlayerGuardianController extends AbstractApiController
         );
 
         return new Response(status: Response::HTTP_NO_CONTENT);
+    }
+
+    private function optionalQueryString(Request $request, string $key): ?string
+    {
+        $value = $request->query->get($key);
+
+        if (null === $value) {
+            return null;
+        }
+
+        $trimmed = trim((string) $value);
+
+        return '' === $trimmed ? null : $trimmed;
     }
 }
