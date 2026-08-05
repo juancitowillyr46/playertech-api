@@ -125,6 +125,20 @@ El sistema asegura que, cuando un jugador no tiene acudientes relacionados y se 
 2. **Given** un jugador sin acudientes relacionados, **When** el admin crea la primera asociación sin enviar `isPrimary`, **Then** el sistema persiste la relación como principal.
 3. **Given** un jugador que ya tiene acudientes relacionados, **When** el admin crea una nueva asociación, **Then** el sistema respeta el valor solicitado para `isPrimary`.
 
+### Historia de Usuario 9 - Reasignar principal al desvincular (Priority: P9)
+
+El sistema debe promover automáticamente al acudiente más reciente que no sea principal cuando se elimina la relación principal de un jugador.
+
+**Por qué esta prioridad**: El jugador no debe quedar sin acudiente principal operativo tras una desvinculación.
+
+**Prueba independiente**: Al eliminar el acudiente principal, uno de los vínculos restantes queda como principal sin intervención manual.
+
+**Escenarios de aceptación**:
+
+1. **Given** un jugador con múltiples acudientes, **When** se elimina la relación principal, **Then** el sistema marca como principal al vínculo no principal más reciente.
+2. **Given** un jugador con un único acudiente no principal, **When** se elimina otro vínculo principal, **Then** el sistema conserva coherencia y no rompe la relación restante.
+3. **Given** un jugador sin acudientes remanentes, **When** se elimina la relación principal, **Then** el sistema no intenta promover ningún registro.
+
 ### Historia de Usuario 8 - Autocomplete de acudientes (Priority: P8)
 
 El sistema permite al frontend consultar un selector liviano de acudientes dentro de la academia autenticada, usando autocomplete.
@@ -159,6 +173,7 @@ El sistema permite al frontend consultar un selector liviano de acudientes dentr
 - **FR-014**: El sistema MUST permitir listar jugadores disponibles para asociar a un acudiente usando un contrato tipo autocomplete que excluya los ya asociados.
 - **FR-015**: El sistema MUST permitir listar acudientes disponibles para autocomplete mediante `GET /api/v1/academy/guardians/options`.
 - **FR-016**: El sistema MUST marcar como principal la primera relación acudiente-jugador creada para un jugador sin vínculos previos, independientemente del valor enviado por el cliente.
+- **FR-017**: El sistema MUST promover automáticamente al acudiente no principal más reciente cuando se elimina la relación principal de un jugador y existan vínculos remanentes.
 
 ### Entidades clave *(include if feature involves data)*
 

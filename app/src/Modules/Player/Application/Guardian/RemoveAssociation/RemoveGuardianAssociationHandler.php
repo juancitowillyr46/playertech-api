@@ -35,6 +35,29 @@ final readonly class RemoveGuardianAssociationHandler
             throw new PlayerGuardianNotFoundException();
         }
 
+        $wasPrimary = $playerGuardian->isPrimary();
+
         $this->playerGuardianRepository->remove($playerGuardian);
+
+        if (!$wasPrimary) {
+            return;
+        }
+
+        $remainingGuardians = $this->playerGuardianRepository->findAllByPlayer($command->academyId, $command->playerId);
+        $candidate = null;
+
+        foreach (array_reverse($remainingGuardians) as $relation) {
+            if (!$relation->isPrimary()) {
+                $candidate = $relation;
+                break;
+            }
+        }
+
+        if (null === $candidate) {
+            return;
+        }
+
+        $candidate->promote($command->actorId);
+        $this->playerGuardianRepository->save($candidate);
     }
 }
