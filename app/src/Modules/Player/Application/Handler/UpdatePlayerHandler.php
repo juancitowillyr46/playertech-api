@@ -56,7 +56,7 @@ final readonly class UpdatePlayerHandler
             $command->input->documentType,
             $command->input->firstName,
             $command->input->lastName,
-            new \DateTimeImmutable($command->input->birthDate),
+            $this->resolveBirthDate($player, $command->input->birthDate),
             $command->input->documentNumber,
             $command->input->email,
             $command->input->phone,
@@ -72,5 +72,14 @@ final readonly class UpdatePlayerHandler
         $this->playerRepository->save($player);
 
         return PlayerResponse::fromPlayer($player);
+    }
+
+    private function resolveBirthDate(\App\Modules\Player\Domain\Player\Player $player, ?string $birthDate): \DateTimeImmutable
+    {
+        if (null === $birthDate || '' === trim($birthDate)) {
+            return $player->birthDate();
+        }
+
+        return new \DateTimeImmutable($birthDate);
     }
 }

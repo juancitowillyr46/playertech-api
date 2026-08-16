@@ -26,7 +26,7 @@ final readonly class CreatePlayerHandler
         $academyId = new AcademyId($command->academyId);
         $input = $command->input;
 
-        if (null === $input->documentType || null === $input->firstName || null === $input->lastName || null === $input->birthDate || null === $input->documentNumber) {
+        if (null === $input->documentType || null === $input->firstName || null === $input->lastName || null === $input->documentNumber) {
             throw new BadRequestHttpException('Missing required player input.');
         }
 
@@ -38,13 +38,15 @@ final readonly class CreatePlayerHandler
             throw new PlayerAlreadyExistsException('El correo electrónico ya existe para esta academia.');
         }
 
+        $birthDate = $this->resolveBirthDate($input->birthDate);
+
         $player = Player::create(
             PlayerId::generate(),
             $academyId,
             $input->documentType,
             $input->firstName,
             $input->lastName,
-            new \DateTimeImmutable($input->birthDate),
+            $birthDate,
             $input->documentNumber,
             $input->email,
             $input->phone,
@@ -60,5 +62,14 @@ final readonly class CreatePlayerHandler
         $this->playerRepository->save($player);
 
         return PlayerResponse::fromPlayer($player);
+    }
+
+    private function resolveBirthDate(?string $birthDate): \DateTimeImmutable
+    {
+        if (null === $birthDate || '' === trim($birthDate)) {
+            return new \DateTimeImmutable('today');
+        }
+
+        return new \DateTimeImmutable($birthDate);
     }
 }

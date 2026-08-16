@@ -430,8 +430,10 @@ La API de `Player` ya expone un contrato operativo enriquecido que debe mantener
   - incluye `teamMain` como objeto resumido con `name` del equipo principal
 - `POST /api/v1/academy/players`
   - crea jugador en contexto tenant
+  - `birthDate` es opcional; si el cliente lo envía, debe usar formato `YYYY-MM-DD`
 - `PUT /api/v1/academy/players/{playerId}`
   - actualiza perfil del jugador
+  - `birthDate` es opcional; si el cliente lo envía, debe usar formato `YYYY-MM-DD`
 - `PATCH /api/v1/academy/players/{playerId}/photo`
   - sube o reemplaza foto
 - `DELETE /api/v1/academy/players/{playerId}/photo`

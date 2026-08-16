@@ -22,7 +22,6 @@ final readonly class UpdatePlayerRequest
         #[Assert\Length(max: 100, maxMessage: 'El campo "lastName" excede la longitud máxima permitida.')]
         public ?string $lastName,
 
-        #[Assert\NotBlank(message: 'El campo "birthDate" es obligatorio.')]
         #[Assert\Date(message: 'El campo "birthDate" debe tener un formato de fecha válido.')]
         public ?string $birthDate,
 

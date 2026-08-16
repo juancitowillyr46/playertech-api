@@ -35,6 +35,7 @@ Para mantener la información vigente.
 * La edición debe respetar el contexto tenant.
 * No se debe permitir cambiar de academia.
 * El documento debe seguir siendo único según la regla del dominio.
+* `birthDate` es opcional en el payload de actualización; si no se envía, el sistema conserva la fecha actual del jugador.
 
 ---
 
@@ -52,4 +53,3 @@ Para mantener la información vigente.
 * Entrada: `UpdatePlayerInput`
 * Respuesta: `PlayerResponse`
 * Validación: contexto tenant obligatorio y documento único por academia
-

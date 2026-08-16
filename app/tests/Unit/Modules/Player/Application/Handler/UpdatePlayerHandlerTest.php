@@ -92,6 +92,55 @@ final class UpdatePlayerHandlerTest extends TestCase
         self::assertSame($categoryId->value(), $response->toArray()['categoryId']);
     }
 
+    public function testItKeepsExistingBirthDateWhenUpdateBirthDateIsMissing(): void
+    {
+        $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
+        $playerId = new PlayerId('019eec93-9a11-7432-bd04-52306b2b3d90');
+
+        $playerRepository = new InMemoryPlayerRepository();
+        $categoryRepository = new UpdatePlayerCategoryInMemoryRepository();
+
+        $playerRepository->save(Player::create(
+            $playerId,
+            $academyId,
+            'DNI',
+            'Juan',
+            'Pérez',
+            new \DateTimeImmutable('2014-05-18'),
+            '12345678',
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
+        ));
+
+        $handler = new UpdatePlayerHandler(
+            new PlayerFinder($playerRepository),
+            new CategoryFinder($categoryRepository),
+            $playerRepository,
+        );
+
+        $response = $handler(new UpdatePlayerCommand(
+            '019eec93-9a11-7432-bd04-52306b2b3d8e',
+            $academyId->value(),
+            $playerId->value(),
+            new UpdatePlayerInput(
+                'DNI',
+                'Juan Carlos',
+                'Pérez Gómez',
+                null,
+                '87654321',
+            ),
+        ));
+
+        self::assertSame('2014-05-18', $response->toArray()['birthDate']);
+    }
+
     public function testItRejectsDuplicateDocumentNumberWithinTheSameAcademy(): void
     {
         $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
@@ -232,7 +281,7 @@ final class UpdatePlayerHandlerTest extends TestCase
         ));
     }
 
-    public function testItRejectsDuplicatePhoneWithinTheSameAcademy(): void
+    public function testItAllowsDuplicatedPhoneWithinTheSameAcademy(): void
     {
         $academyId = new AcademyId('019eec93-9a11-7432-bd04-52306b2b3d8f');
         $playerId = new PlayerId('019eec93-9a11-7432-bd04-52306b2b3d90');
@@ -284,10 +333,7 @@ final class UpdatePlayerHandlerTest extends TestCase
             $playerRepository,
         );
 
-        $this->expectException(PlayerAlreadyExistsException::class);
-        $this->expectExceptionMessage('El celular ya existe para esta academia.');
-
-        $handler(new UpdatePlayerCommand(
+        $response = $handler(new UpdatePlayerCommand(
             '019eec93-9a11-7432-bd04-52306b2b3d8e',
             $academyId->value(),
             $playerId->value(),
@@ -302,6 +348,8 @@ final class UpdatePlayerHandlerTest extends TestCase
                 '3001112233',
             ),
         ));
+
+        self::assertSame('+573001112233', $response->toArray()['phone']);
     }
 }
 

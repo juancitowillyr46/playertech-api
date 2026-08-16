@@ -33,6 +33,21 @@ final class CreatePlayerHandlerTest extends TestCase
         self::assertCount(1, $repository->players);
     }
 
+    public function testItCreatesPlayerWithFallbackBirthDateWhenMissing(): void
+    {
+        $repository = new InMemoryPlayerRepository();
+        $handler = new CreatePlayerHandler($repository);
+
+        $response = $handler(new CreatePlayerCommand(
+            '019eec93-9a11-7432-bd04-52306b2b3d8e',
+            '019eec93-9a11-7432-bd04-52306b2b3d8f',
+            new CreatePlayerInput('DNI', 'Juan', 'Pérez', null, '12345678'),
+        ));
+
+        self::assertSame((new \DateTimeImmutable('today'))->format('Y-m-d'), $response->toArray()['birthDate']);
+        self::assertCount(1, $repository->players);
+    }
+
     public function testItRejectsDuplicateDocumentWithinTheSameAcademy(): void
     {
         $repository = new InMemoryPlayerRepository();
@@ -72,7 +87,7 @@ final class CreatePlayerHandlerTest extends TestCase
         ));
     }
 
-    public function testItRejectsDuplicatePhoneWithinTheSameAcademy(): void
+    public function testItAllowsDuplicatedPhoneWithinTheSameAcademy(): void
     {
         $repository = new InMemoryPlayerRepository();
         $handler = new CreatePlayerHandler($repository);
@@ -83,13 +98,13 @@ final class CreatePlayerHandlerTest extends TestCase
             new CreatePlayerInput('DNI', 'Juan', 'Pérez', '2014-05-18', '12345678', 'juan@example.com', '3125953354'),
         ));
 
-        $this->expectException(PlayerAlreadyExistsException::class);
-        $this->expectExceptionMessage('El celular ya existe para esta academia.');
-
-        $handler(new CreatePlayerCommand(
+        $response = $handler(new CreatePlayerCommand(
             '019eec93-9a11-7432-bd04-52306b2b3d8e',
             '019eec93-9a11-7432-bd04-52306b2b3d8f',
             new CreatePlayerInput('DNI', 'Pedro', 'López', '2014-05-18', '87654321', 'pedro@example.com', '3125953354'),
         ));
+
+        self::assertSame('+573125953354', $response->toArray()['phone']);
+        self::assertCount(2, $repository->players);
     }
 }

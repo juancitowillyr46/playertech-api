@@ -33,6 +33,7 @@ Para centralizar su información administrativa y deportiva.
 
 * El jugador debe pertenecer a la academia actual.
 * El número de documento debe ser válido.
+* `birthDate` es opcional en el payload; si se envía, debe cumplir formato `Y-m-d`.
 * El jugador se crea en estado activo salvo regla futura distinta.
 * El registro no debe permitir duplicados definidos por el dominio.
 
@@ -51,4 +52,3 @@ Para centralizar su información administrativa y deportiva.
 * Usa `PlayerId` como custom type UUID.
 * Usa XML mapping puro para Doctrine.
 * Responde con DTO JSON estándar.
-

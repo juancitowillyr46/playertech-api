@@ -240,7 +240,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `CategoryController` y `VenueController` quedaron homogeneizados para usar el `TenantContext` del controlador y no mezclar inyección por parámetro.
 * La jerarquía compartida de excepciones de `Shared` quedó aplicada y el `ProblemDetailsExceptionSubscriber` traduce por tipo base.
 * `EP-007` quedó reescrita como inicio forrmal del dominio `Player` y ya tiene HUs mínimas para registrar, listarar, consultar, actualizar y deactivar.
-* `HU-001` de `EP-007-player-management` quedó implementada y validada en runtime con `POST /api/v1/academy/players`.
+* `HU-001` de `EP-007-player-management` quedó implementada y validada en runtime con `POST /api/v1/academy/players`; `birthDate` se admite como dato opcional en el payload y sólo se valida formato cuando el cliente lo envía.
 * `HU-002` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players`.
 * `HU-010` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}/summary`.
 * El listado de `Player` ya expone `photo`, `categoryName`, `genderName`, `age` y `createdAt` como campos de salida, con filtros por `gender`, `categoryId`, `documentNumber`, `documentType`, `firstName`, `lastName`, `fullName`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`; la búsqueda de texto quedó definida como case-insensitive y accent-insensitive.
@@ -277,7 +277,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * Las categorias ahora tienen `category_key` estable para soportar importaciones y contratos de integracion sin depender del UUID.
 * La auditoria Doctrine ya quedó centralizada con un `AuditSubscriber` y el filtro `SoftDelete` está activo.
 * `HU-003` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}`; el response incluye `categoryName`, `documentTypeName`, `nationalityName`, `genderName`, `dominantFootName`, `legalGuardianMain` y `teamMain` como resúmenes del contexto principal del jugador.
-* `HU-004` de `EP-007-player-management` quedó implementada y validada en runtime con `PUT /api/v1/academy/players/{playerId}`.
+* `HU-004` de `EP-007-player-management` quedó implementada y validada en runtime con `PUT /api/v1/academy/players/{playerId}`; si `birthDate` no se envía, se conserva la fecha actual del jugador.
 * `HU-005` de `EP-007-player-management` quedó consolidada como gestión de estado del jugador: desactivar y reactivar con endpoints `PATCH /api/v1/academy/players/{playerId}/inactivate` y `/activate`.
 * Se abrió la historia `HU-007` de `EP-007-player-management` para importación masiva de jugadores desde Excel como base de migración de datos.
 * `HU-007` de `EP-007-player-management` quedó orientada a un flujo asíncrono con selección previa de categoría, plantilla generada por backend y polling de progreso.
