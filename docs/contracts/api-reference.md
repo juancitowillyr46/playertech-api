@@ -2494,7 +2494,44 @@ Consultar el staff activo asignado a un equipo.
   "meta": {}
 }
 
-# TeamAssignment API
+# Team Autocomplete
+
+## Purpose
+
+Exponer un selector liviano para autocomplete de equipos activos dentro de la academia autenticada.
+
+## Endpoint
+
+```http
+GET /api/v1/academy/teams/options?q=team
+```
+
+## Rules
+
+* El resultado debe incluir sólo equipos activos de la academia autenticada.
+* La búsqueda por `q` debe ser parcial y apta para autocomplete.
+* La respuesta debe ser liviana para evitar lookups adicionales en frontend.
+* El envelope debe seguir el estándar `data` / `meta`.
+
+## Suggested Response
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "name": "Team A",
+      "categoryName": "Sub 15",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {}
+}
+```
+
+---
+
+# Player Team Assignment API
 
 ## Assign Player To Team
 

@@ -1,7 +1,7 @@
 # HU-001 Asignar jugador a un equipo
 
 ## Epic
-EP-010 Gestión de Asignaciones Deportivas
+EP-010 Player Team Assignment
 
 ## Prioridad
 Alta

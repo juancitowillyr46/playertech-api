@@ -270,7 +270,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El historial financiero ahora puede consultarse también por `guardianId` y el registro de pagos admite `allocations[]` para distribuir un pago entre varios cargos, manteniendo la conciliación parcial fuera del MVP.
 * Se inició la estandarización de listarados con paginación uniforrme (`page`, `per_page`, `sort`, `direction`) en endpoints visibles por frontend.
 * `EP-021` quedó materializada con el desarrollo del módulo `Staff` y `TeamStaffAssignment`, cobertura unitaria base, documentación API y colección Postman para el flujo de staff por equipo.
-* `EP-010` quedó materializada con el módulo `TeamAssignment`, que introduce la relación jugador-equipo con historial, principal activo y finalización, y ahora deja explícito que la duplicidad solo se bloquea si existe una asignación activa al mismo equipo.
+* `EP-010` quedó materializada con el módulo `Player Team Assignment`, que introduce la relación jugador-equipo con historial, principal activo y finalización, y ahora deja explícito que la duplicidad solo se bloquea si existe una asignación activa al mismo equipo.
 * `EP-005` equipos ya quedó cubierto como base de organización deportiva y sirve como referencia de CRUD tenant-scoped.
 * La cobertura de pruebas para `Team` ya incluye dominio, persistencia Doctrine y endpoint HTTP crítico; las suites compartidas sobre MySQL se corren en serie para evitar colisiones de esquema.
 * La subida de escudo institucional para `Academy` y la forto del jugador para `Player` ya quedaron implementadas como historias de media separadas.
@@ -418,7 +418,7 @@ Para considerar la base listara antes de implementar cualquier lógica de negoci
 - [x] `EP-008` Relaciones jugador-acudiente.
 - [x] `EP-005` Equipos.
 - [x] `EP-009` Matrículas y seguimiento de pagos.
-- [x] `EP-010` Asignaciones deportivas.
+- [x] `EP-010` Player Team Assignment.
 - [x] `EP-011` Conceptos de pago.
 - [x] `EP-012` Cargos y pagos.
 - [x] `EP-013` Dashboard operativo.
@@ -427,8 +427,9 @@ Para considerar la base listara antes de implementar cualquier lógica de negoci
 
 - [x] Consolidar la documentación HTTP operativa en Postman y retirar los archivos HTTP duplicados.
 - [x] Revisión final de `README` y guía de ejecución para el siguiente bloque funcional.
-* `EP-010` ya quedó desglosada en historias explícitas para asignar, marcar principal, cambiar principal, finalizar y consultar asignaciones deportivas.
+* `EP-010` ya quedó desglosada en historias explícitas para asignar, marcar principal, cambiar principal, finalizar, consultar asignaciones deportivas y listar equipos disponibles para autocomplete.
 * La consulta de `EP-010` para asignaciones de jugador ahora se orienta a una responseuesta compuesta con `team` anidado para evitar lookups adicionales en frontend.
+* `EP-010` suma ahora un selector liviano de equipos activos para autocomplete como apoyo al flujo de asignación deportiva.
 * `Team` quedó homologado con `Venue` en el patrón HTTP clave: `sort` seguro, validación de `name` alineada al VO compartido y ejemplos de Postman corregidos para reflejar el contrato real.
 * `Team` ahora expone `categoryName` plano en listar/show/crear/actualizar para simplificar el consumo dthe frontend sin introducir un objeto `category` anidado.
 * `Staff` expone `/api/v1/academy/staff/options` como contrato único de selector liviano, filtrando por academia, rol y estado sin hidratar entidades completas.

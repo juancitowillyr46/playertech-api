@@ -1,7 +1,7 @@
 # HU-005 Consultar asignaciones de un jugador
 
 ## Epic
-EP-010 Gestión de Asignaciones Deportivas
+EP-010 Player Team Assignment
 
 ## Prioridad
 Media

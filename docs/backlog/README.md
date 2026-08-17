@@ -10,7 +10,7 @@ Este indice organiza el backlog por prioridad funcional para facilitar la navega
 4. [`EP-005`](./epics/EP-005.md) Team
 5. [`EP-008`](./epics/EP-008.md) PlayerGuardian
 6. [`EP-009`](./epics/EP-009.md) Membership
-7. [`EP-010`](./epics/EP-010.md) TeamAssignment
+7. [`EP-010`](./epics/EP-010-player-team-assignment.md) TeamAssignment
 8. [`EP-011`](./epics/EP-011.md) PaymentConcept
 9. [`EP-012`](./epics/EP-012.md) Charge and Payment
 10. [`EP-013`](./epics/EP-013.md) Dashboard

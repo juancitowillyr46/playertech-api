@@ -55,4 +55,4 @@ Documento central del dominio `Team`.
 ## Functional Guides
 
 - Backlog epic: [`docs/backlog/epics/EP-005.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/epics/EP-005.md)
-- Team assignment flows: [`docs/backlog/epics/EP-010.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/epics/EP-010.md)
+- Team assignment flows: [`docs/backlog/epics/EP-010-player-team-assignment.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/epics/EP-010-player-team-assignment.md)

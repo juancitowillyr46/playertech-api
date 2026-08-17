@@ -1,4 +1,4 @@
-# EP-010 Gestión de Asignaciones Deportivas
+# EP-010 Player Team Assignment
 
 ## Objetivo
 Gestionar la participación deportiva del jugador en uno o varios equipos, incluyendo el equipo principal.
@@ -30,6 +30,7 @@ Permite registrar en qué equipo compite un jugador, distinguir su equipo princi
 * HU-004 Finalizar una asignación.
 * HU-005 Consultar asignaciones de un jugador.
   * La respuesta del listado debe incluir el equipo anidado con `name` y datos de categoría para evitar lookups adicionales en frontend.
+* HU-006 Seleccionar equipos disponibles.
 
 ## MVP
 Sí.

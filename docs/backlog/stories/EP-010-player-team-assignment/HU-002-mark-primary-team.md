@@ -1,7 +1,7 @@
 # HU-002 Marcar una asignación como principal
 
 ## Epic
-EP-010 Gestión de Asignaciones Deportivas
+EP-010 Player Team Assignment
 
 ## Prioridad
 Alta

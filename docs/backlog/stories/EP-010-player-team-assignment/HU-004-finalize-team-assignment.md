@@ -1,7 +1,7 @@
 # HU-004 Finalizar una asignación
 
 ## Epic
-EP-010 Gestión de Asignaciones Deportivas
+EP-010 Player Team Assignment
 
 ## Prioridad
 Alta

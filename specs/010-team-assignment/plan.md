@@ -1,4 +1,4 @@
-# Implementation Plan: Team Assignment
+# Implementation Plan: Player Team Assignment
 
 **Branch**: `010-team-assignment` | **Date**: 2026-07-27 | **Spec**: ./spec.md
 
@@ -6,34 +6,34 @@
 
 ## Resumen
 
-Consolidate player-to-team assignment y primary team hyling as the puedeonical
-competitive participation feature.
+Consolidate player-to-team assignment and primary team handling as the canonical competitive participation feature, including the team autocomplete selector.
 
 ## Contexto técnico
 
-**Language/Version**: PHP 8.4 / Symforny 7.4
+**Language/Version**: PHP 8.4 / Symfony 7.4
 
-**Primary Dependencies**: Symforny, Doctrine ORM, JWT
+**Primary Dependencies**: Symfony, Doctrine ORM, JWT
 
-**Stoage**: MySQL 8+
+**Storage**: MySQL 8+
 
 **Testing**: PHPUnit
 
-**Target Platforrm**: Linux containerized backend
+**Target Platform**: Linux containerized backend
 
 **Project Type**: Web service
 
-**Performance Objetivos**: Keep assignment operations predictable.
+**Performance Objectives**: Keep assignment operations predictable.
 
-**Constraints**: Debe preserve tenant isolation, history y primary assignment integrity.
+**Constraints**: Debe preservar tenant isolation, history y primary assignment integrity.
 
-**Scale/Alpuedece**: Player-team assignment lifecycle inside the academy.
+**Scale/Scope**: Player-team assignment lifecycle inside the academy.
 
 ## Constitution Check
 
-- Debe preserve history y avoid destructive assignment behavio.
+- Debe preservar history y avoid destructive assignment behavior.
 - Debe keep one active primary assignment per player.
 - Debe keep scope tenant explicit.
+- Debe proveer un selector liviano de equipos activos para autocomplete.
 
 ## Estructura del proyecto
 
@@ -50,7 +50,7 @@ specs/010-team-assignment/
 └── tasks.md
 ```
 
-### Source Code (repositoy root)
+### Source Code (repository root)
 
 ```text
 app/src/Modules/TeamAssignment/
@@ -58,6 +58,4 @@ app/tests/Functional/Modules/TeamAssignment/
 app/tests/Unit/Modules/TeamAssignment/
 ```
 
-**Structure Decision**: TeamAssignment stays as a separate relational feature
-because it encodes histoical behavio y primary-state rules.
-
+**Structure Decision**: TeamAssignment stays as a separate relational feature because it encodes historical behavior, primary-state rules y catálogo de selección liviana.
