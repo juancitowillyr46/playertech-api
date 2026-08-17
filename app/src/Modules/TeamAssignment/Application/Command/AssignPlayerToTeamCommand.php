@@ -11,7 +11,7 @@ final readonly class AssignPlayerToTeamCommand
         public string $academyId,
         public string $playerId,
         public string $teamId,
-        public string $startDate
+        public bool $isPrimary = false
     ) {
     }
 }

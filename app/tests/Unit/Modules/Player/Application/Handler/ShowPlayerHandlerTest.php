@@ -212,6 +212,7 @@ final class InMemoryTeamRepository implements TeamRepository
     public function findById(AcademyId $academyId, TeamId $teamId): ?Team { return $this->items[$teamId->value()] ?? null; }
     public function findOneByAcademyCategoryAndName(AcademyId $academyId, CategoryId $categoryId, Name $name): ?Team { return null; }
     public function findAllByAcademy(AcademyId $academyId, \App\Shared\Application\Pagination\PaginationQuery $pagination): array { return ['items' => [], 'total' => 0]; }
+    public function findActiveByAcademyWithSearch(AcademyId $academyId, ?string $search = null): array { return array_values($this->items); }
 }
 
 final class InMemoryTeamAssignmentRepository implements TeamAssignmentRepository

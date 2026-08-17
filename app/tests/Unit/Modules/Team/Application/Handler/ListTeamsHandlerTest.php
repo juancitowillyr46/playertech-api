@@ -153,4 +153,26 @@ final class InMemoryTeamRepository implements TeamRepository
             'total' => count($items),
         ];
     }
+
+    public function findActiveByAcademyWithSearch(AcademyId $academyId, ?string $search = null): array
+    {
+        $search = null !== $search ? mb_strtolower(trim($search)) : '';
+
+        return array_values(array_filter($this->teams ?? ($this->items ?? []), static function (Team $team) use ($academyId, $search): bool {
+            if ($team->academyId()->value() !== $academyId->value()) {
+                return false;
+            }
+
+            if ($team->status()->value() !== TeamStatus::active()->value()) {
+                return false;
+            }
+
+            if ('' === $search) {
+                return true;
+            }
+
+            return str_contains(mb_strtolower($team->name()->value()), $search);
+        }));
+    }
+
 }

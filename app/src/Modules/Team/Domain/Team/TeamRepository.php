@@ -25,4 +25,9 @@ interface TeamRepository
      * @return array{items: Team[], total: int}
      */
     public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array;
+
+    /**
+     * @return Team[]
+     */
+    public function findActiveByAcademyWithSearch(AcademyId $academyId, ?string $search = null): array;
 }

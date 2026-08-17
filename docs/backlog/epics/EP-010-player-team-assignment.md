@@ -19,7 +19,9 @@ Permite registrar en qué equipo compite un jugador, distinguir su equipo princi
 * Una asignación puede finalizarse sin borrar el historial.
 * El equipo principal puede cambiarse a otra asignación activa.
 * El equipo principal debe pertenecer a la academia actual.
-* No se soporta `markAsPrimary` en `POST /api/v1/academy/team-assignments`; la principalidad se define luego con `PATCH /primary`.
+* `POST /api/v1/academy/team-assignments` acepta `isPrimary` para crear la asignación ya marcada como principal.
+* La fecha de inicio de la asignación se fija automáticamente con la fecha actual al momento de crearla.
+* Si una asignación se crea con `isPrimary = true` y ya existe otra principal activa del mismo jugador, la principal anterior se desmarca.
 * Si una asignación principal se finaliza y existe otra asignación activa del mismo jugador, el sistema la promueve automáticamente como principal.
 * Una nueva asignación al mismo equipo solo debe bloquearse si ya existe una asignación activa para ese par jugador-equipo.
 

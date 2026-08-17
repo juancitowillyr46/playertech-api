@@ -32,7 +32,7 @@ final readonly class AssignPlayerToTeamHandler
         $academyId = new AcademyId($command->academyId);
         $playerId = new PlayerId($command->playerId);
         $teamId = new TeamId($command->teamId);
-        $startDate = new \DateTimeImmutable($command->startDate);
+        $startDate = new \DateTimeImmutable('today');
 
         $player = $this->playerRepository->findById($academyId, $playerId);
         if (null === $player) {
@@ -47,6 +47,15 @@ final readonly class AssignPlayerToTeamHandler
             throw new TeamAssignmentAlreadyExistsException();
         }
 
+        $currentPrimary = null;
+        if ($command->isPrimary) {
+            $currentPrimary = $this->assignmentRepository->findPrimaryByPlayer($academyId, $playerId);
+            if (null !== $currentPrimary) {
+                $currentPrimary->unmarkPrimary($command->actorId);
+                $this->assignmentRepository->save($currentPrimary);
+            }
+        }
+
         $assignment = TeamAssignment::create(
             TeamAssignmentId::generate(),
             $academyId,
@@ -55,6 +64,10 @@ final readonly class AssignPlayerToTeamHandler
             $startDate,
             AuditTrail::create($command->actorId)
         );
+
+        if ($command->isPrimary) {
+            $assignment->markPrimary($command->actorId);
+        }
 
         $this->assignmentRepository->save($assignment);
 

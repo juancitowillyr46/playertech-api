@@ -11,6 +11,7 @@ use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\Team\Domain\Team\TeamRepository as TeamRepositoryContract;
 use App\Shared\Domain\ValueObject\Name;
 use App\Shared\Application\Pagination\PaginationQuery;
+use App\Modules\Team\Domain\Team\TeamStatus;
 use App\Shared\Application\Pagination\SortFieldResolver;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -88,5 +89,28 @@ final class TeamRepository extends ServiceEntityRepository implements TeamReposi
         $items = $qb->setFirstResult(($pagination->page - 1) * $pagination->perPage)->setMaxResults($pagination->perPage)->getQuery()->getResult();
 
         return ['items' => $items, 'total' => $total];
+    }
+
+
+    /**
+     * @return Team[]
+     */
+    public function findActiveByAcademyWithSearch(AcademyId $academyId, ?string $search = null): array
+    {
+        $qb = $this->createQueryBuilder('team')
+            ->andWhere('team.academyId = :academyId')
+            ->andWhere('team.deletedAt IS NULL')
+            ->andWhere('team.status.value = :status')
+            ->setParameter('academyId', $academyId->value())
+            ->setParameter('status', TeamStatus::active()->value())
+            ->orderBy('team.name.value', 'ASC');
+
+        $criteria = trim((string) $search);
+        if ('' !== $criteria) {
+            $qb->andWhere('LOWER(team.name.value) LIKE :search')
+                ->setParameter('search', '%'.mb_strtolower($criteria).'%');
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }

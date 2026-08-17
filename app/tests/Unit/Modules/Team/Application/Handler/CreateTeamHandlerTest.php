@@ -17,6 +17,7 @@ use App\Modules\Team\Application\Response\TeamResponse;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\Team\Domain\Team\TeamRepository;
+use App\Modules\Team\Domain\Team\TeamStatus;
 use App\Shared\Application\Pagination\PaginationQuery;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Description;
@@ -41,7 +42,7 @@ final class CreateTeamHandlerTest extends TestCase
             new MinimumAge(14),
             new MaximumAge(16),
             new Description('Base category'),
-            AuditTrail::create('system'),
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
         ));
 
         $teamRepository = new InMemoryCreateTeamRepository();
@@ -80,7 +81,7 @@ final class CreateTeamHandlerTest extends TestCase
             new MinimumAge(14),
             new MaximumAge(16),
             new Description('Base category'),
-            AuditTrail::create('system'),
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
         ));
 
         $teamRepository = new InMemoryCreateTeamRepository();
@@ -89,7 +90,7 @@ final class CreateTeamHandlerTest extends TestCase
             $academyId,
             $categoryId,
             new Name('Sub-16 A'),
-            AuditTrail::create('system'),
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
         ));
 
         $handler = new CreateTeamHandler(
@@ -123,7 +124,7 @@ final class CreateTeamHandlerTest extends TestCase
             new MinimumAge(14),
             new MaximumAge(16),
             new Description('Base category'),
-            AuditTrail::create('system'),
+            AuditTrail::create('019eec93-9a11-7432-bd04-52306b2b3d8e'),
         );
         $category->inactivate('actor-id');
         $categoryRepository->save($category);
@@ -184,13 +185,36 @@ final class InMemoryCreateTeamRepository implements TeamRepository
 
     public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
+        $items = array_values(array_filter(
+            $this->teams,
+            static fn (Team $team): bool => $team->academyId()->value() === $academyId->value()
+        ));
+
         return [
-            'items' => array_values(array_filter(
-                $this->teams,
-                static fn (Team $team): bool => $team->academyId()->value() === $academyId->value()
-            )),
-            'total' => count($this->teams),
+            'items' => $items,
+            'total' => count($items),
         ];
+    }
+
+    public function findActiveByAcademyWithSearch(AcademyId $academyId, ?string $search = null): array
+    {
+        $search = null !== $search ? mb_strtolower(trim($search)) : '';
+
+        return array_values(array_filter($this->teams, static function (Team $team) use ($academyId, $search): bool {
+            if ($team->academyId()->value() !== $academyId->value()) {
+                return false;
+            }
+
+            if ($team->status()->value() !== TeamStatus::active()->value()) {
+                return false;
+            }
+
+            if ('' === $search) {
+                return true;
+            }
+
+            return str_contains(mb_strtolower($team->name()->value()), $search);
+        }));
     }
 }
 
@@ -225,7 +249,7 @@ final class InMemoryCreateTeamCategoryRepository implements CategoryRepository
         return array_values(array_filter(
             $this->categories,
             static fn (Category $category): bool => $category->academyId()->value() === $academyId->value()
-                && $category->status()->value() === \App\Modules\Category\Domain\Category\CategoryStatus::active()->value()
+                && $category->status()->value() === CategoryStatus::active()->value()
         ));
     }
 

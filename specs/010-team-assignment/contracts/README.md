@@ -10,3 +10,8 @@ Expected items:
 - finalize assignment
 - view player assignments
 - team autocomplete for available teams
+
+Contract rule:
+
+- `POST /api/v1/academy/team-assignments` accepts `isPrimary` in the request and returns `isPrimary` in the response.
+- The persistence column remains `is_primary`.

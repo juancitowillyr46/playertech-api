@@ -62,11 +62,13 @@ final class AssignPlayerToTeamHandlerTest extends TestCase
             $academyId->value(),
             $player->id()->value(),
             $team->id()->value(),
-            '2026-07-08',
+            true,
         ));
 
         self::assertSame($player->id()->value(), $response->toArray()['playerId']);
         self::assertSame($team->id()->value(), $response->toArray()['teamId']);
+        self::assertTrue($response->toArray()['isPrimary']);
+        self::assertSame((new \DateTimeImmutable('today'))->format('Y-m-d'), $response->toArray()['startDate']);
         self::assertCount(1, $assignmentRepository->items);
     }
 
@@ -123,7 +125,7 @@ final class AssignPlayerToTeamHandlerTest extends TestCase
             $academyId->value(),
             $player->id()->value(),
             $team->id()->value(),
-            '2026-07-09',
+            false,
         ));
 
         self::assertSame($player->id()->value(), $response->toArray()['playerId']);

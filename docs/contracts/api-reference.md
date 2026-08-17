@@ -2551,15 +2551,15 @@ Asignar un jugador a un equipo dentro de la academia actual.
 {
   "playerId": "uuid",
   "teamId": "uuid",
-  "startDate": "2026-07-08"
+  "isPrimary": false
 }
 ```
 
 ### Business rules
 
-* No se admite `markAsPrimary` en este contrato.
+* `isPrimary` es opcional en la creación; si viene en `true`, la asignación queda marcada como principal.
 * Si el jugador ya tiene una asignación activa para el mismo equipo, el alta se rechaza.
-* Si la asignación creada luego debe quedar como principal, el flujo recomendado es llamar después a `PATCH /primary`.
+* Si la asignación se crea como principal y ya existía otra principal activa, la anterior se desmarca.
 
 ### Success
 
@@ -2571,7 +2571,7 @@ Asignar un jugador a un equipo dentro de la academia actual.
     "id": "uuid",
     "playerId": "uuid",
     "teamId": "uuid",
-    "startDate": "2026-07-08",
+    "startDate": "2026-08-17",
     "endDate": null,
     "isPrimary": false
   },

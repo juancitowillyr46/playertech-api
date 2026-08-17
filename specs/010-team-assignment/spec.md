@@ -22,6 +22,7 @@ El sistema permite a administradores de academia asignar un jugador a uno o más
 
 1. **Given** un jugador y un equipo, **When** el admin asigna el jugador, **Then** la asignación queda registrada.
 2. **Given** una asignación existente, **When** el admin la consulta, **Then** la relación es visible.
+3. **Given** `isPrimary = true`, **When** el admin crea la asignación, **Then** la nueva relación queda como principal y la anterior principal activa del jugador se desmarca.
 
 ### Historia de Usuario 2 - Gestionar equipo principal (Priority: P2)
 
@@ -70,6 +71,7 @@ El sistema permite al frontend consultar un selector liviano de equipos activos 
   "data": [
     {
       "id": "uuid",
+      "playerId": "uuid",
       "name": "Team A",
       "categoryName": "Sub 15",
       "status": "ACTIVE"
@@ -96,10 +98,13 @@ El sistema permite al frontend consultar un selector liviano de equipos activos 
 - **FR-004**: System MUST permitir finalizing assignments sin deleting history.
 - **FR-005**: System MUST preserve assignment history.
 - **FR-006**: System MUST permitir un selector liviano de equipos activos para autocomplete mediante `GET /api/v1/academy/teams/options`.
+- **FR-007**: System MUST aceptar `isPrimary` en `POST /api/v1/academy/team-assignments` para crear la asignación ya marcada como principal.
+- **FR-008**: System MUST establecer automáticamente la fecha de inicio de la asignación al momento de creación.
 
 ### Entidades clave *(include if feature involves data)*
 
 - **TeamAssignment**: relation between player and team with primary state.
+- **TeamAssignment**: relation between player and team with primary state persisted in `is_primary`.
 - **Team**: catálogo de equipos usados por la asignación y el selector liviano.
 
 ## Success Criteria *(mandatory)*

@@ -218,6 +218,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * La separacion de configuracion `local`/`test`/`prod` quedó documentada en `docs/architecture/guides/environment-guide.md`.
 * La validacion principal de suites de integracion y funcionales debe correr sobre la base `test` para simular CI/CD; `local` queda para desarrollo interactivo.
 * `Mailpit` queda adoptado como la herramienta base de desarrollo local para validar envios de correo y flujos de activacion.
+* La discusion de categoria vs edad, asignacion principal/secundaria de equipos y posible historico separado quedo resumida en `docs/audit/team-assignment-category-lifecycle-analysis.md` para mantener trazabilidad sin duplicar contrato.
 * `EP-003` queda reorientada para distinguir usuarios de plataforrma y usuarios tenant; la creacion del owner/admin inicial del tenant se documenta como historia explicita.
 * La creación de tenant por `signup` y por `platforrm` quedó unificada con trazabilidad explícita de origen en `Academy`.
 * `Category` y `Venue` ya quedaron implementados como módulos funcionales completos y el backlog debe seguir su mismo lifecycle con historias faltantes o inconsistentes.

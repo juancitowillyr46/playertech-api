@@ -17,6 +17,8 @@ use App\Modules\Team\Application\Services\TeamFinder;
 use App\Modules\Team\Domain\Team\Team;
 use App\Modules\Team\Domain\Team\TeamId;
 use App\Modules\Team\Domain\Team\TeamRepository;
+use App\Modules\Team\Domain\Team\TeamStatus;
+use App\Shared\Application\Pagination\PaginationQuery;
 use App\Shared\Domain\ValueObject\AuditTrail;
 use App\Shared\Domain\ValueObject\Description;
 use App\Shared\Domain\ValueObject\MaximumAge;
@@ -100,12 +102,35 @@ final class InMemoryUpdateTeamRepository implements TeamRepository
         return null;
     }
 
-    public function findAllByAcademy(AcademyId $academyId, \App\Shared\Application\Pagination\PaginationQuery $pagination): array
+    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
         return [
             'items' => [$this->team],
             'total' => 1,
         ];
+    }
+
+    public function findActiveByAcademyWithSearch(AcademyId $academyId, ?string $search = null): array
+    {
+        $criteria = null !== $search ? mb_strtolower(trim($search)) : '';
+
+        $items = [$this->team];
+
+        return array_values(array_filter($items, static function (Team $team) use ($academyId, $criteria): bool {
+            if ($team->academyId()->value() !== $academyId->value()) {
+                return false;
+            }
+
+            if ($team->status()->value() !== TeamStatus::active()->value()) {
+                return false;
+            }
+
+            if ('' === $criteria) {
+                return true;
+            }
+
+            return str_contains(mb_strtolower($team->name()->value()), $criteria);
+        }));
     }
 }
 
@@ -149,11 +174,11 @@ final class UpdateTeamInMemoryCategoryRepository implements CategoryRepository
         return array_values(array_filter(
             $this->categories,
             static fn (Category $category): bool => $category->academyId()->value() === $academyId->value()
-                && $category->status()->value() === \App\Modules\Category\Domain\Category\CategoryStatus::active()->value()
+                && $category->status()->value() === CategoryStatus::active()->value()
         ));
     }
 
-    public function findAllByAcademy(AcademyId $academyId, \App\Shared\Application\Pagination\PaginationQuery $pagination): array
+    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
         return [
             'items' => $this->categories,

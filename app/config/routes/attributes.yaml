@@ -58,6 +58,13 @@ team_controllers:
     type: attribute
     prefix: /api/v1
 
+team_assignment_controllers:
+    resource:
+        path: ../../src/Modules/TeamAssignment/Presentation/Http/
+        namespace: App\Modules\TeamAssignment\Presentation\Http
+    type: attribute
+    prefix: /api/v1
+
 staff_controllers:
     resource:
         path: ../../src/Modules/Staff/Presentation/Http/

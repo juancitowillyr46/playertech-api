@@ -2111,13 +2111,27 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/document-types/options",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "academy", "document-types", "options"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "document-types",
+                "options"
+              ]
             }
           },
           "response": [
@@ -2125,7 +2139,12 @@
               "name": "Document Types - Options Example",
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"data\": [\n    { \"value\": \"CE\", \"label\": \"Cédula de extranjería\" },\n    { \"value\": \"CC\", \"label\": \"Cédula de ciudadanía\" },\n    { \"value\": \"TI\", \"label\": \"Tarjeta de identidad\" },\n    { \"value\": \"PPT\", \"label\": \"PPT\" },\n    { \"value\": \"PASSPORT\", \"label\": \"Pasaporte\" },\n    { \"value\": \"RC\", \"label\": \"Registro civil\" }\n  ],\n  \"meta\": {}\n}"
             }
           ]
@@ -2141,105 +2160,407 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "url": {
               "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents?page=1&per_page=20",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "academy", "players", "{{playerId}}", "documents"],
-              "query": [{ "key": "page", "value": "1" }, { "key": "per_page", "value": "20" }]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "documents"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20"
+                }
+              ]
             }
           },
-          "response": [{
-            "name": "Player Documents - List Example",
-            "status": "OK",
-            "code": 200,
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
-          }]
+          "response": [
+            {
+              "name": "Player Documents - List Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total\": 0,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Player Documents - Upload",
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{tenantToken}}" },
-              { "key": "Accept", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "formdata",
               "formdata": [
-                { "key": "documentType", "value": "CC", "type": "text" },
-                { "key": "observations", "value": "Documento de identidad", "type": "text" },
-                { "key": "file", "type": "file", "src": "" }
+                {
+                  "key": "documentType",
+                  "value": "CC",
+                  "type": "text"
+                },
+                {
+                  "key": "observations",
+                  "value": "Documento de identidad",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
               ]
             },
-            "url": { "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academy", "players", "{{playerId}}", "documents"] }
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "documents"
+              ]
+            }
           },
-          "response": [{
-            "name": "Player Documents - Upload Example",
-            "status": "Created",
-            "code": 201,
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": "{\n  \"data\": {\n    \"id\": \"{{documentId}}\",\n    \"playerId\": \"{{playerId}}\",\n    \"documentType\": \"CC\",\n    \"originalFileName\": \"cedula.pdf\",\n    \"mimeType\": \"application/pdf\",\n    \"fileSize\": 123456,\n    \"fileExtension\": \"pdf\",\n    \"observations\": \"Documento de identidad\",\n    \"createdAt\": \"2026-07-30T10:00:00+00:00\",\n    \"updatedAt\": null\n  },\n  \"meta\": {}\n}"
-          }]
+          "response": [
+            {
+              "name": "Player Documents - Upload Example",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"{{documentId}}\",\n    \"playerId\": \"{{playerId}}\",\n    \"documentType\": \"CC\",\n    \"originalFileName\": \"cedula.pdf\",\n    \"mimeType\": \"application/pdf\",\n    \"fileSize\": 123456,\n    \"fileExtension\": \"pdf\",\n    \"observations\": \"Documento de identidad\",\n    \"createdAt\": \"2026-07-30T10:00:00+00:00\",\n    \"updatedAt\": null\n  },\n  \"meta\": {}\n}"
+            }
+          ]
         },
         {
           "name": "Player Documents - View Inline",
           "request": {
             "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{tenantToken}}" }],
-            "url": { "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents/{{documentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academy", "players", "{{playerId}}", "documents", "{{documentId}}"] }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents/{{documentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "documents",
+                "{{documentId}}"
+              ]
+            }
           },
-          "response": [{ "name": "Player Documents - View Inline Example", "status": "OK", "code": 200, "header": [{ "key": "Content-Disposition", "value": "inline; filename=cedula.pdf" }, { "key": "X-Content-Type-Options", "value": "nosniff" }] }]
+          "response": [
+            {
+              "name": "Player Documents - View Inline Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Disposition",
+                  "value": "inline; filename=cedula.pdf"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "Player Documents - Download",
           "request": {
             "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{tenantToken}}" }],
-            "url": { "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents/{{documentId}}/download", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academy", "players", "{{playerId}}", "documents", "{{documentId}}", "download"] }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents/{{documentId}}/download",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "documents",
+                "{{documentId}}",
+                "download"
+              ]
+            }
           },
-          "response": [{ "name": "Player Documents - Download Example", "status": "OK", "code": 200, "header": [{ "key": "Content-Disposition", "value": "attachment; filename=cedula.pdf" }, { "key": "X-Content-Type-Options", "value": "nosniff" }] }]
+          "response": [
+            {
+              "name": "Player Documents - Download Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Disposition",
+                  "value": "attachment; filename=cedula.pdf"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "Player Documents - Replace",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Authorization", "value": "Bearer {{tenantToken}}" }, { "key": "Accept", "value": "application/json" }],
-            "body": { "mode": "formdata", "formdata": [{ "key": "documentType", "value": "CC", "type": "text" }, { "key": "observations", "value": "Documento actualizado", "type": "text" }, { "key": "file", "type": "file", "src": "" }] },
-            "url": { "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents/{{documentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academy", "players", "{{playerId}}", "documents", "{{documentId}}"] }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "documentType",
+                  "value": "CC",
+                  "type": "text"
+                },
+                {
+                  "key": "observations",
+                  "value": "Documento actualizado",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents/{{documentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "documents",
+                "{{documentId}}"
+              ]
+            }
           },
-          "response": [{ "name": "Player Documents - Replace Example", "status": "OK", "code": 200, "header": [{ "key": "Content-Type", "value": "application/json" }], "body": "{\n  \"data\": {\n    \"id\": \"{{documentId}}\",\n    \"documentType\": \"CC\",\n    \"updatedAt\": \"2026-07-30T10:10:00+00:00\"\n  },\n  \"meta\": {}\n}" }]
+          "response": [
+            {
+              "name": "Player Documents - Replace Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"{{documentId}}\",\n    \"documentType\": \"CC\",\n    \"updatedAt\": \"2026-07-30T10:10:00+00:00\"\n  },\n  \"meta\": {}\n}"
+            }
+          ]
         },
         {
           "name": "Player Documents - Delete",
           "request": {
             "method": "DELETE",
-            "header": [{ "key": "Authorization", "value": "Bearer {{tenantToken}}" }],
-            "url": { "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents/{{documentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academy", "players", "{{playerId}}", "documents", "{{documentId}}"] }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents/{{documentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "documents",
+                "{{documentId}}"
+              ]
+            }
           },
-          "response": [{ "name": "Player Documents - Delete Example", "status": "No Content", "code": 204, "header": [] }]
+          "response": [
+            {
+              "name": "Player Documents - Delete Example",
+              "status": "No Content",
+              "code": 204,
+              "header": []
+            }
+          ]
         },
         {
           "name": "Player Documents - Upload Invalid Type",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Authorization", "value": "Bearer {{tenantToken}}" }, { "key": "Accept", "value": "application/json" }],
-            "body": { "mode": "formdata", "formdata": [{ "key": "documentType", "value": "INVALID", "type": "text" }, { "key": "file", "type": "file", "src": "" }] },
-            "url": { "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academy", "players", "{{playerId}}", "documents"] }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "documentType",
+                  "value": "INVALID",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "documents"
+              ]
+            }
           },
-          "response": [{ "name": "Player Documents - Invalid Type Example", "status": "Bad Request", "code": 400, "header": [{ "key": "Content-Type", "value": "application/problem+json" }], "body": "{\n  \"type\": \"https://api.playertech/errors/domain\",\n  \"title\": \"Domain Error\",\n  \"status\": 400\n}" }]
+          "response": [
+            {
+              "name": "Player Documents - Invalid Type Example",
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.playertech/errors/domain\",\n  \"title\": \"Domain Error\",\n  \"status\": 400\n}"
+            }
+          ]
         },
         {
           "name": "Player Documents - Not Found",
           "request": {
             "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{tenantToken}}" }],
-            "url": { "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents/019f0000-0000-7000-8000-000000009999", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academy", "players", "{{playerId}}", "documents", "019f0000-0000-7000-8000-000000009999"] }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/documents/019f0000-0000-7000-8000-000000009999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "documents",
+                "019f0000-0000-7000-8000-000000009999"
+              ]
+            }
           },
-          "response": [{ "name": "Player Documents - Not Found Example", "status": "Not Found", "code": 404, "header": [{ "key": "Content-Type", "value": "application/problem+json" }], "body": "{\n  \"type\": \"https://api.playertech/errors/not-found\",\n  \"title\": \"Not Found\",\n  \"status\": 404\n}" }]
+          "response": [
+            {
+              "name": "Player Documents - Not Found Example",
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.playertech/errors/not-found\",\n  \"title\": \"Not Found\",\n  \"status\": 404\n}"
+            }
+          ]
         }
       ]
     },
@@ -2311,7 +2632,7 @@
               }
             ],
             "url": {
-            "raw": "{{baseUrl}}/api/v1/academy/teams?page=1&per_page=20&sort=created_at&direction=DESC",
+              "raw": "{{baseUrl}}/api/v1/academy/teams?page=1&per_page=20&sort=created_at&direction=DESC",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -4533,7 +4854,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"playerId\": \"{{playerId}}\",\n  \"teamId\": \"{{teamId}}\",\n  \"startDate\": \"2026-07-08\"\n}"
+              "raw": "{\n  \"playerId\": \"{{playerId}}\",\n  \"teamId\": \"{{teamId}}\",\n  \"isPrimary\": true\n}"
             }
           },
           "response": [
@@ -4547,7 +4868,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000050\",\n    \"membershipId\": \"019f0000-0000-7000-8000-000000000010\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"guardianId\": \"019f0000-0000-7000-8000-000000000030\",\n    \"paymentConceptId\": \"019f0000-0000-7000-8000-000000000040\",\n    \"paymentDate\": \"2026-07-14\",\n    \"amount\": \"150000.00\",\n    \"method\": \"CASH\",\n    \"allocations\": [\n      {\n        \"chargeId\": \"019f0000-0000-7000-8000-000000000060\",\n        \"amount\": 150000\n      }\n    ],\n    \"status\": \"REGISTERED\"\n  },\n  \"meta\": {}\n}"
+              "body": "{\n  \"data\": {\n    \"id\": \"019f0000-0000-7000-8000-000000000050\",\n    \"playerId\": \"019f0000-0000-7000-8000-000000000020\",\n    \"teamId\": \"019f0000-0000-7000-8000-000000000011\",\n    \"startDate\": \"2026-08-17\",\n    \"endDate\": null,\n    \"isPrimary\": true\n  },\n  \"meta\": {}\n}"
             }
           ]
         },

@@ -13,9 +13,11 @@ use App\Modules\Team\Application\Command\UpdateTeamCommand;
 use App\Modules\Team\Application\Handler\ActivateTeamHandler;
 use App\Modules\Team\Application\Handler\CreateTeamHandler;
 use App\Modules\Team\Application\Handler\InactivateTeamHandler;
+use App\Modules\Team\Application\Handler\ListTeamOptionsHandler;
 use App\Modules\Team\Application\Handler\ListTeamsHandler;
 use App\Modules\Team\Application\Handler\ShowTeamHandler;
 use App\Modules\Team\Application\Handler\UpdateTeamHandler;
+use App\Modules\Team\Application\Query\ListTeamOptionsQuery;
 use App\Modules\Team\Application\Query\ListTeamsQuery;
 use App\Modules\Team\Application\Query\ShowTeamQuery;
 use App\Modules\Team\Domain\Team\TeamId;
@@ -38,6 +40,7 @@ final class TeamController extends AbstractPaginatedApiController
         private readonly CreateTeamHandler $createTeamHandler,
         private readonly UpdateTeamHandler $updateTeamHandler,
         private readonly ListTeamsHandler $listTeamsHandler,
+        private readonly ListTeamOptionsHandler $listTeamOptionsHandler,
         private readonly ShowTeamHandler $showTeamHandler,
         private readonly InactivateTeamHandler $inactivateTeamHandler,
         private readonly ActivateTeamHandler $activateTeamHandler,
@@ -79,6 +82,22 @@ final class TeamController extends AbstractPaginatedApiController
         return new JsonResponse([
             'data' => array_map(static fn ($item) => $item->toArray(), $teams->items),
             'meta' => $teams->meta->toArray(),
+        ]);
+    }
+
+
+    #[Route('/options', name: 'api_v1_teams_options', methods: ['GET'])]
+    public function options(Request $request): JsonResponse
+    {
+        $query = trim((string) $request->query->get('q', ''));
+        $teams = ($this->listTeamOptionsHandler)(new ListTeamOptionsQuery(
+            new AcademyId($this->tenantContext->requireAcademyId()),
+            $query === '' ? null : $query,
+        ));
+
+        return new JsonResponse([
+            'data' => array_map(static fn ($item) => $item->toArray(), $teams),
+            'meta' => new \stdClass(),
         ]);
     }
 

@@ -39,14 +39,19 @@ final class TeamAssignmentController extends AbstractApiController
     #[Route('', methods: ['POST'])]
     public function assign(Request $request): JsonResponse
     {
-        $input = new AssignPlayerToTeamRequest($request->toArray()['player_id'] ?? null, $request->toArray()['team_id'] ?? null, $request->toArray()['start_date'] ?? null);
+        $payload = $request->toArray();
+        $input = new AssignPlayerToTeamRequest(
+            $payload['playerId'] ?? null,
+            $payload['teamId'] ?? null,
+            array_key_exists('isPrimary', $payload) ? (bool) $payload['isPrimary'] : null
+        );
         $this->assertValid($this->validator, $input);
         $view = ($this->assignPlayerToTeamHandler)(new AssignPlayerToTeamCommand(
             $this->requireAuthenticatedUserId($this->security),
             $this->tenantContext->requireAcademyId(),
             $input->playerId ?? '',
             $input->teamId ?? '',
-            $input->startDate ?? (new \DateTimeImmutable())->format('Y-m-d')
+            $input->isPrimary ?? false
         ));
 
         return new JsonResponse([
