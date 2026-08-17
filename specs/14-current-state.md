@@ -240,7 +240,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `CategoryController` y `VenueController` quedaron homogeneizados para usar el `TenantContext` del controlador y no mezclar inyección por parámetro.
 * La jerarquía compartida de excepciones de `Shared` quedó aplicada y el `ProblemDetailsExceptionSubscriber` traduce por tipo base.
 * `EP-007` quedó reescrita como inicio forrmal del dominio `Player` y ya tiene HUs mínimas para registrar, listarar, consultar, actualizar y deactivar.
-* `HU-001` de `EP-007-player-management` quedó implementada y validada en runtime con `POST /api/v1/academy/players`; `birthDate` se admite como dato opcional en el payload y sólo se valida formato cuando el cliente lo envía.
+* `HU-001` de `EP-007-player-management` quedó implementada y validada en runtime con `POST /api/v1/academy/players`; `birthDate` se admite como dato opcional en el payload y sólo se valida formato cuando el cliente lo envía; `categoryId` también se persiste cuando el alta lo incluye.
 * `HU-002` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players`.
 * `HU-010` de `EP-007-player-management` quedó implementada y validada en runtime con `GET /api/v1/academy/players/{playerId}/summary`.
 * El listado de `Player` ya expone `photo`, `categoryName`, `genderName`, `age` y `createdAt` como campos de salida, con filtros por `gender`, `categoryId`, `documentNumber`, `documentType`, `firstName`, `lastName`, `fullName`, `createdAtFrom`, `createdAtTo`, `birthDateFrom` y `birthDateTo`; la búsqueda de texto quedó definida como case-insensitive y accent-insensitive.

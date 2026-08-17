@@ -29,6 +29,9 @@ final readonly class CreatePlayerRequest
         #[Assert\Length(max: 30, maxMessage: 'El campo "documentNumber" excede la longitud máxima permitida.')]
         public ?string $documentNumber,
 
+        #[Assert\Uuid(message: 'El campo "categoryId" debe ser un UUID válido.')]
+        public ?string $categoryId = null,
+
         #[Assert\Email(message: 'El campo "email" debe tener un formato válido.')]
         #[Assert\Length(max: 255, maxMessage: 'El campo "email" excede la longitud máxima permitida.')]
         public ?string $email = null,
@@ -58,6 +61,7 @@ final readonly class CreatePlayerRequest
             self::stringOrNull($payload['lastName'] ?? null),
             self::stringOrNull($payload['birthDate'] ?? null),
             self::stringOrNull($payload['documentNumber'] ?? null),
+            self::stringOrNull($payload['categoryId'] ?? null),
             self::stringOrNull($payload['email'] ?? null),
             self::stringOrNull($payload['phone'] ?? null),
             self::stringOrNull($payload['nationality'] ?? null),
@@ -75,6 +79,7 @@ final readonly class CreatePlayerRequest
             $this->lastName,
             $this->birthDate,
             $this->documentNumber,
+            $this->categoryId,
             $this->email,
             $this->phone,
             $this->nationality,

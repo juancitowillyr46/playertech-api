@@ -57,6 +57,7 @@ El jugador es la entidad central del dominio funcional de PlayerTech.
 * Exponer resumen compacto del jugador.
 * Filtrar listados por `gender`, `categoryId`, `documentNumber`, `documentType`, `firstName`, `lastName`, `fullName`, `createdAt` y `birthDate`.
 * Tratar `birthDate` como dato opcional en create/update, validando formato sólo cuando el cliente lo envía.
+* Permitir que el alta de jugador persista `categoryId` cuando el frontend lo envía y reflejarlo luego en el detalle.
 * Exponer catálogos compartidos para `documentType`, `nationality`, `dominantFoot` y `gender`.
 
 ## Base Técnica de Referencia

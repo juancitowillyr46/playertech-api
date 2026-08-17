@@ -6,6 +6,8 @@ namespace App\Modules\Player\Application\Handler;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Player\Application\Command\CreatePlayerCommand;
+use App\Modules\Category\Application\Services\CategoryFinder;
+use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Player\Application\Response\PlayerResponse;
 use App\Modules\Player\Domain\Exception\PlayerAlreadyExistsException;
 use App\Modules\Player\Domain\Player\Player;
@@ -18,6 +20,7 @@ final readonly class CreatePlayerHandler
 {
     public function __construct(
         private PlayerRepository $playerRepository,
+        private CategoryFinder $categoryFinder,
     ) {
     }
 
@@ -39,6 +42,7 @@ final readonly class CreatePlayerHandler
         }
 
         $birthDate = $this->resolveBirthDate($input->birthDate);
+        $categoryId = $this->resolveCategoryId($academyId, $input->categoryId);
 
         $player = Player::create(
             PlayerId::generate(),
@@ -54,7 +58,7 @@ final readonly class CreatePlayerHandler
             $input->gender,
             $input->federationId,
             $input->dominantFoot,
-            null,
+            $categoryId,
             null,
             AuditTrail::create($command->actorId),
         );
@@ -71,5 +75,21 @@ final readonly class CreatePlayerHandler
         }
 
         return new \DateTimeImmutable($birthDate);
+    }
+
+    private function resolveCategoryId(AcademyId $academyId, ?string $categoryId): ?CategoryId
+    {
+        if (null === $categoryId || '' === trim($categoryId)) {
+            return null;
+        }
+
+        $resolvedCategoryId = new CategoryId($categoryId);
+        $category = $this->categoryFinder->findOrFail($academyId, $resolvedCategoryId);
+
+        if (!$category->status()->isActive()) {
+            throw new BadRequestHttpException('La categoría debe estar activa.');
+        }
+
+        return $resolvedCategoryId;
     }
 }

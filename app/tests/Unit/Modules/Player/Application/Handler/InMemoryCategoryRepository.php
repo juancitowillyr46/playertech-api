@@ -8,6 +8,7 @@ use App\Modules\Academy\Domain\Academy\AcademyId;
 use App\Modules\Category\Domain\Category\Category;
 use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Category\Domain\Category\CategoryRepository;
+use App\Shared\Application\Pagination\PaginationQuery;
 
 final class InMemoryCategoryRepository implements CategoryRepository
 {
@@ -52,7 +53,7 @@ final class InMemoryCategoryRepository implements CategoryRepository
         ));
     }
 
-    public function findAllByAcademy(AcademyId $academyId): array
+    public function findAllByAcademy(AcademyId $academyId, PaginationQuery $pagination): array
     {
         return array_values(array_filter(
             $this->categories,
