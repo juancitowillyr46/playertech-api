@@ -10,8 +10,10 @@ Expected items:
 - finalize assignment
 - view player assignments
 - team autocomplete for available teams
+- player contextual team autocomplete that excludes active assignments
 
 Contract rule:
 
 - `POST /api/v1/academy/team-assignments` accepts `isPrimary` in the request and returns `isPrimary` in the response.
 - The persistence column remains `is_primary`.
+- `GET /api/v1/academy/players/{playerId}/teams/options?q={texto}` returns only active teams not already assigned actively to that player.

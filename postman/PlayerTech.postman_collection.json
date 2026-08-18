@@ -4013,6 +4013,67 @@
           ]
         },
         {
+          "name": "Team Assignments - Available Teams By Player",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tenantToken}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/academy/players/{{playerId}}/teams/options?q=team",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "academy",
+                "players",
+                "{{playerId}}",
+                "teams",
+                "options"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "team"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Team Assignments - Available Teams By Player Example",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{
+  "data": [
+    {
+      "id": "019f7000-0000-7000-8000-000000000010",
+      "name": "Equipo A",
+      "categoryName": "Sub 15",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {}
+}"
+            }
+          ]
+        },
+        {
           "name": "Team Assignments - List By Player",
           "request": {
             "method": "GET",

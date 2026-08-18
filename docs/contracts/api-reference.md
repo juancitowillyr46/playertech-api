@@ -2529,6 +2529,27 @@ GET /api/v1/academy/teams/options?q=team
 }
 ```
 
+### GET /api/v1/academy/players/{playerId}/teams/options?q={texto}
+
+Selector contextual de equipos activos disponibles para un jugador concreto.
+Excluye los equipos ya asignados activamente a ese jugador.
+
+Response:
+
+```json
+{
+  "data": [
+    {
+      "id": "019f7000-0000-7000-8000-000000000010",
+      "name": "Equipo A",
+      "categoryName": "Sub 15",
+      "status": "ACTIVE"
+    }
+  ],
+  "meta": {}
+}
+```
+
 ---
 
 # Player Team Assignment API

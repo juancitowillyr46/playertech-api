@@ -52,9 +52,9 @@ El sistema preserva el historial cuando las asignaciones se finalizan.
 
 ### Historia de Usuario 4 - Seleccionar equipos disponibles (Priority: P4)
 
-El sistema permite al frontend consultar un selector liviano de equipos activos para asociar a un jugador dentro de la academia autenticada.
+El sistema permite al frontend consultar un selector liviano de equipos activos para uso general dentro de la academia autenticada.
 
-**Por qué esta prioridad**: El formulario de asignación deportiva necesita sugerir equipos válidos sin cargar el listado completo.
+**Por qué esta prioridad**: El frontend necesita sugerir equipos válidos sin cargar el listado completo.
 
 **Prueba independiente**: Un admin puede buscar equipos activos por texto parcial y recibir resultados livianos para autocomplete.
 
@@ -63,6 +63,20 @@ El sistema permite al frontend consultar un selector liviano de equipos activos 
 1. **Given** equipos activos en la academia, **When** el frontend consulta el selector, **Then** el sistema devuelve coincidencias livianas para autocomplete.
 2. **Given** un texto parcial, **When** el frontend consulta el selector con `q`, **Then** el sistema responde con coincidencias parciales.
 3. **Given** un equipo inactivo o fuera del tenant, **When** se consulta el selector, **Then** el sistema no lo expone en la respuesta.
+
+### Historia de Usuario 5 - Seleccionar equipos disponibles para un jugador (Priority: P4)
+
+El sistema permite al frontend consultar un selector contextual de equipos activos para un jugador específico, excluyendo los equipos que ya tiene asignados activamente.
+
+**Por qué esta prioridad**: El formulario de asignación deportiva necesita evitar duplicados activos para el mismo jugador.
+
+**Prueba independiente**: Un admin puede buscar equipos activos por texto parcial y recibir únicamente los no asignados activamente al jugador.
+
+**Escenarios de aceptación**:
+
+1. **Given** equipos activos en la academia y un jugador con asignaciones previas, **When** el frontend consulta el selector contextual, **Then** el sistema excluye los equipos ya asignados activamente a ese jugador.
+2. **Given** un texto parcial, **When** el frontend consulta el selector contextual con `q`, **Then** el sistema responde con coincidencias parciales.
+3. **Given** un equipo inactivo, fuera del tenant o ya asignado activamente al jugador, **When** se consulta el selector contextual, **Then** el sistema no lo expone en la respuesta.
 
 ## Respuesta esperada
 
@@ -98,8 +112,9 @@ El sistema permite al frontend consultar un selector liviano de equipos activos 
 - **FR-004**: System MUST permitir finalizing assignments sin deleting history.
 - **FR-005**: System MUST preserve assignment history.
 - **FR-006**: System MUST permitir un selector liviano de equipos activos para autocomplete mediante `GET /api/v1/academy/teams/options`.
-- **FR-007**: System MUST aceptar `isPrimary` en `POST /api/v1/academy/team-assignments` para crear la asignación ya marcada como principal.
-- **FR-008**: System MUST establecer automáticamente la fecha de inicio de la asignación al momento de creación.
+- **FR-007**: System MUST permitir un selector contextual de equipos activos disponibles para un jugador mediante `GET /api/v1/academy/players/{playerId}/teams/options`.
+- **FR-008**: System MUST aceptar `isPrimary` en `POST /api/v1/academy/team-assignments` para crear la asignación ya marcada como principal.
+- **FR-009**: System MUST establecer automáticamente la fecha de inicio de la asignación al momento de creación.
 
 ### Entidades clave *(include if feature involves data)*
 

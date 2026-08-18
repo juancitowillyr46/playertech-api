@@ -9,9 +9,11 @@ use App\Modules\TeamAssignment\Application\Command\AssignPlayerToTeamCommand;
 use App\Modules\TeamAssignment\Application\Command\FinalizeTeamAssignmentCommand;
 use App\Modules\TeamAssignment\Application\Command\MarkTeamAssignmentPrimaryCommand;
 use App\Modules\TeamAssignment\Application\Handler\AssignPlayerToTeamHandler;
+use App\Modules\TeamAssignment\Application\Handler\ListAvailableTeamsForPlayerHandler;
 use App\Modules\TeamAssignment\Application\Handler\FinalizeTeamAssignmentHandler;
 use App\Modules\TeamAssignment\Application\Handler\MarkTeamAssignmentPrimaryHandler;
 use App\Modules\TeamAssignment\Application\Handler\ShowPlayerTeamAssignmentsHandler;
+use App\Modules\TeamAssignment\Application\Query\ListAvailableTeamsForPlayerQuery;
 use App\Modules\TeamAssignment\Application\Query\ShowPlayerTeamAssignmentsQuery;
 use App\Modules\TeamAssignment\Presentation\Http\Request\AssignPlayerToTeamRequest;
 use App\Shared\Presentation\Http\AbstractApiController;
@@ -29,6 +31,7 @@ final class TeamAssignmentController extends AbstractApiController
         private readonly Security $security,
         private readonly ValidatorInterface $validator,
         private readonly AssignPlayerToTeamHandler $assignPlayerToTeamHandler,
+        private readonly ListAvailableTeamsForPlayerHandler $listAvailableTeamsForPlayerHandler,
         private readonly MarkTeamAssignmentPrimaryHandler $markTeamAssignmentPrimaryHandler,
         private readonly FinalizeTeamAssignmentHandler $finalizeTeamAssignmentHandler,
         private readonly ShowPlayerTeamAssignmentsHandler $showPlayerTeamAssignmentsHandler,
@@ -100,6 +103,22 @@ final class TeamAssignmentController extends AbstractApiController
 
         return new JsonResponse([
             'data' => array_map(static fn ($view) => $view->toArray(), $views),
+            'meta' => new \stdClass(),
+        ]);
+    }
+
+    #[Route('/players/{playerId}/teams/options', methods: ['GET'])]
+    public function availableTeamsByPlayer(Request $request, string $playerId): JsonResponse
+    {
+        $query = trim((string) $request->query->get('q', ''));
+        $teams = ($this->listAvailableTeamsForPlayerHandler)(new ListAvailableTeamsForPlayerQuery(
+            $this->tenantContext->requireAcademyId(),
+            $playerId,
+            '' === $query ? null : $query,
+        ));
+
+        return new JsonResponse([
+            'data' => array_map(static fn ($item) => $item->toArray(), $teams),
             'meta' => new \stdClass(),
         ]);
     }
