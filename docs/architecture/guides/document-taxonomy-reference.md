@@ -116,7 +116,7 @@ Documento que describe una capacidad concreta del sistema.
 - `specs/002-venue/`
 - `specs/003-identity/`
 - `specs/007-player-management/`
-- `specs/009-membership/`
+- `specs/009-membership-management/`
 - `specs/012-charge-payment/`
 
 ---

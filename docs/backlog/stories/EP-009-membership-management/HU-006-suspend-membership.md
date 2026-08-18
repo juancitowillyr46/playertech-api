@@ -1,11 +1,11 @@
-# HU-005 Suspender Matrícula
+# HU-006 Suspender Matrícula
 
 ## Información General
 
 | Campo | Valor |
 | --- | --- |
-| ID | HU-005 |
-| Épica | EP-009 Gestión de Matrículas y Cargos Iniciales |
+| ID | HU-006 |
+| Épica | EP-009-membership-management Gestión de Matrículas |
 | Prioridad | Media |
 | MVP | Sí |
 | Estado | Done |
@@ -41,4 +41,3 @@ Para pausar temporalmente la vinculación del jugador sin perder su historial.
 
 * Dado una matrícula vigente, cuando la suspendo, entonces el sistema cambia su estado correctamente.
 * Dado una matrícula ya suspendida o inexistente, cuando intento suspenderla, entonces el sistema rechaza la operación.
-

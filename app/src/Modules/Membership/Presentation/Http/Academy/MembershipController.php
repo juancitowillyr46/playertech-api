@@ -46,7 +46,8 @@ final class MembershipController extends AbstractApiController
         $payload = $request->toArray();
         $input = new CreateMembershipRequest(
             $payload['playerId'] ?? null,
-            $payload['primaryGuardianId'] ?? null,
+            $payload['responsibleGuardianId'] ?? null,
+            $payload['categoryId'] ?? null,
         );
         $this->assertValid($this->validator, $input);
 
@@ -55,7 +56,8 @@ final class MembershipController extends AbstractApiController
                 $this->requireAuthenticatedUserId($this->security),
                 $this->tenantContext->requireAcademyId(),
                 $input->playerId ?? '',
-                $input->primaryGuardianId ?? '',
+                $input->responsibleGuardianId ?? '',
+                $input->categoryId ?? '',
             )
         );
 

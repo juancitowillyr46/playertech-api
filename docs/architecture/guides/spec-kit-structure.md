@@ -129,7 +129,7 @@ Algunos features ya normalizados bajo esta estructura son:
 - `specs/006-legal-guardian-management/`
 - `specs/007-player-management/`
 - `specs/008-player-guardian/`
-- `specs/009-membership/`
+- `specs/009-membership-management/`
 - `specs/010-team-assignment/`
 - `specs/011-payment-concept/`
 - `specs/012-charge-payment/`

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Membership\Domain\Membership;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
 use App\Modules\Player\Domain\Player\PlayerId;
 use App\Shared\Domain\Contracts\Auditable;
@@ -18,7 +19,9 @@ final class Membership implements Auditable
 
     private PlayerId $playerId;
 
-    private LegalGuardianId $primaryGuardianId;
+    private LegalGuardianId $responsibleGuardianId;
+
+    private CategoryId $categoryId;
 
     private MembershipStatus $status;
 
@@ -36,13 +39,15 @@ final class Membership implements Auditable
         MembershipId $id,
         AcademyId $academyId,
         PlayerId $playerId,
-        LegalGuardianId $primaryGuardianId,
+        LegalGuardianId $responsibleGuardianId,
+        CategoryId $categoryId,
         AuditTrail $auditTrail
     ) {
         $this->id = $id;
         $this->academyId = $academyId;
         $this->playerId = $playerId;
-        $this->primaryGuardianId = $primaryGuardianId;
+        $this->responsibleGuardianId = $responsibleGuardianId;
+        $this->categoryId = $categoryId;
         $this->status = MembershipStatus::active();
         $this->startedAt = new \DateTimeImmutable();
         $this->auditTrail = $auditTrail;
@@ -52,10 +57,11 @@ final class Membership implements Auditable
         MembershipId $id,
         AcademyId $academyId,
         PlayerId $playerId,
-        LegalGuardianId $primaryGuardianId,
+        LegalGuardianId $responsibleGuardianId,
+        CategoryId $categoryId,
         AuditTrail $auditTrail
     ): self {
-        return new self($id, $academyId, $playerId, $primaryGuardianId, $auditTrail);
+        return new self($id, $academyId, $playerId, $responsibleGuardianId, $categoryId, $auditTrail);
     }
 
     public function id(): MembershipId
@@ -73,9 +79,14 @@ final class Membership implements Auditable
         return $this->playerId;
     }
 
-    public function primaryGuardianId(): LegalGuardianId
+    public function responsibleGuardianId(): LegalGuardianId
     {
-        return $this->primaryGuardianId;
+        return $this->responsibleGuardianId;
+    }
+
+    public function categoryId(): CategoryId
+    {
+        return $this->categoryId;
     }
 
     public function status(): MembershipStatus

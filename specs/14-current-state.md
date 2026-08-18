@@ -50,6 +50,10 @@ La base tecnica actual incluye:
 | Player validation migration | Technical Enabler | Done | `unrastreared` | La validación de crear, actualizar y asociación de acudiente de `Player` se mueve a `Presentation`; `Application` queda con DTOs puros para esos flujos |
 | Guardian validation migration | Technical Enabler | Done | `unrastreared` | La validación de crear de `Guardian` se mueve a `Presentation`; `Application` queda con DTOs puros para ese flujo |
 | PaymentConcept validation migration | Technical Enabler | Done | `unrastreared` | La validación de crear y actualizar de `PaymentConcept` se movió a `Presentation`; `Application` quedó con DTOs puros para esos flujos |
+| Membership module MVP | Functional / Technical Enabler | Done | `unrastreared` | `Membership` ya forma parte del MVP operativo como matrícula del jugador y controla la permanencia administrativa del flujo base |
+| Charge module MVP | Functional / Technical Enabler | Done | `unrastreared` | `Charge` ya forma parte del MVP financiero como bloque operativo de cargos para el flujo de pagos |
+| Payment module MVP | Functional / Technical Enabler | Done | `unrastreared` | `Payment` ya forma parte del MVP financiero y no debe tratarse como trabajo periférico |
+| PaymentConcept module MVP | Functional / Technical Enabler | Done | `unrastreared` | `PaymentConcept` ya forma parte del MVP financiero como catálogo estable para matrículas y cobranzas |
 | API controller forundation | Technical Enabler | Done | `unrastreared` | Base HTTP común para validación y resolución del usuario autenticado, reduciendo duplicación entre controladores |
 | First unit test baseline | Technical Enabler | Done | `unrastreared` | PHPUnit inicial valida `AcademyId`, `AccountUser` y `UserAdministrationPolicy` |
 | Tenant signup integration test | Technical Enabler | Done | `unrastreared` | `RegisterTenantHandler` valida alta de tenant contra una base de datos MySQL de test con bus de mensajes desacoplado |
@@ -83,9 +87,9 @@ La base tecnica actual incluye:
 | Player status gestionarment story | Functional / Documentation | Done | `unrastreared` | HU-005 consolidada documenta deactivar y reactivar como una sola gestion de estado |
 | Player bulk import async | Functional / Technical Enabler | Done | `unrastreared` | `POST /api/v1/academy/players/import` crea un job asíncrono con categoría seleccionada previamente, plantilla oficial desde backend y polling de progreso |
 | Backlog normalization pass 1 | Documentation | Done | `unrastreared` | Se movieron HUs duplicadas o mal ubicadas a `docs/backlog/stories/_archive/` y se renombró la HU de detalle de sede para alinear `EP-002` |
-| Payment evidence puedeonical owner | Documentation | Done | `unrastreared` | `HU-004-attach-payment-evidence.md` quedó puedeonizada en `EP-012`; la copia de `EP-009` fue archivada |
+| Payment evidence puedeonical owner | Documentation | Done | `unrastreared` | `HU-004-attach-payment-evidence.md` quedó puedeonizada en `EP-012`; la copia de `EP-009-membership-management` fue archivada |
 | Backlog normalization pass 2 | Documentation | Done | `unrastreared` | `EP-007` quedó reducido a una HU puedeónica de estado; `EP-003` archivó la HU de invitación duplicada de alta administrativa |
-| Backlog normalization pass 3 | Documentation | Done | `unrastreared` | `EP-009` quedó con numeración continua y evidencia de pago puedeónica en `EP-012` |
+| Backlog normalization pass 3 | Documentation | Done | `unrastreared` | `EP-009-membership-management` quedó con numeración continua y evidencia de pago puedeónica en `EP-012` |
 | Category business key forundation | Functional / Technical Enabler | Done | `unrastreared` | `Category` ahora expone `category_key` estable, unico por academia, para contratos API e importaciones |
 | Guardian module forundation | Functional / Technical Enabler | Done | `unrastreared` | `LegalGuardian` queda disponible como aggregate root con XML puro, custom type UUID y endpoint de alta dentro de Academy |
 | Guardian lifecycle completion | Functional / Technical Enabler | Done | `unrastreared` | `LegalGuardian` ahora expone create, list, detail, update, inactivate y activate con contratos HTTP, handlers y pruebas unitarias asociadas |
@@ -226,6 +230,8 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Category` y `Venue` comparten ahora el patrón de recuperación por `Finder`, reduciendo duplicación en handlers y homogeneizando Application.
 * `Player` ya quedó documentado también en `docs/domains/player/player-domain-spec.md` como contrato central del dominio, para no depender solo del feature spec y del flujo de importación.
 * El listarado de `Player` expone `photo`, `categoryName`, `genderName`, `age` y `createdAt`; además, el detalle, la foto y la importación masiva quedaron alineados con el contrato HTTP vigente.
+* `Membership`, `Charge`, `Payment` y `PaymentConcept` ya forman parte del MVP financiero y deben tratarse como módulos base del producto.
+* El análisis detallado de `Membership` quedó documentado en `docs/audit/membership-module-analysis.md`.
 * La importación de `Player` queda documentada como flujo central en `docs/flows/player/player-import-flow-spec.md` y su UX satélite en `docs/flows/player/player-import-ux-spec.md`.
 * El backend ya valida la categoría seleccionada antes de crear un job de importación y la plantilla oficial de Excel se genera con referencias desde backend en una hoja `Referencias` con categorías activas, formatos correctos y tablas de valores válidos.
 * `Player` ahora expone eliminación de forto mediante `DELETE /api/v1/academy/players/{playerId}/photo`, no solo subida/reemplazo.
@@ -233,6 +239,7 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * `Academy`, `Identity`, `Guardian`, `Billing` y `Staff` también quedaron reforrzados con documento central de dominio en `docs/domains/`, alineando contexto tenant, reset de contraseña, relación base de acudientes, bloque financiero y selectors de staff con the backend real.
 * Los módulos desarrollados ya usan XML Mapping Doctrine como estándar persistente; las entidades de `Academy`, `Category`, `Venue`, `Identity`, `Guardian`, `Player`, `Membership`, `PaymentConcept`, `Charge`, `Payment`, `Staff`, `Team` y `TeamAssignment` están responsealdadas por mapping XML explícito.
 * `Player`, `Category`, `Venue`, `Team`, `Guardian`, `Academy`, `Membership`, `PaymentConcept`, `Charge`, `Payment`, `Staff` y `TeamAssignment` ya tienen superficie HTTP, DTOs y contratos de persistencia que deben reflejarse en la documentación antes de introducir nuevos cambios funcionales.
+* `Membership`, `PaymentConcept`, `Charge` y `Payment` ya deben considerarse parte del MVP financiero y no módulos secundarios.
 * `Category` y `Venue` ahora normalizan `sort` mediante un mapa seguro antes de construir el `ORDER BY`, evitando enviar el campo crudo a Doctrine.
 * `Category` unifico el contrato de actualizar en `categoryKey` camelCase y el listarado ahora expone `academyId` para alinearse con el detalle.
 * `Category` ahora genera `categoryKey` desde the backend a partir del `name`, eliminando ese campo del payload de crear/actualizar y manteniéndolo como contrato de salida.
@@ -259,10 +266,10 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El contrato público de onboarding pasa a usar un catálogo global de categorías y el signup clonará la categoría elegida dentro de the academy; la implementación sigue pendiente.
 * El signup público valida ahora duplicados de `contactEmail` y `phone` en backend; además, existe `GET /api/v1/public/tenants/availability` para que el front consulte disponibilidad reactiva de email y celular con un solo contrato.
 * Se pobló el catálogo `onboarding_categories` con el rango `Sub 4` a `Sub 20` como base pública de onboarding para frontend y signup.
-* `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-009`, `EP-010` y `EP-012`.
-* Se inició el módulo `Membership` como primer slice técnico de `EP-009`, con base de dominio, mapping XML, repositorio, controller y casos de uso de crear/consultar matrícula activa.
-* `EP-009` quedó consolidada como módulo funcional completo: matrícula activa, cargos iniciales, historial, suspensión y retiro con cobertura unitaria y documentación HTTP operativa en Postman.
-* El bloque financiero fue reordenado: `EP-009` genera cargos iniciales pendientes, `EP-011` administra conceptos de pago, `EP-012` gestiona cargos, pagos, evidencia y deuda, y `EP-013` resume cartera y estado operativo.
+* `Player` quedó priorizado como siguiente módulo de negocio sobre `EP-009-membership-management`, `EP-010` y `EP-012`.
+* Se inició el módulo `Membership` como primer slice técnico de `EP-009-membership-management`, con base de dominio, mapping XML, repositorio, controller y casos de uso de crear/consultar matrícula activa.
+* `EP-009-membership-management` quedó consolidada como módulo funcional completo: matrícula activa, cargos iniciales, historial, suspensión y retiro con cobertura unitaria y documentación HTTP operativa en Postman.
+* El bloque financiero fue reordenado: `EP-009-membership-management` genera cargos iniciales pendientes, `EP-011` administra conceptos de pago, `EP-012` gestiona cargos, pagos, evidencia y deuda, y `EP-013` resume cartera y estado operativo.
 * La frontera financiera quedó estabilizada: `Membership` administra la matrícula y puede disparar cargos automáticos; `Charge` modela la deuda concreta; `Payment` registra el recaudo y `PaymentAllocation` distribuye ese recaudo sobre cargos existentes; `PaymentConcept` sigue siendo el catálogo reusable de motivos de cobro.
 * `Membership` ya adopta el patrón de arquitectura esperado: validación en `Presentation`, `MembershipFinder` en `Application` y excepciones de dominio herederas de `Shared`.
 * `EP-012` quedó cerrado funcional y técnicamente con `Charge`, `Payment`, `PaymentAllocation`, deuda, historial, evidencia y puedecelación; la validación final ya se cubrió sobre `test`.
@@ -320,13 +327,13 @@ Cada cambio importante debera dejar trazabilidad en este documento o en el orden
 * El MVP checklistar debe mantener como cerradas las historias de media ya implementadas: escudo institucional de `Academy` y forto de `Player`.
 * `EP-006` ya expone lectura y creación de acudientes por academia en HTTP, incluyendo el campo `relationship`, y `EP-008` ya cubre la relación jugador-acudiente con alta de acudiente, asociación, cambio de principal, eliminación lógica y vista por jugador.
 * `EP-006` completó su ciclo de vida de acudientes con actualización, inactivación y reactivación, cerrando el contrato completo del módulo.
-* El bloque de módulos aún pendiente para el MVP ya no incluye `EP-012`; `EP-008`, `EP-009`, `EP-010`, `EP-011`, `EP-012` y `EP-013` ya se consideran resueltos.
+* El bloque de módulos aún pendiente para el MVP ya no incluye `EP-012`; `EP-008`, `EP-009-membership-management`, `EP-010`, `EP-011`, `EP-012` y `EP-013` ya se consideran resueltos.
 * La capa fiscal forrmal sigue fuera del MVP y quedó concentrada en `EP-023`.
 * Se documentó una auditoría SDD dthe backend en `docs/architecture/audits/SDD-backend-audit.md`, con diagnóstico de madurez, vacíos de trazabilidad y propuesta incremental de adopción.
 * Se adoptó una versión liviana de SDD para trabajo individual: `docs/contracts/api-reference.md` queda como referencia HTTP operativa principal y `AGENTS.md` incorpora reglas simples de puedeonicidad y trazabilidad mínima.
 * Se consolidó un índice de contratos HTTP en `docs/contracts/api-reference.md` para centralizar la sincronización con frontend y QA sin duplicar la especificación operativa.
 * Se forrmalizó una política SDD escalonada en `docs/architecture/policies/sdd-policy.md` y dos plantillas de cambio en `docs/architecture/templates/change-template-light.md` y `docs/architecture/templates/change-template-full.md` para futuras features.
-* Se documentó la evolución del modelo de cobro de `EP-009` en `docs/domains/billing/billing-evolution-notes.md`, incluyendo el estado actual, casos de uso reales y los diagramas de flujo actual y objetivo.
+* Se documentó la evolución del modelo de cobro de `EP-009-membership-management` en `docs/domains/billing/billing-evolution-notes.md`, incluyendo el estado actual, casos de uso reales y los diagramas de flujo actual y objetivo.
 * Se redefinió el perfil base de `Player` en `docs/domains/domain-overver.md` para separar identidad, atributos deportivos y datos que deben vivir en asignaciones o compras.
 * Se documentó un criterio SDD para la evolución del perfil de `Player` en `docs/domains/player/player-profile-evolution-notes.md`, con reglas para decidir qué atributos viven en el aggregate y cuáles deben quedar fuera.
 * El perfil base de `Player` incorporó `email` y `phone` como datos de contacto opcionales, sincronizados entre dominio, API, Postman y persistencia.
@@ -419,7 +426,7 @@ Para considerar la base listara antes de implementar cualquier lógica de negoci
 - [x] `EP-007` Foto del jugador.
 - [x] `EP-008` Relaciones jugador-acudiente.
 - [x] `EP-005` Equipos.
-- [x] `EP-009` Matrículas y seguimiento de pagos.
+- [x] `EP-009-membership-management` Matrículas y seguimiento de pagos.
 - [x] `EP-010` Player Team Assignment.
 - [x] `EP-011` Conceptos de pago.
 - [x] `EP-012` Cargos y pagos.

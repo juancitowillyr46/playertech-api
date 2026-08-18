@@ -27,6 +27,7 @@ final class ShowActiveMembershipHandlerTest extends TestCase
             '019eec93-9a11-7432-bd04-52306b2b3d8f',
             '019eec93-9a11-7432-bd04-52306b2b3d90',
             '019eec93-9a11-7432-bd04-52306b2b3d91',
+            '019eec93-9a11-7432-bd04-52306b2b3d92',
         ));
 
         $response = $reader(new ShowActiveMembershipQuery(
@@ -35,6 +36,8 @@ final class ShowActiveMembershipHandlerTest extends TestCase
         ));
 
         self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d90', $response->toArray()['playerId']);
+        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d91', $response->toArray()['responsibleGuardianId']);
+        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d92', $response->toArray()['categoryId']);
     }
 
     public function testItThrowsWhenMembershipDoesNotExist(): void

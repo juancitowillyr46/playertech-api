@@ -13,9 +13,13 @@ final readonly class CreateMembershipRequest
         #[Assert\Uuid(message: 'El campo "playerId" debe ser un UUID válido.')]
         public ?string $playerId = null,
 
-        #[Assert\NotBlank(message: 'El campo "primaryGuardianId" es obligatorio.')]
-        #[Assert\Uuid(message: 'El campo "primaryGuardianId" debe ser un UUID válido.')]
-        public ?string $primaryGuardianId = null,
+        #[Assert\NotBlank(message: 'El campo "responsibleGuardianId" es obligatorio.')]
+        #[Assert\Uuid(message: 'El campo "responsibleGuardianId" debe ser un UUID válido.')]
+        public ?string $responsibleGuardianId = null,
+
+        #[Assert\NotBlank(message: 'El campo "categoryId" es obligatorio.')]
+        #[Assert\Uuid(message: 'El campo "categoryId" debe ser un UUID válido.')]
+        public ?string $categoryId = null,
     ) {
     }
 }

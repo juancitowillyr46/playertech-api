@@ -78,7 +78,7 @@ de GitHub Spec Kit y reducir ambigüedad entre backlog, features y specs.
 ### EP-009 - Matrículas y Cargos Iniciales
 
 - Tipo: feature compuesta.
-- Carpeta sugerida: `specs/009-membership/`.
+- Carpeta sugerida: `specs/009-membership-management/`.
 - Subfeatures:
   - `membership-create`
   - `membership-active-view`
@@ -134,7 +134,7 @@ de GitHub Spec Kit y reducir ambigüedad entre backlog, features y specs.
 
 ### Duplicados claros
 
-- `EP-009/HU-004-attach-payment-evidence.md`
+- `EP-009-membership-management/HU-004-attach-payment-evidence.md`
 - `EP-012/HU-004-attach-payment-evidence.md`
 
 Acción sugerida:

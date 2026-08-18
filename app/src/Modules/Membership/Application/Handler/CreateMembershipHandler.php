@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Membership\Application\Handler;
 
 use App\Modules\Academy\Domain\Academy\AcademyId;
+use App\Modules\Category\Domain\Category\CategoryId;
 use App\Modules\Guardian\Domain\LegalGuardian\LegalGuardianId;
 use App\Modules\Membership\Application\Command\CreateMembershipCommand;
 use App\Modules\Membership\Application\Response\MembershipResponse;
@@ -35,7 +36,8 @@ final readonly class CreateMembershipHandler
             MembershipId::generate(),
             $academyId,
             $playerId,
-            new LegalGuardianId($command->primaryGuardianId),
+            new LegalGuardianId($command->responsibleGuardianId),
+            new CategoryId($command->categoryId),
             AuditTrail::create($command->actorId),
         );
 

@@ -5,7 +5,7 @@
 | Campo | Valor |
 | --- | --- |
 | ID | HU-001 |
-| Épica | EP-009 Gestión de Matrículas y Seguimiento de Pagos |
+| Épica | EP-009-membership-management Gestión de Matrículas |
 | Prioridad | Alta |
 | MVP | Sí |
 | Estado | Done |
@@ -36,7 +36,7 @@ Para dejar constancia oficial de su vínculo administrativo y generar los cargos
 * La matrícula debe tener un acudiente principal.
 * Solo puede existir una matrícula activa por jugador dentro de una academia.
 * La matrícula se crea en estado activo salvo regla futura distinta.
-* Al crear la matrícula se generan dos cargos iniciales: matrícula y primera mensualidad.
+* La matrícula mantiene una referencia documental al bloque financiero para que los cargos iniciales puedan resolverse en módulos vecinos.
 
 ---
 

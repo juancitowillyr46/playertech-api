@@ -227,7 +227,7 @@ Documento central para el bloque financiero y de cobros.
 
 ## Functional Guides
 
-- Backlog epic: [`docs/backlog/epics/EP-009.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/epics/EP-009.md)
+- Backlog epic: [`docs/backlog/epics/EP-009-membership-management.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/epics/EP-009-membership-management.md)
 - Payment concepts: [`docs/backlog/epics/EP-011.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/epics/EP-011.md)
 - Charges and payments: [`docs/backlog/epics/EP-012.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/epics/EP-012.md)
 - Dashboard: [`docs/backlog/epics/EP-013.md`](/home/juan-rodas/projects/playertech/playertech-api/docs/backlog/epics/EP-013.md)

@@ -30,6 +30,7 @@ final class WithdrawMembershipHandlerTest extends TestCase
             '019eec93-9a11-7432-bd04-52306b2b3d8f',
             '019eec93-9a11-7432-bd04-52306b2b3d90',
             '019eec93-9a11-7432-bd04-52306b2b3d91',
+            '019eec93-9a11-7432-bd04-52306b2b3d92',
         ));
 
         $withdrawer(new WithdrawMembershipCommand(

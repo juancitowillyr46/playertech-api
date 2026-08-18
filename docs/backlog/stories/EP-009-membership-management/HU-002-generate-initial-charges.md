@@ -5,7 +5,7 @@
 | Campo | Valor |
 | --- | --- |
 | ID | HU-002 |
-| Épica | EP-009 Gestión de Matrículas y Cargos Iniciales |
+| Épica | EP-009-membership-management Gestión de Matrículas |
 | Prioridad | Alta |
 | MVP | Sí |
 | Estado | Done |
@@ -31,10 +31,8 @@ Para dejar pendiente desde el inicio lo que debe pagar el acudiente principal.
 
 # Reglas de Negocio
 
-* Al crear una matrícula activa se generan dos cargos iniciales.
-* Los cargos iniciales son matrícula y primera mensualidad.
-* Ambos cargos nacen en estado `PENDIENTE`.
-* Los cargos deben quedar asociados a la matrícula y al acudiente principal.
+* Los cargos iniciales se documentan como referencia financiera y se resuelven en el bloque financiero.
+* La matrícula conserva trazabilidad hacia esos cargos, pero no los materializa dentro del core administrativo.
 
 ---
 
@@ -42,4 +40,3 @@ Para dejar pendiente desde el inicio lo que debe pagar el acudiente principal.
 
 * Dado una matrícula creada, cuando el sistema termina la operación, entonces existen dos cargos pendientes generados.
 * Dado una matrícula nueva, cuando consulto sus cargos iniciales, entonces el sistema muestra matrícula y primera mensualidad en pendiente.
-

@@ -1,11 +1,11 @@
-# HU-002 Consultar Matrícula Activa
+# HU-003 Consultar Matrícula Activa
 
 ## Información General
 
 | Campo | Valor |
 | --- | --- |
-| ID | HU-002 |
-| Épica | EP-009 Gestión de Matrículas y Seguimiento de Pagos |
+| ID | HU-003 |
+| Épica | EP-009-membership-management Gestión de Matrículas |
 | Prioridad | Alta |
 | MVP | Sí |
 | Estado | Done |
@@ -34,6 +34,7 @@ Para saber si está vinculado actualmente a la academia y quién es su acudiente
 * La consulta debe limitarse a la academia actual.
 * Si el jugador no tiene matrícula activa, el sistema debe indicarlo claramente.
 * La respuesta debe incluir el acudiente principal asociado.
+* La respuesta puede mantener una referencia a información financiera relacionada sin materializar el bloque de cobro dentro de Membership.
 
 ---
 

@@ -1,11 +1,11 @@
-# HU-006 Retirar Matrícula
+# HU-008 Retirar Matrícula
 
 ## Información General
 
 | Campo | Valor |
 | --- | --- |
-| ID | HU-006 |
-| Épica | EP-009 Gestión de Matrículas y Cargos Iniciales |
+| ID | HU-008 |
+| Épica | EP-009-membership-management Gestión de Matrículas |
 | Prioridad | Alta |
 | MVP | Sí |
 | Estado | Done |
@@ -41,4 +41,3 @@ Para finalizar la vinculación del jugador con la academia y dejar su historial 
 
 * Dado una matrícula vigente o suspendida, cuando la retiro, entonces el sistema la marca como finalizada correctamente.
 * Dado una matrícula inexistente o ya retirada, cuando intento retirarla, entonces el sistema rechaza la operación.
-

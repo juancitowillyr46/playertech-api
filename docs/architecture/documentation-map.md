@@ -149,7 +149,7 @@ Vive en `docs/backlog/`.
 | Plan financiero / cargos | [`specs/012-charge-payment/spec.md`](../../specs/012-charge-payment/spec.md) |
 | Documento central de dominio | [`docs/domains/billing/billing-domain-spec.md`](../domains/billing/billing-domain-spec.md) |
 | Modelo financiero | [`docs/domains/billing/financial-domain-model.md`](../../docs/domains/billing/financial-domain-model.md) |
-| HUs | [`docs/backlog/stories/EP-009/`](../backlog/stories/EP-009/) |
+| HUs | [`docs/backlog/stories/EP-009-membership-management/`](../backlog/stories/EP-009-membership-management/) |
 
 ### Staff
 

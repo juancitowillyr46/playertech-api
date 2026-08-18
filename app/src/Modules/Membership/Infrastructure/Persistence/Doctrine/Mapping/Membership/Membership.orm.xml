@@ -14,15 +14,17 @@
         <indexes>
             <index name="IDX_MEMBERSHIP_ACADEMY" columns="academy_id"/>
             <index name="IDX_MEMBERSHIP_PLAYER" columns="player_id"/>
-            <index name="IDX_MEMBERSHIP_GUARDIAN" columns="primary_guardian_id"/>
+            <index name="IDX_MEMBERSHIP_GUARDIAN" columns="responsible_guardian_id"/>
             <index name="IDX_MEMBERSHIP_STATUS" columns="status"/>
+            <index name="IDX_MEMBERSHIP_CATEGORY" columns="category_id"/>
         </indexes>
 
         <id name="id" column="id" type="membership_id"/>
 
         <field name="academyId" column="academy_id" type="academy_id"/>
         <field name="playerId" column="player_id" type="player_id"/>
-        <field name="primaryGuardianId" column="primary_guardian_id" type="legal_guardian_id"/>
+        <field name="responsibleGuardianId" column="responsible_guardian_id" type="legal_guardian_id"/>
+        <field name="categoryId" column="category_id" type="category_id"/>
 
         <embedded name="status" class="App\Modules\Membership\Domain\Membership\MembershipStatus" use-column-prefix="false"/>
         <embedded name="auditTrail" class="App\Shared\Domain\ValueObject\AuditTrail" use-column-prefix="false"/>

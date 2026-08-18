@@ -13,7 +13,8 @@ final readonly class MembershipHistoryItemResponse
         public string $status,
         public string $startedAt,
         public ?string $endedAt,
-        public string $primaryGuardianId,
+        public string $responsibleGuardianId,
+        public string $categoryId,
     ) {
     }
 
@@ -24,7 +25,8 @@ final readonly class MembershipHistoryItemResponse
             $membership->status()->value(),
             $membership->startedAt()->format(DATE_ATOM),
             $membership->endedAt()?->format(DATE_ATOM),
-            $membership->primaryGuardianId()->value(),
+            $membership->responsibleGuardianId()->value(),
+            $membership->categoryId()->value(),
         );
     }
 
@@ -35,7 +37,8 @@ final readonly class MembershipHistoryItemResponse
             'status' => $this->status,
             'startedAt' => $this->startedAt,
             'endedAt' => $this->endedAt,
-            'primaryGuardianId' => $this->primaryGuardianId,
+            'responsibleGuardianId' => $this->responsibleGuardianId,
+            'categoryId' => $this->categoryId,
         ];
     }
 }

@@ -91,7 +91,7 @@ Duplicados o semi-duplicados detectados:
 - `docs/contracts/api-reference.md` y `docs/contracts/api-reference.md`
 - `docs/contracts/api-principles.md` y `docs/contracts/api-reference.md` en parte del contrato HTTP
 - `docs/product/product-vision.md` y `docs/_archive/product/00-product.md`
-- `docs/backlog/stories/EP-012/HU-004-attach-payment-evidence.md` y `docs/backlog/stories/EP-009/HU-004-attach-payment-evidence.md`
+- `docs/backlog/stories/EP-012/HU-004-attach-payment-evidence.md` y `docs/backlog/stories/EP-009-membership-management/HU-004-attach-payment-evidence.md`
 - múltiples `README.md` por carpeta, válidos como índices, no como duplicados de contenido
 
 Decisión de canonicidad:

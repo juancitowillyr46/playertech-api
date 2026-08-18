@@ -90,6 +90,9 @@ Este documento consolida el contexto tecnico persistente de PlayerTech para que 
 - `Identity` concentra autenticion, usuarios, `ROLE_ROOT`, contexto tenant y reglas de acceso.
 - `Player`, `Team`, `Category`, `Venue`, `Membership`, `PaymentConcept`, `Charge`, `Payment`, `Staff` y `TeamAssignment` ya tienen estructura funcional y pruebas.
 - `Player` ya expone importación masiva asíncrona con job persistido, plantilla oficial y endpoint de polling.
+- `Membership` ya forma parte del MVP como matrícula del jugador.
+- El análisis específico de `Membership` quedó documentado en `docs/audit/membership-module-analysis.md`.
+- `PaymentConcept`, `Charge` y `Payment` ya forman parte del MVP financiero y no deben tratarse como slices secundarios.
 
 ### Capas y patrones observados
 
@@ -150,18 +153,18 @@ Este documento consolida el contexto tecnico persistente de PlayerTech para que 
 - La documentacion de nivel `specs` y `docs` debe seguir sincronizada para evitar duplicidad.
 - El historial de migraciones antiguas puede contener deuda tecnica que afecta comandos globales de migracion.
 - Algunos archivos de log o cache dentro del volumen Docker pueden requerir correccion de ownership si el contenedor se recrea o si el volumen conserva artefactos con dueño `root`.
-- El backlog sigue requiriendo normalizacion fina en `EP-003`, `EP-007`, `EP-009` y `EP-012`.
-- `HU-004-attach-payment-evidence.md` tiene dueño canonico unico en `EP-012`; `EP-009` ya no compite por ese flujo.
+- El backlog sigue requiriendo normalizacion fina en `EP-003`, `EP-007`, `EP-009-membership-management` y `EP-012`.
+- `HU-004-attach-payment-evidence.md` tiene dueño canonico unico en `EP-012`; `EP-009-membership-management` ya no compite por ese flujo.
 - `HU-015-view-academy-details.md` dentro de `EP-002` esta semantemente mal nombrada y debe corregirse.
 - `HU-005-disable-player.md` debe fusionarse con `HU-005-player-status-management.md`.
 - Parte de la normalizacion inicial ya se aplico moviendo duplicados a `docs/backlog/stories/_archive/` y renombrando la HU de detalle de sede en `EP-002`.
 - `EP-007` quedo simplificado para que el estado del jugador viva en una sola HU canónica; `EP-003` archivó la HU de invitación duplicada de alta administrativa.
-- `EP-009` ya quedó con numeración continua y sin competir por evidencia de pago, que vive canónicamente en `EP-012`.
+- `EP-009-membership-management` ya quedó con numeración continua y sin competir por evidencia de pago, que vive canónicamente en `EP-012`.
 
 ## Backlog Normalization Plan
 
 - El plan operativo de limpieza del backlog vive en [`docs/audit/backlog-normalization-plan.md`](../audit/backlog-normalization-plan.md).
-- La prioridad es `EP-003`, luego `EP-007`, `EP-009`, `EP-012` y `EP-002`.
+- La prioridad es `EP-003`, luego `EP-007`, `EP-009-membership-management`, `EP-012` y `EP-002`.
 - La regla es preservar la intención historica mientras se deja un unico dueño canónico por flujo de negocio.
 
 ## Regla De Lectura Para Futuras Sesiones

@@ -1,11 +1,11 @@
-# HU-005 Consultar Saldo o Deuda Pendiente
+# HU-007 Consultar Saldo o Deuda Pendiente
 
 ## Información General
 
 | Campo | Valor |
 | --- | --- |
-| ID | HU-005 |
-| Épica | EP-009 Gestión de Matrículas y Seguimiento de Pagos |
+| ID | HU-007 |
+| Épica | EP-009-membership-management Gestión de Matrículas |
 | Prioridad | Alta |
 | MVP | Sí |
 | Estado | Done |
@@ -31,7 +31,7 @@ Para saber cuánto debe el acudiente principal y tomar decisiones de seguimiento
 
 # Reglas de Negocio
 
-* El saldo debe calcularse sobre la matrícula activa y sus pagos asociados.
+* El saldo debe calcularse sobre la matrícula activa y sus pagos asociados, como referencia del bloque financiero.
 * La consulta debe restringirse a la academia actual.
 * El resultado debe ser consistente con el historial de pagos.
 

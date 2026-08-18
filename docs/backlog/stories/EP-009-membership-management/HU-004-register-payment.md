@@ -1,11 +1,11 @@
-# HU-003 Registrar Pago sobre Matrícula
+# HU-004 Registrar Pago sobre Matrícula
 
 ## Información General
 
 | Campo | Valor |
 | --- | --- |
-| ID | HU-003 |
-| Épica | EP-009 Gestión de Matrículas y Seguimiento de Pagos |
+| ID | HU-004 |
+| Épica | EP-009-membership-management Gestión de Matrículas |
 | Prioridad | Alta |
 | MVP | Sí |
 | Estado | Done |

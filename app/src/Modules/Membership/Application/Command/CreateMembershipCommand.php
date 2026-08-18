@@ -10,7 +10,8 @@ final readonly class CreateMembershipCommand
         public string $actorId,
         public string $academyId,
         public string $playerId,
-        public string $primaryGuardianId,
+        public string $responsibleGuardianId,
+        public string $categoryId,
     ) {
     }
 }

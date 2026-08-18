@@ -67,7 +67,7 @@ specs/005-team/
 specs/006-legal-guardian-management/
 specs/007-player/
 specs/008-player-guardian/
-specs/009-membership/
+specs/009-membership-management/
 specs/010-team-assignment/
 specs/011-payment-concept/
 specs/012-charge-payment/
@@ -159,7 +159,7 @@ Carpeta:
 
 Carpeta:
 
-- `specs/009-membership/`
+- `specs/009-membership-management/`
 
 Subfeatures sugeridas:
 
@@ -237,7 +237,7 @@ Subfeatures sugeridas:
 2. `specs/001-academy/`
 3. `specs/007-player/`
 4. `specs/005-team/`
-5. `specs/009-membership/`
+5. `specs/009-membership-management/`
 6. `specs/012-charge-payment/`
 7. `specs/004-category/`
 8. `specs/006-legal-guardian-management/`

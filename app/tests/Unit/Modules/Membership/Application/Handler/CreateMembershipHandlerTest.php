@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 final class CreateMembershipHandlerTest extends TestCase
 {
-    public function testItCreatesMembershipWithPrimaryGuardian(): void
+    public function testItCreatesMembershipWithResponsibleGuardianAndCategory(): void
     {
         $repository = new InMemoryMembershipRepository();
         $handler = new CreateMembershipHandler($repository);
@@ -21,10 +21,12 @@ final class CreateMembershipHandlerTest extends TestCase
             '019eec93-9a11-7432-bd04-52306b2b3d8f',
             '019eec93-9a11-7432-bd04-52306b2b3d90',
             '019eec93-9a11-7432-bd04-52306b2b3d91',
+            '019eec93-9a11-7432-bd04-52306b2b3d92',
         ));
 
         self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d90', $response->toArray()['playerId']);
-        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d91', $response->toArray()['primaryGuardianId']);
+        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d91', $response->toArray()['responsibleGuardianId']);
+        self::assertSame('019eec93-9a11-7432-bd04-52306b2b3d92', $response->toArray()['categoryId']);
         self::assertSame('ACTIVE', $response->toArray()['status']);
         self::assertCount(1, $repository->memberships);
     }
@@ -39,6 +41,7 @@ final class CreateMembershipHandlerTest extends TestCase
             '019eec93-9a11-7432-bd04-52306b2b3d8f',
             '019eec93-9a11-7432-bd04-52306b2b3d90',
             '019eec93-9a11-7432-bd04-52306b2b3d91',
+            '019eec93-9a11-7432-bd04-52306b2b3d92',
         );
 
         $handler($command);
