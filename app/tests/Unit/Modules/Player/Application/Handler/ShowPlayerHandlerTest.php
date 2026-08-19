@@ -126,6 +126,8 @@ final class ShowPlayerHandlerTest extends TestCase
         self::assertSame('Juan', $response->toArray()['firstName']);
         self::assertSame('Pérez', $response->toArray()['lastName']);
         self::assertSame('12345678', $response->toArray()['documentNumber']);
+        self::assertSame(null, $response->toArray()['phone']);
+        self::assertSame(null, $response->toArray()['phoneSingle']);
         self::assertSame(['firstName' => 'Juan', 'lastName' => 'Pérez'], $response->toArray()['legalGuardianMain']);
         self::assertSame(['name' => 'Team A'], $response->toArray()['teamMain']);
     }

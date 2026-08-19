@@ -27,6 +27,7 @@ final readonly class PlayerResponse
         private string $documentNumber,
         private ?string $email,
         private ?string $phone,
+        private ?string $phoneSingle,
         private ?string $nationality,
         private ?string $nationalityName,
         private ?string $gender,
@@ -61,6 +62,7 @@ final readonly class PlayerResponse
             $player->documentNumber(),
             $player->email(),
             $player->phone(),
+            self::phoneSingleFrom($player->phone()),
             $player->nationality(),
             self::nationalityNameFrom($player->nationality()),
             $player->gender(),
@@ -114,6 +116,7 @@ final readonly class PlayerResponse
             'documentNumber' => $this->documentNumber,
             'email' => $this->email,
             'phone' => $this->phone,
+            'phoneSingle' => $this->phoneSingle,
             'nationality' => $this->nationality,
             'nationalityName' => $this->nationalityName,
             'gender' => $this->gender,
@@ -162,5 +165,24 @@ final readonly class PlayerResponse
         }
 
         return DominantFoot::tryFrom(strtoupper(trim($dominantFoot)))?->label() ?? $dominantFoot;
+    }
+
+    private static function phoneSingleFrom(?string $phone): ?string
+    {
+        if (null === $phone) {
+            return null;
+        }
+
+        $normalized = preg_replace('/[^\d]/', '', $phone);
+
+        if (null === $normalized || '' === $normalized) {
+            return null;
+        }
+
+        if (str_starts_with(trim($phone), '+57') && str_starts_with($normalized, '57')) {
+            return substr($normalized, 2);
+        }
+
+        return $normalized;
     }
 }

@@ -73,8 +73,9 @@ El sistema permite a admins import players in bulk and recuperar enriched listar
 - **FR-007**: System MUST exponer enriched listar data for frontend consumption.
 - **FR-008**: System MUST permitir filtros por `documentNumber`, `documentType`, `firstName`, `lastName` y `fullName` en el listado de jugadores.
 - **FR-009**: System MUST exponer en el detalle del jugador los campos derivados `legalGuardianMain` y `teamMain` como objetos resumidos o `null`.
-- **FR-010**: System MUST tratar `birthDate` como un campo opcional en create/update y validar su formato sólo cuando el cliente lo envíe.
-- **FR-011**: System MUST aceptar `categoryId` en la creación de jugadores y persistirlo cuando corresponda.
+- **FR-010**: System MUST exponer `phoneSingle` en el detalle del jugador como número local sin prefijo internacional cuando aplique al formato colombiano.
+- **FR-011**: System MUST tratar `birthDate` como un campo opcional en create/update y validar su formato sólo cuando el cliente lo envíe.
+- **FR-012**: System MUST aceptar `categoryId` en la creación de jugadores y persistirlo cuando corresponda.
 
 ### Entidades clave *(include if feature involves data)*
 
